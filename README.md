@@ -1,2 +1,2 @@
-# standards-compliance
+# Standards Compliance
 An enterprise web application for standards compliance.
