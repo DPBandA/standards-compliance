@@ -54,6 +54,23 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                    
+                    <dependentWarExcludes>
+                        WEB-INF/web.xml,
+                        WEB-INF/glassfish-web.xml, 
+                        index.xhtml                       
+                    </dependentWarExcludes>
+                    
+                    <overlays>
+                        <overlay>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>system-management</artifactId>
+                        </overlay>
+                        <overlay>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>client-management</artifactId>
+                        </overlay>
+                    </overlays>
                 </configuration>
             </plugin>
         </plugins>

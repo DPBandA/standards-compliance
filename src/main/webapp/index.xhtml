@@ -131,10 +131,14 @@ Email: info@dpbennett.com.jm
 
                         <p:tab title="#{t.name}" closable="true"  >                              
 
+                            <h:panelGroup rendered="#{t.id == 'System Administration'}" >
+                                <ui:include src="admin/generalAdminTab.xhtml" /> 
+                            </h:panelGroup>
+                            
                             <h:panelGroup  rendered="#{t.id == 'Standards Compliance'}">
                                 <ui:include src="compliance/surveyBrowser.xhtml" /> 
                             </h:panelGroup> 
-
+                            
                         </p:tab>
                     </p:tabView>
 
@@ -189,22 +193,14 @@ Email: info@dpbennett.com.jm
                                 listener="#{systemManager.onDashboardTabChange}" />
 
                         <p:tab title="#{t.name}" >                             
-
-                            <h:panelGroup rendered="#{t.id == 'Procurement'}">
-                                <ui:include src="dashboard/finance/purchaseAdminTab.xhtml" />
-                            </h:panelGroup>
-
-                            <h:panelGroup rendered="#{t.id == 'Financial Administration'}">
-                                <ui:include src="dashboard/finance/financialAdminTab.xhtml" />
-                            </h:panelGroup>
-
-                            <h:panelGroup rendered="#{t.id == 'Human Resource'}">
-                                <ui:include src="dashboard/hrm/hrmTab.xhtml" />
-                            </h:panelGroup>
-
+                            
                             <h:panelGroup rendered="#{t.id == 'System Administration'}">
                                 <ui:include src="dashboard/admin/generalAdminTab.xhtml" />
                             </h:panelGroup>
+
+                            <h:panelGroup rendered="#{t.id == 'Standards Compliance'}">
+                                <ui:include src="dashboard/compliance/complianceTab.xhtml" />
+                            </h:panelGroup>                            
 
                         </p:tab>   
 
