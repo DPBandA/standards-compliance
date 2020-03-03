@@ -201,9 +201,73 @@ Email: info@dpbennett.com.jm
 
                         </p:inputText>
 
-                        <p:outputLabel value="Consignee:" style="font-weight: bold;" />                        
+                        <p:outputLabel value="Consignee:" style="font-weight: bold;" />     
+                        <ui:remove>
+                            <h:panelGroup>                
+                                <p:autoComplete id="consignee"
+                                                var="client"
+                                                itemLabel="#{client.truncatedName}"
+                                                itemValue="#{client}"
+                                                size="35" 
+                                                maxlength="40"                             
+                                                dropdown="false"
+                                                scrollHeight="200" 
+                                                value="#{complianceManager.currentComplianceSurvey.consignee}"   
+                                                converter="activeClientConverter"
+                                                validator="generalClientValidator"
+                                                forceSelection="true"
+                                                completeMethod="#{clientManager.completeActiveClient}" >
+
+                                    <p:ajax event="itemSelect"
+                                            update="generalPanelGrid"
+                                            listener="#{complianceManager.updateCconsignee}"
+                                            process="@this"/>
+
+                                </p:autoComplete>     
+
+                                <p:menuButton id="consigneeActionsMenu" icon="ui-icon-pencil" title="Add or edit consignee">
+                                    <p:menuitem>                       
+                                        <p:commandButton value="Edit consignee"
+                                                         id="editConsignee"
+                                                         icon="ui-icon-pencil" 
+                                                         disabled="${!complianceManager.isConsigneeNameValid}"
+                                                         style="width: 300%;text-align: left;background: none;border: 0;"
+                                                         onstart="PF('longProcessDialogVar').show();"   
+                                                         oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                         actionListener="#{complianceManager.editConsignee}"  
+                                                         process="@this,consignee"                             
+                                                         title="View or edit this consignee's detail">  
+
+                                            <p:ajax event="dialogReturn" 
+                                                    listener="#{complianceManager.consigneeDialogReturn}"
+                                                    update="consignee,consigneeRepresentative,consigneeActionsMenu" />
+
+                                        </p:commandButton>            
+                                    </p:menuitem>
+
+                                    <p:menuitem >       
+                                        <p:commandButton 
+                                            value="Add consignee"
+                                            icon="ui-icon-plus" 
+                                            style="width: 300%;text-align: left;background: none;border: 0;"
+                                            onstart="PF('longProcessDialogVar').show();"    
+                                            oncomplete="PF('longProcessDialogVar').hide();"                    
+                                            disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                            actionListener="#{complianceManager.createNewConsignee}"                                            
+                                            process="@this"
+                                            title="Add a new consignee to the client database">
+
+                                            <p:ajax event="dialogReturn" 
+                                                    listener="#{complianceManager.consigneeDialogReturn}"
+                                                    update="consignee,consigneeRepresentative,consigneeActionsMenu" />
+
+                                        </p:commandButton>
+                                    </p:menuitem>
+                                </p:menuButton>
+                            </h:panelGroup>
+                        </ui:remove>
                         <h:panelGroup>                
-                            <p:autoComplete id="consignee"
+                            <p:autoComplete id="client"
                                             var="client"
                                             itemLabel="#{client.truncatedName}"
                                             itemValue="#{client}"
@@ -211,54 +275,54 @@ Email: info@dpbennett.com.jm
                                             maxlength="40"                             
                                             dropdown="false"
                                             scrollHeight="200" 
-                                            value="#{complianceManager.currentComplianceSurvey.consignee}"   
+                                            value="#{jobManager.currentJob.client}"   
                                             converter="activeClientConverter"
-                                            validator="generalClientValidator"
+                                            validator="jobClientValidator"
                                             forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
-                                <p:ajax event="itemSelect"
-                                        update="generalPanelGrid"
-                                        listener="#{complianceManager.updateCconsignee}"
+                                <p:ajax event="itemSelect"      
+                                        update="jobFormTabView:jobCosting,jobFormTabView:cashPayments,jobFormTabView:generalTabPanel,:jobDialogForm:jobDetailToolbar1"
+                                        listener="#{jobManager.updateJobEntryTabClient}"
                                         process="@this"/>
 
                             </p:autoComplete>     
 
-                            <p:menuButton id="consigneeActionsMenu" icon="ui-icon-pencil" title="Add or edit consignee">
+                            <p:menuButton id="clientActionsMenu" icon="ui-icon-pencil" title="Add or edit client">
                                 <p:menuitem>                       
-                                    <p:commandButton value="Edit consignee"
-                                                     id="editConsignee"
+                                    <p:commandButton value="Edit client"
+                                                     id="editClient"
                                                      icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isConsigneeNameValid}"
+                                                     disabled="${!jobManager.isClientNameValid}"
                                                      style="width: 300%;text-align: left;background: none;border: 0;"
                                                      onstart="PF('longProcessDialogVar').show();"   
                                                      oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editConsignee}"  
-                                                     process="@this,consignee"                             
-                                                     title="View or edit this consignee's detail">  
+                                                     actionListener="#{jobManager.editJobClient}"  
+                                                     process="@this,client"                             
+                                                     title="View or edit this client's detail">  
 
                                         <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee,consigneeRepresentative,consigneeActionsMenu" />
+                                                listener="#{jobManager.clientDialogReturn}"
+                                                update="client,billingAddress,clientContact,clientActionsMenu,:jobDialogForm:jobDetailToolbar1" />
 
                                     </p:commandButton>            
                                 </p:menuitem>
 
                                 <p:menuitem >       
                                     <p:commandButton 
-                                        value="Add consignee"
+                                        value="Add new client"
                                         icon="ui-icon-plus" 
                                         style="width: 300%;text-align: left;background: none;border: 0;"
                                         onstart="PF('longProcessDialogVar').show();"    
                                         oncomplete="PF('longProcessDialogVar').hide();"                    
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewConsignee}"                                            
+                                        disabled="#{!jobManager.user.privilege.canAddClient}"
+                                        actionListener="#{jobManager.createNewJobClient}"                                            
                                         process="@this"
-                                        title="Add a new consignee to the client database">
+                                        title="Add a new client to the client database">
 
                                         <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee,consigneeRepresentative,consigneeActionsMenu" />
+                                                listener="#{jobManager.clientDialogReturn}"
+                                                update="client,billingAddress,clientContact,clientActionsMenu,:jobDialogForm:jobDetailToolbar1" />
 
                                     </p:commandButton>
                                 </p:menuitem>
