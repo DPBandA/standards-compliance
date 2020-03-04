@@ -201,270 +201,71 @@ Email: info@dpbennett.com.jm
 
                         </p:inputText>
 
-                        <p:outputLabel value="Consignee:" style="font-weight: bold;" />     
-                        <ui:remove>
-                            <h:panelGroup>                
-                                <p:autoComplete id="consignee"
-                                                var="client"
-                                                itemLabel="#{client.truncatedName}"
-                                                itemValue="#{client}"
-                                                size="35" 
-                                                maxlength="40"                             
-                                                dropdown="false"
-                                                scrollHeight="200" 
-                                                value="#{complianceManager.currentComplianceSurvey.consignee}"   
-                                                converter="activeClientConverter"
-                                                validator="generalClientValidator"
-                                                forceSelection="true"
-                                                completeMethod="#{clientManager.completeActiveClient}" >
-
-                                    <p:ajax event="itemSelect"
-                                            update="generalPanelGrid"
-                                            listener="#{complianceManager.updateCconsignee}"
-                                            process="@this"/>
-
-                                </p:autoComplete>     
-
-                                <p:menuButton id="consigneeActionsMenu" icon="ui-icon-pencil" title="Add or edit consignee">
-                                    <p:menuitem>                       
-                                        <p:commandButton value="Edit consignee"
-                                                         id="editConsignee"
-                                                         icon="ui-icon-pencil" 
-                                                         disabled="${!complianceManager.isConsigneeNameValid}"
-                                                         style="width: 300%;text-align: left;background: none;border: 0;"
-                                                         onstart="PF('longProcessDialogVar').show();"   
-                                                         oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                         actionListener="#{complianceManager.editConsignee}"  
-                                                         process="@this,consignee"                             
-                                                         title="View or edit this consignee's detail">  
-
-                                            <p:ajax event="dialogReturn" 
-                                                    listener="#{complianceManager.consigneeDialogReturn}"
-                                                    update="consignee,consigneeRepresentative,consigneeActionsMenu" />
-
-                                        </p:commandButton>            
-                                    </p:menuitem>
-
-                                    <p:menuitem >       
-                                        <p:commandButton 
-                                            value="Add consignee"
-                                            icon="ui-icon-plus" 
-                                            style="width: 300%;text-align: left;background: none;border: 0;"
-                                            onstart="PF('longProcessDialogVar').show();"    
-                                            oncomplete="PF('longProcessDialogVar').hide();"                    
-                                            disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                            actionListener="#{complianceManager.createNewConsignee}"                                            
-                                            process="@this"
-                                            title="Add a new consignee to the client database">
-
-                                            <p:ajax event="dialogReturn" 
-                                                    listener="#{complianceManager.consigneeDialogReturn}"
-                                                    update="consignee,consigneeRepresentative,consigneeActionsMenu" />
-
-                                        </p:commandButton>
-                                    </p:menuitem>
-                                </p:menuButton>
-                            </h:panelGroup>
-                        </ui:remove>
+                        <p:outputLabel value="Consignee:" style="font-weight: bold;" />                         
                         <h:panelGroup>                
-                            <p:autoComplete id="client"
-                                            var="client"
-                                            itemLabel="#{client.truncatedName}"
-                                            itemValue="#{client}"
+                            <p:autoComplete id="consignee"
+                                            var="consignee"
+                                            itemLabel="#{consignee.truncatedName}"
+                                            itemValue="#{consignee}"
                                             size="35" 
                                             maxlength="40"                             
                                             dropdown="false"
                                             scrollHeight="200" 
-                                            value="#{jobManager.currentJob.client}"   
+                                            value="#{complianceManager.currentComplianceSurvey.consignee}"   
                                             converter="activeClientConverter"
-                                            validator="jobClientValidator"
+                                            validator="generalClientValidator"
                                             forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"      
-                                        update="jobFormTabView:jobCosting,jobFormTabView:cashPayments,jobFormTabView:generalTabPanel,:jobDialogForm:jobDetailToolbar1"
-                                        listener="#{jobManager.updateJobEntryTabClient}"
+                                        update="generalPanelGrid"
+                                        listener="#{complianceManager.updateCconsignee}"
                                         process="@this"/>
 
                             </p:autoComplete>     
 
-                            <p:menuButton id="clientActionsMenu" icon="ui-icon-pencil" title="Add or edit client">
+                            <p:menuButton id="consigneeActionsMenu" icon="ui-icon-pencil" title="Add or edit consignee">
                                 <p:menuitem>                       
-                                    <p:commandButton value="Edit client"
-                                                     id="editClient"
+                                    <p:commandButton value="Edit consignee"
+                                                     id="editConsignee"
                                                      icon="ui-icon-pencil" 
-                                                     disabled="${!jobManager.isClientNameValid}"
+                                                     disabled="${!complianceManager.isConsigneeNameValid}"
                                                      style="width: 300%;text-align: left;background: none;border: 0;"
                                                      onstart="PF('longProcessDialogVar').show();"   
                                                      oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{jobManager.editJobClient}"  
-                                                     process="@this,client"                             
-                                                     title="View or edit this client's detail">  
+                                                     actionListener="#{complianceManager.editConsignee}"  
+                                                     process="@this,consignee"                             
+                                                     title="View or edit this consignee's detail">  
 
                                         <p:ajax event="dialogReturn" 
-                                                listener="#{jobManager.clientDialogReturn}"
-                                                update="client,billingAddress,clientContact,clientActionsMenu,:jobDialogForm:jobDetailToolbar1" />
+                                                listener="#{complianceManager.consigneeDialogReturn}"
+                                                update="consignee,consigneeActionsMenu" />
 
                                     </p:commandButton>            
                                 </p:menuitem>
 
                                 <p:menuitem >       
                                     <p:commandButton 
-                                        value="Add new client"
+                                        value="Add consignee"
                                         icon="ui-icon-plus" 
                                         style="width: 300%;text-align: left;background: none;border: 0;"
                                         onstart="PF('longProcessDialogVar').show();"    
                                         oncomplete="PF('longProcessDialogVar').hide();"                    
-                                        disabled="#{!jobManager.user.privilege.canAddClient}"
-                                        actionListener="#{jobManager.createNewJobClient}"                                            
+                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                        actionListener="#{complianceManager.createNewConsignee}"                                            
                                         process="@this"
-                                        title="Add a new client to the client database">
+                                        title="Add a new consignee to the client database">
 
                                         <p:ajax event="dialogReturn" 
-                                                listener="#{jobManager.clientDialogReturn}"
-                                                update="client,billingAddress,clientContact,clientActionsMenu,:jobDialogForm:jobDetailToolbar1" />
+                                                listener="#{complianceManager.consigneeDialogReturn}"
+                                                update="consignee,consigneeActionsMenu" />
 
                                     </p:commandButton>
                                 </p:menuitem>
-                            </p:menuButton>      
-
+                            </p:menuButton>
                         </h:panelGroup>
 
-                        <p:outputLabel value="Consignee representative:" style="font-weight: bold;" />
-                        <p:autoComplete id="consigneeRepresentative"
-                                        value="#{complianceManager.currentComplianceSurvey.consigneeRepresentative}"
-                                        dropdown="true"
-                                        forceSelection="true"
-                                        scrollHeight="200"
-                                        maxlength="40"
-                                        converter="clientContactConverter" 
-                                        validator="contactValidator"
-                                        var="contact"                        
-                                        itemValue="#{contact}"
-                                        itemLabel="#{contact.name}" 
-                                        completeMethod="#{complianceManager.completeConsigneetContact}">
-
-                            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.consignee}" />
-
-                            <p:ajax event="itemSelect"
-                                    listener="#{complianceManager.updateSurvey}"  
-                                    process="@this" />   
-
-                        </p:autoComplete> 
-
-                        <h:outputText value="Broker/contact person: " style="font-weight: bold;" />
-                        <h:panelGroup >
-                            <h:outputText id="broker" value="Broker/contact person: " />
-                            <ui:remove>
-                                <p:autoComplete id="broker"
-                                                size="35"
-                                                maxResults="12"
-                                                var="broker"
-                                                value="#{complianceManager.currentComplianceSurvey.broker}"
-                                                itemLabel="#{broker.name}"
-                                                itemValue="#{broker}"
-                                                converter="activeClientConverter"
-                                                forceSelection="true"
-                                                completeMethod="#{clientManager.completeActiveClient}" >
-                                    <p:ajax event="itemSelect"
-                                            update="brokerRepresentative"
-                                            listener="#{complianceManager.updateComplianceSurveyBroker}"
-                                            process="@this"/>
-
-                                    <p:ajax event="keyup"
-                                            update="brokerRepresentative"
-                                            listener="#{complianceManager.updateComplianceSurveyBroker}"
-                                            process="@this"/>
-                                </p:autoComplete>
-                            </ui:remove>
-                            <h:outputText value=" / "/>    
-                            <h:outputText id="brokerRepresentative" value="brokerRepresentative"/> 
-                            <ui:remove>
-                                <p:autoComplete id="brokerRepresentative"
-                                                size="35"
-                                                maxResults="12"
-                                                dropdown="true"
-                                                var="contact"
-                                                value="#{complianceManager.currentComplianceSurvey.brokerRepresentative}"
-                                                itemLabel="#{contact.name}"
-                                                itemValue="#{contact}"
-                                                forceSelection="true"
-                                                converter="contactConverter"                                                                     
-                                                completeMethod="#{complianceManager.completeComplianceSurveyBrokerRepresentative}" >
-                                    <p:ajax event="itemSelect"                                
-                                            listener="#{complianceManager.updateComplianceSurveyBrokerRepresentative}"
-                                            process="@this"/>
-                                    <p:ajax event="keyup"
-                                            listener="#{complianceManager.updateComplianceSurveyBrokerRepresentative}"
-                                            process="@this"/>
-                                </p:autoComplete>  
-                            </ui:remove>
-                            <p:spacer height="0" width="4"/>
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{complianceManager.editComplianceSurveyBroker}"
-                                             update=""
-                                             oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
-                                             process="@this"
-                                             title="Edit this broker's detail or add a new broker"/>
-                        </h:panelGroup>                      
-
-                        <h:outputText value="Retail Outlet/contact person: " style="font-weight: bold;" />
-                        <h:panelGroup >
-                            <h:outputText id="retailOutlet" value="retailOutlet" />
-                            <ui:remove>
-                                <p:autoComplete id="retailOutlet"
-                                                size="35"
-                                                maxResults="12"
-                                                var="retailOutlet"
-                                                value="#{complianceManager.currentComplianceSurvey.retailOutlet}"
-                                                itemLabel="#{retailOutlet.name}"
-                                                itemValue="#{retailOutlet}"
-                                                converter="activeClientConverter"
-                                                forceSelection="true"
-                                                completeMethod="#{clientManager.completeActiveClient}" >
-                                    <p:ajax event="itemSelect"
-                                            update="retailOutletRepresentative"
-                                            listener="#{complianceManager.updateComplianceSurveyRetailOutlet}"
-                                            process="@this"/>
-
-                                    <p:ajax event="keyup"
-                                            update="retailOutletRepresentative"
-                                            listener="#{complianceManager.updateComplianceSurveyRetailOutlet}"
-                                            process="@this"/>
-                                </p:autoComplete>
-                            </ui:remove>
-                            <h:outputText value=" / "/>     
-                            <h:outputText id="retailOutletRepresentative" value="retailOutletRepresentative"/>  
-                            <ui:remove>
-                                <p:autoComplete id="retailOutletRepresentative"
-                                                size="35"
-                                                maxResults="12"
-                                                dropdown="true"
-                                                var="contact"
-                                                value="#{complianceManager.currentComplianceSurvey.retailRepresentative}"
-                                                itemLabel="#{contact.name}"
-                                                itemValue="#{contact}"
-                                                forceSelection="true"
-                                                converter="contactConverter"                                                                     
-                                                completeMethod="#{complianceManager.completeComplianceSurveyRetailOutletRepresentative}" >
-                                    <p:ajax event="itemSelect"                                
-                                            listener="#{complianceManager.updateComplianceSurveyRetailOutletRepresentative}"
-                                            process="@this"/>
-                                    <p:ajax event="keyup"
-                                            listener="#{complianceManager.updateComplianceSurveyRetailOutletRepresentative}"
-                                            process="@this"/>
-                                </p:autoComplete>  
-                            </ui:remove>
-                            <p:spacer height="0" width="4"/>
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{complianceManager.editComplianceSurveyRetailOutlet}"
-                                             update=""
-                                             oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
-                                             process="@this"
-                                             title="Edit this retail outlet's detail or add a new broker"/>
-                        </h:panelGroup>     
-
-                        <h:outputText value="Inspector *:" style="font-weight: bold;" />
+                        <h:outputText value="Inspector:" style="font-weight: bold;" />
                         <p:autoComplete style="width: 75%;"
                                         id="inspector"
                                         readonly="true"
@@ -484,16 +285,16 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
                         </p:autoComplete>
 
-                        <h:outputText value="Date/time checked *:"  style="font-weight: bold;" />
-                        <p:calendar id="dateAndTimeChecked"
-                                    pattern="yyyy-MM-dd hh:mm a" 
-                                    showOn="button"
-                                    timeOnly="false"
+                        <h:outputText value="Date:"  style="font-weight: bold;" />
+                        <p:calendar id="dateChecked"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy"
                                     value="#{complianceManager.currentComplianceSurvey.dateOfSurvey}" >
                             <p:ajax event="dateSelect"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
                         <h:outputText value="Comments:"  />
@@ -504,14 +305,306 @@ Email: info@dpbennett.com.jm
                                          maxlength="1000"
                                          autoResize="false">
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
                         </p:inputTextarea>
                     </h:panelGrid>
+                </p:tab>   
 
-                </p:tab>                             
+                <p:tab title="POE Detention Request" >
+                    <h:panelGrid columns="2" cellpadding="5" >
+                        <h:outputText value="Detention request for Port of Entry issued: "/>
+                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}">
+                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" update="dateOfDetention"/>
+                        </p:selectBooleanCheckbox>
+
+                        <h:outputText value="Date of detention:" />
+                        <p:calendar id="dateOfDetention"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy"
+                                    value="#{complianceManager.currentComplianceSurvey.dateOfDetention}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateSurvey}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}" />
+                        </p:calendar>
+
+                        <h:outputText value="Reason for Detention: " style="vertical-align: top" />
+                        <p:inputTextarea id="reasonForDetention"
+                                         value="#{complianceManager.currentComplianceSurvey.reasonForDetention}"
+                                         style="width: 300px"
+                                         maxlength="1000"
+                                         autoResize="false">
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this"/>
+                        </p:inputTextarea>
+
+                    </h:panelGrid>
+                </p:tab>
+
+
+                <p:tab title="POE Sample Request" >
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputText value="Sample request issued: "/>
+                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                        </p:selectBooleanCheckbox>
+
+                        <h:outputText value="Samples to be collected within 30 days: "/>
+                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                        </p:selectBooleanCheckbox>
+
+                        <h:outputText value="Disposed of by the Bureau: "/>
+                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                        </p:selectBooleanCheckbox>
+                    </h:panelGrid>
+                </p:tab>
+
+                <p:tab title="POE Release Request">   
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Release request for Port of Entry issued:" />
+                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                        </p:selectBooleanCheckbox>
+                    </h:panelGrid>
+                    <br/>
+                    <h:outputText value="Release location:" style="font-style: italic"/>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Location:" />
+                        <p:inputText id="location"
+                                     style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.name}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Address line 1:" />
+                        <p:inputText id="addressLine1"
+                                     style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.addressLine1}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Address line 2:" />
+                        <p:inputText id="addressLine2"
+                                     style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.addressLine2}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="City:" />
+                        <p:inputText id="city"
+                                     style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.city}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Parish:" />
+                        <p:inputText id="parish"
+                                     style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+                    </h:panelGrid>    
+                </p:tab>
 
                 <ui:remove>
+
+                    <p:tab title="DM Notice/Release from Detention">    
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Notice of release from detention issued: "/>
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
+                                <p:ajax listener="#{complianceManager.updateDateOfDetention}" />
+                            </p:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <h:panelGrid columns="6">
+                            <h:outputText value="Reference #:"  />
+                            <p:inputText style="color: red;"
+                                         readonly="true"
+                                         value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" >                            
+                            </p:inputText>
+
+                            <h:outputText value="Release date:"  />
+                            <p:calendar pattern="yyyy-MM-dd" 
+                                        showOn="button"                                    
+                                        value="#{complianceManager.currentComplianceSurvey.releaseDateDomesticMarket}" >
+                                <p:ajax event="dateSelect"
+                                        listener="#{complianceManager.updateSurvey}" />
+                                <p:ajax event="keyup"
+                                        listener="#{complianceManager.updateSurvey}" />
+                            </p:calendar>
+
+                            <h:outputText value="Full release:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.fullRelease}">
+                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                            </p:selectBooleanCheckbox>
+                        </h:panelGrid>
+                        <hr/>
+                        <h:panelGrid columns="2">
+                            <h:outputText value="Release location:" style="font-style: italic"/>
+                            <h:outputText value="Location of detained product(s):" style="font-style: italic"/>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Location:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.name}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="Address line 1:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine1}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="Address line 2:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine2}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="City:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.city}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="Parish:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.stateOrProvince}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Location:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.name}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="Address line 1:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine1}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="Address line 2:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine2}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="City:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.city}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+
+                                <h:outputText value="Parish:" />
+                                <p:inputText style="width: 300px"
+                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.stateOrProvince}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <hr/>
+                        <h:panelGrid columns="6">
+                            <h:outputText value="Retailer:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.retailer}">
+                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                            </p:selectBooleanCheckbox>
+
+                            <h:outputText value="Distributor:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.distributor}">
+                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                            </p:selectBooleanCheckbox>
+
+                            <h:outputText value="Other:" />
+                            <h:panelGrid columns="2">
+                                <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.otherCompanyTypes}">
+                                    <p:ajax listener="#{complianceManager.updateCompanyTypes}"
+                                            update="companyTypes"/>
+                                </p:selectBooleanCheckbox>
+                                <p:inputText id="companyTypes" style="width: 300px"
+                                             disabled="#{!complianceManager.currentComplianceSurvey.otherCompanyTypes}"
+                                             value="#{complianceManager.currentComplianceSurvey.companyTypes}" >
+                                    <p:ajax
+                                        global="true"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this" />
+                                </p:inputText>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                        <hr/>
+                        <h:panelGrid columns="6">
+                            <h:outputText value="Vessel:" />
+                            <p:inputText value="#{complianceManager.currentComplianceSurvey.vessel}" >
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this" />
+                            </p:inputText>    
+
+                            <h:outputText value="Country of origin:" />
+                            <h:selectOneMenu 
+                                id="countryOfOrigin"
+                                value="#{complianceManager.currentComplianceSurvey.countryOfConsignment}" >
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this" />
+                                <f:selectItems value="#{complianceManager.countries}" />
+                            </h:selectOneMenu>
+                        </h:panelGrid>
+                    </p:tab>
+
                     <p:tab title="Products">
                         <p:commandButton value="Add product"
                                          title="Add new product"
@@ -566,301 +659,6 @@ Email: info@dpbennett.com.jm
                                          icon="ui-icon-plus"
                                          process="@this" />
 
-                    </p:tab>
-
-                    <p:tab title="POE Detention Request" >
-                        <h:panelGrid columns="2" cellpadding="5" >
-                            <h:outputText value="Detention request for Port of Entry issued: "/>
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}">
-                                <p:ajax listener="#{complianceManager.updateDateOfDetention}" update="dateOfDetention"/>
-                            </p:selectBooleanCheckbox>
-
-                            <h:outputText value="Date of detention *:" />
-                            <p:calendar pattern="yyyy-MM-dd"
-                                        id="dateOfDetention"
-                                        showOn="button"
-                                        timeOnly="false"
-                                        value="#{complianceManager.currentComplianceSurvey.dateOfDetention}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateJob}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateJob}" />
-                            </p:calendar>
-
-                            <h:outputText value="Reason for Detention: " style="vertical-align: top" />
-                            <p:inputTextarea id="reasonForDetention"
-                                             value="#{complianceManager.currentComplianceSurvey.reasonForDetention}"
-                                             style="width: 300px"
-                                             maxlength="1000"
-                                             autoResize="false">
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this"/>
-                            </p:inputTextarea>
-
-                        </h:panelGrid>
-                    </p:tab>
-
-                    <p:tab title="POE Sample Request" >
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputText value="Sample request issued: "/>
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-
-                            <h:outputText value="Samples to be collected within 30 days: "/>
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-
-                            <h:outputText value="Disposed of by the Bureau: "/>
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-                        </h:panelGrid>
-                    </p:tab>
-
-                    <p:tab title="POE Release Request">   
-                        <h:panelGrid columns="2">
-                            <h:outputText value="Release request for Port of Entry issued:" />
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-                        </h:panelGrid>
-                        <br/>
-                        <h:outputText value="Release location *:" style="font-style: italic"/>
-                        <h:panelGrid columns="2">
-                            <h:outputText value="Location:" />
-                            <p:inputText id="location"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.name}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Address line 1:" />
-                            <p:inputText id="addressLine1"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.addressLine1}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Address line 2:" />
-                            <p:inputText id="addressLine2"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.addressLine2}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="City:" />
-                            <p:inputText id="city"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.city}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Parish:" />
-                            <p:inputText id="parish"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                            </p:inputText>
-                        </h:panelGrid>                       
-
-                        <br/>
-
-                    </p:tab>
-
-
-                    <p:tab title="DM Notice/Release from Detention">    
-                        <h:panelGrid columns="2">
-                            <h:outputText value="Notice of release from detention issued: "/>
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
-                                <p:ajax listener="#{complianceManager.updateDateOfDetention}" />
-                            </p:selectBooleanCheckbox>
-                        </h:panelGrid>
-                        <h:panelGrid columns="6">
-                            <h:outputText value="Reference # *:"  />
-                            <p:inputText style="color: red;"
-                                         readonly="true"
-                                         value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" >                            
-                            </p:inputText>
-
-                            <h:outputText value="Release date *:"  />
-                            <p:calendar pattern="yyyy-MM-dd" 
-                                        showOn="button"                                    
-                                        value="#{complianceManager.currentComplianceSurvey.releaseDateDomesticMarket}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateJob}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateJob}" />
-                            </p:calendar>
-
-                            <h:outputText value="Full release *:" />
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.fullRelease}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-                        </h:panelGrid>
-                        <hr/>
-                        <h:panelGrid columns="2">
-                            <h:outputText value="Release location *:" style="font-style: italic"/>
-                            <h:outputText value="Location of detained product(s) *:" style="font-style: italic"/>
-                            <h:panelGrid columns="2">
-                                <h:outputText value="Location:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.name}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="Address line 1:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine1}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="Address line 2:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine2}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="City:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.city}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="Parish:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.stateOrProvince}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-                            </h:panelGrid>
-                            <h:panelGrid columns="2">
-                                <h:outputText value="Location:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.name}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="Address line 1:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine1}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="Address line 2:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine2}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="City:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.city}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-
-                                <h:outputText value="Parish:" />
-                                <p:inputText style="width: 300px"
-                                             value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.stateOrProvince}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-                            </h:panelGrid>
-                        </h:panelGrid>
-                        <hr/>
-                        <h:panelGrid columns="6">
-                            <h:outputText value="Retailer:" />
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.retailer}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-
-                            <h:outputText value="Distributor:" />
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.distributor}">
-                                <p:ajax listener="#{complianceManager.updateJob}"/>
-                            </p:selectBooleanCheckbox>
-
-                            <h:outputText value="Other:" />
-                            <h:panelGrid columns="2">
-                                <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.otherCompanyTypes}">
-                                    <p:ajax listener="#{complianceManager.updateCompanyTypes}"
-                                            update="companyTypes"/>
-                                </p:selectBooleanCheckbox>
-                                <p:inputText id="companyTypes" style="width: 300px"
-                                             disabled="#{!complianceManager.currentComplianceSurvey.otherCompanyTypes}"
-                                             value="#{complianceManager.currentComplianceSurvey.companyTypes}" >
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this" />
-                                </p:inputText>
-                            </h:panelGrid>
-                        </h:panelGrid>
-                        <hr/>
-                        <h:panelGrid columns="6">
-                            <h:outputText value="Vessel:" />
-                            <p:inputText value="#{complianceManager.currentComplianceSurvey.vessel}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                            </p:inputText>    
-
-                            <h:outputText value="Country of origin *:" />
-                            <h:selectOneMenu 
-                                id="countryOfOrigin"
-                                value="#{complianceManager.currentComplianceSurvey.countryOfConsignment}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this" />
-                                <f:selectItems value="#{complianceManager.countries}" />
-                            </h:selectOneMenu>
-                        </h:panelGrid>
                     </p:tab>
                 </ui:remove>
             </p:tabView>
