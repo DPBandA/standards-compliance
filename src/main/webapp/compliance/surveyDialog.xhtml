@@ -104,29 +104,30 @@ Email: info@dpbennett.com.jm
                        widgetVar="complianceSurveyTabViewVar"                        
                        dynamic="false">
 
-                <p:ajax event="tabChange"    
-                        listener="#{complianceManager.onComplianceSurveyTabChange}"   
+                <p:ajax event="tabChange"   
                         onstart="longProcessDialogVar.show();"
                         oncomplete="longProcessDialogVar.hide();"/>               
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
+
                         <h:outputText value="Survey Location Type:" />
-                        <h:selectOneMenu id="surveyLocation"
+                        <p:selectOneMenu id="surveyLocation"
                                          value="#{complianceManager.currentComplianceSurvey.surveyLocationType}" >
-                            <p:ajax
-                                global="true"
-                                onstart="longProcessDialogVar.show();"
-                                oncomplete="longProcessDialogVar.hide();"
-                                update="generalPanelGrid,complianceSurveyTabView"
-                                listener="#{complianceManager.updateSurveyLocationType}"  
-                                process="@this" />
+                            <p:ajax global="true"
+                                    onstart="longProcessDialogVar.show();"
+                                    oncomplete="longProcessDialogVar.hide();"
+                                    update="generalPanelGrid,complianceSurveyTabView"
+                                    listener="#{complianceManager.updateSurveyLocationType}"  
+                                    process="@this" />
+
                             <f:selectItems value="#{complianceManager.surveyLocationTypes}" />
-                        </h:selectOneMenu>     
+
+                        </p:selectOneMenu>                        
 
                         <h:outputText value="Type of Establishment:" 
                                       rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
-                        <h:selectOneMenu id="typeOfEstablishment"
+                        <p:selectOneMenu id="typeOfEstablishment"
                                          value="#{complianceManager.currentComplianceSurvey.typeOfEstablishment}" 
                                          rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
@@ -135,11 +136,11 @@ Email: info@dpbennett.com.jm
                                 listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.typesOfEstablishment}" />
-                        </h:selectOneMenu>     
+                        </p:selectOneMenu>     
 
                         <h:outputText value="Type of Port:"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
-                        <h:selectOneMenu value="#{complianceManager.currentComplianceSurvey.typeOfPortOfEntry}" 
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.typeOfPortOfEntry}" 
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
                                 global="true"
@@ -147,29 +148,29 @@ Email: info@dpbennett.com.jm
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.typesOfPortOfEntry}" />
-                        </h:selectOneMenu>      
+                        </p:selectOneMenu>      
 
                         <h:outputText value="Port of Entry:"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
-                        <h:selectOneMenu value="#{complianceManager.currentComplianceSurvey.portOfEntry}" 
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.portOfEntry}" 
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.portsOfEntry}" />
-                        </h:selectOneMenu>                      
+                        </p:selectOneMenu>                      
 
                         <h:outputText value="Inspection Location/Point:"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
-                        <h:selectOneMenu value="#{complianceManager.currentComplianceSurvey.inspectionPoint}" 
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.inspectionPoint}" 
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.inspectionPoints}" />
-                        </h:selectOneMenu>                            
+                        </p:selectOneMenu>                            
 
                         <h:outputText value="Air waybill:" 
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyTypeOfPortOfEntryIsAirport}" />
@@ -208,7 +209,7 @@ Email: info@dpbennett.com.jm
                             <p:spacer height="0" width="4"/>
                             <p:commandButton icon="ui-icon-pencil"
                                              actionListener="#{complianceManager.editComplianceSurveyConsignee}"
-                                             update=":clientForm"
+
                                              oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
                                              process="@this"
                                              title="Edit this Consignee's detail or add a new consignee"/>
@@ -253,7 +254,7 @@ Email: info@dpbennett.com.jm
                             <p:spacer height="0" width="4"/>
                             <p:commandButton icon="ui-icon-pencil"
                                              actionListener="#{complianceManager.editComplianceSurveyRetailOutlet}"
-                                             update=":clientForm"
+
                                              oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
                                              process="@this"
                                              title="Edit this retail outlet's detail or add a new retail outlet"/>
@@ -389,7 +390,7 @@ Email: info@dpbennett.com.jm
                             <p:spacer height="0" width="4"/>
                             <p:commandButton icon="ui-icon-pencil"
                                              actionListener="#{complianceManager.editComplianceSurveyConsignee}"
-                                             update=":clientForm"
+
                                              oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
                                              process="@this"
                                              title="Edit this Consignee's detail or add a new consignee"/>
@@ -472,13 +473,13 @@ Email: info@dpbennett.com.jm
 
 
                         <h:outputText value="Document stamped:"/>
-                        <h:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.documentStamped}">
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.documentStamped}">
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.documentStamps}" />
-                        </h:selectOneMenu>   
+                        </p:selectOneMenu>   
                     </h:panelGrid>
                 </p:tab>
 
@@ -487,7 +488,7 @@ Email: info@dpbennett.com.jm
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewProductInspection}"
                                      onstart="longProcessDialogVar.show();"
-                                     update=":productDialogForm"
+
                                      oncomplete="productDialog.show();longProcessDialogVar.hide();"
                                      icon="ui-icon-plus"
                                      process="@this" />
@@ -516,7 +517,7 @@ Email: info@dpbennett.com.jm
                             <p:commandButton title="Edit product details"
                                              onstart="longProcessDialogVar.show();"
                                              icon="ui-icon-pencil"
-                                             update=":productDialogForm"
+
                                              oncomplete="productDialog.show();longProcessDialogVar.hide();"
                                              process="@this">
                                 <f:setPropertyActionListener value="#{product}"
@@ -537,7 +538,7 @@ Email: info@dpbennett.com.jm
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewProductInspection}"
                                      onstart="longProcessDialogVar.show();"
-                                     update=":productDialogForm"
+
                                      oncomplete="productDialog.show();longProcessDialogVar.hide();"
                                      icon="ui-icon-plus"
                                      process="@this" />
@@ -586,7 +587,7 @@ Email: info@dpbennett.com.jm
                             <p:spacer height="0" width="4"/>
                             <p:commandButton icon="ui-icon-pencil"
                                              actionListener="#{complianceManager.editComplianceSurveyBroker}"
-                                             update=":clientForm"
+
                                              oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
                                              process="@this"
                                              title="Edit this broker's detail or add a new broker"/>
@@ -669,7 +670,7 @@ Email: info@dpbennett.com.jm
                             <p:commandButton title="View/Edit"
                                              onstart="longProcessDialogVar.show();"
                                              onerror="connectionErrorDialog.show();"                                           
-                                             update=":ShippingContainerDialogForm"       
+
                                              oncomplete="longProcessDialogVar.hide();ShippingContainerDialog.show();"
                                              global="true"
                                              icon="ui-icon-pencil">
