@@ -38,14 +38,17 @@
             </p:inputText>  
 
             <h:outputText value="Percentage detained: " />
-            <h:selectOneMenu id="surveyType"
-                             value="#{complianceManager.currentShippingContainer.percentageDetained}" >
-                <p:ajax
-                    global="true"                       
-                    listener="#{complianceManager.updateJob}"  
-                    process="@this" />
-                <f:selectItems value="#{complianceManager.shippingContainerDetainPercentages}" />
-            </h:selectOneMenu>
+            <h:outputText value="h:selectOneMenu/p:autocomplete to go here" />
+            <ui:remove>
+                <h:selectOneMenu id="surveyType"
+                                 value="#{complianceManager.currentShippingContainer.percentageDetained}" >
+                    <p:ajax
+                        global="true"                       
+                        listener="#{complianceManager.updateJob}"  
+                        process="@this" />
+                    <f:selectItems value="#{complianceManager.shippingContainerDetainPercentages}" />
+                </h:selectOneMenu>
+            </ui:remove>                
 
         </h:panelGrid>
         <hr/>

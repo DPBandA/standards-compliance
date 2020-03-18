@@ -199,12 +199,19 @@
                             <p:ajax listener="#{complianceManager.updateJob}"/>
                         </p:selectBooleanCheckbox>
 
-                        <h:selectOneMenu value="#{complianceManager.currentProductInspection.countryOfOrigin}" >
-                            <p:ajax                               
-                                listener="#{complianceManager.updateJob}"
+                        <p:autoComplete value="#{complianceManager.currentProductInspection.countryOfOrigin}" 
+                                         forceSelection="true"  
+                                         maxlength="40"
+                                         dropdown="true"
+                                         scrollHeight="200" 
+                                         validator="requiredFieldValidator"
+                                         completeMethod="#{systemManager.completeCountry}" >       
+                            
+                             <p:ajax                               
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
-                            <f:selectItems value="#{complianceManager.countries}" />
-                        </h:selectOneMenu>
+                            
+                        </p:autoComplete>
                         <ui:remove>
                             <p:inputText value="#{complianceManager.currentProductInspection.countryOfOrigin}"
                                          style="font-weight: bold;width: 300px" >
