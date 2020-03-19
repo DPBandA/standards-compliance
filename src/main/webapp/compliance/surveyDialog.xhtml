@@ -25,83 +25,73 @@
 
             <p:growl id="compliance_survey_growl" life="5000" showDetail="true"/>
 
-            <p:commandButton value="Save"
-                             onstart="longProcessDialogVar.show();"
-                             actionListener="#{complianceManager.saveComplianceSurvey}"     
-                             update="#{complianceManager.componentsToUpdate}"
-                             oncomplete="longProcessDialogVar.hide();"
-                             onerror="connectionErrorDialog.show();"
-                             icon="ui-icon-disk"
-                             process="@this"/>
-            <p:spacer height="0" width="4"/>
-            <p:commandButton value="Close"      
-                             onstart="longProcessDialogVar.show();"
-                             actionListener="#{complianceManager.closeComplianceSurvey}"
-                             update="#{complianceManager.componentsToUpdate}"                         
-                             oncomplete="longProcessDialogVar.hide();"
-                             onerror="connectionErrorDialog.show();"
-                             icon="ui-icon-close"
-                             process="@form"/>
-            <p:spacer height="0" width="200"/>      
+            <p:toolbar style="margin-bottom: 1px;">
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     onstart="longProcessDialogVar.show();"
+                                     actionListener="#{complianceManager.saveComplianceSurvey}"     
+                                     update="#{complianceManager.componentsToUpdate}"
+                                     oncomplete="longProcessDialogVar.hide();"
+                                     onerror="connectionErrorDialog.show();"
+                                     icon="ui-icon-disk"
+                                     process="@this"/>
+                    <p:spacer height="0" width="4"/>
+                    <p:commandButton value="Cancel"      
+                                     onstart="longProcessDialogVar.show();"
+                                     actionListener="#{complianceManager.closeComplianceSurvey}"
+                                     update="#{complianceManager.componentsToUpdate}"                         
+                                     oncomplete="longProcessDialogVar.hide();"
+                                     icon="ui-icon-close"
+                                     process="@this"/>
+                </p:toolbarGroup>
 
-            <p:menuButton id="complianceSurveyToolsMenuButton" value="Forms" >
+                <p:toolbarGroup align="right">
+                    <p:menuButton value="Forms" >
 
-                <p:menuitem value="Detention Request - Ports of Entry"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Detention Request - Ports of Entry"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Release Request - Ports of Entry"                            
-                            ajax="false"
-                            id="releaseRequestPortOfEntryButton"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Release Request - Ports of Entry"                            
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Sample Request - Ports of Entry"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Sample Request - Ports of Entry"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Notice of Detention - Domestic Market"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Notice of Detention - Domestic Market"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Application for Rehabilitation"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Application for Rehabilitation"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Notice of Release from Detention - Domestic Market"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
-                </p:menuitem>
-            </p:menuButton>     
-            <p:spacer height="0" width="100"/>     
-            <p:menuButton id="toolsButton" value="Tools" >       
-                <p:menuitem value="New Client"
-                            icon="ui-icon-plus"
-                            onstart="longProcessDialogVar.show();"                        
-                            actionListener="#{clientManager.createNewClient}"
-
-                            oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"
-                            process="@this"
-                            title="Add a new client"/>
-
-            </p:menuButton>     
-            <hr/>      
+                        <p:menuitem value="Notice of Release from Detention - Domestic Market"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
+                        </p:menuitem>
+                    </p:menuButton>                           
+                </p:toolbarGroup>
+            </p:toolbar>
             <p:tabView id="complianceSurveyTabView" 
                        widgetVar="complianceSurveyTabViewVar"                        
                        dynamic="false">
@@ -1078,12 +1068,12 @@
 
                         <h:outputText value="Country of origin *:" />
                         <p:autoComplete value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.countryOfConsignment}" 
-                                         forceSelection="true"  
-                                         maxlength="40"
-                                         dropdown="true"
-                                         scrollHeight="200" 
-                                         validator="requiredFieldValidator"
-                                         completeMethod="#{systemManager.completeCountry}" >
+                                        forceSelection="true"  
+                                        maxlength="40"
+                                        dropdown="true"
+                                        scrollHeight="200" 
+                                        validator="requiredFieldValidator"
+                                        completeMethod="#{systemManager.completeCountry}" >
 
                             <p:ajax event="itemSelect"                              
                                     listener="#{complianceManager.updateEntryDocumentInspection}"
@@ -1116,72 +1106,73 @@
                     </h:panelGrid>
                 </p:tab>
             </p:tabView>
-            <hr/>     
-            <p:commandButton value="Save"
-                             onstart="longProcessDialogVar.show();"
-                             actionListener="#{complianceManager.saveComplianceSurvey}"     
-                             update="#{complianceManager.componentsToUpdate}"
-                             oncomplete="longProcessDialogVar.hide();"
-                             onerror="connectionErrorDialog.show();"
-                             icon="ui-icon-disk"
-                             process="@this"/>
-            <p:spacer height="0" width="4"/>
-            <p:commandButton value="Close"      
-                             onstart="longProcessDialogVar.show();"
-                             actionListener="#{complianceManager.closeComplianceSurvey}"
-                             update="#{complianceManager.componentsToUpdate}"
-                             oncomplete="longProcessDialogVar.hide();"
-                             onerror="connectionErrorDialog.show();"
-                             icon="ui-icon-close"
-                             process="@form"/>
-            <p:spacer height="0" width="200"/>
-            <p:menuButton id="complianceSurveyToolsMenuButton2" value="Forms" >
+            <p:toolbar style="margin-top: 1px;">
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     onstart="longProcessDialogVar.show();"
+                                     actionListener="#{complianceManager.saveComplianceSurvey}"     
+                                     update="#{complianceManager.componentsToUpdate}"
+                                     oncomplete="longProcessDialogVar.hide();"
+                                     onerror="connectionErrorDialog.show();"
+                                     icon="ui-icon-disk"
+                                     process="@this"/>
+                    <p:spacer height="0" width="4"/>
+                    <p:commandButton value="Cancel"      
+                                     onstart="longProcessDialogVar.show();"
+                                     actionListener="#{complianceManager.closeComplianceSurvey}"
+                                     update="#{complianceManager.componentsToUpdate}"                         
+                                     oncomplete="longProcessDialogVar.hide();"
+                                     icon="ui-icon-close"
+                                     process="@this"/>
+                </p:toolbarGroup>
 
-                <p:menuitem value="Detention Request - Ports of Entry"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
-                </p:menuitem>
+                <p:toolbarGroup align="right">
+                    <p:menuButton value="Forms" >
 
-                <p:menuitem value="Release Request - Ports of Entry"                            
-                            ajax="false"
-                            id="releaseRequestPortOfEntryButton2"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Detention Request - Ports of Entry"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Sample Request - Ports of Entry"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Release Request - Ports of Entry"                            
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Notice of Detention - Domestic Market"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Sample Request - Ports of Entry"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Application for Rehabilitation"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Notice of Detention - Domestic Market"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
+                        </p:menuitem>
 
-                <p:menuitem value="Notice of Release from Detention - Domestic Market"
-                            ajax="false"
-                            disabled="#{!complianceManager.complianceSurveyIsValid}"
-                            onclick="longProcessDialogVar2.show();" >
-                    <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
-                </p:menuitem>
+                        <p:menuitem value="Application for Rehabilitation"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
+                        </p:menuitem>
 
-            </p:menuButton>      
-            <p/>
+                        <p:menuitem value="Notice of Release from Detention - Domestic Market"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    onclick="longProcessDialogVar2.show();" >
+                            <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
+                        </p:menuitem>
+                    </p:menuButton>                           
+                </p:toolbarGroup>
+            </p:toolbar>
 
             <p:remoteCommand  name="updateSelectedStandards"
                               update=":ComplianceSurveyDialogForm:complianceSurveyTabView:reasonForDetention"
