@@ -102,7 +102,7 @@
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
-                        <h:outputText value="Survey Location Type:" />
+                        <h:outputText value="Survey Location Type:" style="font-weight: bold"/>
                         <p:selectOneMenu id="surveyLocation"
                                          value="#{complianceManager.currentComplianceSurvey.surveyLocationType}" >
                             <p:ajax
@@ -116,6 +116,7 @@
                         </p:selectOneMenu>     
 
                         <h:outputText value="Type of Establishment *:" 
+                                      style="font-weight: bold"
                                       rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <p:selectOneMenu id="typeOfEstablishment"
                                          value="#{complianceManager.currentComplianceSurvey.typeOfEstablishment}" 
@@ -123,68 +124,52 @@
                             <p:ajax
                                 global="true"
                                 update="generalPanelGrid"
-                                listener="#{complianceManager.updateJob}"  
+                                listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.typesOfEstablishment}" />
                         </p:selectOneMenu>     
 
                         <h:outputText value="Type of Port:"
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.typeOfPortOfEntry}" 
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
                                 global="true"
                                 update="generalPanelGrid"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.typesOfPortOfEntry}" />
                         </p:selectOneMenu>      
 
                         <h:outputText value="Port of Entry:"
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.portOfEntry}" 
                                          editable="false"
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.portsOfEntry}" />
                         </p:selectOneMenu>                      
 
-                        <h:outputText value="Inspection Location/Point:"                                      
+                        <h:outputText value="Inspection Location/Point:"  
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.inspectionPoint}" 
                                          editable="true"
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax 
-                                update="otherInspectionLocation"
                                 global="true"
-                                listener="#{complianceManager.updateInspectionPoint}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                             <f:selectItems value="#{complianceManager.inspectionPoints}" />
-                        </p:selectOneMenu> 
-
-                        <h:outputText value="Other Location/Point:"                                      
-                                      rendered="#{true}"/>
-                        <p:autoComplete id="otherInspectionLocation"
-                                        disabled="#{complianceManager.currentComplianceSurvey.disableOtherInspectionLocation}"
-                                        maxResults="12"                                          
-                                        value="#{complianceManager.currentComplianceSurvey.otherInspectionLocation}"                                           
-                                        forceSelection="false"
-                                        completeMethod="#{complianceManager.completeActiveClientName}">
-
-                            <p:ajax event="itemSelect"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this"/>
-
-                            <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}"
-                                    process="@this"/>
-
-                        </p:autoComplete>       
+                        </p:selectOneMenu>                     
 
                         <h:outputText value="Air waybill:" 
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyTypeOfPortOfEntryIsAirport}" />
                         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyTypeOfPortOfEntryIsAirport}">
                             <p:inputText   id="waybill"  
@@ -193,46 +178,81 @@
                                            style="width: 300px"                                        
                                            maxlength="254">
                                 <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateJob}"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
                             </p:inputText>                           
                         </h:panelGroup>                    
 
-                        <h:outputText value="Consignee *: "
+                        <h:outputText value="Consignee:"
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-                            <p:autoComplete id="consignee"
-                                            maxResults="12"                                          
-                                            value="#{complianceManager.currentComplianceSurvey.consignee.name}"                                           
+                            <p:autoComplete id="consignee"      
+                                            var="consignee"
+                                            itemLabel="#{consignee.truncatedName}"
+                                            itemValue="#{consignee}"
+                                            size="35" 
+                                            maxlength="40"                             
+                                            dropdown="false"
+                                            scrollHeight="200" 
+                                            value="#{complianceManager.currentComplianceSurvey.consignee}"    
+                                            converter="activeClientConverter"
+                                            validator="clientValidator"
                                             forceSelection="false"
-                                            completeMethod="#{complianceManager.completeActiveClientName}">
+                                            completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="docInspectConsignee,consigneeContact,consigneeBillingAddress,consigneeContact2,consigneeBillingAddress2"
-                                        listener="#{complianceManager.updateComplianceSurveyConsignee}"
+                                        update="docInspectConsignee"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
 
-                                <p:ajax event="keyup"
-                                        update="docInspectConsignee,consigneeContact,consigneeBillingAddress,consigneeContact2,consigneeBillingAddress2"
-                                        listener="#{complianceManager.updateJob}"
-                                        process="@this"/>
+                            </p:autoComplete>  
+                            <p:menuButton id="consigneeActionsMenu" 
+                                          icon="ui-icon-pencil" 
+                                          title="Add or edit consignee">
+                                <p:menuitem>                       
+                                    <p:commandButton value="Edit consignee"
+                                                     id="editConsignee"
+                                                     icon="ui-icon-pencil" 
+                                                     disabled="${!complianceManager.isConsigneeNameValid}"
+                                                     style="width: 300%;text-align: left;background: none;border: 0;"
+                                                     onstart="PF('longProcessDialogVar').show();"   
+                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                     actionListener="#{complianceManager.editConsignee}"  
+                                                     process="@this,consignee"                             
+                                                     title="View or edit this consignee's detail">  
 
-                            </p:autoComplete>                                                
-                            <p:spacer height="0" width="4"/>
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{complianceManager.editComplianceSurveyConsignee}"
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.consigneeDialogReturn}"
+                                                update="consignee" />
 
-                                             oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
-                                             process="@this"
-                                             title="Edit this Consignee's detail or add a new consignee"/>
+                                    </p:commandButton>            
+                                </p:menuitem>
+
+                                <p:menuitem >       
+                                    <p:commandButton 
+                                        value="Add consignee"
+                                        icon="ui-icon-plus" 
+                                        style="width: 300%;text-align: left;background: none;border: 0;"
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();"                    
+                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                        actionListener="#{complianceManager.createNewConsignee}"                                            
+                                        process="@this"
+                                        title="Add a new consignee">
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.consigneeDialogReturn}"
+                                                update="consignee" />
+
+                                    </p:commandButton>
+                                </p:menuitem>
+                            </p:menuButton>      
+                            
                         </h:panelGroup> 
 
-                        <h:outputText value="" />
-                        <h:outputText id="consigneeContact" value="Contact: #{complianceManager.currentComplianceSurvey.consignee.mainContact}" />
-                        <h:outputText value="" />
-                        <h:outputText id="consigneeBillingAddress" value="Billing addr.: #{complianceManager.currentComplianceSurvey.consignee.billingAddress}" />
-
-                        <h:outputText value="Retail Outlet *: " 
+                        <h:outputText value="Retail Outlet: " 
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"/>
                         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}">
                             <p:autoComplete id="retailOutlet"                                            
@@ -259,6 +279,7 @@
                         </h:panelGroup>     
 
                         <h:outputText value="Retail outlet contact" 
+                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"/>                    
                         <p:autoComplete id="retailOutletContact"  
                                         rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"
@@ -271,17 +292,11 @@
                                     listener="#{complianceManager.updateComplianceSurveyRetailOutletRepresentative}"
                                     process="@this"/>
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
-                        </p:autoComplete>     
+                        </p:autoComplete>                               
 
-                        <h:outputText value="Last updated by:" />
-                        <p:inputText style="width: 75%;background-color: lightgrey;"                                   
-                                     readonly="true"                                    
-                                     value="#{complianceManager.currentComplianceSurvey.editedBy}"
-                                     title="#{complianceManager.currentComplianceSurvey.editedBy}" />     
-
-                        <h:outputText value="Date of Survey *:"  />
+                        <h:outputText value="Date of Survey:" style="font-weight: bold" />
                         <h:panelGroup>
                             <p:calendar id="dateOfSurvey"
                                         pattern="yyyy-MM-dd" 
@@ -289,46 +304,57 @@
                                         timeOnly="false"
                                         value="#{complianceManager.currentComplianceSurvey.dateOfSurvey}" >
                                 <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateJob}" />
+                                        listener="#{complianceManager.updateSurvey}" />
                                 <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateJob}" />
+                                        listener="#{complianceManager.updateSurvey}" />
                             </p:calendar>
                             <p:watermark for="dateOfSurvey" value="yyyy-MM-dd"/>
                         </h:panelGroup>
 
-                        <h:outputText value="Date/Time In"  />
+                        <h:outputText value="Date/Time In:"  style="font-weight: bold" />
                         <p:calendar id="timeIn"
                                     pattern="yyyy-MM-dd hh:mm a" 
                                     showOn="button"
                                     timeOnly="false"
                                     value="#{complianceManager.currentComplianceSurvey.surveyStartTime}" >
                             <p:ajax event="dateSelect"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
-                        <h:outputText value="Date/Time Out"  />
+                        <h:outputText value="Date/Time Out:" style="font-weight: bold" />
                         <p:calendar id="timeOut"
                                     pattern="yyyy-MM-dd hh:mm a" 
                                     showOn="button"
                                     timeOnly="false"
                                     value="#{complianceManager.currentComplianceSurvey.surveyEndTime}" >
                             <p:ajax event="dateSelect"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
-                        <h:outputText value="Comments:"  />
-                        <p:inputText id="comments"
-                                     value="#{complianceManager.currentComplianceSurvey.comments}"
-                                     style="width: 300px"                                        
-                                     maxlength="1000">
-                            <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}"
+                        <h:outputText value="Comments:" style="font-weight: bold;" />                        
+                        <p:inputTextarea
+                            id="comments"
+                            value="#{complianceManager.currentComplianceSurvey.comments}"
+                            rows="3"
+                            counter="instructCharsRemaining"
+                            counterTemplate="{0} characters remaining."
+                            autoResize="false"
+                            maxlength="1000" 
+                            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                            style="width: 500px;">
+
+                            <f:validator validatorId="requiredFieldValidator" />
+
+                            <p:ajax event="change"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
-                        </p:inputText>
+                        </p:inputTextarea> 
+                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText id="instructCharsRemaining" /> 
                     </h:panelGrid>
                 </p:tab>    
 
@@ -345,7 +371,7 @@
                                              style="width: 150px">
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this" />
                                 </p:inputText>
                                 <p:watermark value="-- N/A --" for="entryDocumentNumber"/>
@@ -358,7 +384,7 @@
                                              style="width: 150px">
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this" />
                                 </p:inputText>
                                 <p:watermark value="" for="internalNumber"/>
@@ -372,9 +398,9 @@
                                             timeOnly="false"
                                             value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentReportDate}" >
                                     <p:ajax event="dateSelect"
-                                            listener="#{complianceManager.updateJob}" />
+                                            listener="#{complianceManager.updateSurvey}" />
                                     <p:ajax event="keyup"
-                                            listener="#{complianceManager.updateJob}" />
+                                            listener="#{complianceManager.updateSurvey}" />
                                 </p:calendar>      
                                 <p:watermark for="entryDocumentReportDate" value="yyyy-MM-dd"/>
                             </h:panelGroup>
@@ -386,7 +412,7 @@
                                              style="width: 150px">
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this" />
                                 </p:inputText>
                                 <p:watermark value="" for="invoiceNumber"/>
@@ -400,9 +426,9 @@
                                             timeOnly="false"
                                             value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.invoiceDate}" >
                                     <p:ajax event="dateSelect"
-                                            listener="#{complianceManager.updateJob}" />
+                                            listener="#{complianceManager.updateSurvey}" />
                                     <p:ajax event="keyup"
-                                            listener="#{complianceManager.updateJob}" />
+                                            listener="#{complianceManager.updateSurvey}" />
                                 </p:calendar>      
                                 <p:watermark for="invoiceDate" value="yyyy-MM-dd"/>
                             </h:panelGroup>
@@ -416,13 +442,8 @@
                                                 completeMethod="#{complianceManager.completeActiveClientName}">
 
                                     <p:ajax event="itemSelect"
-                                            update="consignee,consigneeContact2,consigneeBillingAddress2,consigneeContact,consigneeBillingAddress"
-                                            listener="#{complianceManager.updateComplianceSurveyConsignee}"
-                                            process="@this"/>
-
-                                    <p:ajax event="keyup"
-                                            update="consignee,consigneeContact2,consigneeBillingAddress2,consigneeContact,consigneeBillingAddress"
-                                            listener="#{complianceManager.updateJob}"
+                                            update="consignee"
+                                            listener="#{complianceManager.updateSurvey}"
                                             process="@this"/>
 
                                 </p:autoComplete>                                                
@@ -434,11 +455,6 @@
                                                  process="@this"
                                                  title="Edit this Consignee's detail or add a new consignee"/>
                             </h:panelGroup>   
-
-                            <h:outputText value="" />
-                            <h:outputText id="consigneeContact2" value="Contact: #{complianceManager.currentComplianceSurvey.consignee.mainContact}" />
-                            <h:outputText value="" />
-                            <h:outputText id="consigneeBillingAddress2" value="Billing addr.: #{complianceManager.currentComplianceSurvey.consignee.billingAddress}" />
 
                             <h:outputText value="Container No.(s):" />
                             <h:panelGroup >
@@ -479,7 +495,7 @@
                                     <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"                               
+                                        listener="#{complianceManager.updateSurvey}"                               
                                         process="@this" />
                                 </p:inputText>                       
                             </h:panelGroup> 
@@ -492,7 +508,7 @@
                                     <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"                               
+                                        listener="#{complianceManager.updateSurvey}"                               
                                         process="@this" />
                                 </p:inputText>                       
                             </h:panelGroup> 
@@ -505,7 +521,7 @@
                                     <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"                               
+                                        listener="#{complianceManager.updateSurvey}"                               
                                         process="@this" />
                                 </p:inputText>                       
                             </h:panelGroup> 
@@ -517,7 +533,7 @@
                                              style="width: 150px">
                                     <p:ajax
                                         global="true"
-                                        listener="#{complianceManager.updateJob}"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this" />
                                 </p:inputText>                                
                             </h:panelGroup>
@@ -526,7 +542,7 @@
                             <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.documentStamped}">
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                                 <f:selectItems value="#{complianceManager.documentStamps}" />
                             </p:selectOneMenu>   
@@ -612,10 +628,10 @@
                                         completeMethod="#{complianceManager.completeJobNumber}">
 
                             <p:ajax event="itemSelect"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
                         </p:autoComplete>          
 
@@ -633,7 +649,7 @@
                                         process="@this"/>
                                 <p:ajax event="keyup"
                                         update="brokerContact,brokerBillingAddress"
-                                        listener="#{complianceManager.updateJob}"
+                                        listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
 
                             </p:autoComplete>                           
@@ -659,9 +675,9 @@
                                         timeOnly="false"
                                         value="#{complianceManager.currentComplianceSurvey.dateOfDetention}" >
                                 <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateJob}" />
+                                        listener="#{complianceManager.updateSurvey}" />
                                 <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateJob}" />
+                                        listener="#{complianceManager.updateSurvey}" />
                             </p:calendar>
                             <p:watermark for="dateOfDetention" value="yyyy-MM-dd"/>
                         </h:panelGroup>
@@ -688,7 +704,7 @@
                                          maxlength="1000"
                                          autoResize="false">
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
                         </p:inputTextarea>                       
 
@@ -764,17 +780,17 @@
                     <h:panelGrid columns="2" cellpadding="3">
                         <h:outputText value="Sample request issued: "/>
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
                         <h:outputText value="Samples to be collected within 30 days: "/>
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
                         <h:outputText value="Disposed of by the Bureau: "/>
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGrid>
                     <hr/>
@@ -804,7 +820,7 @@
                     <h:panelGrid columns="2">
                         <h:outputText value="Release request for Port of Entry issued:" />
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGrid>
                     <br/>
@@ -816,7 +832,7 @@
                                      value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.name}" >
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>
 
@@ -826,7 +842,7 @@
                                      value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.addressLine1}" >
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>
 
@@ -836,7 +852,7 @@
                                      value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.addressLine2}" >
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>
 
@@ -846,7 +862,7 @@
                                      value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.city}" >
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>
 
@@ -856,7 +872,7 @@
                                      value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}" >
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>
                     </h:panelGrid>                       
@@ -921,14 +937,14 @@
                                     showOn="button"                                    
                                     value="#{complianceManager.currentComplianceSurvey.releaseDateDomesticMarket}" >
                             <p:ajax event="dateSelect"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateJob}" />
+                                    listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
                         <h:outputText value="Full release *:" />
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.fullRelease}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGrid>
                     <hr/>
@@ -941,7 +957,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.name}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -950,7 +966,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine1}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -959,7 +975,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine2}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -968,7 +984,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.city}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -977,7 +993,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.stateOrProvince}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
                         </h:panelGrid>
@@ -987,7 +1003,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.name}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -996,7 +1012,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine1}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -1005,7 +1021,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine2}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -1014,7 +1030,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.city}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
 
@@ -1023,7 +1039,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.stateOrProvince}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
                         </h:panelGrid>
@@ -1032,12 +1048,12 @@
                     <h:panelGrid columns="6">
                         <h:outputText value="Retailer:" />
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.retailer}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
                         <h:outputText value="Distributor:" />
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.distributor}">
-                            <p:ajax listener="#{complianceManager.updateJob}"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
                         <h:outputText value="Other:" />
@@ -1051,7 +1067,7 @@
                                          value="#{complianceManager.currentComplianceSurvey.companyTypes}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateJob}"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
                         </h:panelGrid>
@@ -1062,7 +1078,7 @@
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.vessel}" >
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateJob}"
+                                listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>    
 
