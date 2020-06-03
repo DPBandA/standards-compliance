@@ -198,11 +198,11 @@
                                             value="#{complianceManager.currentComplianceSurvey.consignee}"    
                                             converter="activeClientConverter"
                                             validator="clientValidator"
-                                            forceSelection="false"
+                                            forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="docInspectConsignee"
+                                        update="consigneeActionsMenu"
                                         listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
 
