@@ -185,7 +185,7 @@
 
                         <h:outputText value="Consignee:"
                                       style="font-weight: bold"
-                                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
+                                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}" />
                         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:autoComplete id="consignee"      
                                             var="consignee"
@@ -202,8 +202,8 @@
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="consigneeActionsMenu"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        update="consigneeActionsMenu,consigneeRepresentative"
+                                        listener="#{complianceManager.updateConsignee}"
                                         process="@this"/>
 
                             </p:autoComplete>  
@@ -243,79 +243,143 @@
 
                                         <p:ajax event="dialogReturn" 
                                                 listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee" />
+                                                update="consignee,consigneeRepresentative" />
 
                                     </p:commandButton>
                                 </p:menuitem>
-                            </p:menuButton>      
-                            
+                            </p:menuButton>                                
                         </h:panelGroup> 
 
-                        <h:outputText value="Retail Outlet: " 
+                        <h:outputText value="Consignee representative:" style="font-weight: bold" 
+                                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}" />  
+                        <p:autoComplete id="consigneeRepresentative"
+                                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
+                                        value="#{complianceManager.currentComplianceSurvey.consigneeRepresentative}"
+                                        dropdown="true"
+                                        forceSelection="true"
+                                        scrollHeight="200"
+                                        converter="clientContactConverter" 
+                                        validator="contactValidator"
+                                        var="representative"                        
+                                        itemValue="#{representative}"
+                                        itemLabel="#{representative.name}" 
+                                        completeMethod="#{complianceManager.completeConsigneeRepresentative}">
+
+                            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.consignee}" />
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateSurvey}"  
+                                    process="@this" />   
+
+                        </p:autoComplete>   
+
+                        <h:outputText value="Retail Outlet:" 
                                       style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"/>
                         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}">
-                            <p:autoComplete id="retailOutlet"                                            
-                                            maxResults="12"                                           
-                                            value="#{complianceManager.currentComplianceSurvey.retailOutlet.name}"                                          
-                                            forceSelection="false"
-                                            completeMethod="#{complianceManager.completeActiveClientName}">
+                            <p:autoComplete id="retailOutlet"      
+                                            var="retailOutlet"
+                                            itemLabel="#{retailOutlet.truncatedName}"
+                                            itemValue="#{retailOutlet}"
+                                            size="35" 
+                                            maxlength="40"                             
+                                            dropdown="false"
+                                            scrollHeight="200" 
+                                            value="#{complianceManager.currentComplianceSurvey.retailOutlet}"    
+                                            converter="activeClientConverter"
+                                            validator="clientValidator"
+                                            forceSelection="true"
+                                            completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        listener="#{complianceManager.updateComplianceSurveyRetailOutlet}"
+                                        update="retailOutletActionsMenu,retailRepresentative"
+                                        listener="#{complianceManager.updateRetailOutlet}"
                                         process="@this"/>
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateComplianceSurveyRetailOutlet}"
-                                        process="@this"/>
-                            </p:autoComplete>
-                            <!-- <p:watermark value="N/A" for="retailOutlet"/> -->
-                            <p:spacer height="0" width="4"/>
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{complianceManager.editComplianceSurveyRetailOutlet}"
 
-                                             oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
-                                             process="@this"
-                                             title="Edit this retail outlet's detail or add a new retail outlet"/>
-                        </h:panelGroup>     
+                            </p:autoComplete>  
+                            <p:menuButton id="retailOutletActionsMenu" 
+                                          icon="ui-icon-pencil" 
+                                          title="Add or edit retail outlet">
+                                <p:menuitem>                       
+                                    <p:commandButton value="Edit retail outlet"
+                                                     id="editRetailOutlet"
+                                                     icon="ui-icon-pencil" 
+                                                     disabled="#{!complianceManager.isRetailOutletNameValid}"
+                                                     style="width: 300%;text-align: left;background: none;border: 0;"
+                                                     onstart="PF('longProcessDialogVar').show();"   
+                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                     actionListener="#{complianceManager.editRetailOutlet}"  
+                                                     process="@this,retailOutlet"                             
+                                                     title="View or edit this retail outlet's detail">  
 
-                        <h:outputText value="Retail outlet contact" 
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.retailOutletDialogReturn}"
+                                                update="consignee" />
+
+                                    </p:commandButton>            
+                                </p:menuitem>
+
+                                <p:menuitem >       
+                                    <p:commandButton 
+                                        value="Add retail outlet"
+                                        icon="ui-icon-plus" 
+                                        style="width: 300%;text-align: left;background: none;border: 0;"
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();"                    
+                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                        actionListener="#{complianceManager.createNewRetailOutlet}"                                            
+                                        process="@this"
+                                        title="Add a new retail outlet">
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.retailOutletDialogReturn}"
+                                                update="retailOutlet,retailRepresentative" />
+
+                                    </p:commandButton>
+                                </p:menuitem>
+                            </p:menuButton>                                
+                        </h:panelGroup> 
+
+                        <h:outputText value="Retail outlet representative:" 
                                       style="font-weight: bold"
-                                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"/>                    
-                        <p:autoComplete id="retailOutletContact"  
+                                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}" />   
+                        <p:autoComplete id="retailRepresentative"
                                         rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"
-                                        maxResults="12"
+                                        value="#{complianceManager.currentComplianceSurvey.retailRepresentative}"
                                         dropdown="true"
-                                        value="#{complianceManager.currentComplianceSurvey.retailRepresentative.name}"
-                                        forceSelection="false"                                                                                     
-                                        completeMethod="#{complianceManager.completeComplianceSurveyRetailOutletRepresentativeName}" >
-                            <p:ajax event="itemSelect"                            
-                                    listener="#{complianceManager.updateComplianceSurveyRetailOutletRepresentative}"
-                                    process="@this"/>
-                            <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this"/>
-                        </p:autoComplete>                               
+                                        forceSelection="true"
+                                        scrollHeight="200"
+                                        converter="clientContactConverter" 
+                                        validator="contactValidator"
+                                        var="representative"                        
+                                        itemValue="#{representative}"
+                                        itemLabel="#{representative.name}" 
+                                        completeMethod="#{complianceManager.completeRetailRepresentative}" >
+
+                            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.retailOutlet}" />
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateSurvey}"  
+                                    process="@this" />   
+
+                        </p:autoComplete>  
 
                         <h:outputText value="Date of Survey:" style="font-weight: bold" />
-                        <h:panelGroup>
-                            <p:calendar id="dateOfSurvey"
-                                        pattern="yyyy-MM-dd" 
-                                        showOn="button"
-                                        timeOnly="false"
-                                        value="#{complianceManager.currentComplianceSurvey.dateOfSurvey}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateSurvey}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}" />
-                            </p:calendar>
-                            <p:watermark for="dateOfSurvey" value="yyyy-MM-dd"/>
-                        </h:panelGroup>
+                        <p:calendar id="dateOfSurvey"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy" 
+                                    value="#{complianceManager.currentComplianceSurvey.dateOfSurvey}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateSurvey}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}" />
+                        </p:calendar>
 
-                        <h:outputText value="Date/Time In:"  style="font-weight: bold" />
+                        <h:outputText value="Time In:" />
                         <p:calendar id="timeIn"
-                                    pattern="yyyy-MM-dd hh:mm a" 
-                                    showOn="button"
-                                    timeOnly="false"
+                                    pattern="hh:mm a" 
+                                    timeOnly="true"
                                     value="#{complianceManager.currentComplianceSurvey.surveyStartTime}" >
                             <p:ajax event="dateSelect"
                                     listener="#{complianceManager.updateSurvey}" />
@@ -323,11 +387,10 @@
                                     listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
-                        <h:outputText value="Date/Time Out:" style="font-weight: bold" />
+                        <h:outputText value="Time Out:" />
                         <p:calendar id="timeOut"
-                                    pattern="yyyy-MM-dd hh:mm a" 
-                                    showOn="button"
-                                    timeOnly="false"
+                                    pattern="hh:mm a" 
+                                    timeOnly="true"
                                     value="#{complianceManager.currentComplianceSurvey.surveyEndTime}" >
                             <p:ajax event="dateSelect"
                                     listener="#{complianceManager.updateSurvey}" />
@@ -335,7 +398,7 @@
                                     listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
-                        <h:outputText value="Comments:" style="font-weight: bold;" />                        
+                        <h:outputText value="Comments:" />                        
                         <p:inputTextarea
                             id="comments"
                             value="#{complianceManager.currentComplianceSurvey.comments}"
@@ -361,49 +424,42 @@
                 <p:tab id="entryDocumentInspectionTab"
                        title="Entry Document Inspection" 
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-                    <p:scrollPanel style="width:735px;height:475px" mode="native">
+                   
                         <h:panelGrid id="entryDocumentInspectionPanelGrid" columns="2" cellspacing="3"> 
 
                             <h:outputText value="Entry No.:" />
-                            <h:panelGroup>
-                                <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentNumber}" 
-                                             id="entryDocumentNumber" 
-                                             style="width: 150px">
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this" />
-                                </p:inputText>
-                                <p:watermark value="-- N/A --" for="entryDocumentNumber"/>
-                            </h:panelGroup>
+                            <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentNumber}" 
+                                         id="entryDocumentNumber" 
+                                         style="width: 150px">
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this" />
+                            </p:inputText>
 
                             <h:outputText value="Internal No.:" />
-                            <h:panelGroup>
-                                <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.internalNumber}" 
-                                             id="internalNumber" 
-                                             style="width: 150px">
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this" />
-                                </p:inputText>
-                                <p:watermark value="" for="internalNumber"/>
-                            </h:panelGroup>
+                            <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.internalNumber}" 
+                                         id="internalNumber" 
+                                         style="width: 150px">
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this" />
+                            </p:inputText>
 
                             <h:outputText value="Report Date:"  />
-                            <h:panelGroup>
-                                <p:calendar pattern="yyyy-MM-dd" 
-                                            id="entryDocumentReportDate"
-                                            showOn="button"
-                                            timeOnly="false"
-                                            value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentReportDate}" >
-                                    <p:ajax event="dateSelect"
-                                            listener="#{complianceManager.updateSurvey}" />
-                                    <p:ajax event="keyup"
-                                            listener="#{complianceManager.updateSurvey}" />
-                                </p:calendar>      
-                                <p:watermark for="entryDocumentReportDate" value="yyyy-MM-dd"/>
-                            </h:panelGroup>
+                            <p:calendar readonlyInput="true"
+                                        navigator="true" 
+                                        pattern="MMM dd, yyyy" 
+                                        value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentReportDate}" >
+
+                                <p:ajax event="dateSelect"
+                                        listener="#{complianceManager.updateSurvey}" />
+
+                                <p:ajax event="keyup"
+                                        listener="#{complianceManager.updateSurvey}" />
+
+                            </p:calendar>   
 
                             <h:outputText value="Invoice No.:" />
                             <h:panelGroup>
@@ -419,45 +475,21 @@
                             </h:panelGroup>
 
                             <h:outputText value="Invoice Date:"  />
-                            <h:panelGroup>
-                                <p:calendar pattern="yyyy-MM-dd" 
-                                            id="invoiceDate"
-                                            showOn="button"
-                                            timeOnly="false"
-                                            value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.invoiceDate}" >
-                                    <p:ajax event="dateSelect"
-                                            listener="#{complianceManager.updateSurvey}" />
-                                    <p:ajax event="keyup"
-                                            listener="#{complianceManager.updateSurvey}" />
-                                </p:calendar>      
-                                <p:watermark for="invoiceDate" value="yyyy-MM-dd"/>
-                            </h:panelGroup>
+                            <p:calendar readonlyInput="true"
+                                        navigator="true" 
+                                        pattern="MMM dd, yyyy" 
+                                        value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.invoiceDate}" >
 
-                            <h:outputText value="Consignee *: " />
-                            <h:panelGroup>
-                                <p:autoComplete id="docInspectConsignee"
-                                                maxResults="12"                                          
-                                                value="#{complianceManager.currentComplianceSurvey.consignee.name}"                                           
-                                                forceSelection="false"
-                                                completeMethod="#{complianceManager.completeActiveClientName}">
+                                <p:ajax event="dateSelect"
+                                        listener="#{complianceManager.updateSurvey}" />
 
-                                    <p:ajax event="itemSelect"
-                                            update="consignee"
-                                            listener="#{complianceManager.updateSurvey}"
-                                            process="@this"/>
+                                <p:ajax event="keyup"
+                                        listener="#{complianceManager.updateSurvey}" />
 
-                                </p:autoComplete>                                                
-                                <p:spacer height="0" width="4"/>
-                                <p:commandButton icon="ui-icon-pencil"
-                                                 actionListener="#{complianceManager.editComplianceSurveyConsignee}"
+                            </p:calendar>     
 
-                                                 oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
-                                                 process="@this"
-                                                 title="Edit this Consignee's detail or add a new consignee"/>
-                            </h:panelGroup>   
-
-                            <h:outputText value="Container No.(s):" />
-                            <h:panelGroup >
+                            <ui:remove>
+                                <h:outputText value="Container No.(s):" />
                                 <p:inputText id="containerNumbers"
                                              style="width: 300px"
                                              value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.containerNumbers}" >
@@ -466,8 +498,9 @@
                                         listener="#{complianceManager.updateContainerNumbers}"
                                         update="containersTable"
                                         process="@this" />
-                                </p:inputText>                       
-                            </h:panelGroup> 
+
+                                </p:inputText>    
+                            </ui:remove>
 
                             <h:outputText value="Country of consignment:"/>
                             <p:autoComplete value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.countryOfConsignment}" 
@@ -488,55 +521,47 @@
                             </p:autoComplete>   
 
                             <h:outputText value="Cost, Insurance &amp; Freight (CIF):" />
-                            <h:panelGroup >
-                                <p:inputText id="cif"
-                                             style="width: 100px"
-                                             value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.CIF}" >
-                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateSurvey}"                               
-                                        process="@this" />
-                                </p:inputText>                       
-                            </h:panelGroup> 
+                            <p:inputText id="cif"
+                                         style="width: 100px"
+                                         value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.CIF}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"                               
+                                    process="@this" />
+                            </p:inputText>        
 
                             <h:outputText value="SCF Payable:" />
-                            <h:panelGroup >
-                                <p:inputText id="scf"
-                                             style="width: 100px"
-                                             value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCF}" >
-                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateSurvey}"                               
-                                        process="@this" />
-                                </p:inputText>                       
-                            </h:panelGroup> 
+                            <p:inputText id="scf"
+                                         style="width: 100px"
+                                         value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCF}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"                               
+                                    process="@this" />
+                            </p:inputText>     
 
                             <h:outputText value="SCF Amount Calculated:" />
-                            <h:panelGroup >
-                                <p:inputText id="SCFAmountCalculated"
-                                             style="width: 100px"
-                                             value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFAmountCalculated}" >
-                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateSurvey}"                               
-                                        process="@this" />
-                                </p:inputText>                       
-                            </h:panelGroup> 
+                            <p:inputText id="SCFAmountCalculated"
+                                         style="width: 100px"
+                                         value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFAmountCalculated}" >
+                                <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"                               
+                                    process="@this" />
+                            </p:inputText>      
 
                             <h:outputText value="SCF Free Code:" />
-                            <h:panelGroup>
-                                <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFFreeCode}" 
-                                             id="SCFFreeCode" 
-                                             style="width: 150px">
-                                    <p:ajax
-                                        global="true"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this" />
-                                </p:inputText>                                
-                            </h:panelGroup>
+                            <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFFreeCode}" 
+                                         id="SCFFreeCode" 
+                                         style="width: 150px">
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this" />
+                            </p:inputText>    
 
                             <h:outputText value="Document stamped:"/>
                             <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.documentStamped}">
@@ -546,12 +571,12 @@
                                     process="@this" />
                                 <f:selectItems value="#{complianceManager.documentStamps}" />
                             </p:selectOneMenu>   
+                            
                         </h:panelGrid>
-                    </p:scrollPanel>
                 </p:tab>
 
                 <p:tab title="Products">
-                    <p:commandButton value="Add product"
+                    <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewProductInspection}"
                                      onstart="longProcessDialogVar.show();"
@@ -601,7 +626,7 @@
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
-                    <p:commandButton value="Add product"
+                    <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewProductInspection}"
                                      onstart="longProcessDialogVar.show();"
