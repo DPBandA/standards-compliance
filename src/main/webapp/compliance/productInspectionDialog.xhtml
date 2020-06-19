@@ -29,14 +29,17 @@
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Ok"
                                      actionListener="#{complianceManager.okProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
+                                     update=":productDialogForm"
+                                     onstart="longProcessDialogVar.show();"                                     
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon ui-icon-check"
-                                     process="@form"/>
+                                     process="@form" />
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Cancel"
+                                     actionListener="#{complianceManager.cancelProductInspection}"
                                      onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"                            
+                                     oncomplete="longProcessDialogVar.hide();"      
+                                     process="@this"
                                      icon="ui-icon ui-icon-close"/>
                 </p:toolbarGroup>
             </p:toolbar>    
@@ -44,7 +47,7 @@
                 <p:tabView id="productDialogTabView"
                            dynamic="false"
                            widgetVar="productDialogTabViewVar">
-                    
+
                     <p:ajax event="tabChange"    
                             onstart="longProcessDialogVar.show();"
                             oncomplete="longProcessDialogVar.hide();"/>
@@ -52,23 +55,32 @@
                     <p:tab title="Product detail">
                         <h:panelGrid columns="2" cellpadding="3" >
 
-                            <h:outputText value="Name *: " />
-                            <p:inputText value="#{complianceManager.currentProductInspection.name}"
-                                         style="font-weight: bold;" >
+                            <h:outputText value="Name:" 
+                                          style="font-weight: bold;" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.name}" 
+                                         validator="requiredFieldValidator" >
+
                                 <p:ajax event="keyup"
                                         global="false"
                                         listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
+
                             </p:inputText>     
 
-                            <h:outputText value="Product Category *:" />
-                            <h:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" >
+                            <h:outputText value="Product Category:" 
+                                          style="font-weight: bold;" />
+
+                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}"                                              
+                                             validator="requiredFieldValidator" >
+
                                 <p:ajax
                                     global="false"                            
                                     listener="#{complianceManager.updateSurvey}"  
                                     process="@this" />
+
                                 <f:selectItems value="#{complianceManager.productCategories}" />
-                            </h:selectOneMenu>     
+
+                            </p:selectOneMenu>     
 
                             <h:outputText value="Manufacturer: " />
                             <p:autoComplete maxResults="12"                                       
@@ -81,6 +93,7 @@
                                 <p:ajax event="keyup"                                   
                                         listener="#{complianceManager.updateProductManufacturerForProductInsp}"
                                         process="@this"/>
+                                
                             </p:autoComplete>                       
 
                             <h:outputText value="Brand: " />
@@ -217,7 +230,6 @@
                                             maxlength="40"
                                             dropdown="true"
                                             scrollHeight="200" 
-                                            validator="requiredFieldValidator"
                                             completeMethod="#{systemManager.completeCountry}" >       
 
                                 <p:ajax                               
@@ -391,14 +403,17 @@
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Ok"
                                      actionListener="#{complianceManager.okProductInspection}"
+                                     update=":productDialogForm"
                                      onstart="longProcessDialogVar.show();"
                                      oncomplete="longProcessDialogVar.hide();" 
                                      icon="ui-icon ui-icon-check"
                                      process="@form"/>
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Cancel"
+                                     actionListener="#{complianceManager.cancelProductInspection}"
                                      onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"                            
+                                     oncomplete="longProcessDialogVar.hide();"    
+                                     process="@this"
                                      icon="ui-icon ui-icon-close"/>
                 </p:toolbarGroup>
             </p:toolbar>

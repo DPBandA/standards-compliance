@@ -74,8 +74,10 @@
                              icon="ui-icon-pencil">
                 <f:setPropertyActionListener value="#{complianceSurvey}" 
                                              target="#{complianceManager.currentComplianceSurvey}" />
+                
                 <p:ajax event="dialogReturn" 
                         update=":mainTabViewForm:mainTabView:complianceSurveysTable"/>
+                
             </p:commandButton>
         </p:column>
     </p:dataTable>
