@@ -83,22 +83,72 @@
                             </p:selectOneMenu>     
 
                             <h:outputText value="Manufacturer: " />
-                            <p:autoComplete maxResults="12"                                       
-                                            value="#{complianceManager.currentProductInspection.manufacturer.name}"                                                                     
-                                            completeMethod="#{complianceManager.completeManufacturerName}" >
-                                <p:ajax event="itemSelect"                                    
-                                        listener="#{complianceManager.updateProductManufacturerForProductInsp}"
-                                        process="@this"/>
+                            <h:panelGroup>
+                                <p:autoComplete id="manufacturer"      
+                                                var="manufacturer"
+                                                itemLabel="#{manufacturer.truncatedName}"
+                                                itemValue="#{manufacturer}"
+                                                size="35" 
+                                                maxlength="40"                             
+                                                dropdown="false"
+                                                scrollHeight="200" 
+                                                value="#{complianceManager.currentProductInspection.manufacturer}"    
+                                                converter="activeManufacturerConverter"
+                                                validator="manufacturerValidator"
+                                                forceSelection="true"
+                                                completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
-                                <p:ajax event="keyup"                                   
-                                        listener="#{complianceManager.updateProductManufacturerForProductInsp}"
-                                        process="@this"/>
-                                
-                            </p:autoComplete>                       
+                                    <p:ajax event="itemSelect"
+                                            update="manufacturerActionsMenu"
+                                            listener="#{complianceManager.updateSurvey}"
+                                            process="@this"/>
 
+                                </p:autoComplete>  
+
+                                <p:menuButton id="manufacturerActionsMenu" 
+                                              icon="ui-icon-pencil" 
+                                              title="Add or edit manufacturer">
+                                    <p:menuitem>                       
+                                        <p:commandButton value="Edit manufacturer"
+                                                         id="editManufacturer"
+                                                         icon="ui-icon-pencil" 
+                                                         disabled="${!complianceManager.isManufacturerNameValid}"
+                                                         style="width: 300%;text-align: left;background: none;border: 0;"
+                                                         onstart="PF('longProcessDialogVar').show();"   
+                                                         oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                         actionListener="#{complianceManager.editManufacturer}"  
+                                                         process="@this,manufacturer"                             
+                                                         title="View or edit this manufacturer's detail">  
+
+                                            <p:ajax event="dialogReturn" 
+                                                    listener="#{complianceManager.manufacturerDialogReturn}"
+                                                    update="manufacturer" />
+
+                                        </p:commandButton>            
+                                    </p:menuitem>
+
+                                    <p:menuitem >       
+                                        <p:commandButton 
+                                            value="Add manufacturer"
+                                            icon="ui-icon-plus" 
+                                            style="width: 300%;text-align: left;background: none;border: 0;"
+                                            onstart="PF('longProcessDialogVar').show();"    
+                                            oncomplete="PF('longProcessDialogVar').hide();"    
+                                            actionListener="#{complianceManager.createNewManufacturer}"                                            
+                                            process="@this"
+                                            title="Add a new manufacturer">
+
+                                            <p:ajax event="dialogReturn" 
+                                                    listener="#{complianceManager.manufacturerDialogReturn}"
+                                                    update="manufacturer" />
+
+                                        </p:commandButton>
+                                    </p:menuitem>
+                                </p:menuButton>                                
+                            </h:panelGroup>
+                           
                             <h:outputText value="Brand: " />
-                            <p:inputText value="#{complianceManager.currentProductInspection.brand}"
-                                         style="font-weight: bold;" >
+                            <p:inputText value="#{complianceManager.currentProductInspection.brand}" >
                                 <p:ajax event="keyup"
                                         global="false"
                                         listener="#{complianceManager.updateSurvey}"
@@ -106,8 +156,7 @@
                             </p:inputText>        
 
                             <h:outputText value="Model: " />
-                            <p:inputText value="#{complianceManager.currentProductInspection.model}"
-                                         style="font-weight: bold;" >
+                            <p:inputText value="#{complianceManager.currentProductInspection.model}" >
                                 <p:ajax event="keyup"
                                         global="false"
                                         listener="#{complianceManager.updateSurvey}"
@@ -115,8 +164,7 @@
                             </p:inputText>    
 
                             <h:outputText value="Serial No.: " />
-                            <p:inputText value="#{complianceManager.currentProductInspection.serialNumber}"
-                                         style="font-weight: bold;" >
+                            <p:inputText value="#{complianceManager.currentProductInspection.serialNumber}" >
                                 <p:ajax event="keyup"
                                         global="false"
                                         listener="#{complianceManager.updateSurvey}"
@@ -124,8 +172,7 @@
                             </p:inputText>   
 
                             <h:outputText value="Tariff Code:" />
-                            <p:inputText value="#{complianceManager.currentProductInspection.tariffCode}"
-                                         style="font-weight: bold;" >
+                            <p:inputText value="#{complianceManager.currentProductInspection.tariffCode}" >
                                 <p:ajax event="keyup"
                                         global="false"
                                         listener="#{complianceManager.updateSurvey}"
@@ -143,6 +190,7 @@
 
                                 <f:selectItems value="#{complianceManager.allShippingContainers}" />
                             </p:selectCheckboxMenu>
+                            
                             <h:panelGroup>                           
                                 <p:inputText value="#{complianceManager.currentProductInspection.containerNumber}"     
                                              id="productShippingContainerNumber"                                            
