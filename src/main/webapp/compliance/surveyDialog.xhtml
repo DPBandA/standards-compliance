@@ -224,7 +224,7 @@
 
                                         <p:ajax event="dialogReturn" 
                                                 listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee" />
+                                                update="consignee,consigneeRepresentative" />
 
                                     </p:commandButton>            
                                 </p:menuitem>
@@ -314,7 +314,7 @@
 
                                         <p:ajax event="dialogReturn" 
                                                 listener="#{complianceManager.retailOutletDialogReturn}"
-                                                update="consignee" />
+                                                update="retailOutlet,retailRepresentative" />
 
                                     </p:commandButton>            
                                 </p:menuitem>
@@ -403,7 +403,7 @@
                             id="comments"
                             value="#{complianceManager.currentComplianceSurvey.comments}"
                             rows="3"
-                            counter="instructCharsRemaining"
+                            counter="commentsCharsRemaining"
                             counterTemplate="{0} characters remaining."
                             autoResize="false"
                             maxlength="1000" 
@@ -417,7 +417,7 @@
                                     process="@this"/>
                         </p:inputTextarea> 
                         <h:outputText value="&nbsp;&nbsp;" />
-                        <h:outputText id="instructCharsRemaining" /> 
+                        <h:outputText id="commentsCharsRemaining" /> 
                     </h:panelGrid>
                 </p:tab>    
 
@@ -637,21 +637,25 @@
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-plus"
                                      process="@this" >
-                        
-                         <p:ajax event="dialogReturn" 
+
+                        <p:ajax event="dialogReturn" 
                                 update="marketProductsTable" />
-                         
+
                     </p:commandButton>
-                        
+
                 </p:tab>
 
                 <p:tab title="POE Detention Request" 
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                     <h:panelGrid columns="2" cellpadding="3" >
 
-                        <h:outputText value="Detention request issued: "/>
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}">
+                        <p:outputLabel value="Detention request issued: "
+                                       for="detentionRequestIssued" />
+                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
+                                                 id="detentionRequestIssued" >
+
                             <p:ajax listener="#{complianceManager.updateDateOfDetention}" update="dateOfDetention"/>
+
                         </p:selectBooleanCheckbox>   
 
                         <h:outputText value="Job number: " />                   
@@ -664,71 +668,179 @@
                             <p:ajax event="itemSelect"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
+
                             <p:ajax event="keyup"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
+
                         </p:autoComplete>          
 
                         <h:outputText value="Broker: " />
-                        <h:panelGroup >
-                            <p:autoComplete id="broker"                                           
-                                            maxResults="12"                                           
-                                            value="#{complianceManager.currentComplianceSurvey.broker.name}"                                           
-                                            forceSelection="false"
-                                            completeMethod="#{complianceManager.completeActiveClientName}">
+                        <h:panelGroup>
+                            <p:autoComplete id="broker"      
+                                            var="broker"
+                                            itemLabel="#{broker.truncatedName}"
+                                            itemValue="#{broker}"
+                                            size="35" 
+                                            maxlength="40"                             
+                                            dropdown="false"
+                                            scrollHeight="200" 
+                                            value="#{complianceManager.currentComplianceSurvey.broker}"    
+                                            converter="activeClientConverter"
+                                            validator="clientValidator"
+                                            forceSelection="true"
+                                            completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        listener="#{complianceManager.updateComplianceSurveyBroker}"
-                                        update="brokerContact,brokerBillingAddress"
-                                        process="@this"/>
-                                <p:ajax event="keyup"
-                                        update="brokerContact,brokerBillingAddress"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        update="brokerActionsMenu,brokerRepresentative,brokerAddress"
+                                        listener="#{complianceManager.updateBroker}"
                                         process="@this"/>
 
-                            </p:autoComplete>                           
-                            <p:spacer height="0" width="4"/>
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{complianceManager.editComplianceSurveyBroker}"
+                            </p:autoComplete>  
+                            <p:menuButton id="brokerActionsMenu" 
+                                          icon="ui-icon-pencil" 
+                                          title="Add or edit broker">
+                                <p:menuitem>                       
+                                    <p:commandButton value="Edit broker"
+                                                     id="editBroker"
+                                                     icon="ui-icon-pencil" 
+                                                     disabled="${!complianceManager.isBrokerNameValid}"
+                                                     style="width: 300%;text-align: left;background: none;border: 0;"
+                                                     onstart="PF('longProcessDialogVar').show();"   
+                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                     actionListener="#{complianceManager.editBroker}"  
+                                                     process="@this,broker"                             
+                                                     title="View or edit this broker's detail">  
 
-                                             oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"   
-                                             process="@this"
-                                             title="Edit this broker's detail or add a new broker"/>
-                        </h:panelGroup>    
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.brokerDialogReturn}"
+                                                update="broker,brokerRepresentative,brokerAddress" />
 
-                        <h:outputText value="" />
-                        <h:outputText id="brokerContact" value="Contact: #{complianceManager.currentComplianceSurvey.broker.mainContact}" />
-                        <h:outputText value="" />
-                        <h:outputText id="brokerBillingAddress" value="Billing addr.: #{complianceManager.currentComplianceSurvey.broker.billingAddress}" />
+                                    </p:commandButton>            
+                                </p:menuitem>
+
+                                <p:menuitem >       
+                                    <p:commandButton 
+                                        value="Add broker"
+                                        icon="ui-icon-plus" 
+                                        style="width: 300%;text-align: left;background: none;border: 0;"
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();"  
+                                        actionListener="#{complianceManager.createNewBroker}"                                            
+                                        process="@this"
+                                        title="Add a new broker">
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.brokerDialogReturn}"
+                                                update="broker,brokerRepresentative,brokerAddress" />
+
+                                    </p:commandButton>
+                                </p:menuitem>
+                            </p:menuButton>                                
+                        </h:panelGroup>
+
+                        <h:outputText value="Broker representative:" />  
+                        <p:autoComplete id="brokerRepresentative"
+                                        value="#{complianceManager.currentComplianceSurvey.brokerRepresentative}"
+                                        dropdown="true"
+                                        forceSelection="true"
+                                        scrollHeight="200"
+                                        converter="clientContactConverter" 
+                                        validator="contactValidator"
+                                        var="representative"                        
+                                        itemValue="#{representative}"
+                                        itemLabel="#{representative.name}" 
+                                        completeMethod="#{complianceManager.completeBrokerRepresentative}">
+
+                            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.broker}" />
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateSurvey}"  
+                                    process="@this" />   
+
+                        </p:autoComplete> 
+
+                        <h:outputText value="Broker address:" /> 
+                        <p:autoComplete id="brokerAddress"
+                                        value="#{complianceManager.currentComplianceSurvey.brokerAddress}"
+                                        dropdown="true"
+                                        forceSelection="true"
+                                        size="35"
+                                        converter="clientAddressConverter" 
+                                        validator="addressValidator"
+                                        var="address"  
+                                        scrollHeight="200"
+                                        itemValue="#{address}"
+                                        itemLabel="#{address.name}" 
+                                        completeMethod="#{complianceManager.completeBrokerAddress}">
+
+                            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.broker}" />
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateSurvey}"  
+                                    process="@this" />   
+
+                        </p:autoComplete>
+
+                        <ui:remove>
+                            <h:outputText value="" />
+                            <h:outputText id="brokerContact" value="Contact: #{complianceManager.currentComplianceSurvey.broker.mainContact}" />
+                            <h:outputText value="" />
+                            <h:outputText id="brokerBillingAddress" value="Billing addr.: #{complianceManager.currentComplianceSurvey.broker.billingAddress}" />
+                        </ui:remove>
 
                         <h:outputText value="Date of detention:" />
-                        <h:panelGroup>
-                            <p:calendar pattern="yyyy-MM-dd"
-                                        id="dateOfDetention"
-                                        showOn="button"
-                                        timeOnly="false"
-                                        value="#{complianceManager.currentComplianceSurvey.dateOfDetention}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateSurvey}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}" />
-                            </p:calendar>
-                            <p:watermark for="dateOfDetention" value="yyyy-MM-dd"/>
-                        </h:panelGroup>
+                        <p:calendar id="dateOfDetention"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy" 
+                                    value="#{complianceManager.currentComplianceSurvey.dateOfDetention}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateSurvey}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}" />
+                        </p:calendar>
 
                         <h:outputText style="vertical-align: top;"
                                       value="Specifications breached: " />
-                        <p:selectCheckboxMenu id="specificationsBreached" 
-                                              value="#{complianceManager.selectedStandardNames}" 
-                                              label="Select specification(s)"                                              
-                                              filter="true" 
-                                              style="vertical-align: bottom;"
-                                              filterMatchMode="startsWith" 
-                                              onHide="updateSelectedStandards();"
-                                              panelStyle="width:250px">
+                        <ui:remove>
+                        <p:autoComplete id="representatives"
+                                        var="representative"   
+                                        value="#{jobManager.currentJob.representatives}"
+                                        itemLabel="#{representative.name}"
+                                        itemValue="#{representative}"
+                                        converter="activeEmployeeConverter"
+                                        forceSelection="true"
+                                        dropdown="true"
+                                        scrollHeight="200"                         
+                                        multiple="true"
+                                        completeMethod="#{humanResourceManager.completeActiveEmployee}" >
 
-                            <f:selectItems value="#{complianceManager.allDocumentStandardNames}" />
-                        </p:selectCheckboxMenu>
+                            <p:ajax event="itemSelect"
+                                    listener="#{jobManager.updateJob}"
+                                    update=":jobDialogForm:jobDetailToolbar1"
+                                    process="@this"/>
+
+                            <p:ajax event="itemUnselect"
+                                    listener="#{jobManager.updateJob}"
+                                    update=":jobDialogForm:jobDetailToolbar1"
+                                    process="@this"/>
+
+                        </p:autoComplete>
+                        </ui:remove>    
+                        <ui:remove>
+                            <p:selectCheckboxMenu id="specificationsBreached" 
+                                                  value="#{complianceManager.selectedStandardNames}" 
+                                                  label="Select specification(s)"                                              
+                                                  filter="true" 
+                                                  style="vertical-align: bottom;"
+                                                  filterMatchMode="startsWith" 
+                                                  onHide="updateSelectedStandards();"
+                                                  panelStyle="width:250px">
+
+                                <f:selectItems value="#{complianceManager.allDocumentStandardNames}" />
+                            </p:selectCheckboxMenu>
+                        </ui:remove>
 
                         <h:outputText value="Reason for Detention: " style="vertical-align: top" />
                         <p:inputTextarea id="reasonForDetention"

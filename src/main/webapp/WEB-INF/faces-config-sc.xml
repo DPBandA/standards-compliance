@@ -4,6 +4,11 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
     
+    <converter>
+        <converter-id>activeClientConverter</converter-id>
+        <converter-class>jm.com.dpbennett.cm.converter.ActiveClientConverter</converter-class>
+    </converter>   
+    
     <managed-bean>
         <managed-bean-name>complianceManager</managed-bean-name>
         <managed-bean-class>jm.com.dpbennett.sc.manager.ComplianceManager</managed-bean-class>
