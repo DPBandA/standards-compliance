@@ -802,32 +802,29 @@
                         </p:calendar>
 
                         <h:outputText style="vertical-align: top;"
-                                      value="Specifications breached: " />
-                        <ui:remove>
-                        <p:autoComplete id="representatives"
-                                        var="representative"   
-                                        value="#{jobManager.currentJob.representatives}"
-                                        itemLabel="#{representative.name}"
-                                        itemValue="#{representative}"
-                                        converter="activeEmployeeConverter"
+                                      value="Standards breached:" />
+                        <p:autoComplete id="standards"
+                                        var="standard"   
+                                        value="#{complianceManager.currentComplianceSurvey.standardsBreached}"
+                                        itemLabel="#{standard.number} - #{standard.name}"
+                                        itemValue="#{standard}"
+                                        converter="activeDocumentStandardConverter"
                                         forceSelection="true"
                                         dropdown="true"
                                         scrollHeight="200"                         
                                         multiple="true"
-                                        completeMethod="#{humanResourceManager.completeActiveEmployee}" >
+                                        completeMethod="#{complianceManager.completeActiveDocumentStandard}" >
 
                             <p:ajax event="itemSelect"
-                                    listener="#{jobManager.updateJob}"
-                                    update=":jobDialogForm:jobDetailToolbar1"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
 
                             <p:ajax event="itemUnselect"
-                                    listener="#{jobManager.updateJob}"
-                                    update=":jobDialogForm:jobDetailToolbar1"
+                                    listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
 
                         </p:autoComplete>
-                        </ui:remove>    
+
                         <ui:remove>
                             <p:selectCheckboxMenu id="specificationsBreached" 
                                                   value="#{complianceManager.selectedStandardNames}" 

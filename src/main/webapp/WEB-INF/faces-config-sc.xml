@@ -5,9 +5,14 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
     
     <converter>
-        <converter-id>activeClientConverter</converter-id>
-        <converter-class>jm.com.dpbennett.cm.converter.ActiveClientConverter</converter-class>
+        <converter-id>activeDocumentStandardConverter</converter-id>
+        <converter-class>jm.com.dpbennett.sc.converter.ActiveDocumentStandardConverter</converter-class>
     </converter>   
+    
+    <validator>
+        <validator-id>documentStandardValidator</validator-id>
+        <validator-class>jm.com.dpbennett.cm.validator.DocumentStandardValidator</validator-class>
+    </validator>
     
     <managed-bean>
         <managed-bean-name>complianceManager</managed-bean-name>

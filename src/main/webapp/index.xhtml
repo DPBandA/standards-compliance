@@ -138,6 +138,10 @@ Email: info@dpbennett.com.jm
                             <h:panelGroup  rendered="#{t.id == 'Standards Compliance'}">
                                 <ui:include src="compliance/surveyBrowser.xhtml" /> 
                             </h:panelGroup> 
+                             
+                            <h:panelGroup rendered="#{t.id == 'Standards'}" >
+                                <ui:include src="compliance/standardsTab.xhtml" />                                                                
+                            </h:panelGroup>
                             
                         </p:tab>
                     </p:tabView>
@@ -200,7 +204,7 @@ Email: info@dpbennett.com.jm
 
                             <h:panelGroup rendered="#{t.id == 'Standards Compliance'}">
                                 <ui:include src="dashboard/compliance/complianceTab.xhtml" />
-                            </h:panelGroup>                            
+                            </h:panelGroup>                                  
 
                         </p:tab>   
 
