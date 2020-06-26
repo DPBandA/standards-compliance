@@ -11,7 +11,7 @@
     
     <validator>
         <validator-id>documentStandardValidator</validator-id>
-        <validator-class>jm.com.dpbennett.cm.validator.DocumentStandardValidator</validator-class>
+        <validator-class>jm.com.dpbennett.sc.validator.DocumentStandardValidator</validator-class>
     </validator>
     
     <managed-bean>

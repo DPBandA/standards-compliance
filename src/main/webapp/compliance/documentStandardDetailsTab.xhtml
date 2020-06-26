@@ -31,174 +31,68 @@ Email: info@dpbennett.com.jm
                                      id="documentStandardActive"
                                      value="#{complianceManager.currentDocumentStandard.active}" >
 
-                <p:ajax listener="#{clientManager.updateClient}"
+                <p:ajax listener="#{complianceManager.updateDocumentStandard}"
                         event="change"                                      
                         process="@this"/>
 
             </p:selectBooleanCheckbox>     
 
-            <p:tooltip for="clientActive" value="Check to activate this client" 
+            <p:tooltip for="documentStandardActive" value="Check to activate this standard" 
                        showEffect="fade" hideEffect="fade" />            
         </h:panelGroup>
         <h:outputText value="" />
 
-        <h:outputText value="Name:" style="font-weight: bold;" />       
-        <p:inputText value="#{clientManager.selectedClient.name}"
-                     id="clientName"
-                     disabled="#{!clientManager.user.privilege.canAddClient}"
-                     validator="clientValidator">
-            <f:attribute name="isNewClient" value="#{clientManager.isNewClient}" />
+        <h:outputText value="Code/Number:" style="font-weight: bold;" />       
+        <p:inputText value="#{complianceManager.currentDocumentStandard.number}"                     
+                     id="documentStandardNumber"
+                     validator="documentStandardValidator">
 
             <p:ajax event="change"
                     global="true"      
-                    update="clientName"
-                    listener="#{clientManager.updateClientName}"
+                    update="documentStandardNumber"
+                    listener="#{complianceManager.updateDocumentStandardName}"
                     process="@this"/>
+
         </p:inputText>     
         <h:outputText value="" />
 
-        <h:outputText value="Identification type:" />
-        <p:selectOneMenu id="identificationType"                             
-                         disabled="#{!clientManager.user.privilege.canAddClient}"
-                         value="#{clientManager.selectedClient.identificationType}">
+        <h:outputText value="Name:" style="font-weight: bold;" />       
+        <p:inputText value="#{complianceManager.currentDocumentStandard.name}"
+                     style="width: 500px;"
+                     id="documentStandardName"
+                     validator="documentStandardValidator">
 
-            <f:selectItems  value="#{systemManager.identificationTypeList}"
-                            var="identificationType"                            
-                            itemValue="#{progress}"
-                            itemLabel="#{progress}"/>
-
-            <p:ajax listener="#{clientManager.updateClient}"
-                    global="true"
+            <p:ajax event="change"
+                    global="true"      
+                    update="documentStandardName"
+                    listener="#{complianceManager.updateDocumentStandardName}"
                     process="@this"/>
 
-        </p:selectOneMenu>  
+        </p:inputText>     
         <h:outputText value="" />
 
-        <h:outputText value="Identification:" />        
-        <p:inputText value="#{clientManager.selectedClient.identification}"
-                     id="identification"
-                     disabled="#{!clientManager.user.privilege.canAddClient}" >
-            <p:ajax event="change"                    
-                    global="true"                   
-                    listener="#{clientManager.updateClient}"
+        <h:outputText value="Synopsis:" />                        
+        <p:inputTextarea
+            id="synopsis"
+            value="#{complianceManager.currentDocumentStandard.synopsis}"
+            rows="3"
+            counter="synopsisCharsRemaining"
+            counterTemplate="{0} characters remaining."
+            autoResize="false"
+            maxlength="1000" 
+            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+            style="width: 500px;">
+
+            <p:ajax event="change"
+                    listener="#{complianceManager.updateDocumentStandard}"
                     process="@this"/>
-        </p:inputText>
-        <h:outputText value="" />        
-
-        <h:outputText value="Type of business:" />     
-        <p:selectOneMenu value="#{clientManager.selectedClient.typeOfBusiness}"   
-                         id="typeOfBusiness"
-                         maxlength="50"
-                         editable="true">
-            <p:ajax
-                global="true"
-                event="change"
-                listener="#{clientManager.updateClient}"
-                process="@this" />
-
-            <f:selectItems value="#{systemManager.typesOfBusinessList}" />
-
-        </p:selectOneMenu>
-        <ui:remove>
-            <p:inputText value="#{clientManager.selectedClient.typeOfBusiness}"
-                         id="typeOfBusiness"
-                         style="width: 150%;"
-                         disabled="#{!clientManager.user.privilege.canAddClient}" >
-                <p:ajax event="change"                    
-                        global="true"                   
-                        listener="#{clientManager.updateClient}"
-                        process="@this"/>
-            </p:inputText>
-        </ui:remove>
+            
+        </p:inputTextarea> 
         <h:outputText value="" />
-
-        <h:outputText id="currentBillingAddress" value="Most recent billing address: " 
-                      style="font-weight: bold;"/> 
-        <h:panelGroup>
-            <h:outputText id="addressLine1" value="#{clientManager.currentAddress.addressLine1FriendlyDisplay}"/>  
-            <p:watermark for="addressLine1" value="-- none --" />
-        </h:panelGroup>
+        
         <h:outputText value="" />
-        <ui:remove>
-            <p:menuButton icon="ui-icon-pencil" title="Add or edit address">
-                <p:menuitem>                       
-                    <p:commandButton value="Edit"
-                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                     icon="ui-icon-pencil"
-                                     title="Edit address"
-                                     update=":addressForm"
-                                     oncomplete="PF('addressFormDialog').show();"
-                                     actionListener="#{clientManager.editCurrentAddress}" 
-                                     process="@this" >
+        <h:outputText id="synopsisCharsRemaining" />
 
-                        <p:resetInput target=":addressForm" />
-
-                    </p:commandButton>          
-                </p:menuitem>
-                <p:menuitem>                       
-                    <p:commandButton value="New"
-                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                     icon="ui-icon-plus" 
-                                     title="Add new address"
-                                     update=":addressForm"
-                                     oncomplete="PF('addressFormDialog').show();"
-                                     actionListener="#{clientManager.createNewAddress}" 
-                                     process="@this" >
-
-                        <p:resetInput target=":addressForm" />
-
-                    </p:commandButton>          
-                </p:menuitem>
-            </p:menuButton>  
-        </ui:remove>
-
-        <h:outputText value="" />
-        <h:outputText value="#{clientManager.currentAddress.addressLine2}" />
-        <h:outputText value="" />
-
-        <h:outputText value="" />
-        <h:outputText value="#{clientManager.currentAddress.city}" />
-        <h:outputText value="" />
-
-        <h:outputText value="" />
-        <h:outputText value="#{clientManager.currentAddress.stateOrProvince}" />
-        <h:outputText value="" />
-
-        <h:outputText id="currentContact" value="Most recent contact: " style="font-weight: bold"/>    
-        <h:outputText value="#{clientManager.currentContact.friendlyName}" />
-        <h:outputText value="" />
-        <ui:remove>
-            <p:menuButton icon="ui-icon-pencil" title="Add or edit contact">
-                <p:menuitem>                       
-                    <p:commandButton value="Edit"
-                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                     icon="ui-icon-pencil"
-                                     title="Edit contact"
-                                     update=":contactForm"
-                                     oncomplete="PF('contactFormDialog').show();"
-                                     actionListener="#{clientManager.editCurrentContact}" 
-                                     process="@this" >
-
-                        <p:resetInput target=":contactForm" />
-
-                    </p:commandButton>       
-                </p:menuitem>
-                <p:menuitem>                       
-                    <p:commandButton value="New"
-                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                     icon="ui-icon-plus" 
-                                     title="Add new contact"
-                                     update=":contactForm"
-                                     oncomplete="PF('contactFormDialog').show();"
-                                     actionListener="#{clientManager.createNewContact}" 
-                                     process="@this" >
-
-                        <p:resetInput target=":contactForm" />
-
-                    </p:commandButton>       
-                </p:menuitem>
-            </p:menuButton>      
-        </ui:remove>
     </h:panelGrid>                    
 
 </html>
