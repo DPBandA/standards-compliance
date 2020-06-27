@@ -32,11 +32,10 @@
                                      actionListener="#{complianceManager.saveComplianceSurvey}"     
                                      update="#{complianceManager.componentsToUpdate}"
                                      oncomplete="longProcessDialogVar.hide();"
-                                     onerror="connectionErrorDialog.show();"
                                      icon="ui-icon-disk"
                                      process="@this"/>
                     <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Cancel"      
+                    <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.closeComplianceSurvey}"
                                      update="#{complianceManager.componentsToUpdate}"                         
@@ -840,135 +839,156 @@
                         </ui:remove>
 
                         <h:outputText value="Reason for Detention: " style="vertical-align: top" />
-                        <p:inputTextarea id="reasonForDetention"
-                                         value="#{complianceManager.currentComplianceSurvey.reasonForDetention}"
-                                         style="width: 300px"
-                                         rows="1"
-                                         maxlength="1000"
-                                         autoResize="false">
-                            <p:ajax event="keyup"
+                        <p:inputTextarea
+                            id="reasonForDetention"
+                            value="#{complianceManager.currentComplianceSurvey.reasonForDetention}"
+                            rows="3"
+                            counter="reasonForDetentionCharsRemaining"
+                            counterTemplate="{0} characters remaining."
+                            autoResize="false"
+                            maxlength="1000" 
+                            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                            style="width: 500px;">
+
+                            <p:ajax event="change"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
-                        </p:inputTextarea>                       
 
+                        </p:inputTextarea> 
+                        <h:outputText value="" />
+                        <h:outputText id="reasonForDetentionCharsRemaining" />
                     </h:panelGrid>
-                    <hr/>
-                    <p:dataTable id="containersTable"
-                                 var="shippingContainer"
-                                 rendered="true"                                 
-                                 value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.shippingContainers}">
-                        <f:facet name="header">
-                            <h:outputText value="Containers" />
-                        </f:facet>
-
-                        <p:column>
+                    <ui:remove>
+                        <hr/>
+                        <p:dataTable id="containersTable"
+                                     var="shippingContainer"
+                                     rendered="true"                                 
+                                     value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.shippingContainers}">
                             <f:facet name="header">
-                                <h:outputText value="Container Number"/>
+                                <h:outputText value="Containers" />
                             </f:facet>
-                            <h:outputText value="#{shippingContainer.number}" />
-                        </p:column>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Size description"/>
-                            </f:facet>
-                            <h:outputText value="#{shippingContainer.sizeDescription}" />
-                        </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Container Number"/>
+                                </f:facet>
+                                <h:outputText value="#{shippingContainer.number}" />
+                            </p:column>
 
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Percentage Detained"/>
-                            </f:facet>
-                            <h:outputText value="#{shippingContainer.percentageDetained}" />
-                        </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Size description"/>
+                                </f:facet>
+                                <h:outputText value="#{shippingContainer.sizeDescription}" />
+                            </p:column>
 
-                        <p:column style="width:32px">
-                            <p:commandButton title="View/Edit"
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Percentage Detained"/>
+                                </f:facet>
+                                <h:outputText value="#{shippingContainer.percentageDetained}" />
+                            </p:column>
+
+                            <p:column style="width:32px">
+                                <p:commandButton title="View/Edit"
+                                                 onstart="longProcessDialogVar.show();"                                      
+                                                 update=":ShippingContainerDialogForm"       
+                                                 oncomplete="longProcessDialogVar.hide();ShippingContainerDialog.show();"
+                                                 global="true"
+                                                 icon="ui-icon-pencil">
+                                    <f:setPropertyActionListener value="#{shippingContainer}"
+                                                                 target="#{complianceManager.currentShippingContainer}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                        <hr/>
+                        <h:panelGrid columns="2" cellpadding="3" >
+                            <p:commandButton value="Authorize"
+                                             title="Authorize form"
+                                             actionListener="#{complianceManager.updateAuthDetentionRequestPOE}"
                                              onstart="longProcessDialogVar.show();"
-                                             onerror="connectionErrorDialog.show();"                                           
-                                             update=":ShippingContainerDialogForm"       
-                                             oncomplete="longProcessDialogVar.hide();ShippingContainerDialog.show();"
-                                             global="true"
-                                             icon="ui-icon-pencil">
-                                <f:setPropertyActionListener value="#{shippingContainer}"
-                                                             target="#{complianceManager.currentShippingContainer}" />
-                            </p:commandButton>
-                        </p:column>
+                                             update="AuthSigForDetentionRequestPOEPanelGroup"
+                                             oncomplete="longProcessDialogVar.hide();"
+                                             icon="ui-icon-key"
+                                             process="@this" />
 
-                    </p:dataTable>
-                    <hr/>
-                    <h:panelGrid columns="2" cellpadding="3" >
-                        <p:commandButton value="Authorize"
-                                         title="Authorize form"
-                                         actionListener="#{complianceManager.updateAuthDetentionRequestPOE}"
-                                         onstart="longProcessDialogVar.show();"
-                                         update="AuthSigForDetentionRequestPOEPanelGroup"
-                                         oncomplete="longProcessDialogVar.hide();"
-                                         icon="ui-icon-key"
-                                         process="@this" />
-
-                        <h:panelGroup id="AuthSigForDetentionRequestPOEPanelGroup">
-                            <p:graphicImage id="AuthSigForDetentionRequestPOE" 
-                                            height="24"
-                                            width="192" cache="false"
-                                            value="#{complianceManager.authSigForDetentionRequestPOE}" />  
-                            <h:outputText  id="AuthSigDateForDetentionRequestPOE"
-                                           value="  #{complianceManager.currentComplianceSurvey.authSigDateForDetentionRequestPOE}" />
-                        </h:panelGroup>
-                    </h:panelGrid>
+                            <h:panelGroup id="AuthSigForDetentionRequestPOEPanelGroup">
+                                <p:graphicImage id="AuthSigForDetentionRequestPOE" 
+                                                height="24"
+                                                width="192" cache="false"
+                                                value="#{complianceManager.authSigForDetentionRequestPOE}" />  
+                                <h:outputText  id="AuthSigDateForDetentionRequestPOE"
+                                               value="  #{complianceManager.currentComplianceSurvey.authSigDateForDetentionRequestPOE}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </ui:remove>
                 </p:tab>
 
                 <p:tab title="POE Sample Request" 
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                     <h:panelGrid columns="2" cellpadding="3">
-                        <h:outputText value="Sample request issued: "/>
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
+                        <p:outputLabel value="Sample request issued:" for="sampleRequestIssued"/>
+                        <p:selectBooleanCheckbox 
+                            id="sampleRequestIssued"
+                            value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
                             <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
-                        <h:outputText value="Samples to be collected within 30 days: "/>
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
+                        <p:outputLabel value="Samples to be collected within 30 days: " for="collectedWithin30Days" />
+                        <p:selectBooleanCheckbox 
+                            id="collectedWithin30Days"
+                            value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
                             <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
-                        <h:outputText value="Disposed of by the Bureau: "/>
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
+                        <p:outputLabel value="Disposed of by the NCRA: " for="disposedOfByUs"/>
+                        <p:selectBooleanCheckbox 
+                            id="disposedOfByUs"
+                            value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
                             <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
+
                     </h:panelGrid>
-                    <hr/>
-                    <h:panelGrid columns="2" cellpadding="3">
-                        <p:commandButton value="Sign"
-                                         title="Sign form"
-                                         actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
-                                         onstart="longProcessDialogVar.show();"
-                                         update="InspectorSigForSampleRequestPOE,InspectorSigDateForSampleRequestPOE"
-                                         oncomplete="longProcessDialogVar.hide();"
-                                         icon="ui-icon-key"
-                                         process="@this" />
+                    <ui:remove>
+                        <hr/>
+                        <h:panelGrid columns="2" cellpadding="3">
+                            <p:commandButton value="Sign"
+                                             title="Sign form"
+                                             actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
+                                             onstart="longProcessDialogVar.show();"
+                                             update="InspectorSigForSampleRequestPOE,InspectorSigDateForSampleRequestPOE"
+                                             oncomplete="longProcessDialogVar.hide();"
+                                             icon="ui-icon-key"
+                                             process="@this" />
 
-                        <h:panelGroup>
-                            <p:graphicImage id="InspectorSigForSampleRequestPOE" 
-                                            height="24"
-                                            width="192" 
-                                            value="#{complianceManager.inspectorSigForSampleRequestPOE}" />  
-                            <h:outputText  id="InspectorSigDateForSampleRequestPOE"
-                                           value="  #{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestPOE}" />
-                        </h:panelGroup>
-                    </h:panelGrid>
+                            <h:panelGroup>
+                                <p:graphicImage id="InspectorSigForSampleRequestPOE" 
+                                                height="24"
+                                                width="192" 
+                                                value="#{complianceManager.inspectorSigForSampleRequestPOE}" />  
+                                <h:outputText  id="InspectorSigDateForSampleRequestPOE"
+                                               value="  #{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestPOE}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </ui:remove>
                 </p:tab>
 
                 <p:tab title="POE Release Request"
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">   
                     <h:panelGrid columns="2">
-                        <h:outputText value="Release request for Port of Entry issued:" />
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
+                        <p:outputLabel value="Release request for Port of Entry issued:" for="releaseRequestIssued"/>
+                        <p:selectBooleanCheckbox 
+                            id="releaseRequestIssued"
+                            value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
                             <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGrid>
-                    <br/>
-                    <h:outputText value="Release location:" style="font-style: italic"/>
+                    <br/>                    
                     <h:panelGrid columns="2">
+                        <h:outputText value="Release location:" style="font-style: italic" />
+                        <h:outputText value="" />
+
                         <h:outputText value="Location:" />
                         <p:inputText id="location"
                                      style="width: 300px"
@@ -999,7 +1019,7 @@
                                 process="@this" />
                         </p:inputText>
 
-                        <h:outputText value="City:" />
+                        <h:outputText value="Nearest City/Town:" />
                         <p:inputText id="city"
                                      style="width: 300px"
                                      value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.city}" >
@@ -1009,202 +1029,242 @@
                                 process="@this" />
                         </p:inputText>
 
-                        <h:outputText value="Parish:" />
-                        <p:inputText id="parish"
-                                     style="width: 300px"
-                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}" >
+                        <h:outputText value="Parish/State/Province:" />
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}"   
+                                         id="parishStateProvince"
+                                         maxlength="50"
+                                         validator="addressLineValidator"
+                                         editable="true">
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
-                        </p:inputText>
-                    </h:panelGrid>                       
-                    <hr/>
-                    <h:panelGrid columns="2" cellpadding="3">
-                        <p:commandButton value="Sign Prepared By"
-                                         title="Sign form prepared by"
-                                         actionListener="#{complianceManager.updatePreparedBySigForReleaseRequestPOE}"
-                                         onstart="longProcessDialogVar.show();"
-                                         update="PreparedBySigForReleaseRequestPOE,PreparedBySigDateForReleaseRequestPOE"
-                                         oncomplete="longProcessDialogVar.hide();"
-                                         icon="ui-icon-key"
-                                         process="@this" />
 
-                        <h:panelGroup>
-                            <p:graphicImage id="PreparedBySigForReleaseRequestPOE" 
-                                            height="24"
-                                            width="192" cache="false"
-                                            value="#{complianceManager.preparedBySigForReleaseRequestPOE}" />  
-                            <h:outputText  id="PreparedBySigDateForReleaseRequestPOE"
-                                           value="  #{complianceManager.currentComplianceSurvey.preparedBySigDateForReleaseRequestPOE}" />
-                        </h:panelGroup>
+                            <f:selectItems value="#{systemManager.jamaicaParishes}" />
 
-                        <p:commandButton value="Sign Approved By"
-                                         title="Sign form approved by"
-                                         actionListener="#{complianceManager.updateApprovedBySigForReleaseRequestPOE}"
-                                         onstart="longProcessDialogVar.show();"
-                                         update="ApprovedBySigForReleaseRequestPOE,ApprovedBySigDateForReleaseRequestPOE"
-                                         oncomplete="longProcessDialogVar.hide();"
-                                         icon="ui-icon-key"
-                                         process="@this" />
+                        </p:selectOneMenu>
+                        <ui:remove>
+                            <p:inputText id="parish"
+                                         style="width: 300px"
+                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}" >
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this" />
 
-                        <h:panelGroup>
-                            <p:graphicImage id="ApprovedBySigForReleaseRequestPOE" 
-                                            height="24"
-                                            width="192"
-                                            value="#{complianceManager.approvedBySigForReleaseRequestPOE}" />  
-                            <h:outputText  id="ApprovedBySigDateForReleaseRequestPOE"
-                                           value="  #{complianceManager.currentComplianceSurvey.approvedBySigDateForReleaseRequestPOE}" />
-                        </h:panelGroup>
-                    </h:panelGrid>
+                            </p:inputText>
+                        </ui:remove>
+                    </h:panelGrid>     
+                    <ui:remove>
+                        <hr/>
+                        <h:panelGrid columns="2" cellpadding="3">
+                            <p:commandButton value="Sign Prepared By"
+                                             title="Sign form prepared by"
+                                             actionListener="#{complianceManager.updatePreparedBySigForReleaseRequestPOE}"
+                                             onstart="longProcessDialogVar.show();"
+                                             update="PreparedBySigForReleaseRequestPOE,PreparedBySigDateForReleaseRequestPOE"
+                                             oncomplete="longProcessDialogVar.hide();"
+                                             icon="ui-icon-key"
+                                             process="@this" />
 
+                            <h:panelGroup>
+                                <p:graphicImage id="PreparedBySigForReleaseRequestPOE" 
+                                                height="24"
+                                                width="192" cache="false"
+                                                value="#{complianceManager.preparedBySigForReleaseRequestPOE}" />  
+                                <h:outputText  id="PreparedBySigDateForReleaseRequestPOE"
+                                               value="  #{complianceManager.currentComplianceSurvey.preparedBySigDateForReleaseRequestPOE}" />
+                            </h:panelGroup>
+
+                            <p:commandButton value="Sign Approved By"
+                                             title="Sign form approved by"
+                                             actionListener="#{complianceManager.updateApprovedBySigForReleaseRequestPOE}"
+                                             onstart="longProcessDialogVar.show();"
+                                             update="ApprovedBySigForReleaseRequestPOE,ApprovedBySigDateForReleaseRequestPOE"
+                                             oncomplete="longProcessDialogVar.hide();"
+                                             icon="ui-icon-key"
+                                             process="@this" />
+
+                            <h:panelGroup>
+                                <p:graphicImage id="ApprovedBySigForReleaseRequestPOE" 
+                                                height="24"
+                                                width="192"
+                                                value="#{complianceManager.approvedBySigForReleaseRequestPOE}" />  
+                                <h:outputText  id="ApprovedBySigDateForReleaseRequestPOE"
+                                               value="  #{complianceManager.currentComplianceSurvey.approvedBySigDateForReleaseRequestPOE}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </ui:remove>
                 </p:tab>
 
                 <p:tab title="DM Notice of/Release from Detention"
-                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">    
+                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">   
+
                     <h:panelGrid columns="2">
-                        <h:outputText value="Notice of release from detention issued: "/>
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
+                        <p:outputLabel value="Notice of release from detention issued:" for="releaseFromDetentionIssued" />
+                        <p:selectBooleanCheckbox 
+                            id="releaseFromDetentionIssued"
+                            value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
                             <p:ajax listener="#{complianceManager.updateDateOfDetention}" />
-                        </p:selectBooleanCheckbox>
-                    </h:panelGrid>
-                    <h:panelGrid columns="6">
+                        </p:selectBooleanCheckbox>                   
                         <h:outputText value="Reference #:"  />
-                        <p:inputText style="color: red;"
-                                     readonly="true"
-                                     value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" >                            
+                        <p:inputText value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" > 
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />                            
                         </p:inputText>
 
-                        <h:outputText value="Release date *:"  />
-                        <p:calendar pattern="yyyy-MM-dd" 
-                                    showOn="button"                                    
-                                    value="#{complianceManager.currentComplianceSurvey.releaseDateDomesticMarket}" >
+                        <h:outputText value="Release date:"  />
+                        <p:calendar  readonlyInput="true"
+                                     navigator="true" 
+                                     pattern="MMM dd, yyyy"                                     
+                                     value="#{complianceManager.currentComplianceSurvey.releaseDateDomesticMarket}" >
                             <p:ajax event="dateSelect"
                                     listener="#{complianceManager.updateSurvey}" />
                             <p:ajax event="keyup"
                                     listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
 
-                        <h:outputText value="Full release *:" />
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.fullRelease}">
-                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
-                        </p:selectBooleanCheckbox>
-                    </h:panelGrid>
-                    <hr/>
-                    <h:panelGrid columns="2">
-                        <h:outputText value="Release location *:" style="font-style: italic"/>
-                        <h:outputText value="Location of detained product(s) *:" style="font-style: italic"/>
-                        <h:panelGrid columns="2">
-                            <h:outputText value="Location:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.name}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Address line 1:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine1}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Address line 2:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine2}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="City:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.city}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Parish:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.stateOrProvince}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-                        </h:panelGrid>
-                        <h:panelGrid columns="2">
-                            <h:outputText value="Location:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.name}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Address line 1:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine1}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Address line 2:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine2}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="City:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.city}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-
-                            <h:outputText value="Parish:" />
-                            <p:inputText style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.stateOrProvince}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-                            </p:inputText>
-                        </h:panelGrid>
-                    </h:panelGrid>
-                    <hr/>
-                    <h:panelGrid columns="6">
-                        <h:outputText value="Retailer:" />
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.retailer}">
+                        <p:outputLabel value="Full release:" for="fullRelease"/>
+                        <p:selectBooleanCheckbox 
+                            id="fullRelease"
+                            value="#{complianceManager.currentComplianceSurvey.fullRelease}">
                             <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
-                        <h:outputText value="Distributor:" />
-                        <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.distributor}">
+                        <h:outputText value="Release location:" style="font-style: italic"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Location:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.name}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Address line 1:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine1}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Address line 2:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.addressLine2}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Nearest City/Town:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.city}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Parish/State/Province:" />
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.stateOrProvince}"   
+                                         maxlength="50"
+                                         validator="addressLineValidator"
+                                         editable="true">
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+
+                            <f:selectItems value="#{systemManager.jamaicaParishes}" />
+
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Location of detained product(s):"  style="font-style: italic"/>
+                        <h:outputText value=""/>
+
+                        <h:outputText value="Location:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.name}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Address line 1:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine1}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Address line 2:" />
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.addressLine2}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Nearest City/Town:" />                        
+                        <p:inputText style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.city}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                        </p:inputText>
+
+                        <h:outputText value="Parish/State/Province:" />
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.stateOrProvince}"   
+                                         maxlength="50"
+                                         validator="addressLineValidator"
+                                         editable="true">
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+
+                            <f:selectItems value="#{systemManager.jamaicaParishes}" />
+
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Type of business:"  style="font-style: italic"/>
+                        <h:outputText value=""/>
+
+                        <p:outputLabel value="Retailer:" for="retailerBusiness"/>
+                        <p:selectBooleanCheckbox 
+                            id="retailerBusiness"
+                            value="#{complianceManager.currentComplianceSurvey.retailer}">
                             <p:ajax listener="#{complianceManager.updateSurvey}"/>
                         </p:selectBooleanCheckbox>
 
-                        <h:outputText value="Other:" />
-                        <h:panelGrid columns="2">
-                            <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.otherCompanyTypes}">
+                        <p:outputLabel value="Distributor:" for="distributorBusiness"/>
+                        <p:selectBooleanCheckbox 
+                            id="distributorBusiness"
+                            value="#{complianceManager.currentComplianceSurvey.distributor}">
+                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                        </p:selectBooleanCheckbox>
+
+                        <p:outputLabel value="Other:" for="otherBusiness"/>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox 
+                                id="otherBusiness"
+                                value="#{complianceManager.currentComplianceSurvey.otherCompanyTypes}">
                                 <p:ajax listener="#{complianceManager.updateCompanyTypes}"
                                         update="companyTypes"/>
                             </p:selectBooleanCheckbox>
+                            <p:spacer height="0" width="4"/>
                             <p:inputText id="companyTypes" style="width: 300px"
                                          disabled="#{!complianceManager.currentComplianceSurvey.otherCompanyTypes}"
                                          value="#{complianceManager.currentComplianceSurvey.companyTypes}" >
@@ -1213,19 +1273,22 @@
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this" />
                             </p:inputText>
-                        </h:panelGrid>
-                    </h:panelGrid>
-                    <hr/>
-                    <h:panelGrid columns="6">
-                        <h:outputText value="Vessel:" />
-                        <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.vessel}" >
+                        </h:panelGroup>
+
+                        <h:outputText value="Shipping:"  style="font-style: italic"/>
+                        <h:outputText value=""/>
+
+                        <p:outputLabel value="Vessel:" for="shippingVessel" />
+                        <p:inputText 
+                            id="shippingVessel"
+                            value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.vessel}" >
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
                         </p:inputText>    
 
-                        <h:outputText value="Country of origin *:" />
+                        <h:outputText value="Country of origin:" />
                         <p:autoComplete value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.countryOfConsignment}" 
                                         forceSelection="true"  
                                         maxlength="40"
@@ -1240,29 +1303,32 @@
 
                             <p:ajax event="change"                              
                                     listener="#{complianceManager.updateEntryDocumentInspection}"
-                                    process="@this" />                               
+                                    process="@this" />   
+
                         </p:autoComplete>
                     </h:panelGrid>
-                    <hr/>
-                    <h:panelGrid columns="2" cellpadding="3">
-                        <p:commandButton value="Authorize Detention Notice"
-                                         title="Authorize notice of detention"
-                                         actionListener="#{complianceManager.updateAuthSigForNoticeOfDentionDM}"
-                                         onstart="longProcessDialogVar.show();"
-                                         update="AuthSigForNoticeOfDentionDM,AuthSigDateForNoticeOfDentionDM"
-                                         oncomplete="longProcessDialogVar.hide();"
-                                         icon="ui-icon-key"
-                                         process="@this" />
+                    <ui:remove>
+                        <hr/>
+                        <h:panelGrid columns="2" cellpadding="3">
+                            <p:commandButton value="Authorize Detention Notice"
+                                             title="Authorize notice of detention"
+                                             actionListener="#{complianceManager.updateAuthSigForNoticeOfDentionDM}"
+                                             onstart="longProcessDialogVar.show();"
+                                             update="AuthSigForNoticeOfDentionDM,AuthSigDateForNoticeOfDentionDM"
+                                             oncomplete="longProcessDialogVar.hide();"
+                                             icon="ui-icon-key"
+                                             process="@this" />
 
-                        <h:panelGroup>
-                            <p:graphicImage id="AuthSigForNoticeOfDentionDM" 
-                                            height="24"
-                                            width="192"
-                                            value="#{complianceManager.authSigForNoticeOfDentionDM}" />  
-                            <h:outputText  id="AuthSigDateForNoticeOfDentionDM"
-                                           value="  #{complianceManager.currentComplianceSurvey.authSigDateForNoticeOfDentionDM}" />
-                        </h:panelGroup>
-                    </h:panelGrid>
+                            <h:panelGroup>
+                                <p:graphicImage id="AuthSigForNoticeOfDentionDM" 
+                                                height="24"
+                                                width="192"
+                                                value="#{complianceManager.authSigForNoticeOfDentionDM}" />  
+                                <h:outputText  id="AuthSigDateForNoticeOfDentionDM"
+                                               value="  #{complianceManager.currentComplianceSurvey.authSigDateForNoticeOfDentionDM}" />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </ui:remove>
                 </p:tab>
             </p:tabView>
             <p:toolbar style="margin-top: 1px;">
@@ -1276,7 +1342,7 @@
                                      icon="ui-icon-disk"
                                      process="@this"/>
                     <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Cancel"      
+                    <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.closeComplianceSurvey}"
                                      update="#{complianceManager.componentsToUpdate}"                         
