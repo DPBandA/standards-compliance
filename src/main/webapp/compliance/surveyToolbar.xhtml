@@ -25,7 +25,7 @@ Email: info@dpbennett.com.jm
 
     <p:toolbar>
         <p:toolbarGroup align="left" >   
-            
+
             <p:commandButton
                 actionListener="#{complianceManager.createNewComplianceSurvey}"
                 global="true"                
@@ -41,23 +41,22 @@ Email: info@dpbennett.com.jm
                         update=":mainTabViewForm:mainTabView"
                         listener="#{complianceManager.surveyDialogReturn}" />
 
-            </p:commandButton>      
-           
+            </p:commandButton>   
 
         </p:toolbarGroup>
 
-        <p:toolbarGroup align="right" >               
-            <p:menuButton value="Tools" >
+        <ui:remove>
+            <p:toolbarGroup align="right" >               
+                <p:menuButton value="Tools" >
 
-                <p:menuitem value="Reports"
-                            onstart="PF('longProcessDialogVar').show();"                                                    
-                            
-                            oncomplete="PF('longProcessDialogVar').hide();"
-                            process="@this"/>
+                    <p:menuitem value="Reports"
+                                onstart="PF('longProcessDialogVar').show();"  
+                                oncomplete="PF('longProcessDialogVar').hide();"
+                                process="@this"/>
 
-            </p:menuButton>                                    
-
-        </p:toolbarGroup>
+                </p:menuButton>    
+            </p:toolbarGroup>
+        </ui:remove>
     </p:toolbar>   
 
 </html>

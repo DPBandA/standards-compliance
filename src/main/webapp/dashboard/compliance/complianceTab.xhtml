@@ -27,7 +27,7 @@ Email: info@dpbennett.com.jm
             <p:menuButton value="New">   
                 <p:menuitem>
                     <p:commandButton
-                        
+                        actionListener="#{complianceManager.createNewComplianceSurvey}"
                         style="width: 300%;text-align: left;background: none;border: 0;"
                         onstart="PF('longProcessDialogVar').show();"                 
                         oncomplete="PF('longProcessDialogVar').hide();"
@@ -35,6 +35,25 @@ Email: info@dpbennett.com.jm
                         value="Survey"       
                         update="headerForm:growl3"
                         title="Add a new survey"
+                        icon="ui-icon-plus"
+                        process="@this" >
+
+                        <p:ajax event="dialogReturn" 
+                                update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+
+                    </p:commandButton>
+                </p:menuitem>
+                
+                <p:menuitem>
+                    <p:commandButton
+                        actionListener="#{complianceManager.createNewDocumentStandard}"
+                        style="width: 300%;text-align: left;background: none;border: 0;"
+                        onstart="PF('longProcessDialogVar').show();"                 
+                        oncomplete="PF('longProcessDialogVar').hide();"
+                        onerror="PF('connectionErrorDialog').show();"
+                        value="Standard"       
+                        update="headerForm:growl3"
+                        title="Add a new standard"
                         icon="ui-icon-plus"
                         process="@this" >
 
@@ -55,9 +74,9 @@ Email: info@dpbennett.com.jm
                             actionListener="#{complianceManager.openSurveyBrowser}"   
                             process="@this"/>                   
                 <p:separator />
-                <p:menuitem value="Reports"
+                <p:menuitem value="Standard Browser"
                             onstart="PF('longProcessDialogVar').show();"  
-                            actionListener="#{complianceManager.openReportsTab}"
+                            actionListener="#{complianceManager.openStandardsBrowser}"
                             oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
 

@@ -109,7 +109,7 @@
                                 onstart="longProcessDialogVar.show();"
                                 oncomplete="longProcessDialogVar.hide();"
                                 update="generalPanelGrid,complianceSurveyTabView"
-                                listener="#{complianceManager.updateSurveyLocationType}"  
+                                listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
 
                             <f:selectItems value="#{complianceManager.surveyLocationTypes}" />
@@ -625,8 +625,10 @@
                                              icon="ui-icon-pencil"
                                              oncomplete="longProcessDialogVar.hide();"
                                              process="@this">
+                                
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
+                                
                             </p:commandButton>
                         </p:column>
                         <p:column style="width:32px">
