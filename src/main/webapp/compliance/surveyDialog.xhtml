@@ -33,7 +33,7 @@
                                      update="#{complianceManager.componentsToUpdate}"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-disk"
-                                     process="@this"/>
+                                     process="@form"/>
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
@@ -111,21 +111,28 @@
                                 update="generalPanelGrid,complianceSurveyTabView"
                                 listener="#{complianceManager.updateSurveyLocationType}"  
                                 process="@this" />
+
                             <f:selectItems value="#{complianceManager.surveyLocationTypes}" />
+
                         </p:selectOneMenu>     
 
-                        <h:outputText value="Type of Establishment *:" 
+                        <h:outputText value="Type of Establishment:" 
                                       style="font-weight: bold"
                                       rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <p:selectOneMenu id="typeOfEstablishment"
                                          value="#{complianceManager.currentComplianceSurvey.typeOfEstablishment}" 
                                          rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
+                            
+                            <f:validator validatorId="requiredFieldValidator" />
+                            
                             <p:ajax
                                 global="true"
                                 update="generalPanelGrid"
                                 listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
-                            <f:selectItems value="#{complianceManager.typesOfEstablishment}" />
+
+                           <f:selectItems value="#{complianceManager.typesOfEstablishment}" />
+
                         </p:selectOneMenu>     
 
                         <h:outputText value="Type of Port:"
@@ -147,10 +154,12 @@
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.portOfEntry}" 
                                          editable="false"
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
+                                                        
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
+                            
                             <f:selectItems value="#{complianceManager.portsOfEntry}" />
                         </p:selectOneMenu>                      
 
@@ -159,6 +168,7 @@
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.inspectionPoint}" 
                                          editable="true"
+                                         validator="requiredFieldValidator"
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax 
                                 global="true"
@@ -196,7 +206,7 @@
                                             scrollHeight="200" 
                                             value="#{complianceManager.currentComplianceSurvey.consignee}"    
                                             converter="activeClientConverter"
-                                            validator="clientValidator"
+                                            validator="jobClientValidator"
                                             forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
@@ -206,6 +216,7 @@
                                         process="@this"/>
 
                             </p:autoComplete>  
+
                             <p:menuButton id="consigneeActionsMenu" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit consignee">
@@ -286,7 +297,7 @@
                                             scrollHeight="200" 
                                             value="#{complianceManager.currentComplianceSurvey.retailOutlet}"    
                                             converter="activeClientConverter"
-                                            validator="clientValidator"
+                                            validator="jobClientValidator"
                                             forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
@@ -295,6 +306,7 @@
                                         listener="#{complianceManager.updateRetailOutlet}"
                                         process="@this"/>
 
+                                
                             </p:autoComplete>  
                             <p:menuButton id="retailOutletActionsMenu" 
                                           icon="ui-icon-pencil" 
@@ -409,11 +421,10 @@
                             styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
                             style="width: 500px;">
 
-                            <f:validator validatorId="requiredFieldValidator" />
-
                             <p:ajax event="change"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
+                            
                         </p:inputTextarea> 
                         <h:outputText value="&nbsp;&nbsp;" />
                         <h:outputText id="commentsCharsRemaining" /> 
@@ -506,8 +517,7 @@
                                         forceSelection="true"  
                                         maxlength="40"
                                         dropdown="true"
-                                        scrollHeight="200" 
-                                        validator="requiredFieldValidator"
+                                        scrollHeight="200"
                                         completeMethod="#{systemManager.completeCountry}" >
 
                             <p:ajax event="itemSelect"                              
@@ -686,7 +696,6 @@
                                             scrollHeight="200" 
                                             value="#{complianceManager.currentComplianceSurvey.broker}"    
                                             converter="activeClientConverter"
-                                            validator="clientValidator"
                                             forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
@@ -745,7 +754,6 @@
                                         forceSelection="true"
                                         scrollHeight="200"
                                         converter="clientContactConverter" 
-                                        validator="contactValidator"
                                         var="representative"                        
                                         itemValue="#{representative}"
                                         itemLabel="#{representative.name}" 
@@ -766,7 +774,6 @@
                                         forceSelection="true"
                                         size="35"
                                         converter="clientAddressConverter" 
-                                        validator="addressValidator"
                                         var="address"  
                                         scrollHeight="200"
                                         itemValue="#{address}"
@@ -1033,7 +1040,6 @@
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}"   
                                          id="parishStateProvince"
                                          maxlength="50"
-                                         validator="addressLineValidator"
                                          editable="true">
                             <p:ajax
                                 global="true"
@@ -1175,7 +1181,6 @@
                         <h:outputText value="Parish/State/Province:" />
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocationDomesticMarket.stateOrProvince}"   
                                          maxlength="50"
-                                         validator="addressLineValidator"
                                          editable="true">
                             <p:ajax
                                 global="true"
@@ -1228,7 +1233,6 @@
                         <h:outputText value="Parish/State/Province:" />
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.locationOfDetainedProductDomesticMarket.stateOrProvince}"   
                                          maxlength="50"
-                                         validator="addressLineValidator"
                                          editable="true">
                             <p:ajax
                                 global="true"
@@ -1293,8 +1297,7 @@
                                         forceSelection="true"  
                                         maxlength="40"
                                         dropdown="true"
-                                        scrollHeight="200" 
-                                        validator="requiredFieldValidator"
+                                        scrollHeight="200"
                                         completeMethod="#{systemManager.completeCountry}" >
 
                             <p:ajax event="itemSelect"                              
@@ -1340,7 +1343,7 @@
                                      oncomplete="longProcessDialogVar.hide();"
                                      onerror="connectionErrorDialog.show();"
                                      icon="ui-icon-disk"
-                                     process="@this"/>
+                                     process="@form"/>
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
