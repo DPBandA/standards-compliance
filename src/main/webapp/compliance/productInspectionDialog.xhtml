@@ -69,7 +69,8 @@
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
 
-                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}"                                              
+                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
+                                             editable="true"
                                              validator="requiredFieldValidator" >
 
                                 <p:ajax
