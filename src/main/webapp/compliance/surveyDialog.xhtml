@@ -17,9 +17,7 @@
     <h:body >  
         <ui:insert >   
             <ui:include src="../common/longProcessDialog.xhtml"/>
-
-            <ui:include src="cdbAlertDialogs.xhtml"/>   
-            <ui:include src="cdbShippingContainerDialogForm.xhtml"/>
+            <ui:include src="deleteProductInspectionDialog.xhtml"/>   
         </ui:insert>
         <h:form id="ComplianceSurveyDialogForm">   
 
@@ -621,6 +619,7 @@
                         </p:column>
                         <p:column style="width:32px">
                             <p:commandButton title="Edit product details"
+                                             actionListener="#{complianceManager.editCurrentProductInspection}" 
                                              onstart="longProcessDialogVar.show();"
                                              icon="ui-icon-pencil"
                                              oncomplete="longProcessDialogVar.hide();"

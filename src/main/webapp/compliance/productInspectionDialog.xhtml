@@ -18,7 +18,6 @@
     <h:body >  
         <ui:insert >   
             <ui:include src="../common/longProcessDialog.xhtml"/>
-
             <ui:include src="cdbAlertDialogs.xhtml"/>   
             <ui:include src="cdbShippingContainerDialogForm.xhtml"/>
         </ui:insert>
@@ -316,7 +315,6 @@
                                                 scrollHeight="200" 
                                                 value="#{complianceManager.currentProductInspection.distributor}"    
                                                 converter="activeClientConverter"
-                                                validator="jobClientValidator"
                                                 forceSelection="true"
                                                 completeMethod="#{clientManager.completeActiveClient}" >
 
