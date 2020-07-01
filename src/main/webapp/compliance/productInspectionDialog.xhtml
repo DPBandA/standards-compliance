@@ -192,7 +192,7 @@
                                 </p:selectCheckboxMenu>
                             </ui:remove>
 
-                            <h:outputText value="Shipping container #(s):" />
+                            <h:outputText value="Shipping Container #(s):" />
                             <p:inputText value="#{complianceManager.currentProductInspection.containerNumber}"     
                                          id="productShippingContainerNumber"                                            
                                          size="35" >
@@ -238,7 +238,7 @@
                                         process="@this"/> 
                             </p:spinner>  
 
-                            <h:outputText value="No. Products Sampled:" />                       
+                            <h:outputText value="Sample Quantity:" />                       
                             <p:spinner  value="#{complianceManager.currentProductInspection.numProductsSampled}" 
                                         stepFactor="1"
                                         min="0">
