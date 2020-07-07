@@ -134,15 +134,19 @@ Email: info@dpbennett.com.jm
                             <h:panelGroup rendered="#{t.id == 'System Administration'}" >
                                 <ui:include src="admin/generalAdminTab.xhtml" /> 
                             </h:panelGroup>
-                            
+
                             <h:panelGroup  rendered="#{t.id == 'Standards Compliance'}">
                                 <ui:include src="compliance/surveyBrowser.xhtml" /> 
                             </h:panelGroup> 
-                             
+
+                            <h:panelGroup  rendered="#{t.id == 'Complaints'}">
+                                <ui:include src="compliance/complaintBrowser.xhtml" /> 
+                            </h:panelGroup>
+
                             <h:panelGroup rendered="#{t.id == 'Standards'}" >
                                 <ui:include src="compliance/standardsTab.xhtml" />                                                                
                             </h:panelGroup>
-                            
+
                         </p:tab>
                     </p:tabView>
 
@@ -197,9 +201,13 @@ Email: info@dpbennett.com.jm
                                 listener="#{systemManager.onDashboardTabChange}" />
 
                         <p:tab title="#{t.name}" >                             
-                            
+
                             <h:panelGroup rendered="#{t.id == 'System Administration'}">
                                 <ui:include src="dashboard/admin/generalAdminTab.xhtml" />
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{t.id == 'Complaints'}">
+                                <ui:include src="dashboard/compliance/complaintTab.xhtml" />
                             </h:panelGroup>
 
                             <h:panelGroup rendered="#{t.id == 'Standards Compliance'}">
