@@ -1,6 +1,6 @@
 <!--
-Job Management & Tracking System (JMTS) 
-Copyright (C) 2017  D P Bennett & Associates Limited
+Standards Compliance (SC) 
+Copyright (C) 2020  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -24,65 +24,66 @@ Email: info@dpbennett.com.jm
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"> 
 
-    <ui:include src="surveyToolbar.xhtml"/>
+    <ui:include src="complaintToolbar.xhtml"/>
     
-    <p:dataTable id="complianceSurveysTable"
-                 var="complianceSurvey"
+    <p:dataTable id="complaintsTable"
+                 var="complaint"
                  paginator="true"
                  rendered="true"
                  style="margin-bottom: 1px;margin-top: 1px;"
                  rows="15"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                 value="#{complianceManager.complianceSurveys}">
+                 value="#{complianceManager.complaints}">
         <f:facet name="header">
-            <h:outputText value="Surveys" />
+            <h:outputText value="Complaints" />
         </f:facet>
 
         <p:column>
             <f:facet name="header">
-                <h:outputText value="Location"/>
+                <h:outputText value="Complaint"/>
             </f:facet>
-            <h:outputText value="#{complianceSurvey.surveyLocationType}" />
+            <h:outputText value="#{complaint.complaint}" />
         </p:column>
 
         <p:column>
             <f:facet name="header">
-                <h:outputText value="Comments"/>
+                <h:outputText value="Action taken"/>
             </f:facet>
-            <h:outputText value="#{complianceSurvey.comments}" />
+            <h:outputText value="#{complaint.actions}" />
         </p:column>
 
         <p:column>
             <f:facet name="header">
-                <h:outputText value="Inspector"/>
+                <h:outputText value="Action results"/>
             </f:facet>
-            <h:outputText value="#{complianceSurvey.inspector.name}" />
+            <h:outputText value="#{complaint.actionsResults}" />
         </p:column>
 
         <p:column>
             <f:facet name="header">
-                <h:outputText value="Date of survey"/>
+                <h:outputText value="Date of received"/>
             </f:facet>
-            <h:outputText value="#{complianceSurvey.dateOfSurvey}" >
+            <h:outputText value="#{complaint.dateReceived}" >
                 <f:convertDateTime pattern="MMM dd, yyyy" />
             </h:outputText>
         </p:column>
 
         <p:column style="width:32px">
-            <p:commandButton title="View or edit survey"
+            <p:commandButton title="View or edit complaint"
                              onstart="longProcessDialogVar.show();"
                              oncomplete="longProcessDialogVar.hide();"
-                             actionListener="#{complianceManager.editComplianceSurvey}"                             
+                             actionListener="#{complianceManager.editComplaint}"                             
                              global="true"
                              icon="ui-icon-pencil">
                 
-                <f:setPropertyActionListener value="#{complianceSurvey}"
-                                             target="#{complianceManager.currentComplianceSurvey}" />
+                <f:setPropertyActionListener value="#{complaint}"
+                                             target="#{complianceManager.currentComplaint}" />
                 
             </p:commandButton>
         </p:column>
     </p:dataTable>
-    <ui:include src="surveyToolbar.xhtml"/>
+    
+    <ui:include src="complaintToolbar.xhtml"/>
 
 </html>
 
