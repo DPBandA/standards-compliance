@@ -44,6 +44,15 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{complaint.complaint}" />
         </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Date of received"/>
+            </f:facet>
+            <h:outputText value="#{complaint.dateReceived}" >
+                <f:convertDateTime pattern="MMM dd, yyyy" />
+            </h:outputText>
+        </p:column>
 
         <p:column>
             <f:facet name="header">
@@ -57,16 +66,7 @@ Email: info@dpbennett.com.jm
                 <h:outputText value="Action results"/>
             </f:facet>
             <h:outputText value="#{complaint.actionsResults}" />
-        </p:column>
-
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Date of received"/>
-            </f:facet>
-            <h:outputText value="#{complaint.dateReceived}" >
-                <f:convertDateTime pattern="MMM dd, yyyy" />
-            </h:outputText>
-        </p:column>
+        </p:column>        
 
         <p:column style="width:32px">
             <p:commandButton title="View or edit complaint"
@@ -79,11 +79,14 @@ Email: info@dpbennett.com.jm
                 <f:setPropertyActionListener value="#{complaint}"
                                              target="#{complianceManager.currentComplaint}" />
                 
+                <p:ajax event="dialogReturn" 
+                        update=":mainTabViewForm:mainTabView"
+                        listener="#{complianceManager.complaintDialogReturn}" />
+                
             </p:commandButton>
         </p:column>
     </p:dataTable>
-    
-    <ui:include src="complaintToolbar.xhtml"/>
+   
 
 </html>
 

@@ -131,6 +131,7 @@ Email: info@dpbennett.com.jm
                                              target="#{complianceManager.currentDocumentStandard}" />
 
                 <p:ajax event="dialogReturn" 
+                        listener="#{complianceManager.doDocumentStandardSearch}"
                         update=":mainTabViewForm:mainTabView:standardsTable"/>
 
             </p:commandButton>

@@ -28,7 +28,7 @@
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveComplaint}"     
-                                     update="complaint_growl"
+                                     update="complaint_growl,complaintDialogForm"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-disk"
                                      process="@form"/>
@@ -52,7 +52,7 @@
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
-                        
+
                         <h:outputText value="Complainant:"
                                       style="font-weight: bold" />
                         <h:panelGroup>
@@ -132,6 +132,48 @@
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
 
+                        <h:outputText value="Date of correspondence:" style="font-weight: bold" />
+                        <p:calendar id="dateOfCorrespondence"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy" 
+                                    value="#{complianceManager.currentComplaint.dateOfCorrespondence}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateComplaint}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateComplaint}" />
+                        </p:calendar>
+
+                        <h:outputText value="Complaint officer:"/>
+                        <p:inputText maxlength="250"
+                                     value="#{complianceManager.currentComplaint.complaintOfficer}" >
+
+                            <p:ajax event="change"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:inputText>
+
+                        <h:outputText value="Complaint:" />                        
+                        <p:inputTextarea
+                            id="complaint"
+                            value="#{complianceManager.currentComplaint.complaint}"
+                            rows="3"
+                            counter="complaintCharsRemaining"
+                            counterTemplate="{0} characters remaining."
+                            autoResize="false"
+                            maxlength="1000" 
+                            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                            style="width: 500px;">
+
+                            <p:ajax event="change"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:inputTextarea> 
+                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText id="complaintCharsRemaining" /> 
+
                         <h:outputText value="Comments:" />                        
                         <p:inputTextarea
                             id="comments"
@@ -147,10 +189,11 @@
                             <p:ajax event="change"
                                     listener="#{complianceManager.updateComplaint}"
                                     process="@this"/>
-                            
+
                         </p:inputTextarea> 
                         <h:outputText value="&nbsp;&nbsp;" />
                         <h:outputText id="commentsCharsRemaining" /> 
+
                     </h:panelGrid>
                 </p:tab>    
 
@@ -189,10 +232,10 @@
                                              icon="ui-icon-pencil"
                                              oncomplete="longProcessDialogVar.hide();"
                                              process="@this">
-                                
+
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
-                                
+
                             </p:commandButton>
                         </p:column>
                         <p:column style="width:32px">
@@ -218,14 +261,80 @@
 
                     </p:commandButton>
 
-                </p:tab>                
+                </p:tab>   
+
+                <p:tab title="Status &amp; Tracking" >
+                    <h:panelGrid id="statusAndTrackingPanelGrid" columns="2" cellspacing="3">
+
+                        <h:outputText value="Entered by: "/>
+                        <p:inputText readonly="true"
+                                     maxlength="250"
+                                     style="background-color: lightgrey"
+                                     value="#{complianceManager.currentComplaint.enteredBy.firstName} #{complianceManager.currentComplaint.enteredBy.lastName}"
+                                     title="#{complianceManager.currentComplaint.enteredBy.firstName} #{complianceManager.currentComplaint.enteredBy.lastName}"/>
+
+                        <h:outputText value="Date resolved:" />
+                        <p:calendar id="dateResolved"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy" 
+                                    value="#{complianceManager.currentComplaint.dateResolved}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateComplaint}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateComplaint}" />
+                        </p:calendar>
+
+                        <h:outputText value="Action taken:" />                        
+                        <p:inputTextarea
+                            id="actions"
+                            value="#{complianceManager.currentComplaint.actions}"
+                            rows="3"
+                            counter="actionTakenCharsRemaining"
+                            counterTemplate="{0} characters remaining."
+                            autoResize="false"
+                            maxlength="1000" 
+                            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                            style="width: 500px;">
+
+                            <p:ajax event="change"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:inputTextarea> 
+                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText id="actionTakenCharsRemaining" />
+                        
+                        <h:outputText value="Action results:" />                        
+                        <p:inputTextarea
+                            id="actionsResults"
+                            value="#{complianceManager.currentComplaint.actionsResults}"
+                            rows="3"
+                            counter="actionsResultsCharsRemaining"
+                            counterTemplate="{0} characters remaining."
+                            autoResize="false"
+                            maxlength="1000" 
+                            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                            style="width: 500px;">
+
+                            <p:ajax event="change"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:inputTextarea> 
+                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText id="actionsResultsCharsRemaining" />
+
+                    </h:panelGrid>
+                </p:tab>
+
             </p:tabView>
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveComplaint}"     
-                                     update="complaint_growl"
+                                     update="complaint_growl,complaintDialogForm"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-disk"
                                      process="@form"/>
