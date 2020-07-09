@@ -17,9 +17,7 @@
     </h:head>
     <h:body >  
         <ui:insert >   
-            <ui:include src="../common/longProcessDialog.xhtml"/>
-            <ui:include src="cdbAlertDialogs.xhtml"/>   
-            <ui:include src="cdbShippingContainerDialogForm.xhtml"/>
+            <ui:include src="../common/longProcessDialog.xhtml"/>           
         </ui:insert>
         <h:form id="productDialogForm">   
             <p:growl id="product_inspection_growl" life="5000" showDetail="true"/>
@@ -27,7 +25,7 @@
             <p:toolbar style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Ok"
-                                     actionListener="#{complianceManager.okProductInspection}"
+                                     actionListener="#{complianceManager.okComplaintProductInspection}"
                                      update=":productDialogForm"
                                      onstart="longProcessDialogVar.show();"                                     
                                      oncomplete="longProcessDialogVar.hide();"
@@ -61,7 +59,7 @@
 
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
 
                             </p:inputText>     
@@ -75,7 +73,7 @@
 
                                 <p:ajax
                                     global="false"                            
-                                    listener="#{complianceManager.updateSurvey}"  
+                                    listener="#{complianceManager.updateComplaint}"  
                                     process="@this" />
 
                                 <f:selectItems value="#{complianceManager.productCategories}" />
@@ -99,7 +97,7 @@
 
                                     <p:ajax event="itemSelect"
                                             update="manufacturerActionsMenu"
-                                            listener="#{complianceManager.updateSurvey}"
+                                            listener="#{complianceManager.updateComplaint}"
                                             process="@this"/>
 
                                 </p:autoComplete>  
@@ -150,7 +148,7 @@
                             <p:inputText value="#{complianceManager.currentProductInspection.brand}" >
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>        
 
@@ -158,7 +156,7 @@
                             <p:inputText value="#{complianceManager.currentProductInspection.model}" >
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>    
 
@@ -166,118 +164,10 @@
                             <p:inputText value="#{complianceManager.currentProductInspection.serialNumber}" >
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>   
-
-                            <h:outputText value="Tariff Code:" />
-                            <p:inputText value="#{complianceManager.currentProductInspection.tariffCode}" >
-                                <p:ajax event="keyup"
-                                        global="false"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
-                            </p:inputText>  
-
-                            <ui:remove>
-                                <p:selectCheckboxMenu id="productShippingContainers" 
-                                                      value="#{complianceManager.selectedContainerNumbers}" 
-                                                      label="Select shipping container(s)"                                              
-                                                      filter="true" 
-                                                      style="vertical-align: bottom;"
-                                                      filterMatchMode="startsWith" 
-                                                      onHide="updateSelectedShippingContainers();"
-                                                      panelStyle="width:250px">
-
-                                    <f:selectItems value="#{complianceManager.allShippingContainers}" />
-                                </p:selectCheckboxMenu>
-                            </ui:remove>
-
-                            <h:outputText value="Shipping Container #(s):" />
-                            <p:inputText value="#{complianceManager.currentProductInspection.containerNumber}"     
-                                         id="productShippingContainerNumber"                                            
-                                         size="35" >
-                                <p:ajax event="keyup"                                   
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
-                            </p:inputText>    
-
-                            <h:outputText value="Product Group Package Type:" />
-                            <p:inputText value="#{complianceManager.currentProductInspection.productGroupPackageType}"
-                                         title="Enter the package group type. E.g. case, palette"
-                                         placeholder="case, palette, etc." >
-
-                                <p:ajax event="keyup"
-                                        global="false"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
-
-                            </p:inputText>     
-
-                            <h:outputText value=" Product Package Type:" />
-                            <p:inputText value="#{complianceManager.currentProductInspection.productPackageType}"
-                                         placeholder="bottle, box, etc." >
-                                <p:ajax event="keyup"
-                                        global="false"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
-                            </p:inputText>
-
-                            <h:outputText value="No. of Products per Group Package:" />                       
-                            <p:spinner  value="#{complianceManager.currentProductInspection.numProductsPerGroupPackage}" 
-                                        stepFactor="1"
-                                        min="0">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
-                            </p:spinner>  
-
-                            <h:outputText value="Product Quantity:" /> 
-                            <p:spinner  value="#{complianceManager.currentProductInspection.quantity}" 
-                                        stepFactor="1"
-                                        min="0">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/> 
-                            </p:spinner>  
-
-                            <h:outputText value="Sample Quantity:" />                       
-                            <p:spinner  value="#{complianceManager.currentProductInspection.numProductsSampled}" 
-                                        stepFactor="1"
-                                        min="0">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
-                            </p:spinner>  
-
-                            <h:outputText value="Sampled for:" />
-                            <h:panelGrid columns="2">
-                                <p:outputLabel value="Label Assessment:" 
-                                               for="sampledForLabelAssessment"/>                                
-                                <p:selectBooleanCheckbox 
-                                    id="sampledForLabelAssessment"
-                                    value="#{complianceManager.currentProductInspection.sampledForLabelAssessment}">
-
-                                    <p:ajax listener="#{complianceManager.updateSurvey}"/>
-
-                                </p:selectBooleanCheckbox>
-
-                                <p:outputLabel value="Testing:" 
-                                               for="sampledForTesting" />                            
-                                <p:selectBooleanCheckbox 
-                                    id="sampledForTesting"
-                                    value="#{complianceManager.currentProductInspection.sampledForTesting}">
-
-                                    <p:ajax listener="#{complianceManager.updateSurvey}"/>
-
-                                </p:selectBooleanCheckbox>
-
-                                <p:outputLabel value="Investigation:" 
-                                               for="sampledForInvestigation"/>
-                                <p:selectBooleanCheckbox 
-                                    id="sampledForInvestigation"
-                                    value="#{complianceManager.currentProductInspection.sampledForInvestigation}">
-
-                                    <p:ajax listener="#{complianceManager.updateSurvey}"/>
-
-                                </p:selectBooleanCheckbox>
-                            </h:panelGrid>
+                            
                         </h:panelGrid>
                     </p:tab>
 
@@ -285,7 +175,7 @@
                         <h:panelGrid columns="3" cellpadding="5">
                             <h:outputText value="Country of Origin:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasCountryOfOrigin}">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
                             </p:selectBooleanCheckbox>
 
                             <p:autoComplete value="#{complianceManager.currentProductInspection.countryOfOrigin}" 
@@ -296,14 +186,14 @@
                                             completeMethod="#{systemManager.completeCountry}" >       
 
                                 <p:ajax                               
-                                    listener="#{complianceManager.updateSurvey}"
+                                    listener="#{complianceManager.updateComplaint}"
                                     process="@this" />
 
                             </p:autoComplete>
 
                             <h:outputText value="Distributor:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasBusinessSource}">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
                             </p:selectBooleanCheckbox>   
                             <h:panelGroup>
                                 <p:autoComplete id="distributor"      
@@ -321,7 +211,7 @@
 
                                     <p:ajax event="itemSelect"
                                             update="distributorActionsMenu"
-                                            listener="#{complianceManager.updateSurvey}"
+                                            listener="#{complianceManager.updateComplaint}"
                                             process="@this"/>
 
                                 </p:autoComplete>  
@@ -367,55 +257,45 @@
                                 </p:menuButton>                                
                             </h:panelGroup> 
 
-                            <ui:remove>
-                                <p:inputText value="#{complianceManager.currentProductInspection.businessSource.name}"
-                                             style="font-weight: bold;width: 300px" >
-                                    <p:ajax event="keyup"
-                                            global="false"
-                                            listener="#{complianceManager.updateSurvey}"
-                                            process="@this"/>
-                                </p:inputText>
-                            </ui:remove>
-
                             <h:outputText value="Net Quantity Declaration in Metric:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasQuantityDescription}">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
                             </p:selectBooleanCheckbox>
                             <p:inputText value="#{complianceManager.currentProductInspection.quantityDescription}"
                                          style="font-weight: bold;width: 300px" >
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>
 
                             <h:outputText value="Ingredient Listing:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasIngredients}">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
                             </p:selectBooleanCheckbox>
                             <p:inputText value="#{complianceManager.currentProductInspection.ingredients}"
                                          style="width: 300px"                                        
                                          maxlength="1000">
                                 <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>
 
                             <h:outputText value="Instructions:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasInstructions}">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
                             </p:selectBooleanCheckbox>
                             <p:inputText value="#{complianceManager.currentProductInspection.instructions}"
                                          style="width: 300px"
                                          maxlength="1000">
                                 <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>
 
                             <h:outputText value="Pictorial Representation:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasPictorialRepresentation}">
-                                <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
                             </p:selectBooleanCheckbox>                            
 
                         </h:panelGrid>
@@ -426,7 +306,7 @@
                                          style="font-weight: bold;" >
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>
 
@@ -435,7 +315,7 @@
                                          style="font-weight: bold;" >
                                 <p:ajax event="keyup"
                                         global="false"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
                             </p:inputText>
 
@@ -452,7 +332,7 @@
                                 style="width: 500px;">
 
                                 <p:ajax event="change"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
 
                             </p:inputTextarea> 
@@ -463,7 +343,7 @@
                             <p:selectOneMenu value="#{complianceManager.currentProductInspection.status}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateSurvey}"
+                                    listener="#{complianceManager.updateComplaint}"
                                     process="@this" />
                                 <f:selectItems value="#{complianceManager.productStatus}" />
                             </p:selectOneMenu>
@@ -481,7 +361,7 @@
                                 style="width: 500px;">
 
                                 <p:ajax event="change"
-                                        listener="#{complianceManager.updateSurvey}"
+                                        listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
 
                             </p:inputTextarea> 
@@ -489,48 +369,13 @@
                             <h:outputText id="commentsCharsRemaining" />
                            
                         </h:panelGrid>
-
-                        <ui:remove>
-                            <hr/>
-                            <h:panelGrid columns="2">
-                                <h:outputText value="Product image:" />
-                                <h:panelGroup>
-                                    <h:panelGrid columns="2">
-                                        <p:inputText value="#{complianceManager.currentProductInspection.imageURL}"
-                                                     id="imageURL"
-                                                     readonly="true"
-                                                     style="font-weight: bold;width: 300px" >
-                                            <p:ajax event="keyup"
-                                                    global="false"
-                                                    listener="#{complianceManager.updateSurvey}"
-                                                    process="@this"/>                           
-                                        </p:inputText>
-
-                                        <p:commandButton id="downloadImageButton" value="Download" ajax="false" 
-                                                         onclick="longProcessDialogVar2.show();"   
-                                                         disabled="#{!complianceManager.marketProductImageIsValid}"
-                                                         icon="ui-icon-arrowthichk-s">  
-                                            <p:fileDownload value="#{complianceManager.getCurrentProductInspectionImageDownload}" />
-                                        </p:commandButton> 
-                                    </h:panelGrid>
-
-                                    <p:fileUpload fileUploadListener="#{complianceManager.handleProductPhotoFileUpload}" 
-                                                  onstart="longProcessDialogVar.show();"
-                                                  oncomplete="longProcessDialogVar.hide();"
-                                                  multiple="false"
-                                                  update="imageURL,downloadImageButton"
-                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
-                                </h:panelGroup>
-                            </h:panelGrid>
-                        </ui:remove>
                     </p:tab>
                 </p:tabView>    
             </p:scrollPanel>
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Ok"
-                                     actionListener="#{complianceManager.okProductInspection}"
+                                     actionListener="#{complianceManager.okComplaintProductInspection}"
                                      update=":productDialogForm"
                                      onstart="longProcessDialogVar.show();"
                                      oncomplete="longProcessDialogVar.hide();" 
