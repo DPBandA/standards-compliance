@@ -127,6 +127,27 @@
                             </p:menuButton>                                
                         </h:panelGroup> 
 
+                        <h:outputText value="Received by:" style="font-weight: bold" />       
+                        <p:autoComplete id="receivedBy"
+                                        var="receivedBy"                            
+                                        maxlength="40" 
+                                        value="#{complianceManager.currentComplaint.receivedBy}"
+                                        title="#{complianceManager.currentComplaint.receivedBy}"
+                                        itemLabel="#{receivedBy.name}"
+                                        itemValue="#{receivedBy}"
+                                        converter="activeEmployeeConverter"
+                                        validator="businessEntityValidator"
+                                        forceSelection="true"
+                                        dropdown="true"
+                                        scrollHeight="200" 
+                                        completeMethod="#{humanResourceManager.completeActiveEmployee}" >
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+                            
+                        </p:autoComplete>  
+
                         <h:outputText value="Received via:"
                                       style="font-weight: bold" />
                         <h:panelGroup>
@@ -206,7 +227,7 @@
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
 
-                        <h:outputText value="Date of correspondence:" style="font-weight: bold" />
+                        <h:outputText value="Date of correspondence:" />
                         <p:calendar id="dateOfCorrespondence"
                                     readonlyInput="true"
                                     navigator="true" 
@@ -218,6 +239,23 @@
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
 
+                        <h:outputText value="Job number(s):" />                   
+                        <p:autoComplete id="jobNumber"                                           
+                                        maxResults="12"                                           
+                                        value="#{complianceManager.currentComplaint.jobNumber}"                                           
+                                        forceSelection="false"
+                                        completeMethod="#{complianceManager.completeJobNumber}">
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:autoComplete>
+
                         <h:outputText value="Complaint officer:"/>
                         <p:inputText maxlength="250"
                                      value="#{complianceManager.currentComplaint.complaintOfficer}" >
@@ -228,7 +266,7 @@
 
                         </p:inputText>
 
-                        <h:outputText value="Complaint:" />                        
+                        <h:outputText value="Nature of complaint:" />                        
                         <p:inputTextarea
                             id="complaint"
                             value="#{complianceManager.currentComplaint.complaint}"
@@ -346,6 +384,24 @@
                                      style="background-color: lightgrey"
                                      value="#{complianceManager.currentComplaint.enteredBy.firstName} #{complianceManager.currentComplaint.enteredBy.lastName}"
                                      title="#{complianceManager.currentComplaint.enteredBy.firstName} #{complianceManager.currentComplaint.enteredBy.lastName}"/>
+
+                        <h:outputLabel value="Work progress: " 
+                                       style="font-weight: bold;"
+                                       for="workProgress"/>
+                        <p:selectOneMenu id="workProgress"     
+                                         style="width: 200px;"
+                                         value="#{complianceManager.currentComplaint.workProgress}">
+
+                            <f:selectItems  value="#{systemManager.workProgressList}"
+                                            var="progress"                            
+                                            itemValue="#{progress}"
+                                            itemLabel="#{progress}"/>
+
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    global="false"
+                                    process="@this"/>
+
+                        </p:selectOneMenu>   
 
                         <h:outputText value="Date resolved:" />
                         <p:calendar id="dateResolved"
