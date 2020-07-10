@@ -53,6 +53,13 @@
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
 
+                        <p:outputLabel for="internal" value="Internal"
+                                       style="font-weight: bold;" />               
+                        <p:selectBooleanCheckbox id="internal"
+                                                 style="vertical-align: middle"
+                                                 value="#{complianceManager.currentComplaint.internal}" />                       
+
+
                         <h:outputText value="Complainant:"
                                       style="font-weight: bold" />
                         <h:panelGroup>
@@ -392,7 +399,30 @@
                         <h:outputText value="&nbsp;&nbsp;" />
                         <h:outputText id="actionsResultsCharsRemaining" />
 
-                        <h:outputText value="Referred to:" />       
+                        <h:outputText value="Referred to department(s):" />       
+                        <p:autoComplete id="referredToDepartment"
+                                        var="referredToDepartment"   
+                                        value="#{complianceManager.currentComplaint.referredToDepartment}"
+                                        itemLabel="#{referredToDepartment.name}"
+                                        itemValue="#{referredToDepartment}"
+                                        converter="activeDepartmentConverter"
+                                        forceSelection="true"
+                                        dropdown="true"
+                                        scrollHeight="200"                         
+                                        multiple="true"
+                                        completeMethod="#{humanResourceManager.completeActiveDepartment}" >
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                            <p:ajax event="itemUnselect"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:autoComplete>
+
+                        <h:outputText value="Referred to employee(s):" />       
                         <p:autoComplete id="referredTo"
                                         var="referredTo"   
                                         value="#{complianceManager.currentComplaint.referredTo}"
