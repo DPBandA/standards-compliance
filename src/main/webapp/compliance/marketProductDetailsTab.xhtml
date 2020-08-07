@@ -43,40 +43,36 @@ Email: info@dpbennett.com.jm
         <h:outputText value="" />
 
         <h:outputText value="Code" style="font-weight: bold;" />       
-        <p:inputText value="#{complianceManager.currentMarketProduct.code}"                     
-                     id="marketProductCode"
-                     validator="documentStandardValidator">
+        <p:inputText value="#{complianceManager.currentMarketProduct.code}" 
+                     validator="marketProductValidator">
 
             <p:ajax event="change"
                     global="true"      
-                    update="documentStandardNumber"
-                    listener="#{complianceManager.updateDocumentStandardName}"
+                    listener="#{complianceManager.updateMarketProduct}"
                     process="@this"/>
 
         </p:inputText>     
         <h:outputText value="" />
 
         <h:outputText value="Name:" style="font-weight: bold;" />       
-        <p:inputText value="#{complianceManager.currentDocumentStandard.name}"
+        <p:inputText value="#{complianceManager.currentMarketProduct.name}"
                      style="width: 500px;"
-                     id="documentStandardName"
-                     validator="documentStandardValidator">
+                     validator="marketProductValidator">
 
             <p:ajax event="change"
-                    global="true"      
-                    update="documentStandardName"
-                    listener="#{complianceManager.updateDocumentStandardName}"
+                    global="true"  
+                    listener="#{complianceManager.updateMarketProduct}"
                     process="@this"/>
 
         </p:inputText>     
         <h:outputText value="" />
 
-        <h:outputText value="Synopsis:" />                        
+        <h:outputText value="Description:" />                        
         <p:inputTextarea
-            id="synopsis"
-            value="#{complianceManager.currentDocumentStandard.synopsis}"
+            id="description"
+            value="#{complianceManager.currentMarketProduct.description}"
             rows="3"
-            counter="synopsisCharsRemaining"
+            counter="descriptionCharsRemaining"
             counterTemplate="{0} characters remaining."
             autoResize="false"
             maxlength="1000" 
@@ -84,14 +80,14 @@ Email: info@dpbennett.com.jm
             style="width: 500px;">
 
             <p:ajax event="change"
-                    listener="#{complianceManager.updateDocumentStandard}"
+                    listener="#{complianceManager.updateMarketProduct}"
                     process="@this"/>
             
         </p:inputTextarea> 
         <h:outputText value="" />
         
         <h:outputText value="" />
-        <h:outputText id="synopsisCharsRemaining" />
+        <h:outputText id="descriptionCharsRemaining" />
 
     </h:panelGrid>                    
 
