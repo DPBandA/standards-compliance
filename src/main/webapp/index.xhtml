@@ -150,9 +150,13 @@ Email: info@dpbennett.com.jm
                             <h:panelGroup rendered="#{t.id == 'Market Products'}" >
                                 <ui:include src="compliance/marketProductBrowser.xhtml" />                                                                
                             </h:panelGroup>
-                            
+
                             <h:panelGroup rendered="#{t.id == 'Manufacturers'}" >
                                 <ui:include src="compliance/manufacturersTab.xhtml" />                                                                
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{t.id == 'Factory Inspections'}" >
+                                <ui:include src="compliance/factoryInspectionsTab.xhtml" />                                                                
                             </h:panelGroup>
 
                         </p:tab>
