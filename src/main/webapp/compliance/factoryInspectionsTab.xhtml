@@ -37,93 +37,66 @@ Email: info@dpbennett.com.jm
                 title="Add a new factory inspection" >
 
                 <p:ajax event="dialogReturn" 
-                        listener="#{complianceManager.doManufacturerSearch}"
+                        listener="#{complianceManager.doFactoryInspectionSearch}"
                         update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
-            <p:spacer width="20" />
-            <p:inputText id="manufacturerSearchText" 
-                         placeholder="Enter search text"
-                         style="width:200px" 
-                         value="#{complianceManager.manufacturerSearchText}" >
+            <ui:remove>
+                <p:spacer width="20" />
+                <p:inputText id="factoryInspectionSearchText" 
+                             placeholder="Enter search text"
+                             style="width:200px" 
+                             value="#{complianceManager.factoryInspectionSearchText}" >
 
-                <p:ajax event="keyup"                            
-                        global="false"
-                        update=":mainTabViewForm:mainTabView:manufacturersTable"
-                        listener="#{complianceManager.doManufacturerSearch}"
-                        process="@this"/>
+                    <p:ajax event="keyup"                            
+                            global="false"
+                            update=":mainTabViewForm:mainTabView:factoryInspectionsTable"
+                            listener="#{complianceManager.doFactoryInspectionSearch}"
+                            process="@this"/>
 
-            </p:inputText>
+                </p:inputText>
+            </ui:remove>
         </p:toolbarGroup>
 
-        <p:toolbarGroup align="right" >
-            <h:outputText value="Active manufacturers only: " />  
-            <h:panelGroup>
-                <p:selectBooleanCheckbox style="vertical-align: middle"
-                                         id="activeManufacturersOnly"
-                                         value="#{complianceManager.isActiveManufacturersOnly}" >
-                    <p:ajax  update=":mainTabViewForm:mainTabView:manufacturersTable"
-                             listener="#{complianceManager.doManufacturerSearch}"
-                             event="change"                                      
-                             process="@this"/>
-                </p:selectBooleanCheckbox>            
-                <p:tooltip for="activeManufacturersOnly" value="Check to search for activate manufacturers only" 
-                           showEffect="fade" hideEffect="fade" />
-                <p:spacer width="15" />                
-            </h:panelGroup>
-        </p:toolbarGroup>
     </p:toolbar>
 
     <p:dataTable id="factoryInspectionsTable"
-                 var="manufacturer"
+                 var="factoryInspection"
                  style="margin-bottom: 1px;margin-top: 1px;"
                  editable="true" 
                  editMode="cell"
                  paginator="true"                                 
                  rows="15"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                 value="#{complianceManager.foundManufacturers}">                        
+                 value="#{complianceManager.factoryInspections}">                        
 
-        <p:ajax event="cellEdit" listener="#{complianceManager.onManufacturerCellEdit}" />
+        <p:ajax event="cellEdit" listener="#{complianceManager.onFactoryInspectionCellEdit}" />
 
         <f:facet name="header">
-            <h:outputText value="Search Results (found: #{complianceManager.numManufacturersFound})" />
+            <h:outputText value="Search Results (found: #{complianceManager.numFactoryInspectionsFound})" />
         </f:facet>
 
-        <p:column sortBy="#{manufacturer.name}">
+        <p:column sortBy="#{factoryInspection.manufacturer.name}">
             <f:facet name="header">
                 <h:outputText value="Name"/>
             </f:facet>
-            <h:outputText value="#{manufacturer.name}" />
+            <h:outputText value="#{factoryInspection.manufacturer.name}" />
         </p:column>
 
-        <p:column headerText="Active?" >                                                                         
-            <p:cellEditor>                
-                <f:facet name="output">
-                    <h:outputText value="#{manufacturer.isActive}" />
-                </f:facet>
-                <f:facet name="input">
-                    <p:selectOneMenu value="#{manufacturer.isActive}" style="width:90%">
-                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
-                        <f:selectItem itemLabel="No" itemValue="No"/>
-                    </p:selectOneMenu>
-                </f:facet>
-            </p:cellEditor>         
-        </p:column>
 
         <p:column style="width:32px">
             <p:commandButton icon="ui-icon-pencil"
                              onstart="PF('longProcessDialogVar').show();"                               
                              oncomplete="PF('longProcessDialogVar').hide();"
-                             actionListener="#{complianceManager.editSelectedManufacturer}"
+                             actionListener="#{complianceManager.editCurrentFactoryInspection}"
                              process="@this"
-                             title="View or edit this manufacturer's detail">
+                             title="View or edit this factory inspection's detail">
 
-                <f:setPropertyActionListener value="#{manufacturer}" 
-                                             target="#{complianceManager.selectedManufacturer}" />
+                <f:setPropertyActionListener value="#{factoryInspection}" 
+                                             target="#{complianceManager.currentFactoryInspection}" />
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView:manufacturersTable"/>
+                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
         </p:column>
@@ -136,12 +109,13 @@ Email: info@dpbennett.com.jm
                 icon="ui-icon-plus" 
                 onstart="PF('longProcessDialogVar').show();"
                 oncomplete="PF('longProcessDialogVar').hide();"
-                actionListener="#{complianceManager.createNewManufacturer}"                                            
+                actionListener="#{complianceManager.createNewFactoryInspection}"                                            
                 process="@this"
-                title="Add a new manufacturer to the manufacturer database" >
+                title="Add a new factory inspection" >
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView:manufacturersTable"/>
+                        listener="#{complianceManager.doFactoryInspectionSearch}"
+                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
 
