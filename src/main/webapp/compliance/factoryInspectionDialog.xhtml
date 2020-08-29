@@ -135,94 +135,91 @@ Email: info@dpbennett.com.jm
                             </p:menuButton>                                
                         </h:panelGroup>
 
-                        <ui:remove>
-                            <h:outputText value="Consignee representative:" style="font-weight: bold" 
-                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}" />  
-                            <p:autoComplete id="consigneeRepresentative"
-                                            rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
-                                            value="#{complianceManager.currentComplianceSurvey.consigneeRepresentative}"
-                                            dropdown="true"
-                                            forceSelection="true"
-                                            scrollHeight="200"
-                                            converter="clientContactConverter" 
-                                            validator="contactValidator"
-                                            var="representative"                        
-                                            itemValue="#{representative}"
-                                            itemLabel="#{representative.name}" 
-                                            completeMethod="#{complianceManager.completeConsigneeRepresentative}">
+                        <h:outputText value="Factory representative:" style="font-weight: bold" />  
+                        <p:autoComplete id="currentFactoryInspection"
+                                        value="#{complianceManager.currentFactoryInspection.factoryRepresentative}"
+                                        dropdown="true"
+                                        forceSelection="true"
+                                        scrollHeight="200"
+                                        converter="manufacturerContactConverter" 
+                                        validator="contactValidator"
+                                        var="representative"                        
+                                        itemValue="#{representative}"
+                                        itemLabel="#{representative.name}" 
+                                        completeMethod="#{complianceManager.completeFactoryRepresentative}">
 
-                                <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.consignee}" />
+                            <f:attribute name="currentManufacturer" value="#{complianceManager.currentFactoryInspection.manufacturer}" />
 
-                                <p:ajax event="itemSelect"
-                                        listener="#{complianceManager.updateSurvey}"  
-                                        process="@this" />   
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateFactoryInspection}"  
+                                    process="@this" />   
 
-                            </p:autoComplete>   
+                        </p:autoComplete>   
 
-                            <h:outputText value="Date of Survey:" style="font-weight: bold" />
-                            <p:calendar id="dateOfSurvey"
-                                        readonlyInput="true"
-                                        navigator="true" 
-                                        pattern="MMM dd, yyyy" 
-                                        value="#{complianceManager.currentComplianceSurvey.dateOfSurvey}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateSurvey}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}" />
-                            </p:calendar>
+                        <h:outputText value="Date of inspection" style="font-weight: bold" />
+                        <p:calendar id="inspectionDate"
+                                    readonlyInput="true"
+                                    navigator="true" 
+                                    pattern="MMM dd, yyyy" 
+                                    value="#{complianceManager.currentFactoryInspection.inspectionDate}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateFactoryInspection}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateFactoryInspection}" />
+                        </p:calendar>
 
-                            <h:outputText value="Time In:" />
-                            <p:calendar id="timeIn"
-                                        pattern="hh:mm a" 
-                                        timeOnly="true"
-                                        value="#{complianceManager.currentComplianceSurvey.surveyStartTime}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateSurvey}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}" />
-                            </p:calendar>
+                        <h:outputText value="Start time:" />
+                        <p:calendar id="timeIn"
+                                    pattern="hh:mm a" 
+                                    timeOnly="true"
+                                    value="#{complianceManager.currentFactoryInspection.inspectionStartTime}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateFactoryInspection}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateFactoryInspection}" />
+                        </p:calendar>
 
-                            <h:outputText value="Time Out:" />
-                            <p:calendar id="timeOut"
-                                        pattern="hh:mm a" 
-                                        timeOnly="true"
-                                        value="#{complianceManager.currentComplianceSurvey.surveyEndTime}" >
-                                <p:ajax event="dateSelect"
-                                        listener="#{complianceManager.updateSurvey}" />
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}" />
-                            </p:calendar>
+                        <h:outputText value="Time Out:" />
+                        <p:calendar id="timeOut"
+                                    pattern="hh:mm a" 
+                                    timeOnly="true"
+                                    value="#{complianceManager.currentComplianceSurvey.surveyEndTime}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateSurvey}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}" />
+                        </p:calendar>
 
-                            <h:outputText value="Comments:" />                        
-                            <p:inputTextarea
-                                id="comments"
-                                value="#{complianceManager.currentComplianceSurvey.comments}"
-                                rows="3"
-                                counter="commentsCharsRemaining"
-                                counterTemplate="{0} characters remaining."
-                                autoResize="false"
-                                maxlength="1000" 
-                                styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
-                                style="width: 500px;">
+                        <h:outputText value="Comments:" />                        
+                        <p:inputTextarea
+                            id="comments"
+                            value="#{complianceManager.currentComplianceSurvey.comments}"
+                            rows="3"
+                            counter="commentsCharsRemaining"
+                            counterTemplate="{0} characters remaining."
+                            autoResize="false"
+                            maxlength="1000" 
+                            styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                            style="width: 500px;">
 
-                                <p:ajax event="change"
-                                        listener="#{complianceManager.updateSurvey}"
-                                        process="@this"/>
+                            <p:ajax event="change"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this"/>
 
-                            </p:inputTextarea> 
-                            <h:outputText value="&nbsp;&nbsp;" />
-                            <h:outputText id="commentsCharsRemaining" /> 
-                        </ui:remove>
+                        </p:inputTextarea> 
+                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText id="commentsCharsRemaining" /> 
+
                     </h:panelGrid>
                 </p:tab>  
-                
+
                 <p:tab title="Inspections">
-                  
+
                 </p:tab>
-                
+
             </p:tabView>
             <p:toolbar style="margin-top: 1px;">
-                 <p:toolbarGroup align="left">
+                <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveFactoryInspection}"     
