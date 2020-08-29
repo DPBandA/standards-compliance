@@ -71,7 +71,7 @@ Email: info@dpbennett.com.jm
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
 
-                        <h:outputText value="Manufacturer:" />
+                        <h:outputText value="Manufacturer:"  style="font-weight: bold" />
                         <h:panelGroup>
                             <p:autoComplete id="manufacturer"      
                                             var="manufacturer"
@@ -83,6 +83,7 @@ Email: info@dpbennett.com.jm
                                             scrollHeight="200" 
                                             value="#{complianceManager.currentFactoryInspection.manufacturer}"    
                                             converter="activeManufacturerConverter"
+                                            validator="manufacturerValidator"
                                             forceSelection="true"
                                             completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
@@ -179,21 +180,21 @@ Email: info@dpbennett.com.jm
                                     listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
 
-                        <h:outputText value="Time Out:" />
+                        <h:outputText value="End time:" />
                         <p:calendar id="timeOut"
                                     pattern="hh:mm a" 
                                     timeOnly="true"
-                                    value="#{complianceManager.currentComplianceSurvey.surveyEndTime}" >
+                                    value="#{complianceManager.currentFactoryInspection.inspectionEndTime}" >
                             <p:ajax event="dateSelect"
-                                    listener="#{complianceManager.updateSurvey}" />
+                                    listener="#{complianceManager.updateFactoryInspection}" />
                             <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateSurvey}" />
+                                    listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
 
                         <h:outputText value="Comments:" />                        
                         <p:inputTextarea
                             id="comments"
-                            value="#{complianceManager.currentComplianceSurvey.comments}"
+                            value="#{complianceManager.currentFactoryInspection.generalComments}"
                             rows="3"
                             counter="commentsCharsRemaining"
                             counterTemplate="{0} characters remaining."
@@ -203,7 +204,7 @@ Email: info@dpbennett.com.jm
                             style="width: 500px;">
 
                             <p:ajax event="change"
-                                    listener="#{complianceManager.updateSurvey}"
+                                    listener="#{complianceManager.updateFactoryInspection}"
                                     process="@this"/>
 
                         </p:inputTextarea> 
