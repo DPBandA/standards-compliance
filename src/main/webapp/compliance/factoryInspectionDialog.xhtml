@@ -211,6 +211,24 @@ Email: info@dpbennett.com.jm
                                     listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
 
+                        <h:outputLabel value="Inspection progress:" 
+                                       style="font-weight: bold;"
+                                       for="workProgress"/>
+                        <p:selectOneMenu id="workProgress"     
+                                         style="width: 200px;"
+                                         value="#{complianceManager.currentFactoryInspection.workProgress}">
+
+                            <f:selectItems  value="#{systemManager.workProgressList}"
+                                            var="progress"                            
+                                            itemValue="#{progress}"
+                                            itemLabel="#{progress}"/>
+
+                            <p:ajax listener="#{complianceManager.updateFactoryInspection}"
+                                    global="false"
+                                    process="@this"/>
+
+                        </p:selectOneMenu>     
+
                         <h:outputText value="Comments:" />                        
                         <p:inputTextarea
                             id="comments"
