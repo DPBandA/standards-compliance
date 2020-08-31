@@ -157,6 +157,26 @@ Email: info@dpbennett.com.jm
 
                         </p:autoComplete>   
 
+                        <h:outputText value="Inspector:" style="font-weight: bold" />       
+                        <p:autoComplete id="assignedInspector"
+                                        var="assignedInspector"                            
+                                        maxlength="40" 
+                                        value="#{complianceManager.currentFactoryInspection.assignedInspector}"
+                                        title="#{complianceManager.currentFactoryInspection.assignedInspector}"
+                                        itemLabel="#{assignedInspector.name}"
+                                        itemValue="#{assignedInspector}"
+                                        converter="activeEmployeeConverter"
+                                        validator="businessEntityValidator"
+                                        forceSelection="true"
+                                        dropdown="true"
+                                        scrollHeight="200" 
+                                        completeMethod="#{humanResourceManager.completeActiveEmployee}" >
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateFactoryInspection}"
+                                    process="@this"/>
+                        </p:autoComplete>  
+
                         <h:outputText value="Date of inspection" style="font-weight: bold" />
                         <p:calendar id="inspectionDate"
                                     readonlyInput="true"
