@@ -88,8 +88,8 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="manufacturerActionsMenu"
-                                        listener="#{complianceManager.updateFactoryInspection}"
+                                        update="address,representative,manufacturerActionsMenu"
+                                        listener="#{complianceManager.updateManufacturer}"
                                         process="@this"/>
 
                             </p:autoComplete>  
@@ -136,8 +136,30 @@ Email: info@dpbennett.com.jm
                             </p:menuButton>                                
                         </h:panelGroup>
 
-                        <h:outputText value="Factory representative:" style="font-weight: bold" />  
-                        <p:autoComplete id="currentFactoryInspection"
+                        <h:outputText value="Address:" style="font-weight: bold" />    
+                        <p:autoComplete id="address"
+                                        value="#{complianceManager.currentFactoryInspection.address}"
+                                        dropdown="true"
+                                        forceSelection="true"
+                                        size="35"
+                                        converter="manufacturerAddressConverter" 
+                                        validator="addressValidator"
+                                        var="address"  
+                                        scrollHeight="200"
+                                        itemValue="#{address}"
+                                        itemLabel="#{address.name}" 
+                                        completeMethod="#{complianceManager.completeManufacturerAddress}">
+
+                            <f:attribute name="currentManufacturer" value="#{complianceManager.currentFactoryInspection.manufacturer}" />
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateFactoryInspection}" 
+                                    process="@this" />   
+
+                        </p:autoComplete>
+
+                        <h:outputText value="Representative:" style="font-weight: bold" />  
+                        <p:autoComplete id="representative"
                                         value="#{complianceManager.currentFactoryInspection.factoryRepresentative}"
                                         dropdown="true"
                                         forceSelection="true"
@@ -252,7 +274,7 @@ Email: info@dpbennett.com.jm
                     </h:panelGrid>
                 </p:tab>  
 
-                <p:tab title="Inspections">
+                <p:tab title="Inspection">
 
                 </p:tab>
 
