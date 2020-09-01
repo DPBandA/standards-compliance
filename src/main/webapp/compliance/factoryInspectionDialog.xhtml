@@ -275,7 +275,219 @@ Email: info@dpbennett.com.jm
                 </p:tab>  
 
                 <p:tab title="Inspection">
+                    <p:panel id="inspectionComponentsPanel" header="Checklist" >
+                        <p:toolbar>
+                            <p:toolbarGroup align="left">
+                                <h:panelGroup>                   
+                                    <h:outputLabel value="Find template: "
+                                                   title="Select an existing inspection template"/>                           
+                                    <p:autoComplete dropdown="false"
+                                                    value="#{jobFinanceManager.selectedJobCostingTemplate}"
+                                                    placeholder="enter template name"
+                                                    scrollHeight="200" 
+                                                    disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                                    forceSelection="true"
+                                                    completeMethod="#{jobFinanceManager.completeJobCostingAndPaymentName}">
+                                        <p:ajax event="itemSelect"                                    
+                                                update=":jobCostingDialogForm:costComponentsPanel,:jobCostingDialogForm:costingSummaryPanel"
+                                                listener="#{jobFinanceManager.updateCostingComponents}"
+                                                process="@this"/>                      
+                                    </p:autoComplete>
+                                </h:panelGroup> 
+                                <p:spacer width="10" />
+                                <p:commandButton title="Manage costing templates"
+                                                 value="Manage templates"
+                                                 actionListener="#{jobFinanceManager.doJobCostingAndPaymentSearch}"
+                                                 update=":jobCostingTemplateManagerDialogForm"
+                                                 onstart="PF('longProcessDialogVar').show();"
+                                                 oncomplete="PF('jobCostingTemplateManagerDialog').show();PF('longProcessDialogVar').hide();"
+                                                 process="@this">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                            <p:toolbarGroup align="right">                        
+                                <h:panelGroup>
+                                    <h:outputLabel title="Enter a name to save the costings as a template" 
+                                                   for="jobCostingsTemplateName" 
+                                                   value="Template name: " />
+                                    <p:inputText id="jobCostingsTemplateName"
+                                                 value="#{jobFinanceManager.currentJob.jobCostingAndPayment.name}"
+                                                 disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                                 style="width: 150px;">
+                                        <p:ajax event="change"
+                                                global="false"
+                                                listener="#{jobFinanceManager.updateJobCostingAndPayment}"
+                                                process="@this"/>
+                                    </p:inputText>
+                                    <p:watermark value="enter new name" for="jobCostingsTemplateName" />
+                                    <p:tooltip for="jobCostingsTemplateName" value="Enter a name to save the costings as a template" />
+                                </h:panelGroup>
+                            </p:toolbarGroup>
+                        </p:toolbar>
 
+                        <p:toolbar style="margin-top: 1px;margin-bottom: 1px;">
+                            <p:toolbarGroup>
+                                <p:commandButton title="Add new cost component"
+                                                 value="New"
+                                                 actionListener="#{jobFinanceManager.createNewCostComponent}"
+                                                 disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                                 update=":costingComponentDialogForm"
+                                                 onstart="PF('longProcessDialogVar').show();"
+                                                 oncomplete="PF('costingComponentDialog').show();PF('longProcessDialogVar').hide();"
+                                                 icon="ui-icon-plus"
+                                                 process="@this">
+                                </p:commandButton>
+
+                                <p:spacer width="10" />
+                                <h:outputText value="#{jobFinanceManager.subcontractsMessage}" 
+                                              style="color: gold;font-weight: bold;" />
+
+                            </p:toolbarGroup>                    
+                        </p:toolbar>
+
+                        <p:dataTable  var="costComponent"
+                                      id="i#{jobCosting.id}"
+                                      rowStyleClass="#{costComponent.isHeading ? 'header' : null}"
+                                      value="#{jobFinanceManager.currentJob.jobCostingAndPayment.allSortedCostComponents}">
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Component" />
+                                </f:facet>
+                                <h:outputText value="#{costComponent.name}" />                    
+                            </p:column>
+
+
+                            <p:column rendered="#{!costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value="Type" />
+                                </f:facet>
+                                <h:outputText value="#{costComponent.type}" />
+                            </p:column>
+
+
+                            <p:column rendered="#{costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />
+                            </p:column>
+
+
+                            <p:column rendered="#{!costComponent.isHeading}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Hours/Qty"/>
+                                </f:facet>
+                                <h:outputText value="#{costComponent.hoursOrQuantity}"
+                                              styleClass="datatable-number-field" >
+                                    <f:convertNumber />
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column rendered="#{costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />
+                            </p:column>
+
+                            <p:column  rendered="#{!costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value="Rate ($/hr/qty)" />
+                                </f:facet>
+                                <h:outputText value="#{costComponent.rate}" 
+                                              styleClass="datatable-number-field" >
+                                    <f:convertNumber />
+                                </h:outputText>
+                                <f:facet name="footer">
+                                    <h:outputText value="Total ($):" 
+                                                  styleClass="datatable-number-field" />
+                                </f:facet>
+                            </p:column>
+
+                            <p:column rendered="#{costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />
+                            </p:column>
+
+                            <p:column rendered="#{!costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value="Cost ($)" />
+                                </f:facet>
+                                <h:outputText value="#{costComponent.cost}"
+                                              styleClass="datatable-number-field" >
+                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                                </h:outputText>
+                                <f:facet name="footer">
+                                    <h:outputText value="#{jobFinanceManager.currentJob.jobCostingAndPayment.finalCost}" 
+                                                  styleClass="datatable-number-field" >
+                                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                                    </h:outputText>
+                                </f:facet>
+                            </p:column>
+
+                            <p:column rendered="#{costComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />
+                            </p:column>
+
+                            <p:column style="width:32px" >
+                                <p:menuButton id="toolsButton" 
+                                              title="Edit or delete cost component"
+                                              disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                              icon="ui-icon-pencil" >
+                                    <p:menuitem>                       
+                                        <p:commandButton   
+                                            value="Edit"
+                                            style="width: 300%;text-align: left;background: none;border: 0;"
+                                            actionListener="#{jobFinanceManager.editCostComponent}"
+                                            disabled="#{!costComponent.isEditable}"
+                                            update=":costingComponentDialogForm"
+                                            oncomplete="PF('costingComponentDialog').show();"
+                                            icon="ui-icon ui-icon-pencil"
+                                            process="@this" >
+
+                                            <f:setPropertyActionListener value="#{costComponent}"
+                                                                         target="#{jobFinanceManager.selectedCostComponent}" />
+
+                                        </p:commandButton>                       
+                                    </p:menuitem>
+
+                                    <p:menuitem >                       
+                                        <p:commandButton   
+                                            value="Delete"
+                                            style="width: 300%;text-align: left;background: none;border: 0;"
+                                            onclick="costComponentDeleteConfirm.show();"
+                                            icon="ui-icon-trash"
+                                            process="@this">
+
+                                            <f:setPropertyActionListener value="#{costComponent}"
+                                                                         target="#{jobFinanceManager.selectedCostComponent}" />
+
+                                        </p:commandButton>
+                                    </p:menuitem>                   
+
+                                </p:menuButton>                   
+                            </p:column>      
+
+                        </p:dataTable>
+                        <p:toolbar style="margin-top: 1px;">
+                            <p:toolbarGroup>
+                                <p:commandButton title="Add new cost component"
+                                                 value="New"
+                                                 actionListener="#{jobFinanceManager.createNewCostComponent}"
+                                                 disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                                 update=":costingComponentDialogForm"
+                                                 onstart="PF('longProcessDialogVar').show();"
+                                                 oncomplete="PF('costingComponentDialog').show();PF('longProcessDialogVar').hide();"
+                                                 icon="ui-icon-plus"
+                                                 process="@this">
+                                </p:commandButton>
+                            </p:toolbarGroup>
+                        </p:toolbar>                
+                    </p:panel>
                 </p:tab>
 
             </p:tabView>
