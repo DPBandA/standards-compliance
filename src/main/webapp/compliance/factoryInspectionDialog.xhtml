@@ -295,29 +295,19 @@ Email: info@dpbennett.com.jm
                                                 process="@this"/>      
                                         
                                     </p:autoComplete>
-                                </h:panelGroup> 
-                                <p:spacer width="10" />
-                                <p:commandButton title="Manage costing templates"
-                                                 value="Manage templates"
-                                                 actionListener="#{jobFinanceManager.doJobCostingAndPaymentSearch}"
-                                                 update=":jobCostingTemplateManagerDialogForm"
-                                                 onstart="PF('longProcessDialogVar').show();"
-                                                 oncomplete="PF('jobCostingTemplateManagerDialog').show();PF('longProcessDialogVar').hide();"
-                                                 process="@this">
-                                </p:commandButton>
+                                </h:panelGroup>                                
                             </p:toolbarGroup>
                             <p:toolbarGroup align="right">                        
                                 <h:panelGroup>
-                                    <h:outputLabel title="Enter a name to save the costings as a template" 
-                                                   for="jobCostingsTemplateName" 
+                                    <h:outputLabel title="Enter a name to save the inspections as a template" 
+                                                   for="templateName" 
                                                    value="Template name: " />
-                                    <p:inputText id="jobCostingsTemplateName"
-                                                 value="#{jobFinanceManager.currentJob.jobCostingAndPayment.name}"
-                                                 disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                    <p:inputText id="templateName"
+                                                 value="#{complianceManager.currentFactoryInspection.name}"
                                                  style="width: 150px;">
                                         <p:ajax event="change"
                                                 global="false"
-                                                listener="#{jobFinanceManager.updateJobCostingAndPayment}"
+                                                listener="#{complianceManager.updateFactoryInspection}"
                                                 process="@this"/>
                                     </p:inputText>
                                     <p:watermark value="enter new name" for="jobCostingsTemplateName" />
