@@ -280,18 +280,20 @@ Email: info@dpbennett.com.jm
                             <p:toolbarGroup align="left">
                                 <h:panelGroup>                   
                                     <h:outputLabel value="Find template: "
-                                                   title="Select an existing inspection template"/>                           
+                                                   title="Select an existing inspection template"/>      
+                                    
                                     <p:autoComplete dropdown="false"
-                                                    value="#{jobFinanceManager.selectedJobCostingTemplate}"
+                                                    value="#{complianceManager.selectedFactoryInspectionTemplate}"
                                                     placeholder="enter template name"
                                                     scrollHeight="200" 
-                                                    disabled="#{jobFinanceManager.disableJobCostingEdit}"
                                                     forceSelection="true"
-                                                    completeMethod="#{jobFinanceManager.completeJobCostingAndPaymentName}">
+                                                    completeMethod="#{complianceManager.completeFactoryInspectionName}">
+                                        
                                         <p:ajax event="itemSelect"                                    
-                                                update=":jobCostingDialogForm:costComponentsPanel,:jobCostingDialogForm:costingSummaryPanel"
-                                                listener="#{jobFinanceManager.updateCostingComponents}"
-                                                process="@this"/>                      
+                                                update=":factoryInspectionDialogForm:inspectionComponentsPanel"
+                                                listener="#{complianceManager.updateInspectionComponents}"
+                                                process="@this"/>      
+                                        
                                     </p:autoComplete>
                                 </h:panelGroup> 
                                 <p:spacer width="10" />
