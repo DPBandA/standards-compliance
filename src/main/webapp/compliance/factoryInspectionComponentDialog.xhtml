@@ -33,8 +33,8 @@ Email: info@dpbennett.com.jm
             <p:toolbar style="margin-bottom: 1px;">
                 <p:toolbarGroup>
                     <p:commandButton value="Ok"
-                                     actionListener="#{jobFinanceManager.okCostingComponent}"
-                                     update=":jobCostingDialogForm:jobCosting_growl,:jobCostingDialogForm:costComponentsPanel,:jobCostingDialogForm:costingSummaryPanel"
+                                     actionListener="#{complianceManager.okFactoryInspectionComponent}"
+                                     update=":factoryInspectionDialogForm:factory_inspection_survey_growl,:factoryInspectionDialogForm:inspectionComponentsPanel"
                                      onstart="PF('longProcessDialogVar').show();" 
                                      oncomplete="PF('longProcessDialogVar').hide();"
                                      icon="ui-icon ui-icon-check"
@@ -42,7 +42,7 @@ Email: info@dpbennett.com.jm
                     <p:spacer width="5" />
                     <p:commandButton value="Cancel" 
                                      immediate="true"
-                                     actionListener="#{jobFinanceManager.cancelCostComponentEdit}"
+                                     actionListener="#{complianceManager.cancelFactoryInspectionComponentEdit}"
                                      update=":jobCostingDialogForm:costComponentsPanel,:jobCostingDialogForm:costingSummaryPanel"
                                      onstart="PF('longProcessDialogVar').show();"                              
                                      oncomplete="PF('costingComponentDialog').hide();PF('longProcessDialogVar').hide();"
