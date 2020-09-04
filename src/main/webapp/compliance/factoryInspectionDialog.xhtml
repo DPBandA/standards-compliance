@@ -35,8 +35,9 @@ Email: info@dpbennett.com.jm
     </h:head>
     <h:body >  
         <ui:insert >   
+            <ui:include src="factoryInspectionComponentDialog.xhtml"/>       
+            <ui:include src="factoryInspectionComponentDeleteConfirmDialog.xhtml"/>             
             <ui:include src="../common/longProcessDialog.xhtml"/>
-
         </ui:insert>
         <h:form id="factoryInspectionDialogForm">   
 
@@ -281,19 +282,19 @@ Email: info@dpbennett.com.jm
                                 <h:panelGroup>                   
                                     <h:outputLabel value="Find template: "
                                                    title="Select an existing inspection template"/>      
-                                    
+
                                     <p:autoComplete dropdown="false"
                                                     value="#{complianceManager.selectedFactoryInspectionTemplate}"
                                                     placeholder="enter template name"
                                                     scrollHeight="200" 
                                                     forceSelection="true"
                                                     completeMethod="#{complianceManager.completeFactoryInspectionName}">
-                                        
+
                                         <p:ajax event="itemSelect"                                    
                                                 update=":factoryInspectionDialogForm:inspectionComponentsPanel"
                                                 listener="#{complianceManager.updateInspectionComponents}"
                                                 process="@this"/>      
-                                        
+
                                     </p:autoComplete>
                                 </h:panelGroup>                                
                             </p:toolbarGroup>
@@ -305,23 +306,24 @@ Email: info@dpbennett.com.jm
                                     <p:inputText id="templateName"
                                                  value="#{complianceManager.currentFactoryInspection.name}"
                                                  style="width: 150px;">
+
                                         <p:ajax event="change"
                                                 global="false"
                                                 listener="#{complianceManager.updateFactoryInspection}"
                                                 process="@this"/>
+
                                     </p:inputText>
-                                    <p:watermark value="enter new name" for="jobCostingsTemplateName" />
-                                    <p:tooltip for="jobCostingsTemplateName" value="Enter a name to save the costings as a template" />
+                                    <p:watermark value="enter new name" for="templateName" />
+                                    <p:tooltip for="templateName" value="Enter a name to save the inspection components as a template" />
                                 </h:panelGroup>
                             </p:toolbarGroup>
                         </p:toolbar>
 
                         <p:toolbar style="margin-top: 1px;margin-bottom: 1px;">
                             <p:toolbarGroup>
-                                <p:commandButton title="Add new cost component"
+                                <p:commandButton title="Add new inspection component"
                                                  value="New"
-                                                 actionListener="#{jobFinanceManager.createNewCostComponent}"
-                                                 disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                                 actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
                                                  update=":costingComponentDialogForm"
                                                  onstart="PF('longProcessDialogVar').show();"
                                                  oncomplete="PF('costingComponentDialog').show();PF('longProcessDialogVar').hide();"
