@@ -321,106 +321,40 @@ Email: info@dpbennett.com.jm
 
                         <p:toolbar style="margin-top: 1px;margin-bottom: 1px;">
                             <p:toolbarGroup>
+                                
                                 <p:commandButton title="Add new inspection component"
                                                  value="New"
                                                  actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
-                                                 update=":costingComponentDialogForm"
+                                                 update=":factoryInspectionComponentDialogForm"
                                                  onstart="PF('longProcessDialogVar').show();"
-                                                 oncomplete="PF('costingComponentDialog').show();PF('longProcessDialogVar').hide();"
+                                                 oncomplete="PF('factoryInspectionComponentDialog').show();PF('longProcessDialogVar').hide();"
                                                  icon="ui-icon-plus"
                                                  process="@this">
                                 </p:commandButton>
 
-                                <p:spacer width="10" />
-                                <h:outputText value="#{jobFinanceManager.subcontractsMessage}" 
-                                              style="color: gold;font-weight: bold;" />
-
                             </p:toolbarGroup>                    
                         </p:toolbar>
 
-                        <p:dataTable  var="costComponent"
-                                      id="i#{jobCosting.id}"
-                                      rowStyleClass="#{costComponent.isHeading ? 'header' : null}"
-                                      value="#{jobFinanceManager.currentJob.jobCostingAndPayment.allSortedCostComponents}">
+                        <p:dataTable  var="factoryInspectionComponent"
+                                      rowStyleClass="#{factoryInspectionComponent.isHeading ? 'header' : null}"
+                                      value="#{complianceManager.currentFactoryInspection.allSortedFactoryInspectionComponents}">
                             <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Component" />
                                 </f:facet>
-                                <h:outputText value="#{costComponent.name}" />                    
+                                <h:outputText value="#{factoryInspectionComponent.name}" />                    
                             </p:column>
 
 
-                            <p:column rendered="#{!costComponent.isHeading}">
+                            <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
-                                    <h:outputText value="Type" />
+                                    <h:outputText value="Comment" />
                                 </f:facet>
-                                <h:outputText value="#{costComponent.type}" />
+                                <h:outputText value="#{factoryInspectionComponent.comment}" />
                             </p:column>
 
 
-                            <p:column rendered="#{costComponent.isHeading}">
-                                <f:facet name="header">
-                                    <h:outputText value=" " />
-                                </f:facet>
-                                <h:outputText value=" " />
-                            </p:column>
-
-
-                            <p:column rendered="#{!costComponent.isHeading}" >
-                                <f:facet name="header">
-                                    <h:outputText value="Hours/Qty"/>
-                                </f:facet>
-                                <h:outputText value="#{costComponent.hoursOrQuantity}"
-                                              styleClass="datatable-number-field" >
-                                    <f:convertNumber />
-                                </h:outputText>
-                            </p:column>
-
-                            <p:column rendered="#{costComponent.isHeading}">
-                                <f:facet name="header">
-                                    <h:outputText value=" " />
-                                </f:facet>
-                                <h:outputText value=" " />
-                            </p:column>
-
-                            <p:column  rendered="#{!costComponent.isHeading}">
-                                <f:facet name="header">
-                                    <h:outputText value="Rate ($/hr/qty)" />
-                                </f:facet>
-                                <h:outputText value="#{costComponent.rate}" 
-                                              styleClass="datatable-number-field" >
-                                    <f:convertNumber />
-                                </h:outputText>
-                                <f:facet name="footer">
-                                    <h:outputText value="Total ($):" 
-                                                  styleClass="datatable-number-field" />
-                                </f:facet>
-                            </p:column>
-
-                            <p:column rendered="#{costComponent.isHeading}">
-                                <f:facet name="header">
-                                    <h:outputText value=" " />
-                                </f:facet>
-                                <h:outputText value=" " />
-                            </p:column>
-
-                            <p:column rendered="#{!costComponent.isHeading}">
-                                <f:facet name="header">
-                                    <h:outputText value="Cost ($)" />
-                                </f:facet>
-                                <h:outputText value="#{costComponent.cost}"
-                                              styleClass="datatable-number-field" >
-                                    <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                                </h:outputText>
-                                <f:facet name="footer">
-                                    <h:outputText value="#{jobFinanceManager.currentJob.jobCostingAndPayment.finalCost}" 
-                                                  styleClass="datatable-number-field" >
-                                        <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
-                                    </h:outputText>
-                                </f:facet>
-                            </p:column>
-
-                            <p:column rendered="#{costComponent.isHeading}">
+                            <p:column rendered="#{factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value=" " />
                                 </f:facet>
@@ -429,17 +363,15 @@ Email: info@dpbennett.com.jm
 
                             <p:column style="width:32px" >
                                 <p:menuButton id="toolsButton" 
-                                              title="Edit or delete cost component"
-                                              disabled="#{jobFinanceManager.disableJobCostingEdit}"
+                                              title="Edit or delete inspection component"
                                               icon="ui-icon-pencil" >
                                     <p:menuitem>                       
                                         <p:commandButton   
                                             value="Edit"
                                             style="width: 300%;text-align: left;background: none;border: 0;"
-                                            actionListener="#{jobFinanceManager.editCostComponent}"
-                                            disabled="#{!costComponent.isEditable}"
-                                            update=":costingComponentDialogForm"
-                                            oncomplete="PF('costingComponentDialog').show();"
+                                            actionListener="#{complianceManager.editFactoryInspectionComponent}"
+                                            update=":factoryInspectionComponentDialogForm"
+                                            oncomplete="PF('factoryInspectionComponentDialog').show();"
                                             icon="ui-icon ui-icon-pencil"
                                             process="@this" >
 
