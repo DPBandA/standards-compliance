@@ -41,21 +41,19 @@ Email: info@dpbennett.com.jm
                         update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
-            <ui:remove>
-                <p:spacer width="20" />
-                <p:inputText id="factoryInspectionSearchText" 
-                             placeholder="Enter search text"
-                             style="width:200px" 
-                             value="#{complianceManager.factoryInspectionSearchText}" >
+            <p:spacer width="20" />
+            <p:inputText id="factoryInspectionSearchText" 
+                         placeholder="Enter search text"
+                         style="width:200px" 
+                         value="#{complianceManager.factoryInspectionSearchText}" >
 
-                    <p:ajax event="keyup"                            
-                            global="false"
-                            update=":mainTabViewForm:mainTabView:factoryInspectionsTable"
-                            listener="#{complianceManager.doFactoryInspectionSearch}"
-                            process="@this"/>
+                <p:ajax event="keyup"                            
+                        global="false"
+                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"
+                        listener="#{complianceManager.doFactoryInspectionSearch}"
+                        process="@this"/>
 
-                </p:inputText>
-            </ui:remove>
+            </p:inputText>
         </p:toolbarGroup>
 
     </p:toolbar>
