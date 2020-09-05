@@ -291,7 +291,7 @@ Email: info@dpbennett.com.jm
                                                     completeMethod="#{complianceManager.completeFactoryInspectionName}">
 
                                         <p:ajax event="itemSelect"                                    
-                                                update=":factoryInspectionDialogForm:inspectionComponentsPanel"
+                                                update=":factoryInspectionDialogForm:factoryInspectionTabView:inspectionComponentsPanel"
                                                 listener="#{complianceManager.updateInspectionComponents}"
                                                 process="@this"/>      
 
@@ -375,8 +375,8 @@ Email: info@dpbennett.com.jm
                                             icon="ui-icon ui-icon-pencil"
                                             process="@this" >
 
-                                            <f:setPropertyActionListener value="#{costComponent}"
-                                                                         target="#{jobFinanceManager.selectedCostComponent}" />
+                                            <f:setPropertyActionListener value="#{factoryInspectionComponent}"
+                                                                         target="#{complianceManager.currentFactoryInspection}" />
 
                                         </p:commandButton>                       
                                     </p:menuitem>
@@ -385,12 +385,12 @@ Email: info@dpbennett.com.jm
                                         <p:commandButton   
                                             value="Delete"
                                             style="width: 300%;text-align: left;background: none;border: 0;"
-                                            onclick="costComponentDeleteConfirm.show();"
+                                            onclick="factoryInspectionComponentDeleteConfirm.show();"
                                             icon="ui-icon-trash"
                                             process="@this">
 
-                                            <f:setPropertyActionListener value="#{costComponent}"
-                                                                         target="#{jobFinanceManager.selectedCostComponent}" />
+                                            <f:setPropertyActionListener value="#{factoryInspectionComponent}"
+                                                                         target="#{complianceManager.currentFactoryInspectionComponent}" />
 
                                         </p:commandButton>
                                     </p:menuitem>                   
@@ -401,16 +401,17 @@ Email: info@dpbennett.com.jm
                         </p:dataTable>
                         <p:toolbar style="margin-top: 1px;">
                             <p:toolbarGroup>
-                                <p:commandButton title="Add new cost component"
+                                
+                                <p:commandButton title="Add new inspection component"
                                                  value="New"
-                                                 actionListener="#{jobFinanceManager.createNewCostComponent}"
-                                                 disabled="#{jobFinanceManager.disableJobCostingEdit}"
-                                                 update=":costingComponentDialogForm"
+                                                 actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
+                                                 update=":factoryInspectionComponentDialogForm"
                                                  onstart="PF('longProcessDialogVar').show();"
-                                                 oncomplete="PF('costingComponentDialog').show();PF('longProcessDialogVar').hide();"
+                                                 oncomplete="PF('factoryInspectionComponentDialog').show();PF('longProcessDialogVar').hide();"
                                                  icon="ui-icon-plus"
                                                  process="@this">
                                 </p:commandButton>
+
                             </p:toolbarGroup>
                         </p:toolbar>                
                     </p:panel>
