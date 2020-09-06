@@ -89,52 +89,95 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="address,representative,manufacturerActionsMenu"
+                                        update="address,representative,manufacturerActionsMenuButton"
                                         listener="#{complianceManager.updateManufacturer}"
                                         process="@this"/>
 
                             </p:autoComplete>  
+                            <p:commandButton id="manufacturerActionsMenuButton"
+                                             icon="ui-icon-pencil" 
+                                             title="Add, view or edit a manufacturer">  
+                            </p:commandButton>
+                            <p:overlayPanel id="manufacturerActionsMenu" for="manufacturerActionsMenuButton" 
+                                            widgetVar="manufacturerActionsMenuVar"
+                                            hideEffect="fade">
+                                <p:commandButton id="manufacturerViewOrEditButton"
+                                                 value="View or edit manufacturer"
+                                                 icon="ui-icon-pencil" 
+                                                 style="background: none;border: 0;"
+                                                 disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
+                                                 onstart="PF('longProcessDialogVar').show();"   
+                                                 oncomplete="PF('longProcessDialogVar').hide();PF('manufacturerActionsMenuVar').hide();"                                  
+                                                 actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
+                                                 process="@this,manufacturer"                             
+                                                 title="View or edit manufacturer">  
 
-                            <p:menuButton id="manufacturerActionsMenu" 
-                                          icon="ui-icon-pencil" 
-                                          title="Add or edit manufacturer">
-                                <p:menuitem>                       
-                                    <p:commandButton value="Edit manufacturer"
-                                                     id="editManufacturer"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
-                                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
-                                                     process="@this,manufacturer"                             
-                                                     title="View or edit this manufacturer's detail">  
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
+                                            update="manufacturer,address,representative" />
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
-                                                update="manufacturer" />
 
-                                    </p:commandButton>            
-                                </p:menuitem>
+                                </p:commandButton>
+                                <br/>
+                                <p:commandButton 
+                                    value="Add manufacturer"
+                                    icon="ui-icon-plus" 
+                                    style="background: none;border: 0;"
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();PF('manufacturerActionsMenuVar').hide();"    
+                                    actionListener="#{complianceManager.createNewManufacturer}"                                            
+                                    process="@this"
+                                    title="Add a new manufacturer">
 
-                                <p:menuitem >       
-                                    <p:commandButton 
-                                        value="Add manufacturer"
-                                        icon="ui-icon-plus" 
-                                        style="width: 300%;text-align: left;background: none;border: 0;"
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"    
-                                        actionListener="#{complianceManager.createNewManufacturer}"                                            
-                                        process="@this"
-                                        title="Add a new manufacturer">
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
+                                            update="manufacturer,address,representative" />
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
-                                                update="manufacturer" />
+                                </p:commandButton>
 
-                                    </p:commandButton>
-                                </p:menuitem>
-                            </p:menuButton>                                
+                            </p:overlayPanel>
+                            <ui:remove>
+                                <p:menuButton id="manufacturerActionsMenu" 
+                                              icon="ui-icon-pencil" 
+                                              title="Add or edit manufacturer">
+                                    <p:menuitem>                       
+                                        <p:commandButton value="Edit manufacturer"
+                                                         id="editManufacturer"
+                                                         icon="ui-icon-pencil" 
+                                                         disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
+                                                         style="width: 300%;text-align: left;background: none;border: 0;"
+                                                         onstart="PF('longProcessDialogVar').show();"   
+                                                         oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                         actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
+                                                         process="@this,manufacturer"                             
+                                                         title="View or edit this manufacturer's detail">  
+
+                                            <p:ajax event="dialogReturn" 
+                                                    listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
+                                                    update="manufacturer" />
+
+                                        </p:commandButton>            
+                                    </p:menuitem>
+
+                                    <p:menuitem >       
+                                        <p:commandButton 
+                                            value="Add manufacturer"
+                                            icon="ui-icon-plus" 
+                                            style="width: 300%;text-align: left;background: none;border: 0;"
+                                            onstart="PF('longProcessDialogVar').show();"    
+                                            oncomplete="PF('longProcessDialogVar').hide();"    
+                                            actionListener="#{complianceManager.createNewManufacturer}"                                            
+                                            process="@this"
+                                            title="Add a new manufacturer">
+
+                                            <p:ajax event="dialogReturn" 
+                                                    listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
+                                                    update="manufacturer" />
+
+                                        </p:commandButton>
+                                    </p:menuitem>
+                                </p:menuButton>  
+                            </ui:remove>
                         </h:panelGroup>
 
                         <h:outputText value="Address:" style="font-weight: bold" />    
@@ -321,7 +364,7 @@ Email: info@dpbennett.com.jm
 
                         <p:toolbar style="margin-top: 1px;margin-bottom: 1px;">
                             <p:toolbarGroup>
-                                
+
                                 <p:commandButton title="Add new inspection component"
                                                  value="New"
                                                  actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
@@ -401,7 +444,7 @@ Email: info@dpbennett.com.jm
                         </p:dataTable>
                         <p:toolbar style="margin-top: 1px;">
                             <p:toolbarGroup>
-                                
+
                                 <p:commandButton title="Add new inspection component"
                                                  value="New"
                                                  actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
