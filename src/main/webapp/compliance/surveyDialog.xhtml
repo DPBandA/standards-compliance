@@ -1,5 +1,5 @@
 <!--
-Job Management & Tracking System (JMTS) 
+Standards Compliance (SC) 
 Copyright (C) 2020  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
@@ -140,16 +140,16 @@ Email: info@dpbennett.com.jm
                                          editable="true"
                                          value="#{complianceManager.currentComplianceSurvey.typeOfEstablishment}" 
                                          rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-                            
+
                             <f:validator validatorId="requiredFieldValidator" />
-                            
+
                             <p:ajax
                                 global="true"
                                 update="generalPanelGrid"
                                 listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
 
-                           <f:selectItems value="#{complianceManager.typesOfEstablishment}" />
+                            <f:selectItems value="#{complianceManager.typesOfEstablishment}" />
 
                         </p:selectOneMenu>     
 
@@ -172,12 +172,12 @@ Email: info@dpbennett.com.jm
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.portOfEntry}" 
                                          editable="false"
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-                                                        
+
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
-                            
+
                             <f:selectItems value="#{complianceManager.portsOfEntry}" />
                         </p:selectOneMenu>                      
 
@@ -229,39 +229,88 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="consigneeActionsMenu,consigneeRepresentative"
+                                        update="actionsMenuButton,consigneeRepresentative"
                                         listener="#{complianceManager.updateConsignee}"
                                         process="@this"/>
 
                             </p:autoComplete>  
+                            <ui:remove>
+                                <p:commandButton id="actionsMenuButton"
+                                                 icon="ui-icon-pencil" 
+                                                 title="Add, view or edit consignee" >
 
-                            <p:menuButton id="consigneeActionsMenu" 
-                                          icon="ui-icon-pencil" 
-                                          title="Add or edit consignee">
-                                <p:menuitem>                       
-                                    <p:commandButton value="Edit consignee"
-                                                     id="editConsignee"
+                                    <p:ajax update="consignee,consigneeRepresentative" resetValues="true" />
+
+                                </p:commandButton>
+                                <p:overlayPanel id="actionsMenu" 
+                                                for="actionsMenuButton" 
+                                                dynamic="true"                                            
+                                                widgetVar="actionsMenuVar"
+                                                hideEffect="fade">
+
+                                    <p:commandButton value="View or edit actionsMenuButton"
                                                      icon="ui-icon-pencil" 
+                                                     style="background: none;border: 0;"
                                                      disabled="${!complianceManager.isConsigneeNameValid}"
-                                                     style="width: 300%;text-align: left;background: none;border: 0;"
                                                      onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editConsignee}"  
+                                                     oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"                                  
+                                                     actionListener="#{complianceManager.editConsignee}"
                                                      process="@this,consignee"                             
-                                                     title="View or edit this consignee's detail">  
+                                                     title="View or edit consignee">  
 
                                         <p:ajax event="dialogReturn" 
                                                 listener="#{complianceManager.consigneeDialogReturn}"
                                                 update="consignee,consigneeRepresentative" />
 
-                                    </p:commandButton>            
+                                    </p:commandButton>
+                                    <br/>
+                                    <p:commandButton 
+                                        value="Add consignee"
+                                        icon="ui-icon-plus" 
+                                        style="background: none;border: 0;"
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"  
+                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                        actionListener="#{complianceManager.createNewConsignee}"                                            
+                                        process="@this"
+                                        title="Add a new consignee">
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.consigneeDialogReturn}"
+                                                update="consignee,consigneeRepresentative" />
+
+                                    </p:commandButton>
+
+                                </p:overlayPanel>
+                            </ui:remove>
+
+
+                            <p:menuButton id="actionsMenuButton" 
+                                          icon="ui-icon-pencil" 
+                                          title="Add or edit consignee">
+                                
+                                <p:menuitem value="Edit consignee"
+                                            id="editConsignee"
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.isConsigneeNameValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editConsignee}"  
+                                            process="@this,consignee"                             
+                                            title="View or edit this consignee's detail">                       
+
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.consigneeDialogReturn}"
+                                            update="consignee,consigneeRepresentative" />
+
+
                                 </p:menuitem>
 
                                 <p:menuitem >       
                                     <p:commandButton 
                                         value="Add consignee"
                                         icon="ui-icon-plus" 
-                                        style="width: 300%;text-align: left;background: none;border: 0;"
                                         onstart="PF('longProcessDialogVar').show();"    
                                         oncomplete="PF('longProcessDialogVar').hide();"                    
                                         disabled="#{!complianceManager.user.privilege.canAddClient}"
@@ -275,7 +324,8 @@ Email: info@dpbennett.com.jm
 
                                     </p:commandButton>
                                 </p:menuitem>
-                            </p:menuButton>                                
+                            </p:menuButton>     
+
                         </h:panelGroup> 
 
                         <h:outputText value="Consignee representative:" style="font-weight: bold" 
@@ -324,7 +374,7 @@ Email: info@dpbennett.com.jm
                                         listener="#{complianceManager.updateRetailOutlet}"
                                         process="@this"/>
 
-                                
+
                             </p:autoComplete>  
                             <p:menuButton id="retailOutletActionsMenu" 
                                           icon="ui-icon-pencil" 
@@ -442,7 +492,7 @@ Email: info@dpbennett.com.jm
                             <p:ajax event="change"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
-                            
+
                         </p:inputTextarea> 
                         <h:outputText value="&nbsp;&nbsp;" />
                         <h:outputText id="commentsCharsRemaining" /> 
@@ -644,10 +694,10 @@ Email: info@dpbennett.com.jm
                                              icon="ui-icon-pencil"
                                              oncomplete="longProcessDialogVar.hide();"
                                              process="@this">
-                                
+
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
-                                
+
                             </p:commandButton>
                         </p:column>
                         <p:column style="width:32px">

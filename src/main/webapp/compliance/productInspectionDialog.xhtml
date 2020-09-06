@@ -96,52 +96,53 @@
                                                 completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
                                     <p:ajax event="itemSelect"
-                                            update="manufacturerActionsMenu"
+                                            update="actionsMenu"
                                             listener="#{complianceManager.updateSurvey}"
                                             process="@this"/>
 
-                                </p:autoComplete>  
+                                </p:autoComplete> 
 
-                                <p:menuButton id="manufacturerActionsMenu" 
-                                              icon="ui-icon-pencil" 
-                                              title="Add or edit manufacturer">
-                                    <p:menuitem>                       
-                                        <p:commandButton value="Edit manufacturer"
-                                                         id="editManufacturer"
-                                                         icon="ui-icon-pencil" 
-                                                         disabled="${!complianceManager.isManufacturerNameValid}"
-                                                         style="width: 300%;text-align: left;background: none;border: 0;"
-                                                         onstart="PF('longProcessDialogVar').show();"   
-                                                         oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                         actionListener="#{complianceManager.editManufacturer}"  
-                                                         process="@this,manufacturer"                             
-                                                         title="View or edit this manufacturer's detail">  
+                                <p:commandButton id="actionsMenuButton"
+                                                 icon="ui-icon-pencil" 
+                                                 title="Add or edit manufacturer" />  
+                                <p:overlayPanel id="actionsMenu" for="actionsMenuButton" 
+                                                widgetVar="actionsMenuVar"
+                                                hideEffect="fade">
 
-                                            <p:ajax event="dialogReturn" 
-                                                    listener="#{complianceManager.manufacturerDialogReturn}"
-                                                    update="manufacturer" />
+                                    <p:commandButton value="View or edit manufacturer"
+                                                     icon="ui-icon-pencil" 
+                                                     style="background: none;border: 0;"
+                                                     disabled="${!complianceManager.isManufacturerNameValid}"
+                                                     onstart="PF('longProcessDialogVar').show();"   
+                                                     oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"                                  
+                                                     actionListener="#{complianceManager.editManufacturer}"
+                                                     process="@this,manufacturer"                             
+                                                     title="View or edit manufacturer">  
 
-                                        </p:commandButton>            
-                                    </p:menuitem>
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.manufacturerDialogReturn}"
+                                                update="manufacturer" />
 
-                                    <p:menuitem >       
-                                        <p:commandButton 
-                                            value="Add manufacturer"
-                                            icon="ui-icon-plus" 
-                                            style="width: 300%;text-align: left;background: none;border: 0;"
-                                            onstart="PF('longProcessDialogVar').show();"    
-                                            oncomplete="PF('longProcessDialogVar').hide();"    
-                                            actionListener="#{complianceManager.createNewManufacturer}"                                            
-                                            process="@this"
-                                            title="Add a new manufacturer">
+                                    </p:commandButton>
+                                    <br/>
+                                    <p:commandButton 
+                                        value="Add manufacturer"
+                                        icon="ui-icon-plus" 
+                                        style="background: none;border: 0;"
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"  
+                                        actionListener="#{complianceManager.createNewManufacturer}"                                            
+                                        process="@this"
+                                        title="Add a new manufacturer">
 
-                                            <p:ajax event="dialogReturn" 
-                                                    listener="#{complianceManager.manufacturerDialogReturn}"
-                                                    update="manufacturer" />
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.manufacturerDialogReturn}"
+                                                update="manufacturer" />
 
-                                        </p:commandButton>
-                                    </p:menuitem>
-                                </p:menuButton>                                
+                                    </p:commandButton>
+
+                                </p:overlayPanel>
+
                             </h:panelGroup>
 
                             <h:outputText value="Brand:" />
@@ -456,7 +457,7 @@
                             </p:inputTextarea> 
                             <h:outputText value="&nbsp;&nbsp;" />
                             <h:outputText id="precautionStatementCharsRemaining" /> 
-                            
+
                             <h:outputText value="Status:" />
                             <p:selectOneMenu value="#{complianceManager.currentProductInspection.status}" >
                                 <p:ajax
@@ -485,7 +486,7 @@
                             </p:inputTextarea> 
                             <h:outputText value="&nbsp;&nbsp;" />
                             <h:outputText id="commentsCharsRemaining" />
-                           
+
                         </h:panelGrid>
 
                         <ui:remove>
