@@ -18,8 +18,6 @@
     <h:body >  
         <ui:insert >   
             <ui:include src="../common/longProcessDialog.xhtml"/>
-            <ui:include src="cdbAlertDialogs.xhtml"/>   
-            <ui:include src="cdbShippingContainerDialogForm.xhtml"/>
         </ui:insert>
         <h:form id="productDialogForm">   
             <p:growl id="product_inspection_growl" life="5000" showDetail="true"/>
@@ -514,7 +512,7 @@
                                         </p:commandButton> 
                                     </h:panelGrid>
 
-                                    <p:fileUpload fileUploadListener="#{complianceManager.handleProductPhotoFileUpload}" 
+                                    <p:fileUpload listener="#{complianceManager.handleProductPhotoFileUpload}"                                                   
                                                   onstart="longProcessDialogVar.show();"
                                                   oncomplete="longProcessDialogVar.hide();"
                                                   multiple="false"

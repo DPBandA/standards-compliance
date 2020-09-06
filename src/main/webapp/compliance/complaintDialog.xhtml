@@ -78,53 +78,53 @@
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="complainantActionsMenu"
+                                        update="actionsMenuButton"
                                         listener="#{complianceManager.updateComplainant}"
                                         process="@this"/>
 
                             </p:autoComplete>  
 
-                            <p:menuButton id="complainantActionsMenu" 
-                                          icon="ui-icon-pencil" 
-                                          title="Add or edit complainant">
-                                <p:menuitem>                       
-                                    <p:commandButton value="Edit complainant"
-                                                     id="editComplainant"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isComplainantNameValid}"
-                                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editComplainant}"  
-                                                     process="@this,complainant"                             
-                                                     title="View or edit this complainant's detail">  
+                            <p:commandButton id="actionsMenuButton"
+                                             icon="ui-icon-pencil" 
+                                             title="Add or edit complainant" />  
+                            <p:overlayPanel id="actionsMenu" for="actionsMenuButton" 
+                                            widgetVar="actionsMenuVar"
+                                            hideEffect="fade">
+                                <p:commandButton value="View or edit complainant"
+                                                 icon="ui-icon-pencil" 
+                                                 style="background: none;border: 0;"
+                                                 disabled="${!complianceManager.isComplainantNameValid}"
+                                                 onstart="PF('longProcessDialogVar').show();"   
+                                                 oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"                                  
+                                                 actionListener="#{complianceManager.editComplainant}"
+                                                 process="@this,complainant"                             
+                                                 title="View or edit complainant">  
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.complainantDialogReturn}"
-                                                update="complainant" />
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.complainantDialogReturn}"
+                                            update="complainant" />
 
-                                    </p:commandButton>            
-                                </p:menuitem>
+                                </p:commandButton>
+                                <br/>
+                                <p:commandButton 
+                                    value="Add complainant"
+                                    icon="ui-icon-plus" 
+                                    style="background: none;border: 0;"
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"  
+                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    actionListener="#{complianceManager.createNewComplainant}"                                            
+                                    process="@this"
+                                    title="Add a new complainant">
 
-                                <p:menuitem >       
-                                    <p:commandButton 
-                                        value="Add complainant"
-                                        icon="ui-icon-plus" 
-                                        style="width: 300%;text-align: left;background: none;border: 0;"
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"                    
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewComplainant}"                                            
-                                        process="@this"
-                                        title="Add a new complainant">
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.complainantDialogReturn}"
+                                            update="complainant" />
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.complainantDialogReturn}"
-                                                update="complainant" />
+                                </p:commandButton>
 
-                                    </p:commandButton>
-                                </p:menuitem>
-                            </p:menuButton>                                
+                            </p:overlayPanel>
+
                         </h:panelGroup> 
 
                         <h:outputText value="Received by:" style="font-weight: bold" />       
@@ -145,7 +145,7 @@
                             <p:ajax event="itemSelect"
                                     listener="#{complianceManager.updateComplaint}"
                                     process="@this"/>
-                            
+
                         </p:autoComplete>  
 
                         <h:outputText value="Received via:"
