@@ -335,21 +335,27 @@ Email: info@dpbennett.com.jm
                         <p:dataTable  var="factoryInspectionComponent"
                                       rowStyleClass="#{factoryInspectionComponent.isHeading ? 'header' : null}"
                                       value="#{complianceManager.currentFactoryInspection.allSortedFactoryInspectionComponents}">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Component" />
-                                </f:facet>
-                                <h:outputText value="#{factoryInspectionComponent.name}" />                    
-                            </p:column>
-
-
+                            
                             <p:column rendered="#{!factoryInspectionComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value="Item" />
+                                </f:facet>
+                                <h:outputText value="#{factoryInspectionComponent.item}" />                    
+                            </p:column>
+                            
+                            <p:column rendered="#{factoryInspectionComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />
+                            </p:column>
+                            
+                            <p:column>
                                 <f:facet name="header">
                                     <h:outputText value="Comment" />
                                 </f:facet>
-                                <h:outputText value="#{factoryInspectionComponent.comments}" />
+                                <h:outputText value="#{factoryInspectionComponent.name}" />
                             </p:column>
-
 
                             <p:column rendered="#{factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
