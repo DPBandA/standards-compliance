@@ -288,7 +288,7 @@ Email: info@dpbennett.com.jm
                             <p:menuButton id="actionsMenuButton" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit consignee">
-                                
+
                                 <p:menuitem value="Edit consignee"
                                             id="editConsignee"
                                             icon="ui-icon-pencil" 
@@ -307,22 +307,20 @@ Email: info@dpbennett.com.jm
 
                                 </p:menuitem>
 
-                                <p:menuitem >       
-                                    <p:commandButton 
-                                        value="Add consignee"
-                                        icon="ui-icon-plus" 
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"                    
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewConsignee}"                                            
-                                        process="@this"
-                                        title="Add a new consignee">
+                                <p:menuitem
+                                    value="Add consignee"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"                    
+                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    actionListener="#{complianceManager.createNewConsignee}"                                            
+                                    process="@this"
+                                    title="Add a new consignee">
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee,consigneeRepresentative" />
-
-                                    </p:commandButton>
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.consigneeDialogReturn}"
+                                            update="consignee,consigneeRepresentative" />
+                                    
                                 </p:menuitem>
                             </p:menuButton>     
 
