@@ -297,13 +297,11 @@ Email: info@dpbennett.com.jm
                                             oncomplete="PF('longProcessDialogVar').hide();"                                  
                                             actionListener="#{complianceManager.editConsignee}"  
                                             process="@this,consignee"                             
-                                            title="View or edit this consignee's detail">                       
-
-
+                                            title="View or edit this consignee's detail">    
+                                    
                                     <p:ajax event="dialogReturn" 
                                             listener="#{complianceManager.consigneeDialogReturn}"
                                             update="consignee,consigneeRepresentative" />
-
 
                                 </p:menuitem>
 
@@ -377,6 +375,7 @@ Email: info@dpbennett.com.jm
                             <p:menuButton id="retailOutletActionsMenu" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit retail outlet">
+                                
                                 <p:menuitem value="Edit retail outlet"
                                             id="editRetailOutlet"
                                             icon="ui-icon-pencil" 
@@ -409,6 +408,7 @@ Email: info@dpbennett.com.jm
                                             update="retailOutlet,retailRepresentative" />
 
                                 </p:menuitem>
+                                
                             </p:menuButton>                                
                         </h:panelGroup> 
 

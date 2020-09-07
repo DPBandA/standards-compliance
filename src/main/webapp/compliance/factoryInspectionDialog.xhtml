@@ -94,19 +94,16 @@ Email: info@dpbennett.com.jm
                                         process="@this"/>
 
                             </p:autoComplete>  
-                            <p:commandButton id="actionsMenuButton"
+                            
+                            <p:menuButton id="actionsMenuButton"
                                              icon="ui-icon-pencil" 
-                                             title="Add, view or edit a manufacturer">  
-                            </p:commandButton>
-                            <p:overlayPanel id="actionsMenu" for="actionsMenuButton" 
-                                            widgetVar="actionsMenuVar"
-                                            hideEffect="fade">
-                                <p:commandButton value="View or edit manufacturer"
+                                             title="Add, view or edit a manufacturer">                            
+                           
+                                <p:menuitem value="Edit manufacturer"
                                                  icon="ui-icon-pencil" 
-                                                 style="background: none;border: 0;"
                                                  disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
                                                  onstart="PF('longProcessDialogVar').show();"   
-                                                 oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"                                  
+                                                 oncomplete="PF('longProcessDialogVar').hide();"                                  
                                                  actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
                                                  process="@this,manufacturer"                             
                                                  title="View or edit manufacturer">  
@@ -116,14 +113,13 @@ Email: info@dpbennett.com.jm
                                             update="manufacturer,address,representative" />
 
 
-                                </p:commandButton>
-                                <br/>
-                                <p:commandButton 
+                                </p:menuitem>
+                               
+                                <p:menuitem 
                                     value="Add manufacturer"
                                     icon="ui-icon-plus" 
-                                    style="background: none;border: 0;"
                                     onstart="PF('longProcessDialogVar').show();"    
-                                    oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"    
                                     actionListener="#{complianceManager.createNewManufacturer}"                                            
                                     process="@this"
                                     title="Add a new manufacturer">
@@ -132,9 +128,9 @@ Email: info@dpbennett.com.jm
                                             listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
                                             update="manufacturer,address,representative" />
 
-                                </p:commandButton>
+                                </p:menuitem>
 
-                            </p:overlayPanel>
+                            </p:menuButton>
                             
                         </h:panelGroup>
 

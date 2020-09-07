@@ -96,25 +96,21 @@
                                                 completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
                                     <p:ajax event="itemSelect"
-                                            update="actionsMenu"
+                                            update="actionsMenuButton"
                                             listener="#{complianceManager.updateSurvey}"
                                             process="@this"/>
 
                                 </p:autoComplete> 
 
-                                <p:commandButton id="actionsMenuButton"
+                                <p:menuButton id="actionsMenuButton"
                                                  icon="ui-icon-pencil" 
-                                                 title="Add or edit manufacturer" />  
-                                <p:overlayPanel id="actionsMenu" for="actionsMenuButton" 
-                                                widgetVar="actionsMenuVar"
-                                                hideEffect="fade">
-
-                                    <p:commandButton value="View or edit manufacturer"
+                                                 title="Add or edit manufacturer" >  
+                               
+                                    <p:menuitem value="Edit manufacturer"
                                                      icon="ui-icon-pencil" 
-                                                     style="background: none;border: 0;"
                                                      disabled="${!complianceManager.isManufacturerNameValid}"
                                                      onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"                                  
+                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
                                                      actionListener="#{complianceManager.editManufacturer}"
                                                      process="@this,manufacturer"                             
                                                      title="View or edit manufacturer">  
@@ -123,14 +119,13 @@
                                                 listener="#{complianceManager.manufacturerDialogReturn}"
                                                 update="manufacturer" />
 
-                                    </p:commandButton>
-                                    <br/>
-                                    <p:commandButton 
+                                    </p:menuitem>
+                                    
+                                    <p:menuitem 
                                         value="Add manufacturer"
                                         icon="ui-icon-plus" 
-                                        style="background: none;border: 0;"
                                         onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"  
+                                        oncomplete="PF('longProcessDialogVar').hide();"  
                                         actionListener="#{complianceManager.createNewManufacturer}"                                            
                                         process="@this"
                                         title="Add a new manufacturer">
@@ -139,9 +134,9 @@
                                                 listener="#{complianceManager.manufacturerDialogReturn}"
                                                 update="manufacturer" />
 
-                                    </p:commandButton>
+                                    </p:menuitem>
 
-                                </p:overlayPanel>
+                                </p:menuButton>
 
                             </h:panelGroup>
 
