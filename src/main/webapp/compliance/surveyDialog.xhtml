@@ -320,7 +320,7 @@ Email: info@dpbennett.com.jm
                                     <p:ajax event="dialogReturn" 
                                             listener="#{complianceManager.consigneeDialogReturn}"
                                             update="consignee,consigneeRepresentative" />
-                                    
+
                                 </p:menuitem>
                             </p:menuButton>     
 
@@ -377,42 +377,37 @@ Email: info@dpbennett.com.jm
                             <p:menuButton id="retailOutletActionsMenu" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit retail outlet">
-                                <p:menuitem>                       
-                                    <p:commandButton value="Edit retail outlet"
-                                                     id="editRetailOutlet"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="#{!complianceManager.isRetailOutletNameValid}"
-                                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editRetailOutlet}"  
-                                                     process="@this,retailOutlet"                             
-                                                     title="View or edit this retail outlet's detail">  
+                                <p:menuitem value="Edit retail outlet"
+                                            id="editRetailOutlet"
+                                            icon="ui-icon-pencil" 
+                                            disabled="#{!complianceManager.isRetailOutletNameValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editRetailOutlet}"  
+                                            process="@this,retailOutlet"                             
+                                            title="View or edit this retail outlet's detail">  
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.retailOutletDialogReturn}"
-                                                update="retailOutlet,retailRepresentative" />
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.retailOutletDialogReturn}"
+                                            update="retailOutlet,retailRepresentative" />
 
-                                    </p:commandButton>            
+
                                 </p:menuitem>
 
-                                <p:menuitem >       
-                                    <p:commandButton 
-                                        value="Add retail outlet"
-                                        icon="ui-icon-plus" 
-                                        style="width: 300%;text-align: left;background: none;border: 0;"
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"                    
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewRetailOutlet}"                                            
-                                        process="@this"
-                                        title="Add a new retail outlet">
+                                <p:menuitem 
+                                    value="Add retail outlet"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"                    
+                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    actionListener="#{complianceManager.createNewRetailOutlet}"                                            
+                                    process="@this"
+                                    title="Add a new retail outlet">
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.retailOutletDialogReturn}"
-                                                update="retailOutlet,retailRepresentative" />
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.retailOutletDialogReturn}"
+                                            update="retailOutlet,retailRepresentative" />
 
-                                    </p:commandButton>
                                 </p:menuitem>
                             </p:menuButton>                                
                         </h:panelGroup> 
