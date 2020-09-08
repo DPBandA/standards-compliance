@@ -49,7 +49,60 @@ Email: info@dpbennett.com.jm
                 </p:toolbarGroup>
             </p:toolbar>            
             <p:panel>
-                <h:panelGrid id="factoryInspectionPanelGrid" columns="3" style="width: 100%">
+                <h:panelGrid id="factoryInspectionPanelGrid" columns="2">
+                    <p:outputLabel value="Heading:" for="heading" />               
+                    <p:selectBooleanCheckbox id="heading"
+                                             value="#{complianceManager.currentFactoryInspectionComponent.isHeading}" >
+
+                        <p:ajax listener="#{complianceManager.updateFactoryInspectionComponent}"
+                                update="factoryInspectionPanelGrid"
+                                process="@this"/>
+
+                    </p:selectBooleanCheckbox>
+
+                    <h:outputText value="Component:"/>
+                    <p:inputText maxlength="250"
+                                 style="width: 300px;"
+                                 value="#{complianceManager.currentFactoryInspectionComponent.name}" >
+
+                        <p:ajax event="change"
+                                listener="#{complianceManager.updateFactoryInspectionComponent}"
+                                process="@this"/>
+
+                    </p:inputText>
+
+                    <p:outputLabel value="Satisfactory:" for="satisfactory" />               
+                    <p:selectBooleanCheckbox id="satisfactory"
+                                             value="#{complianceManager.currentFactoryInspectionComponent.satisfactory}" >
+
+                        <p:ajax listener="#{complianceManager.updateFactoryInspectionComponent}"
+                                update="factoryInspectionPanelGrid"
+                                process="@this"/>
+
+                    </p:selectBooleanCheckbox>
+
+                    <h:outputLabel value="Comments:" />
+                    <h:panelGroup>
+                        <h:panelGrid columns="1" >
+                            <p:inputTextarea  value="#{complianceManager.currentFactoryInspectionComponent.comments}"
+                                              id="comments"
+                                              rows="2"
+                                              counter="charsRemaining"
+                                              counterTemplate="{0} characters remaining."
+                                              maxlength="250"
+                                              autoResize="false"
+                                              style="width: 225px;" >
+
+                                <p:ajax event="change"
+                                        global="false" 
+                                        listener="#{complianceManager.updateFactoryInspectionComponent}" 
+                                        process="@this"/>
+
+                            </p:inputTextarea>
+                            <h:outputText id="charsRemaining" />
+                        </h:panelGrid>
+                    </h:panelGroup>
+
                     <ui:remove>
                         <h:outputLabel value="Cost type:" for="costComponentType" style="font-weight: bold;" />
                         <p:spacer height="0" width="10"/>

@@ -94,19 +94,19 @@ Email: info@dpbennett.com.jm
                                         process="@this"/>
 
                             </p:autoComplete>  
-                            
+
                             <p:menuButton id="actionsMenuButton"
-                                             icon="ui-icon-pencil" 
-                                             title="Add, view or edit a manufacturer">                            
-                           
+                                          icon="ui-icon-pencil" 
+                                          title="Add, view or edit a manufacturer">                            
+
                                 <p:menuitem value="Edit manufacturer"
-                                                 icon="ui-icon-pencil" 
-                                                 disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
-                                                 onstart="PF('longProcessDialogVar').show();"   
-                                                 oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                 actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
-                                                 process="@this,manufacturer"                             
-                                                 title="View or edit manufacturer">  
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
+                                            process="@this,manufacturer"                             
+                                            title="View or edit manufacturer">  
 
                                     <p:ajax event="dialogReturn" 
                                             listener="#{complianceManager.factoryInspectionManufacturerDialogReturn}"
@@ -114,7 +114,7 @@ Email: info@dpbennett.com.jm
 
 
                                 </p:menuitem>
-                               
+
                                 <p:menuitem 
                                     value="Add manufacturer"
                                     icon="ui-icon-plus" 
@@ -131,7 +131,7 @@ Email: info@dpbennett.com.jm
                                 </p:menuitem>
 
                             </p:menuButton>
-                            
+
                         </h:panelGroup>
 
                         <h:outputText value="Address:" style="font-weight: bold" />    
@@ -335,7 +335,7 @@ Email: info@dpbennett.com.jm
                         <p:dataTable  var="factoryInspectionComponent"
                                       rowStyleClass="#{factoryInspectionComponent.isHeading ? 'header' : null}"
                                       value="#{complianceManager.currentFactoryInspection.allSortedFactoryInspectionComponents}">
-                            
+
                             <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value="Item" />
@@ -348,7 +348,7 @@ Email: info@dpbennett.com.jm
                                 </f:facet>
                                 <h:outputText value=" " />
                             </p:column>
-                            
+
                             <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value="Component" />
@@ -361,7 +361,7 @@ Email: info@dpbennett.com.jm
                                 </f:facet>
                                 <h:outputText value=" " />
                             </p:column>
-                            
+
                             <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value="Satisfactory" />
@@ -374,7 +374,7 @@ Email: info@dpbennett.com.jm
                                 </f:facet>
                                 <h:outputText value=" " />
                             </p:column>
-                            
+
                             <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value="Comments" />
@@ -392,34 +392,28 @@ Email: info@dpbennett.com.jm
                                 <p:menuButton id="toolsButton" 
                                               title="Edit or delete inspection component"
                                               icon="ui-icon-pencil" >
-                                    <p:menuitem>                       
-                                        <p:commandButton   
-                                            value="Edit"
-                                            style="width: 300%;text-align: left;background: none;border: 0;"
-                                            actionListener="#{complianceManager.editFactoryInspectionComponent}"
-                                            update=":factoryInspectionComponentDialogForm"
-                                            oncomplete="PF('factoryInspectionComponentDialog').show();"
-                                            icon="ui-icon ui-icon-pencil"
-                                            process="@this" >
+                                    <p:menuitem 
+                                        value="Edit"
+                                        actionListener="#{complianceManager.editFactoryInspectionComponent}"
+                                        update=":factoryInspectionComponentDialogForm"
+                                        oncomplete="PF('factoryInspectionComponentDialog').show();"
+                                        icon="ui-icon ui-icon-pencil"
+                                        process="@this" >
 
-                                            <f:setPropertyActionListener value="#{factoryInspectionComponent}"
-                                                                         target="#{complianceManager.currentFactoryInspection}" />
+                                        <f:setPropertyActionListener value="#{factoryInspectionComponent}"
+                                                                     target="#{complianceManager.currentFactoryInspectionComponent}" />
 
-                                        </p:commandButton>                       
                                     </p:menuitem>
 
-                                    <p:menuitem >                       
-                                        <p:commandButton   
-                                            value="Delete"
-                                            style="width: 300%;text-align: left;background: none;border: 0;"
-                                            onclick="factoryInspectionComponentDeleteConfirm.show();"
-                                            icon="ui-icon-trash"
-                                            process="@this">
+                                    <p:menuitem  
+                                        value="Delete"
+                                        onclick="factoryInspectionComponentDeleteConfirm.show();"
+                                        icon="ui-icon-trash"
+                                        process="@this">
 
-                                            <f:setPropertyActionListener value="#{factoryInspectionComponent}"
-                                                                         target="#{complianceManager.currentFactoryInspectionComponent}" />
+                                        <f:setPropertyActionListener value="#{factoryInspectionComponent}"
+                                                                     target="#{complianceManager.currentFactoryInspectionComponent}" />
 
-                                        </p:commandButton>
                                     </p:menuitem>                   
 
                                 </p:menuButton>                   
