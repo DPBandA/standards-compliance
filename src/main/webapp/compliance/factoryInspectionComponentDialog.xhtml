@@ -59,6 +59,16 @@ Email: info@dpbennett.com.jm
                                 process="@this"/>
 
                     </p:selectBooleanCheckbox>
+                    
+                    <h:outputText value="Item No.:"/>
+                    <p:inputText maxlength="250"
+                                 value="#{complianceManager.currentFactoryInspectionComponent.item}" >
+
+                        <p:ajax event="change"
+                                listener="#{complianceManager.updateFactoryInspectionComponent}"
+                                process="@this"/>
+
+                    </p:inputText>
 
                     <h:outputText value="Component:"/>
                     <p:inputText maxlength="250"
@@ -91,7 +101,7 @@ Email: info@dpbennett.com.jm
                                               counterTemplate="{0} characters remaining."
                                               maxlength="250"
                                               autoResize="false"
-                                              style="width: 225px;" >
+                                              style="width: 300px;" >
 
                                 <p:ajax event="change"
                                         global="false" 
