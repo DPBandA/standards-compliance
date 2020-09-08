@@ -341,8 +341,7 @@ Email: info@dpbennett.com.jm
                                     <h:outputText value="Item" />
                                 </f:facet>
                                 <h:outputText value="#{factoryInspectionComponent.item}" />                    
-                            </p:column>
-                            
+                            </p:column>                            
                             <p:column rendered="#{factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value=" " />
@@ -356,12 +355,37 @@ Email: info@dpbennett.com.jm
                                 </f:facet>
                                 <h:outputText value="#{factoryInspectionComponent.name}" />
                             </p:column>
-
                             <p:column rendered="#{factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
                                     <h:outputText value=" " />
                                 </f:facet>
                                 <h:outputText value=" " />
+                            </p:column>
+                            
+                            <p:column rendered="#{!factoryInspectionComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value="Satisfactory" />
+                                </f:facet>
+                                <h:outputText value="#{factoryInspectionComponent.isSatisfactory}" />
+                            </p:column>
+                            <p:column rendered="#{factoryInspectionComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />
+                            </p:column>
+                            
+                            <p:column rendered="#{!factoryInspectionComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value="Comments" />
+                                </f:facet>
+                                <h:outputText value="#{factoryInspectionComponent.comments}" />
+                            </p:column>
+                            <p:column rendered="#{factoryInspectionComponent.isHeading}">
+                                <f:facet name="header">
+                                    <h:outputText value=" " />
+                                </f:facet>
+                                <h:outputText value=" " />                                
                             </p:column>
 
                             <p:column style="width:32px" >
