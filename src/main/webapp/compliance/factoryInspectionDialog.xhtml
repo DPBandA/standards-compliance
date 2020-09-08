@@ -350,9 +350,9 @@ Email: info@dpbennett.com.jm
                                 <h:outputText value=" " />
                             </p:column>
                             
-                            <p:column>
+                            <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
-                                    <h:outputText value="Comment" />
+                                    <h:outputText value="Component" />
                                 </f:facet>
                                 <h:outputText value="#{factoryInspectionComponent.name}" />
                             </p:column>
