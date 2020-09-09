@@ -333,8 +333,12 @@ Email: info@dpbennett.com.jm
                         </p:toolbar>
 
                         <p:dataTable  var="factoryInspectionComponent"
+                                      editable="true" 
+                                      editMode="cell"
                                       rowStyleClass="#{factoryInspectionComponent.isHeading ? 'header' : null}"
                                       value="#{complianceManager.currentFactoryInspection.allSortedFactoryInspectionComponents}">
+
+                            <p:ajax event="cellEdit" listener="#{complianceManager.onFactoryInspectionComponentCellEdit}" />
 
                             <p:column rendered="#{!factoryInspectionComponent.isHeading}">
                                 <f:facet name="header">
