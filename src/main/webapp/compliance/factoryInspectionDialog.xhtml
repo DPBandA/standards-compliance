@@ -356,7 +356,13 @@ Email: info@dpbennett.com.jm
                             <p:column headerText="Component" rendered="#{!factoryInspectionComponent.isHeading}">    
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{factoryInspectionComponent.name}" /></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{factoryInspectionComponent.name}" style="width:96%"/></f:facet>
+                                    <f:facet name="input">
+                                        <p:inputTextarea  value="#{factoryInspectionComponent.name}"
+                                                          rows="2"
+                                                          maxlength="250"
+                                                          autoResize="false"
+                                                          style="width: 95%;" />
+                                    </f:facet>
                                 </p:cellEditor>
                             </p:column>
                             <p:column rendered="#{factoryInspectionComponent.isHeading}">
@@ -387,6 +393,13 @@ Email: info@dpbennett.com.jm
                             <p:column headerText="Comments" rendered="#{!factoryInspectionComponent.isHeading}">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{factoryInspectionComponent.comments}" /></f:facet>
+                                    <f:facet name="input">
+                                        <p:inputTextarea  value="#{factoryInspectionComponent.comments}"
+                                                          rows="2"
+                                                          maxlength="250"
+                                                          autoResize="false"
+                                                          style="width: 95%;" />
+                                    </f:facet>
                                 </p:cellEditor>
                             </p:column>
                             <p:column rendered="#{factoryInspectionComponent.isHeading}">
