@@ -107,6 +107,12 @@ Email: info@dpbennett.com.jm
                             actionListener="#{complianceManager.openComplaintsBrowser}"
                             oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
+                <p:separator />
+                <p:menuitem value="Factory Inspections"
+                            onstart="PF('longProcessDialogVar').show();"  
+                            actionListener="#{complianceManager.openFactoryInspectionBrowser}"
+                            oncomplete="PF('longProcessDialogVar').hide();"
+                            process="@this"/>
 
             </p:menuButton>         
         </p:toolbarGroup>
