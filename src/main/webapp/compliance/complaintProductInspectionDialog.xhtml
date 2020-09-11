@@ -103,24 +103,24 @@
                                 </p:autoComplete>  
 
                                 <p:menuButton id="actionsMenuButton"
-                                                 icon="ui-icon-pencil" 
-                                                 title="Add or edit manufacturer" >  
-                              
+                                              icon="ui-icon-pencil" 
+                                              title="Add or edit manufacturer" >  
+
                                     <p:menuitem value="Edit manufacturer"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isManufacturerNameValid}"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editManufacturer}"
-                                                     process="@this,manufacturer"                             
-                                                     title="View or edit manufacturer">  
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isManufacturerNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editManufacturer}"
+                                                process="@this,manufacturer"                             
+                                                title="View or edit manufacturer">  
 
                                         <p:ajax event="dialogReturn" 
                                                 listener="#{complianceManager.manufacturerDialogReturn}"
                                                 update="manufacturer" />
 
                                     </p:menuitem>
-                                    
+
                                     <p:menuitem 
                                         value="Add manufacturer"
                                         icon="ui-icon-plus" 
@@ -213,41 +213,35 @@
                                 <p:menuButton id="distributorActionsMenu" 
                                               icon="ui-icon-pencil" 
                                               title="Add or edit distributor">
-                                    <p:menuitem>                       
-                                        <p:commandButton value="Edit distributor"
-                                                         id="editDistributor"
-                                                         icon="ui-icon-pencil" 
-                                                         disabled="${!complianceManager.isDistributorNameValid}"
-                                                         style="width: 300%;text-align: left;background: none;border: 0;"
-                                                         onstart="PF('longProcessDialogVar').show();"   
-                                                         oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                         actionListener="#{complianceManager.editDistributor}"  
-                                                         process="@this,distributor"                             
-                                                         title="View or edit this distributor's detail">  
+                                    <p:menuitem value="Edit distributor"
+                                                id="editDistributor"
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isDistributorNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editDistributor}"  
+                                                process="@this,distributor"                             
+                                                title="View or edit this distributor's detail">  
 
-                                            <p:ajax event="dialogReturn" 
-                                                    listener="#{complianceManager.distributorDialogReturn}"
-                                                    update="distributor" />
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.distributorDialogReturn}"
+                                                update="distributor" />
 
-                                        </p:commandButton>            
                                     </p:menuitem>
 
-                                    <p:menuitem >       
-                                        <p:commandButton 
-                                            value="Add distributor"
-                                            icon="ui-icon-plus" 
-                                            style="width: 300%;text-align: left;background: none;border: 0;"
-                                            onstart="PF('longProcessDialogVar').show();"    
-                                            oncomplete="PF('longProcessDialogVar').hide();"  
-                                            actionListener="#{complianceManager.createNewDistributor}"                                            
-                                            process="@this"
-                                            title="Add a new distributor">
+                                    <p:menuitem 
+                                        value="Add distributor"
+                                        icon="ui-icon-plus" 
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();"  
+                                        actionListener="#{complianceManager.createNewDistributor}"                                            
+                                        process="@this"
+                                        title="Add a new distributor">
 
-                                            <p:ajax event="dialogReturn" 
-                                                    listener="#{complianceManager.distributorDialogReturn}"
-                                                    update="distributor" />
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.distributorDialogReturn}"
+                                                update="distributor" />
 
-                                        </p:commandButton>
                                     </p:menuitem>
                                 </p:menuButton>                                
                             </h:panelGroup> 

@@ -298,7 +298,7 @@ Email: info@dpbennett.com.jm
                                             actionListener="#{complianceManager.editConsignee}"  
                                             process="@this,consignee"                             
                                             title="View or edit this consignee's detail">    
-                                    
+
                                     <p:ajax event="dialogReturn" 
                                             listener="#{complianceManager.consigneeDialogReturn}"
                                             update="consignee,consigneeRepresentative" />
@@ -375,7 +375,7 @@ Email: info@dpbennett.com.jm
                             <p:menuButton id="retailOutletActionsMenu" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit retail outlet">
-                                
+
                                 <p:menuitem value="Edit retail outlet"
                                             id="editRetailOutlet"
                                             icon="ui-icon-pencil" 
@@ -408,7 +408,7 @@ Email: info@dpbennett.com.jm
                                             update="retailOutlet,retailRepresentative" />
 
                                 </p:menuitem>
-                                
+
                             </p:menuButton>                                
                         </h:panelGroup> 
 
@@ -772,41 +772,35 @@ Email: info@dpbennett.com.jm
                             <p:menuButton id="brokerActionsMenu" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit broker">
-                                <p:menuitem>                       
-                                    <p:commandButton value="Edit broker"
-                                                     id="editBroker"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isBrokerNameValid}"
-                                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editBroker}"  
-                                                     process="@this,broker"                             
-                                                     title="View or edit this broker's detail">  
+                                <p:menuitem value="Edit broker"
+                                            id="editBroker"
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.isBrokerNameValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editBroker}"  
+                                            process="@this,broker"                             
+                                            title="View or edit this broker's detail">  
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.brokerDialogReturn}"
-                                                update="broker,brokerRepresentative,brokerAddress" />
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.brokerDialogReturn}"
+                                            update="broker,brokerRepresentative,brokerAddress" />
 
-                                    </p:commandButton>            
                                 </p:menuitem>
 
-                                <p:menuitem >       
-                                    <p:commandButton 
-                                        value="Add broker"
-                                        icon="ui-icon-plus" 
-                                        style="width: 300%;text-align: left;background: none;border: 0;"
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"  
-                                        actionListener="#{complianceManager.createNewBroker}"                                            
-                                        process="@this"
-                                        title="Add a new broker">
+                                <p:menuitem  
+                                    value="Add broker"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"  
+                                    actionListener="#{complianceManager.createNewBroker}"                                            
+                                    process="@this"
+                                    title="Add a new broker">
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.brokerDialogReturn}"
-                                                update="broker,brokerRepresentative,brokerAddress" />
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.brokerDialogReturn}"
+                                            update="broker,brokerRepresentative,brokerAddress" />
 
-                                    </p:commandButton>
                                 </p:menuitem>
                             </p:menuButton>                                
                         </h:panelGroup>

@@ -87,38 +87,38 @@
                             <p:menuButton id="actionsMenuButton"
                                           icon="ui-icon-pencil" 
                                           title="Add or edit complainant" >  
-                               
-                                    <p:menuitem value="Edit complainant"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isComplainantNameValid}"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editComplainant}"
-                                                     process="@this,complainant"                             
-                                                     title="View or edit complainant">  
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.complainantDialogReturn}"
-                                                update="complainant" />
+                                <p:menuitem value="Edit complainant"
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.isComplainantNameValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editComplainant}"
+                                            process="@this,complainant"                             
+                                            title="View or edit complainant">  
 
-                                    </p:menuitem>
-                                
-                                    <p:menuitem 
-                                        value="Add complainant"
-                                        icon="ui-icon-plus" 
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"  
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewComplainant}"                                            
-                                        process="@this"
-                                        title="Add a new complainant">
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.complainantDialogReturn}"
+                                            update="complainant" />
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.complainantDialogReturn}"
-                                                update="complainant" />
+                                </p:menuitem>
 
-                                    </p:menuitem>
-                              
+                                <p:menuitem 
+                                    value="Add complainant"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"  
+                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    actionListener="#{complianceManager.createNewComplainant}"                                            
+                                    process="@this"
+                                    title="Add a new complainant">
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.complainantDialogReturn}"
+                                            update="complainant" />
+
+                                </p:menuitem>
+
                             </p:menuButton>
                         </h:panelGroup> 
 
@@ -170,42 +170,37 @@
                             <p:menuButton id="receivedViaActionsMenu" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit">
-                                <p:menuitem>                       
-                                    <p:commandButton value="Edit client"
-                                                     id="editReceivedVia"
-                                                     icon="ui-icon-pencil" 
-                                                     disabled="${!complianceManager.isReceivedViaNameValid}"
-                                                     style="width: 300%;text-align: left;background: none;border: 0;"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editReceivedVia}"  
-                                                     process="@this,receivedVia"                             
-                                                     title="View or edit this client's detail">  
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.receivedViaDialogReturn}"
-                                                update="receivedVia" />
+                                <p:menuitem value="Edit client"
+                                            id="editReceivedVia"
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.isReceivedViaNameValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editReceivedVia}"  
+                                            process="@this,receivedVia"                             
+                                            title="View or edit this client's detail">  
 
-                                    </p:commandButton>            
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.receivedViaDialogReturn}"
+                                            update="receivedVia" />
+
                                 </p:menuitem>
 
-                                <p:menuitem >       
-                                    <p:commandButton 
-                                        value="Add client"
-                                        icon="ui-icon-plus" 
-                                        style="width: 300%;text-align: left;background: none;border: 0;"
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"                    
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewReceivedVia}"                                            
-                                        process="@this"
-                                        title="Add a new client">
+                                <p:menuitem 
+                                    value="Add client"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"                    
+                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    actionListener="#{complianceManager.createNewReceivedVia}"                                            
+                                    process="@this"
+                                    title="Add a new client">
 
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.receivedViaDialogReturn}"
-                                                update="complainant" />
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.receivedViaDialogReturn}"
+                                            update="complainant" />
 
-                                    </p:commandButton>
                                 </p:menuitem>
                             </p:menuButton>                                
                         </h:panelGroup>
