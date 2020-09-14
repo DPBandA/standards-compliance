@@ -42,6 +42,18 @@ Email: info@dpbennett.com.jm
                         listener="#{complianceManager.surveyDialogReturn}" />
 
             </p:commandButton>   
+            <p:spacer width="20" />
+            <p:inputText placeholder="Enter search text"
+                         style="width:200px" 
+                         value="#{complianceManager.surveySearchText}" >
+
+                <p:ajax event="keyup"                            
+                        global="false"
+                        update=":mainTabViewForm:mainTabView:complianceSurveysTable"
+                        listener="#{complianceManager.doNoDateSurveySearch}"
+                        process="@this"/>
+
+            </p:inputText>
 
         </p:toolbarGroup>
 
