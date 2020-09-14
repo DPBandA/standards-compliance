@@ -49,8 +49,10 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="keyup"                            
                         global="false"
+                        onstart="PF('longProcessDialogVar').show();"
+                        oncomplete="PF('longProcessDialogVar').hide();"
                         update=":mainTabViewForm:mainTabView:complianceSurveysTable"
-                        listener="#{complianceManager.doNoDateSurveySearch}"
+                        listener="#{complianceManager.doDefaultSurveySearch}"
                         process="@this"/>
 
             </p:inputText>
