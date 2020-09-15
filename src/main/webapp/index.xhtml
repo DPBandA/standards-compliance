@@ -114,18 +114,12 @@ Email: info@dpbennett.com.jm
                                var="t"         
                                style="border-width: 0px;"
                                onTabShow="PF('longProcessDialogVar').hide();"
-                               widgetVar="mainTabViewVar">
-
-                        <p:ajax event="tabClose" 
-                                immediate="true"
-                                process="@this"
-                                update=":headerForm:growl3"
-                                listener="#{systemManager.onMainViewTabClose}" />  
+                               widgetVar="mainTabViewVar">                      
 
                         <p:ajax event="tabChange" 
                                 immediate="true"
                                 process="@this"                                
-                                listener="#{systemManager.onMainViewTabChange}" />  
+                                listener="#{complianceManager.onMainViewTabChange}" />  
 
 
                         <p:tab title="#{t.name}" closable="true"  >                              
@@ -151,7 +145,7 @@ Email: info@dpbennett.com.jm
                             </h:panelGroup>
 
                             <h:panelGroup rendered="#{t.id == 'Manufacturers'}" >
-                                <ui:include src="compliance/manufacturersTab.xhtml" />                                                                
+                                <ui:include src="hr/manufacturer/manufacturersTab.xhtml"/>  
                             </h:panelGroup>
 
                             <h:panelGroup rendered="#{t.id == 'Factory Inspections'}" >
