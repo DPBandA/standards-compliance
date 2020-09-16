@@ -42,9 +42,8 @@ Email: info@dpbennett.com.jm
         </h:panelGroup>
         <h:outputText value="" />
 
-        <h:outputText value="Code" style="font-weight: bold;" />       
-        <p:inputText value="#{complianceManager.currentMarketProduct.code}" 
-                     validator="marketProductValidator">
+        <h:outputText value="Code" />       
+        <p:inputText value="#{complianceManager.currentMarketProduct.code}" >
 
             <p:ajax event="change"
                     global="true"      
@@ -56,6 +55,7 @@ Email: info@dpbennett.com.jm
 
         <h:outputText value="Name:" style="font-weight: bold;" />       
         <p:inputText value="#{complianceManager.currentMarketProduct.name}"
+                     id="marketProducName"
                      style="width: 300px;"
                      validator="marketProductValidator">
 
@@ -68,8 +68,7 @@ Email: info@dpbennett.com.jm
         <h:outputText value="" />
 
         <h:outputText value="Brand:" />       
-        <p:inputText value="#{complianceManager.currentMarketProduct.brand}"
-                     validator="marketProductValidator">
+        <p:inputText value="#{complianceManager.currentMarketProduct.brand}" >
 
             <p:ajax event="change"
                     global="true"  
@@ -80,8 +79,7 @@ Email: info@dpbennett.com.jm
         <h:outputText value="" />
 
         <h:outputText value="Model:" />       
-        <p:inputText value="#{complianceManager.currentMarketProduct.model}"
-                     validator="marketProductValidator">
+        <p:inputText value="#{complianceManager.currentMarketProduct.model}" >
 
             <p:ajax event="change"
                     global="true"  
@@ -92,8 +90,7 @@ Email: info@dpbennett.com.jm
         <h:outputText value="" />
 
         <h:outputText value="Type:" />       
-        <p:inputText value="#{complianceManager.currentMarketProduct.type}"
-                     validator="marketProductValidator">
+        <p:inputText value="#{complianceManager.currentMarketProduct.type}" >
 
             <p:ajax event="change"
                     global="true"  
