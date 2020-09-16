@@ -48,8 +48,8 @@ Email: info@dpbennett.com.jm
                          style="width:200px" 
                          value="#{complianceManager.complaintSearchText}" >
 
-                <p:ajax event="keyup"                            
-                        global="false"
+                <p:ajax global="true"
+                        event="keyup"
                         update=":mainTabViewForm:mainTabView:complaintsTable"
                         listener="#{complianceManager.doComplaintSearch}"
                         process="@this"/>
