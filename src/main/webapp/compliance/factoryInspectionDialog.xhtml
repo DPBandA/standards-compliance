@@ -491,9 +491,9 @@ Email: info@dpbennett.com.jm
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="Inspector"/>
+                                <h:outputText value="Model"/>
                             </f:facet>
-                            <h:outputText value="#{product.inspector.name}" />
+                            <h:outputText value="#{product.model}" />
                         </p:column>
                         <p:column style="width:32px">
                             <p:commandButton title="Edit product details"
@@ -502,6 +502,9 @@ Email: info@dpbennett.com.jm
                                              icon="ui-icon-pencil"
                                              oncomplete="longProcessDialogVar.hide();"
                                              process="@this">
+
+                                <p:ajax event="dialogReturn" 
+                                        update="factoryProductsTable" />
 
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
@@ -513,8 +516,10 @@ Email: info@dpbennett.com.jm
                                              onclick="deleteProductDialog.show();"
                                              icon="ui-icon-trash"
                                              process="@this">
+                                
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
+                                
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
