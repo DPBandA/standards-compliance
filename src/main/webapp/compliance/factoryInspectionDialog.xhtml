@@ -36,7 +36,8 @@ Email: info@dpbennett.com.jm
     <h:body >  
         <ui:insert >   
             <ui:include src="factoryInspectionComponentDialog.xhtml"/>       
-            <ui:include src="factoryInspectionComponentDeleteConfirmDialog.xhtml"/>             
+            <ui:include src="factoryInspectionComponentDeleteConfirmDialog.xhtml"/>   
+            <ui:include src="deleteFactoryProductInspectionDialog.xhtml"/>  
             <ui:include src="../common/longProcessDialog.xhtml"/>
         </ui:insert>
         <h:form id="factoryInspectionDialogForm">   
@@ -457,6 +458,78 @@ Email: info@dpbennett.com.jm
                             </p:toolbarGroup>
                         </p:toolbar>                
                     </p:panel>
+                </p:tab>
+
+                <p:tab title="Product Sampling">
+                    <p:commandButton value="Add"
+                                     title="Add new product"
+                                     actionListener="#{complianceManager.createNewFactoryProductInspection}"
+                                     onstart="longProcessDialogVar.show();"
+                                     oncomplete="longProcessDialogVar.hide();"
+                                     icon="ui-icon-plus"
+                                     process="@this" >
+
+                        <p:ajax event="dialogReturn" 
+                                update="factoryProductsTable" />
+
+                    </p:commandButton>
+
+                    <p:dataTable id="factoryProductsTable"
+                                 var="product"
+                                 value="#{complianceManager.currentFactoryInspection.productInspections}">                   
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Name"/>
+                            </f:facet>
+                            <h:outputText value="#{product.name}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Brand"/>
+                            </f:facet>
+                            <h:outputText value="#{product.brand}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Inspector"/>
+                            </f:facet>
+                            <h:outputText value="#{product.inspector.name}" />
+                        </p:column>
+                        <p:column style="width:32px">
+                            <p:commandButton title="Edit product details"
+                                             actionListener="#{complianceManager.editFactoryProductInspection}" 
+                                             onstart="longProcessDialogVar.show();"
+                                             icon="ui-icon-pencil"
+                                             oncomplete="longProcessDialogVar.hide();"
+                                             process="@this">
+
+                                <f:setPropertyActionListener value="#{product}"
+                                                             target="#{complianceManager.currentProductInspection}" />
+
+                            </p:commandButton>
+                        </p:column>
+                        <p:column style="width:32px">
+                            <p:commandButton title="Delete this product"
+                                             onclick="deleteProductDialog.show();"
+                                             icon="ui-icon-trash"
+                                             process="@this">
+                                <f:setPropertyActionListener value="#{product}"
+                                                             target="#{complianceManager.currentProductInspection}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:commandButton value="Add"
+                                     title="Add new product"
+                                     actionListener="#{complianceManager.createNewFactoryProductInspection}"
+                                     onstart="longProcessDialogVar.show();"
+                                     oncomplete="longProcessDialogVar.hide();"
+                                     icon="ui-icon-plus"
+                                     process="@this" >
+
+                        <p:ajax event="dialogReturn" 
+                                update="factoryProductsTable" />
+
+                    </p:commandButton>
                 </p:tab>
 
             </p:tabView>

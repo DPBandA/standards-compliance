@@ -234,57 +234,6 @@ Email: info@dpbennett.com.jm
                                         process="@this"/>
 
                             </p:autoComplete>  
-                            <ui:remove>
-                                <p:commandButton id="actionsMenuButton"
-                                                 icon="ui-icon-pencil" 
-                                                 title="Add, view or edit consignee" >
-
-                                    <p:ajax update="consignee,consigneeRepresentative" resetValues="true" />
-
-                                </p:commandButton>
-                                <p:overlayPanel id="actionsMenu" 
-                                                for="actionsMenuButton" 
-                                                dynamic="true"                                            
-                                                widgetVar="actionsMenuVar"
-                                                hideEffect="fade">
-
-                                    <p:commandButton value="View or edit actionsMenuButton"
-                                                     icon="ui-icon-pencil" 
-                                                     style="background: none;border: 0;"
-                                                     disabled="${!complianceManager.isConsigneeNameValid}"
-                                                     onstart="PF('longProcessDialogVar').show();"   
-                                                     oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"                                  
-                                                     actionListener="#{complianceManager.editConsignee}"
-                                                     process="@this,consignee"                             
-                                                     title="View or edit consignee">  
-
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee,consigneeRepresentative" />
-
-                                    </p:commandButton>
-                                    <br/>
-                                    <p:commandButton 
-                                        value="Add consignee"
-                                        icon="ui-icon-plus" 
-                                        style="background: none;border: 0;"
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();PF('actionsMenuVar').hide();"  
-                                        disabled="#{!complianceManager.user.privilege.canAddClient}"
-                                        actionListener="#{complianceManager.createNewConsignee}"                                            
-                                        process="@this"
-                                        title="Add a new consignee">
-
-                                        <p:ajax event="dialogReturn" 
-                                                listener="#{complianceManager.consigneeDialogReturn}"
-                                                update="consignee,consigneeRepresentative" />
-
-                                    </p:commandButton>
-
-                                </p:overlayPanel>
-                            </ui:remove>
-
-
                             <p:menuButton id="actionsMenuButton" 
                                           icon="ui-icon-pencil" 
                                           title="Add or edit consignee">
