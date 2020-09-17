@@ -58,7 +58,7 @@
                                          validator="requiredFieldValidator" >
 
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
 
                             </p:inputText>     
@@ -72,7 +72,7 @@
 
                                 <p:ajax
                                     global="false"                            
-                                    listener="#{complianceManager.updateComplaint}"  
+                                    listener="#{complianceManager.updateProductInspection}"  
                                     process="@this" />
 
                                 <f:selectItems value="#{complianceManager.productCategories}" />
@@ -96,7 +96,7 @@
 
                                     <p:ajax event="itemSelect"
                                             update="actionsMenuButton"
-                                            listener="#{complianceManager.updateComplaint}"
+                                            listener="#{complianceManager.updateProductInspection}"
                                             process="@this"/>
 
                                 </p:autoComplete>  
@@ -141,21 +141,21 @@
                             <h:outputText value="Brand:" />
                             <p:inputText value="#{complianceManager.currentProductInspection.brand}" >
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>        
 
                             <h:outputText value="Model:" />
                             <p:inputText value="#{complianceManager.currentProductInspection.model}" >
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>    
 
                             <h:outputText value="Serial No.:" />
                             <p:inputText value="#{complianceManager.currentProductInspection.serialNumber}" >
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>   
 
@@ -166,7 +166,7 @@
                         <h:panelGrid columns="3" cellpadding="5">
                             <h:outputText value="Country of Origin:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasCountryOfOrigin}">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                             </p:selectBooleanCheckbox>
 
                             <p:autoComplete value="#{complianceManager.currentProductInspection.countryOfOrigin}" 
@@ -177,14 +177,14 @@
                                             completeMethod="#{systemManager.completeCountry}" >       
 
                                 <p:ajax                               
-                                    listener="#{complianceManager.updateComplaint}"
+                                    listener="#{complianceManager.updateProductInspection}"
                                     process="@this" />
 
                             </p:autoComplete>
 
                             <h:outputText value="Distributor:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasBusinessSource}">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                             </p:selectBooleanCheckbox>   
                             <h:panelGroup>
                                 <p:autoComplete id="distributor"      
@@ -202,7 +202,7 @@
 
                                     <p:ajax event="itemSelect"
                                             update="distributorActionsMenu"
-                                            listener="#{complianceManager.updateComplaint}"
+                                            listener="#{complianceManager.updateProductInspection}"
                                             process="@this"/>
 
                                 </p:autoComplete>  
@@ -244,40 +244,40 @@
 
                             <h:outputText value="Net Quantity Declaration in Metric:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasQuantityDescription}">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                             </p:selectBooleanCheckbox>
                             <p:inputText value="#{complianceManager.currentProductInspection.quantityDescription}"
                                          style="font-weight: bold;width: 300px" >
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>
 
                             <h:outputText value="Ingredient Listing:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasIngredients}">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                             </p:selectBooleanCheckbox>
                             <p:inputText value="#{complianceManager.currentProductInspection.ingredients}"
                                          style="width: 300px"                                        
                                          maxlength="1000">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>
 
                             <h:outputText value="Instructions:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasInstructions}">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                             </p:selectBooleanCheckbox>
                             <p:inputText value="#{complianceManager.currentProductInspection.instructions}"
                                          style="width: 300px"
                                          maxlength="1000">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>
 
                             <h:outputText value="Pictorial Representation:" />
                             <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasPictorialRepresentation}">
-                                <p:ajax listener="#{complianceManager.updateComplaint}"/>
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                             </p:selectBooleanCheckbox>                            
 
                         </h:panelGrid>
@@ -287,7 +287,7 @@
                             <p:inputText value="#{complianceManager.currentProductInspection.batchCode}"
                                          style="font-weight: bold;" >
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>
 
@@ -295,7 +295,7 @@
                             <p:inputText value="#{complianceManager.currentProductInspection.dateMark}"
                                          style="font-weight: bold;" >
                                 <p:ajax global="false"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>
 
@@ -312,7 +312,7 @@
                                 style="width: 500px;">
 
                                 <p:ajax event="change"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
 
                             </p:inputTextarea> 
@@ -323,7 +323,7 @@
                             <p:selectOneMenu value="#{complianceManager.currentProductInspection.status}" >
                                 <p:ajax
                                     global="true"
-                                    listener="#{complianceManager.updateComplaint}"
+                                    listener="#{complianceManager.updateProductInspection}"
                                     process="@this" />
                                 <f:selectItems value="#{complianceManager.productStatus}" />
                             </p:selectOneMenu>
@@ -341,7 +341,7 @@
                                 style="width: 500px;">
 
                                 <p:ajax event="change"
-                                        listener="#{complianceManager.updateComplaint}"
+                                        listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
 
                             </p:inputTextarea> 

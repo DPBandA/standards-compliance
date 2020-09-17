@@ -637,6 +637,9 @@ Email: info@dpbennett.com.jm
                                              oncomplete="longProcessDialogVar.hide();"
                                              process="@this">
 
+                                <p:ajax event="dialogReturn" 
+                                        update="marketProductsTable" />                                
+
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
 
