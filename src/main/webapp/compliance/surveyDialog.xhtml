@@ -42,7 +42,7 @@ Email: info@dpbennett.com.jm
 
             <p:growl id="compliance_survey_growl" life="5000" showDetail="true"/>
 
-            <p:toolbar style="margin-bottom: 1px;">
+            <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
@@ -384,6 +384,32 @@ Email: info@dpbennett.com.jm
                                     process="@this" />   
 
                         </p:autoComplete>  
+
+                        <h:outputText value="Inspector(s): " style="font-weight: bold" />       
+                        <p:autoComplete id="inspectors"
+                                        var="inspector"   
+                                        value="#{complianceManager.currentComplianceSurvey.inspectors}"
+                                        itemLabel="#{inspector.name}"
+                                        itemValue="#{inspector}"
+                                        converter="activeEmployeeConverter"
+                                        validator="businessEntityListValidator"
+                                        forceSelection="true"
+                                        dropdown="true"
+                                        scrollHeight="200"                         
+                                        multiple="true"
+                                        completeMethod="#{humanResourceManager.completeActiveEmployee}" >
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
+                                    process="@this"/>
+
+                            <p:ajax event="itemUnselect"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
+                                    process="@this"/>
+
+                        </p:autoComplete>
 
                         <h:outputText value="Date of survey:" style="font-weight: bold" />
                         <p:calendar id="dateOfSurvey"
