@@ -198,7 +198,7 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
                         </p:autoComplete>  
 
-                        <h:outputText value="Date of inspection" style="font-weight: bold" />
+                        <h:outputText value="Date of inspection:" style="font-weight: bold" />
                         <p:calendar id="inspectionDate"
                                     readonlyInput="true"
                                     navigator="true" 
@@ -231,24 +231,6 @@ Email: info@dpbennett.com.jm
                             <p:ajax event="keyup"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
-
-                        <h:outputLabel value="Inspection progress:" 
-                                       style="font-weight: bold;"
-                                       for="workProgress"/>
-                        <p:selectOneMenu id="workProgress"     
-                                         style="width: 200px;"
-                                         value="#{complianceManager.currentFactoryInspection.workProgress}">
-
-                            <f:selectItems  value="#{systemManager.workProgressList}"
-                                            var="progress"                            
-                                            itemValue="#{progress}"
-                                            itemLabel="#{progress}"/>
-
-                            <p:ajax listener="#{complianceManager.updateFactoryInspection}"
-                                    global="false"
-                                    process="@this"/>
-
-                        </p:selectOneMenu>     
 
                         <h:outputText value="Comments:" />                        
                         <p:inputTextarea
@@ -516,10 +498,10 @@ Email: info@dpbennett.com.jm
                                              onclick="deleteProductDialog.show();"
                                              icon="ui-icon-trash"
                                              process="@this">
-                                
+
                                 <f:setPropertyActionListener value="#{product}"
                                                              target="#{complianceManager.currentProductInspection}" />
-                                
+
                             </p:commandButton>
                         </p:column>
                     </p:dataTable>
@@ -536,7 +518,27 @@ Email: info@dpbennett.com.jm
 
                     </p:commandButton>
                 </p:tab>
+                <p:tab title="Status &amp; Tracking" >
+                    <h:panelGrid columns="2" cellspacing="3">
+                        <h:outputLabel value="Work progress:" 
+                                       style="font-weight: bold;"
+                                       for="workProgress"/>
+                        <p:selectOneMenu id="workProgress"     
+                                         style="width: 200px;"
+                                         value="#{complianceManager.currentFactoryInspection.workProgress}">
 
+                            <f:selectItems  value="#{systemManager.workProgressList}"
+                                            var="progress"                            
+                                            itemValue="#{progress}"
+                                            itemLabel="#{progress}"/>
+
+                            <p:ajax listener="#{complianceManager.updateFactoryInspection}"
+                                    global="false"
+                                    process="@this"/>
+
+                        </p:selectOneMenu>    
+                    </h:panelGrid>
+                </p:tab>
             </p:tabView>
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">

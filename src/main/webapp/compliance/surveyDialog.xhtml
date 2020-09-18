@@ -1344,23 +1344,25 @@ Email: info@dpbennett.com.jm
                     </ui:remove>
                 </p:tab>
                 <p:tab title="Status &amp; Tracking" >
-                    <h:outputLabel value="Work progress: " 
-                                   style="font-weight: bold;"
-                                   for="workProgress"/>
-                    <p:selectOneMenu id="workProgress"     
-                                     style="width: 200px;"
-                                     value="#{complianceManager.currentComplianceSurvey.workProgress}">
+                    <h:panelGrid columns="2" cellspacing="3">
+                        <h:outputLabel value="Work progress: " 
+                                       style="font-weight: bold;"
+                                       for="workProgress"/>
+                        <p:selectOneMenu id="workProgress"     
+                                         style="width: 200px;"
+                                         value="#{complianceManager.currentComplianceSurvey.workProgress}">
 
-                        <f:selectItems  value="#{systemManager.workProgressList}"
-                                        var="progress"                            
-                                        itemValue="#{progress}"
-                                        itemLabel="#{progress}"/>
+                            <f:selectItems  value="#{systemManager.workProgressList}"
+                                            var="progress"                            
+                                            itemValue="#{progress}"
+                                            itemLabel="#{progress}"/>
 
-                        <p:ajax listener="#{complianceManager.updateComplaint}"
-                                global="false"
-                                process="@this"/>
+                            <p:ajax listener="#{complianceManager.updateSurvey}"
+                                    global="false"
+                                    process="@this"/>
 
-                    </p:selectOneMenu>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
                 </p:tab>
             </p:tabView>
             <p:toolbar style="margin-top: 1px;">
