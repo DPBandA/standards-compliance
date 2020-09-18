@@ -1343,6 +1343,25 @@ Email: info@dpbennett.com.jm
                         </h:panelGrid>
                     </ui:remove>
                 </p:tab>
+                <p:tab title="Status &amp; Tracking" >
+                    <h:outputLabel value="Work progress: " 
+                                   style="font-weight: bold;"
+                                   for="workProgress"/>
+                    <p:selectOneMenu id="workProgress"     
+                                     style="width: 200px;"
+                                     value="#{complianceManager.currentComplianceSurvey.workProgress}">
+
+                        <f:selectItems  value="#{systemManager.workProgressList}"
+                                        var="progress"                            
+                                        itemValue="#{progress}"
+                                        itemLabel="#{progress}"/>
+
+                        <p:ajax listener="#{complianceManager.updateComplaint}"
+                                global="false"
+                                process="@this"/>
+
+                    </p:selectOneMenu>
+                </p:tab>
             </p:tabView>
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">
