@@ -58,6 +58,7 @@
                                             id="marketproduct"
                                             forceSelection="false"  
                                             maxlength="40"
+                                            placeholder="-- select of enter name --"
                                             dropdown="true"
                                             scrollHeight="200" 
                                             completeMethod="#{complianceManager.completeMarketProduct}" >
@@ -71,7 +72,6 @@
                                         process="@this" />    
 
                             </p:autoComplete>
-
 
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
@@ -168,7 +168,21 @@
                                 <p:ajax global="false"
                                         listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
-                            </p:inputText>   
+                            </p:inputText> 
+                            
+                            <h:outputText value="Coil No.:" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.coilNumber}" >
+                                <p:ajax global="false"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+                            </p:inputText>
+                            
+                            <h:outputText value="Heat No.:" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.heatNumber}" >
+                                <p:ajax global="false"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+                            </p:inputText>
 
                             <h:outputText value="Tariff Code:" />
                             <p:inputText value="#{complianceManager.currentProductInspection.tariffCode}" >
