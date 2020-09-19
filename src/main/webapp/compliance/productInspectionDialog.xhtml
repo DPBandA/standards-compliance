@@ -53,15 +53,25 @@
                         <h:panelGrid columns="2" cellpadding="3" >
 
                             <h:outputText value="Name:" 
-                                          style="font-weight: bold;" />
-                            <p:inputText value="#{complianceManager.currentProductInspection.name}" 
-                                         validator="requiredFieldValidator" >
+                                          style="font-weight: bold;" />                            
+                            <p:autoComplete value="#{complianceManager.currentProductInspection.name}"     
+                                            id="marketproduct"
+                                            forceSelection="false"  
+                                            maxlength="40"
+                                            dropdown="true"
+                                            scrollHeight="200" 
+                                            completeMethod="#{complianceManager.completeMarketProduct}" >
 
-                                <p:ajax  global="false"
-                                         listener="#{complianceManager.updateProductInspection}"
-                                         process="@this"/>
+                                <p:ajax event="itemSelect"                              
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this" />      
 
-                            </p:inputText>     
+                                <p:ajax event="change"                              
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this" />    
+
+                            </p:autoComplete>
+
 
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
