@@ -27,7 +27,7 @@ Email: info@dpbennett.com.jm
 
     <p:toolbar>
         <p:toolbarGroup align="left" >  
-           
+
             <p:commandButton 
                 value="New"
                 icon="ui-icon-plus" 
@@ -90,13 +90,6 @@ Email: info@dpbennett.com.jm
         <f:facet name="header">
             <h:outputText value="Search Results (found: #{complianceManager.numMarketProducts})" />
         </f:facet>
-        
-        <p:column sortBy="#{marketProduct.code}">
-            <f:facet name="header">
-                <h:outputText value="Code"/>
-            </f:facet>
-            <h:outputText value="#{marketProduct.code}" />
-        </p:column>
 
         <p:column sortBy="#{marketProduct.name}">
             <f:facet name="header">
@@ -104,6 +97,13 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{marketProduct.name}" />
         </p:column>
+
+        <p:column sortBy="#{marketProduct.description}">
+            <f:facet name="header">
+                <h:outputText value="Description"/>
+            </f:facet>
+            <h:outputText value="#{marketProduct.description}" />
+        </p:column>       
 
         <p:column headerText="Active?" >                                                                         
             <p:cellEditor>                

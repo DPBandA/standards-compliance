@@ -326,31 +326,38 @@
                                 <h:outputText value="Brand"/>
                             </f:facet>
                             <h:outputText value="#{product.brand}"/>
-                        </p:column>                       
+                        </p:column>  
                         <p:column style="width:32px">
-                            <p:commandButton title="Edit product details"
-                                             actionListener="#{complianceManager.editCurrentComplaintProductInspection}" 
-                                             onstart="longProcessDialogVar.show();"
-                                             icon="ui-icon-pencil"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             process="@this">
+                            <p:menuButton icon="ui-icon-pencil" 
+                                          title="Edit or delete product" >  
 
-                                <p:ajax event="dialogReturn" 
-                                        update="marketProductsTable" />
+                                <p:menuitem value="Edit product details"
+                                            actionListener="#{complianceManager.editCurrentComplaintProductInspection}" 
+                                            onstart="longProcessDialogVar.show();"
+                                            icon="ui-icon-pencil"
+                                            oncomplete="longProcessDialogVar.hide();"
+                                            process="@this">  
 
-                                <f:setPropertyActionListener value="#{product}"
-                                                             target="#{complianceManager.currentProductInspection}" />
+                                    <p:ajax event="dialogReturn" 
+                                            update="marketProductsTable" />
 
-                            </p:commandButton>
-                        </p:column>
-                        <p:column style="width:32px">
-                            <p:commandButton title="Delete this product"
-                                             onclick="deleteProductDialog.show();"
-                                             icon="ui-icon-trash"
-                                             process="@this">
-                                <f:setPropertyActionListener value="#{product}"
-                                                             target="#{complianceManager.currentProductInspection}" />
-                            </p:commandButton>
+                                    <f:setPropertyActionListener value="#{product}"
+                                                                 target="#{complianceManager.currentProductInspection}" />
+
+                                </p:menuitem>
+
+                                <p:menuitem 
+                                    value="Delete this product"
+                                    onclick="deleteProductDialog.show();"
+                                    icon="ui-icon-trash"
+                                    process="@this">
+
+                                    <f:setPropertyActionListener value="#{product}"
+                                                                 target="#{complianceManager.currentProductInspection}" />
+
+                                </p:menuitem>
+
+                            </p:menuButton>
                         </p:column>
                     </p:dataTable>
                     <p:commandButton value="Add"
