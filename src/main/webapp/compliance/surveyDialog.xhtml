@@ -133,8 +133,23 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
 
                         </p:autoComplete>
-                        
-                        <h:outputText value="Survey Location Type:" style="font-weight: bold"/>
+
+                        <h:outputText value="Survey type:" style="font-weight: bold"/>
+                        <p:selectOneMenu id="surveyType"
+                                         value="#{complianceManager.currentComplianceSurvey.surveyType}" >
+                            <p:ajax
+                                global="true"
+                                onstart="longProcessDialogVar.show();"
+                                oncomplete="longProcessDialogVar.hide();"
+                                update="generalPanelGrid,complianceSurveyTabView"
+                                listener="#{complianceManager.updateSurvey}"  
+                                process="@this" />
+
+                            <f:selectItems value="#{complianceManager.surveyTypes}" />
+
+                        </p:selectOneMenu>
+
+                        <h:outputText value="Survey location type:" style="font-weight: bold"/>
                         <p:selectOneMenu id="surveyLocation"
                                          value="#{complianceManager.currentComplianceSurvey.surveyLocationType}" >
                             <p:ajax
