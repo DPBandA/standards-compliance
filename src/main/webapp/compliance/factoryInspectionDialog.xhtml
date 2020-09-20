@@ -476,33 +476,37 @@ Email: info@dpbennett.com.jm
                                 <h:outputText value="Model"/>
                             </f:facet>
                             <h:outputText value="#{product.model}" />
-                        </p:column>
+                        </p:column>                        
                         <p:column style="width:32px">
-                            <p:commandButton title="Edit product details"
-                                             actionListener="#{complianceManager.editFactoryProductInspection}" 
-                                             onstart="longProcessDialogVar.show();"
-                                             icon="ui-icon-pencil"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             process="@this">
+                            <p:menuButton icon="ui-icon-pencil" 
+                                          title="Edit or delete product">
 
-                                <p:ajax event="dialogReturn" 
-                                        update="factoryProductsTable" />
+                                <p:menuitem value="Edit product details"
+                                            actionListener="#{complianceManager.editFactoryProductInspection}" 
+                                            onstart="longProcessDialogVar.show();"
+                                            icon="ui-icon-pencil"
+                                            oncomplete="longProcessDialogVar.hide();"
+                                            process="@this">    
 
-                                <f:setPropertyActionListener value="#{product}"
-                                                             target="#{complianceManager.currentProductInspection}" />
+                                    <p:ajax event="dialogReturn" 
+                                            update="factoryProductsTable" />                                
 
-                            </p:commandButton>
-                        </p:column>
-                        <p:column style="width:32px">
-                            <p:commandButton title="Delete this product"
-                                             onclick="deleteProductDialog.show();"
-                                             icon="ui-icon-trash"
-                                             process="@this">
+                                    <f:setPropertyActionListener value="#{product}"
+                                                                 target="#{complianceManager.currentProductInspection}" />
 
-                                <f:setPropertyActionListener value="#{product}"
-                                                             target="#{complianceManager.currentProductInspection}" />
+                                </p:menuitem>
 
-                            </p:commandButton>
+                                <p:menuitem
+                                    value="Delete this product"
+                                    onclick="deleteProductDialog.show();"
+                                    icon="ui-icon-trash"
+                                    process="@this">
+
+                                    <f:setPropertyActionListener value="#{product}"
+                                                                 target="#{complianceManager.currentProductInspection}" />
+
+                                </p:menuitem>
+                            </p:menuButton>   
                         </p:column>
                     </p:dataTable>
                     <p:commandButton value="Add"
