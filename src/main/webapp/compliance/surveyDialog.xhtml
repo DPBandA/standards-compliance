@@ -118,6 +118,22 @@ Email: info@dpbennett.com.jm
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
+                        <h:outputText value="Job number: " />                   
+                        <p:autoComplete maxResults="12"                                           
+                                        value="#{complianceManager.currentComplianceSurvey.jobNumber}"                                           
+                                        forceSelection="false"
+                                        completeMethod="#{complianceManager.completeJobNumber}">
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this"/>
+
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    process="@this"/>
+
+                        </p:autoComplete>
+                        
                         <h:outputText value="Survey Location Type:" style="font-weight: bold"/>
                         <p:selectOneMenu id="surveyLocation"
                                          value="#{complianceManager.currentComplianceSurvey.surveyLocationType}" >
@@ -716,8 +732,7 @@ Email: info@dpbennett.com.jm
                         </p:selectBooleanCheckbox>   
 
                         <h:outputText value="Job number: " />                   
-                        <p:autoComplete id="jobNumber"                                           
-                                        maxResults="12"                                           
+                        <p:autoComplete maxResults="12"                                           
                                         value="#{complianceManager.currentComplianceSurvey.jobNumber}"                                           
                                         forceSelection="false"
                                         completeMethod="#{complianceManager.completeJobNumber}">
