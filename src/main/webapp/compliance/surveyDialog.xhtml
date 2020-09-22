@@ -751,23 +751,7 @@ Email: info@dpbennett.com.jm
                             <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
                                     update="dateOfDetention,:ComplianceSurveyDialogForm:formsMenu"/>
 
-                        </p:selectBooleanCheckbox>   
-
-                        <h:outputText value="Job number: " />                   
-                        <p:autoComplete maxResults="12"                                           
-                                        value="#{complianceManager.currentComplianceSurvey.jobNumber}"                                           
-                                        forceSelection="false"
-                                        completeMethod="#{complianceManager.completeJobNumber}">
-
-                            <p:ajax event="itemSelect"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this"/>
-
-                            <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this"/>
-
-                        </p:autoComplete>          
+                        </p:selectBooleanCheckbox>
 
                         <h:outputText value="Broker: " />
                         <h:panelGroup>
