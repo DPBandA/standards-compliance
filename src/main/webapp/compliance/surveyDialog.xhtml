@@ -62,11 +62,11 @@ Email: info@dpbennett.com.jm
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right">
-                    <p:menuButton value="Forms" >
+                    <p:menuButton id="formsMenu" value="Forms" >
 
                         <p:menuitem value="Detention Request - Ports of Entry"
                                     ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    disabled="#{!complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                                     onclick="longProcessDialogVar2.show();" >
                             
                             <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
@@ -75,21 +75,25 @@ Email: info@dpbennett.com.jm
 
                         <p:menuitem value="Release Request - Ports of Entry"                            
                                     ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    disabled="#{!complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
                                     onclick="longProcessDialogVar2.show();" >
+                            
                             <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
+                            
                         </p:menuitem>
 
                         <p:menuitem value="Sample Request - Ports of Entry"
                                     ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    disabled="#{!complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
                                     onclick="longProcessDialogVar2.show();" >
+                            
                             <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
+                            
                         </p:menuitem>
 
                         <p:menuitem value="Notice of Detention - Domestic Market"
                                     ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    disabled="#{!complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
                                     onclick="longProcessDialogVar2.show();" >
                             <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
                         </p:menuitem>
@@ -744,7 +748,8 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                                                  id="detentionRequestIssued" >
 
-                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" update="dateOfDetention"/>
+                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
+                                    update="dateOfDetention,:ComplianceSurveyDialogForm:formsMenu"/>
 
                         </p:selectBooleanCheckbox>   
 
@@ -862,13 +867,6 @@ Email: info@dpbennett.com.jm
 
                         </p:autoComplete>
 
-                        <ui:remove>
-                            <h:outputText value="" />
-                            <h:outputText id="brokerContact" value="Contact: #{complianceManager.currentComplianceSurvey.broker.mainContact}" />
-                            <h:outputText value="" />
-                            <h:outputText id="brokerBillingAddress" value="Billing addr.: #{complianceManager.currentComplianceSurvey.broker.billingAddress}" />
-                        </ui:remove>
-
                         <h:outputText value="Date of detention:" />
                         <p:calendar id="dateOfDetention"
                                     readonlyInput="true"
@@ -904,21 +902,7 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
 
                         </p:autoComplete>
-
-                        <ui:remove>
-                            <p:selectCheckboxMenu id="specificationsBreached" 
-                                                  value="#{complianceManager.selectedStandardNames}" 
-                                                  label="Select specification(s)"                                              
-                                                  filter="true" 
-                                                  style="vertical-align: bottom;"
-                                                  filterMatchMode="startsWith" 
-                                                  onHide="updateSelectedStandards();"
-                                                  panelStyle="width:250px">
-
-                                <f:selectItems value="#{complianceManager.allDocumentStandardNames}" />
-                            </p:selectCheckboxMenu>
-                        </ui:remove>
-
+                        
                         <h:outputText value="Reason for Detention: " style="vertical-align: top" />
                         <p:inputTextarea
                             id="reasonForDetention"
@@ -1013,7 +997,10 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox 
                             id="sampleRequestIssued"
                             value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
-                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                            
+                            <p:ajax listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+                            
                         </p:selectBooleanCheckbox>
 
                         <p:outputLabel value="Samples to be collected within 30 days: " for="collectedWithin30Days" />
@@ -1062,7 +1049,10 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox 
                             id="releaseRequestIssued"
                             value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
-                            <p:ajax listener="#{complianceManager.updateSurvey}"/>
+                            
+                            <p:ajax listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+                            
                         </p:selectBooleanCheckbox>
                     </h:panelGrid>
                     <br/>                    
@@ -1181,12 +1171,23 @@ Email: info@dpbennett.com.jm
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">   
 
                     <h:panelGrid columns="2">
+                        <p:outputLabel value="Notice of detention issued:" for="noticeOfDetentionIssued" />
+                        <p:selectBooleanCheckbox 
+                            id="noticeOfDetentionIssued"
+                            value="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}">
+                            
+                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
+                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+                            
+                        </p:selectBooleanCheckbox>                        
+                        
                         <p:outputLabel value="Notice of release from detention issued:" for="releaseFromDetentionIssued" />
                         <p:selectBooleanCheckbox 
                             id="releaseFromDetentionIssued"
                             value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
                             <p:ajax listener="#{complianceManager.updateDateOfDetention}" />
-                        </p:selectBooleanCheckbox>                   
+                        </p:selectBooleanCheckbox>
+                        
                         <h:outputText value="Reference #:"  />
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" > 
                             <p:ajax
@@ -1448,60 +1449,8 @@ Email: info@dpbennett.com.jm
                                      icon="ui-icon-close"
                                      process="@this"/>
                 </p:toolbarGroup>
-
-                <p:toolbarGroup align="right">
-                    <p:menuButton value="Forms" >
-
-                        <p:menuitem value="Detention Request - Ports of Entry"
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
-                        </p:menuitem>
-
-                        <p:menuitem value="Release Request - Ports of Entry"                            
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
-                        </p:menuitem>
-
-                        <p:menuitem value="Sample Request - Ports of Entry"
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
-                        </p:menuitem>
-
-                        <p:menuitem value="Notice of Detention - Domestic Market"
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
-                        </p:menuitem>
-
-                        <p:menuitem value="Application for Rehabilitation"
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
-                        </p:menuitem>
-
-                        <p:menuitem value="Notice of Release from Detention - Domestic Market"
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
-                        </p:menuitem>
-                    </p:menuButton>                           
-                </p:toolbarGroup>
             </p:toolbar>
 
-            <ui:remove>
-                <p:remoteCommand  name="updateSelectedStandards"
-                                  update=":ComplianceSurveyDialogForm:complianceSurveyTabView:reasonForDetention"
-                                  action="#{complianceManager.updateSpecificationsBreached()}"/> 
-            </ui:remove>
         </h:form>   
     </h:body>
 </html>
