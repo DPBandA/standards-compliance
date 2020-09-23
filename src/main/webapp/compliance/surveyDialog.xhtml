@@ -68,27 +68,27 @@ Email: info@dpbennett.com.jm
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                                     onclick="longProcessDialogVar2.show();" >
-                            
+
                             <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
-                            
+
                         </p:menuitem>
 
                         <p:menuitem value="Release Request - Ports of Entry"                            
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
                                     onclick="longProcessDialogVar2.show();" >
-                            
+
                             <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
-                            
+
                         </p:menuitem>
 
                         <p:menuitem value="Sample Request - Ports of Entry"
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
                                     onclick="longProcessDialogVar2.show();" >
-                            
+
                             <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
-                            
+
                         </p:menuitem>
 
                         <p:menuitem value="Notice of Detention - Domestic Market"
@@ -98,18 +98,22 @@ Email: info@dpbennett.com.jm
                             <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
                         </p:menuitem>
 
-                        <p:menuitem value="Application for Rehabilitation"
-                                    ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
-                                    onclick="longProcessDialogVar2.show();" >
-                            <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
-                        </p:menuitem>
-
                         <p:menuitem value="Notice of Release from Detention - Domestic Market"
                                     ajax="false"
-                                    disabled="#{!complianceManager.complianceSurveyIsValid}"
+                                    disabled="#{!complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}"
                                     onclick="longProcessDialogVar2.show();" >
+
                             <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
+
+                        </p:menuitem>
+
+                        <p:menuitem value="Application for Rehabilitation"
+                                    ajax="false"
+                                    disabled="#{!complianceManager.currentComplianceSurvey.applicationForRehabilitation}"
+                                    onclick="longProcessDialogVar2.show();" >
+
+                            <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
+
                         </p:menuitem>
                     </p:menuButton>                           
                 </p:toolbarGroup>
@@ -886,7 +890,7 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
 
                         </p:autoComplete>
-                        
+
                         <h:outputText value="Reason for Detention: " style="vertical-align: top" />
                         <p:inputTextarea
                             id="reasonForDetention"
@@ -981,10 +985,10 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox 
                             id="sampleRequestIssued"
                             value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}">
-                            
+
                             <p:ajax listener="#{complianceManager.updateSurvey}"
                                     update=":ComplianceSurveyDialogForm:formsMenu" />
-                            
+
                         </p:selectBooleanCheckbox>
 
                         <p:outputLabel value="Samples to be collected within 30 days: " for="collectedWithin30Days" />
@@ -1033,10 +1037,10 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox 
                             id="releaseRequestIssued"
                             value="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}">
-                            
+
                             <p:ajax listener="#{complianceManager.updateSurvey}"
                                     update=":ComplianceSurveyDialogForm:formsMenu" />
-                            
+
                         </p:selectBooleanCheckbox>
                     </h:panelGrid>
                     <br/>                    
@@ -1159,19 +1163,32 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox 
                             id="noticeOfDetentionIssued"
                             value="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}">
-                            
+
                             <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
                                     update=":ComplianceSurveyDialogForm:formsMenu" />
-                            
+
                         </p:selectBooleanCheckbox>                        
-                        
+
                         <p:outputLabel value="Notice of release from detention issued:" for="releaseFromDetentionIssued" />
                         <p:selectBooleanCheckbox 
                             id="releaseFromDetentionIssued"
                             value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
-                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" />
+
+                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
+                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+
                         </p:selectBooleanCheckbox>
-                        
+
+                        <p:outputLabel value="Authorize application to rehabilitate goods:" for="applicationForRehabilitation" />
+                        <p:selectBooleanCheckbox 
+                            id="applicationForRehabilitation"
+                            value="#{complianceManager.currentComplianceSurvey.applicationForRehabilitation}">
+
+                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
+                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+
+                        </p:selectBooleanCheckbox>
+
                         <h:outputText value="Reference #:"  />
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" > 
                             <p:ajax
