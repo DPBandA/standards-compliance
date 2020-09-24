@@ -67,7 +67,6 @@ Email: info@dpbennett.com.jm
 
                         <p:menuitem value="Detention Request - Ports of Entry"
                                     ajax="false"
-                                    immediate="true"
                                     disabled="#{!complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                                     onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
 
@@ -78,7 +77,7 @@ Email: info@dpbennett.com.jm
                         <p:menuitem value="Release Request - Ports of Entry"                            
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
-                                    onclick="longProcessDialogVar2.show();" >
+                                    onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
 
                             <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
 
@@ -87,7 +86,7 @@ Email: info@dpbennett.com.jm
                         <p:menuitem value="Sample Request - Ports of Entry"
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
-                                    onclick="longProcessDialogVar2.show();" >
+                                    onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
 
                             <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
 
@@ -96,14 +95,16 @@ Email: info@dpbennett.com.jm
                         <p:menuitem value="Notice of Detention - Domestic Market"
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
-                                    onclick="longProcessDialogVar2.show();" >
+                                    onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
+                            
                             <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
+                            
                         </p:menuitem>
 
                         <p:menuitem value="Notice of Release from Detention - Domestic Market"
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}"
-                                    onclick="longProcessDialogVar2.show();" >
+                                    onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
 
                             <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
 
@@ -112,7 +113,7 @@ Email: info@dpbennett.com.jm
                         <p:menuitem value="Application for Rehabilitation"
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.applicationForRehabilitation}"
-                                    onclick="longProcessDialogVar2.show();" >
+                                    onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
 
                             <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
 
