@@ -96,9 +96,9 @@ Email: info@dpbennett.com.jm
                                     ajax="false"
                                     disabled="#{!complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
                                     onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
-                            
+
                             <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
-                            
+
                         </p:menuitem>
 
                         <p:menuitem value="Notice of Release from Detention - Domestic Market"
@@ -578,19 +578,16 @@ Email: info@dpbennett.com.jm
 
                         </p:calendar>     
 
-                        <ui:remove>
-                            <h:outputText value="Container no.(s):" />
-                            <p:inputText id="containerNumbers"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.containerNumbers}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateContainerNumbers}"
-                                    update="containersTable"
-                                    process="@this" />
+                        <h:outputText value="Container no.(s):" />
+                        <p:inputText id="containerNumbers"
+                                     style="width: 300px"
+                                     value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.containerNumbers}" >
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
 
-                            </p:inputText>    
-                        </ui:remove>
+                        </p:inputText>    
 
                         <h:outputText value="Country of consignment:"/>
                         <p:autoComplete value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.countryOfConsignment}" 
@@ -913,72 +910,27 @@ Email: info@dpbennett.com.jm
                         </p:inputTextarea> 
                         <h:outputText value="" />
                         <h:outputText id="reasonForDetentionCharsRemaining" />
+                    </h:panelGrid>                       
+                    <hr/>                        
+                    <h:panelGrid columns="2" cellpadding="3" >
+                        <p:commandButton value="Authorize"
+                                         title="Authorize form"
+                                         actionListener="#{complianceManager.updateAuthDetentionRequestPOE}"
+                                         onstart="longProcessDialogVar.show();"
+                                         update="AuthSigForDetentionRequestPOEPanelGroup"
+                                         oncomplete="longProcessDialogVar.hide();"
+                                         icon="ui-icon-key"
+                                         process="@this" />
+
+                        <h:panelGroup id="AuthSigForDetentionRequestPOEPanelGroup">
+                            <p:graphicImage id="AuthSigForDetentionRequestPOE" 
+                                            height="24"
+                                            width="192" cache="false"
+                                            value="#{complianceManager.authSigForDetentionRequestPOE}" />  
+                            <h:outputText  id="AuthSigDateForDetentionRequestPOE"
+                                           value="  #{complianceManager.currentComplianceSurvey.authSigDateForDetentionRequestPOE}" />
+                        </h:panelGroup>
                     </h:panelGrid>
-                    <ui:remove>
-                        <hr/>
-                        <p:dataTable id="containersTable"
-                                     var="shippingContainer"
-                                     rendered="true"                                 
-                                     value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.shippingContainers}">
-                            <f:facet name="header">
-                                <h:outputText value="Containers" />
-                            </f:facet>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Container Number"/>
-                                </f:facet>
-                                <h:outputText value="#{shippingContainer.number}" />
-                            </p:column>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Size description"/>
-                                </f:facet>
-                                <h:outputText value="#{shippingContainer.sizeDescription}" />
-                            </p:column>
-
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Percentage Detained"/>
-                                </f:facet>
-                                <h:outputText value="#{shippingContainer.percentageDetained}" />
-                            </p:column>
-
-                            <p:column style="width:32px">
-                                <p:commandButton title="View/Edit"
-                                                 onstart="longProcessDialogVar.show();"                                      
-                                                 update=":ShippingContainerDialogForm"       
-                                                 oncomplete="longProcessDialogVar.hide();ShippingContainerDialog.show();"
-                                                 global="true"
-                                                 icon="ui-icon-pencil">
-                                    <f:setPropertyActionListener value="#{shippingContainer}"
-                                                                 target="#{complianceManager.currentShippingContainer}" />
-                                </p:commandButton>
-                            </p:column>
-
-                        </p:dataTable>
-                        <hr/>
-                        <h:panelGrid columns="2" cellpadding="3" >
-                            <p:commandButton value="Authorize"
-                                             title="Authorize form"
-                                             actionListener="#{complianceManager.updateAuthDetentionRequestPOE}"
-                                             onstart="longProcessDialogVar.show();"
-                                             update="AuthSigForDetentionRequestPOEPanelGroup"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             icon="ui-icon-key"
-                                             process="@this" />
-
-                            <h:panelGroup id="AuthSigForDetentionRequestPOEPanelGroup">
-                                <p:graphicImage id="AuthSigForDetentionRequestPOE" 
-                                                height="24"
-                                                width="192" cache="false"
-                                                value="#{complianceManager.authSigForDetentionRequestPOE}" />  
-                                <h:outputText  id="AuthSigDateForDetentionRequestPOE"
-                                               value="  #{complianceManager.currentComplianceSurvey.authSigDateForDetentionRequestPOE}" />
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </ui:remove>
                 </p:tab>
 
                 <p:tab title="POE Sample Request" 
@@ -1009,28 +961,27 @@ Email: info@dpbennett.com.jm
                         </p:selectBooleanCheckbox>
 
                     </h:panelGrid>
-                    <ui:remove>
-                        <hr/>
-                        <h:panelGrid columns="2" cellpadding="3">
-                            <p:commandButton value="Sign"
-                                             title="Sign form"
-                                             actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
-                                             onstart="longProcessDialogVar.show();"
-                                             update="InspectorSigForSampleRequestPOE,InspectorSigDateForSampleRequestPOE"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             icon="ui-icon-key"
-                                             process="@this" />
+                    <hr/>
+                    <h:panelGrid columns="2" cellpadding="3">
+                        <p:commandButton value="Sign"
+                                         title="Sign form"
+                                         actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
+                                         onstart="longProcessDialogVar.show();"
+                                         update="InspectorSigForSampleRequestPOE,InspectorSigDateForSampleRequestPOE"
+                                         oncomplete="longProcessDialogVar.hide();"
+                                         icon="ui-icon-key"
+                                         process="@this" />
 
-                            <h:panelGroup>
-                                <p:graphicImage id="InspectorSigForSampleRequestPOE" 
-                                                height="24"
-                                                width="192" 
-                                                value="#{complianceManager.inspectorSigForSampleRequestPOE}" />  
-                                <h:outputText  id="InspectorSigDateForSampleRequestPOE"
-                                               value="  #{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestPOE}" />
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </ui:remove>
+                        <h:panelGroup>
+                            <p:graphicImage id="InspectorSigForSampleRequestPOE" 
+                                            height="24"
+                                            width="192" 
+                                            value="#{complianceManager.inspectorSigForSampleRequestPOE}" />  
+                            <h:outputText  id="InspectorSigDateForSampleRequestPOE"
+                                           value="  #{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestPOE}" />
+                        </h:panelGroup>
+
+                    </h:panelGrid>
                 </p:tab>
 
                 <p:tab title="POE Release Request"
@@ -1050,16 +1001,6 @@ Email: info@dpbennett.com.jm
                     <h:panelGrid columns="2">
                         <h:outputText value="Release location:" style="font-style: italic" />
                         <h:outputText value="" />
-
-                        <h:outputText value="Location:" />
-                        <p:inputText id="location"
-                                     style="width: 300px"
-                                     value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.name}" >
-                            <p:ajax
-                                global="true"
-                                listener="#{complianceManager.updateSurvey}"
-                                process="@this" />
-                        </p:inputText>
 
                         <h:outputText value="Address line 1:" />
                         <p:inputText id="addressLine1"
@@ -1104,58 +1045,45 @@ Email: info@dpbennett.com.jm
                             <f:selectItems value="#{systemManager.jamaicaParishes}" />
 
                         </p:selectOneMenu>
-                        <ui:remove>
-                            <p:inputText id="parish"
-                                         style="width: 300px"
-                                         value="#{complianceManager.currentComplianceSurvey.specifiedReleaseLocation.stateOrProvince}" >
-                                <p:ajax
-                                    global="true"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this" />
-
-                            </p:inputText>
-                        </ui:remove>
                     </h:panelGrid>     
-                    <ui:remove>
-                        <hr/>
-                        <h:panelGrid columns="2" cellpadding="3">
-                            <p:commandButton value="Sign Prepared By"
-                                             title="Sign form prepared by"
-                                             actionListener="#{complianceManager.updatePreparedBySigForReleaseRequestPOE}"
-                                             onstart="longProcessDialogVar.show();"
-                                             update="PreparedBySigForReleaseRequestPOE,PreparedBySigDateForReleaseRequestPOE"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             icon="ui-icon-key"
-                                             process="@this" />
+                    <hr/>
+                    <h:panelGrid columns="2" cellpadding="3">
+                        <p:commandButton value="Sign Prepared By"
+                                         title="Sign form prepared by"
+                                         actionListener="#{complianceManager.updatePreparedBySigForReleaseRequestPOE}"
+                                         onstart="longProcessDialogVar.show();"
+                                         update="PreparedBySigForReleaseRequestPOE,PreparedBySigDateForReleaseRequestPOE"
+                                         oncomplete="longProcessDialogVar.hide();"
+                                         icon="ui-icon-key"
+                                         process="@this" />
 
-                            <h:panelGroup>
-                                <p:graphicImage id="PreparedBySigForReleaseRequestPOE" 
-                                                height="24"
-                                                width="192" cache="false"
-                                                value="#{complianceManager.preparedBySigForReleaseRequestPOE}" />  
-                                <h:outputText  id="PreparedBySigDateForReleaseRequestPOE"
-                                               value="  #{complianceManager.currentComplianceSurvey.preparedBySigDateForReleaseRequestPOE}" />
-                            </h:panelGroup>
+                        <h:panelGroup>
+                            <p:graphicImage id="PreparedBySigForReleaseRequestPOE" 
+                                            height="24"
+                                            width="192" cache="false"
+                                            value="#{complianceManager.preparedBySigForReleaseRequestPOE}" />  
+                            <h:outputText  id="PreparedBySigDateForReleaseRequestPOE"
+                                           value="  #{complianceManager.currentComplianceSurvey.preparedBySigDateForReleaseRequestPOE}" />
+                        </h:panelGroup>
 
-                            <p:commandButton value="Sign Approved By"
-                                             title="Sign form approved by"
-                                             actionListener="#{complianceManager.updateApprovedBySigForReleaseRequestPOE}"
-                                             onstart="longProcessDialogVar.show();"
-                                             update="ApprovedBySigForReleaseRequestPOE,ApprovedBySigDateForReleaseRequestPOE"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             icon="ui-icon-key"
-                                             process="@this" />
+                        <p:commandButton value="Sign Approved By"
+                                         title="Sign form approved by"
+                                         actionListener="#{complianceManager.updateApprovedBySigForReleaseRequestPOE}"
+                                         onstart="longProcessDialogVar.show();"
+                                         update="ApprovedBySigForReleaseRequestPOE,ApprovedBySigDateForReleaseRequestPOE"
+                                         oncomplete="longProcessDialogVar.hide();"
+                                         icon="ui-icon-key"
+                                         process="@this" />
 
-                            <h:panelGroup>
-                                <p:graphicImage id="ApprovedBySigForReleaseRequestPOE" 
-                                                height="24"
-                                                width="192"
-                                                value="#{complianceManager.approvedBySigForReleaseRequestPOE}" />  
-                                <h:outputText  id="ApprovedBySigDateForReleaseRequestPOE"
-                                               value="  #{complianceManager.currentComplianceSurvey.approvedBySigDateForReleaseRequestPOE}" />
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </ui:remove>
+                        <h:panelGroup>
+                            <p:graphicImage id="ApprovedBySigForReleaseRequestPOE" 
+                                            height="24"
+                                            width="192"
+                                            value="#{complianceManager.approvedBySigForReleaseRequestPOE}" />  
+                            <h:outputText  id="ApprovedBySigDateForReleaseRequestPOE"
+                                           value="  #{complianceManager.currentComplianceSurvey.approvedBySigDateForReleaseRequestPOE}" />
+                        </h:panelGroup>
+                    </h:panelGrid>
                 </p:tab>
 
                 <p:tab title="DM Notice of/Release from Detention"
@@ -1389,28 +1317,26 @@ Email: info@dpbennett.com.jm
 
                         </p:autoComplete>
                     </h:panelGrid>
-                    <ui:remove>
-                        <hr/>
-                        <h:panelGrid columns="2" cellpadding="3">
-                            <p:commandButton value="Authorize Detention Notice"
-                                             title="Authorize notice of detention"
-                                             actionListener="#{complianceManager.updateAuthSigForNoticeOfDentionDM}"
-                                             onstart="longProcessDialogVar.show();"
-                                             update="AuthSigForNoticeOfDentionDM,AuthSigDateForNoticeOfDentionDM"
-                                             oncomplete="longProcessDialogVar.hide();"
-                                             icon="ui-icon-key"
-                                             process="@this" />
+                    <hr/>
+                    <h:panelGrid columns="2" cellpadding="3">
+                        <p:commandButton value="Authorize Detention Notice"
+                                         title="Authorize notice of detention"
+                                         actionListener="#{complianceManager.updateAuthSigForNoticeOfDentionDM}"
+                                         onstart="longProcessDialogVar.show();"
+                                         update="AuthSigForNoticeOfDentionDM,AuthSigDateForNoticeOfDentionDM"
+                                         oncomplete="longProcessDialogVar.hide();"
+                                         icon="ui-icon-key"
+                                         process="@this" />
 
-                            <h:panelGroup>
-                                <p:graphicImage id="AuthSigForNoticeOfDentionDM" 
-                                                height="24"
-                                                width="192"
-                                                value="#{complianceManager.authSigForNoticeOfDentionDM}" />  
-                                <h:outputText  id="AuthSigDateForNoticeOfDentionDM"
-                                               value="  #{complianceManager.currentComplianceSurvey.authSigDateForNoticeOfDentionDM}" />
-                            </h:panelGroup>
-                        </h:panelGrid>
-                    </ui:remove>
+                        <h:panelGroup>
+                            <p:graphicImage id="AuthSigForNoticeOfDentionDM" 
+                                            height="24"
+                                            width="192"
+                                            value="#{complianceManager.authSigForNoticeOfDentionDM}" />  
+                            <h:outputText  id="AuthSigDateForNoticeOfDentionDM"
+                                           value="  #{complianceManager.currentComplianceSurvey.authSigDateForNoticeOfDentionDM}" />
+                        </h:panelGroup>
+                    </h:panelGrid>
                 </p:tab>
                 <p:tab title="Status &amp; Tracking" >
                     <h:panelGrid columns="2" cellspacing="3">
