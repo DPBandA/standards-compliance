@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Sample Request - Port of Entry" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7be5e4ea-68fa-43f9-a68a-5d0b82dabf99">
 	<property name="ireport.zoom" value="1.2100000000000002"/>
 	<property name="ireport.x" value="0"/>
@@ -384,42 +385,28 @@ WHERE
 	<title>
 		<band height="175" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72" mode="Transparent" x="150" y="0" width="279" height="26" forecolor="#6C1B78"/>
+				<reportElement mode="Transparent" x="150" y="0" width="279" height="26" forecolor="#6C1B78" uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="18" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[BUREAU OF STANDARDS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72" mode="Transparent" x="150" y="26" width="279" height="26" forecolor="#6C1B78"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
-				</textElement>
-				<text><![CDATA[REGULATORY DIVISION]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72" mode="Transparent" x="98" y="52" width="384" height="26" forecolor="#6C1B78"/>
+				<reportElement mode="Transparent" x="98" y="25" width="384" height="26" forecolor="#6C1B78" uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
 				</textElement>
 				<text><![CDATA[STANDARDS COMPLIANCE PROGRAMME]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72" mode="Transparent" x="18" y="78" width="537" height="26" forecolor="#6C1B78"/>
+				<reportElement mode="Transparent" x="18" y="73" width="537" height="26" forecolor="#6C1B78" uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="16" isBold="true" isItalic="false"/>
 				</textElement>
-				<text><![CDATA[APPLICATION FOR AUTHORIZATION TO REHABILITATE GOODS]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="4813cf56-368d-45e7-b1d7-f623ea1b6e72" mode="Transparent" x="3" y="152" width="479" height="22" forecolor="#000000"/>
-				<textElement textAlignment="Left">
-					<font fontName="Arial" size="12" isBold="false" isItalic="false"/>
-				</textElement>
-				<text><![CDATA[To: The Executive Director, Bureau of Standards]]></text>
+				<text><![CDATA[INSPECTOR'S VERIFICATION REPORT]]></text>
 			</staticText>
 			<textField pattern="MMM dd, yyyy">
-				<reportElement uuid="254156ba-3f89-4f90-a664-f7bbf4360759" x="414" y="120" width="100" height="15"/>
+				<reportElement x="414" y="120" width="100" height="15" uuid="254156ba-3f89-4f90-a664-f7bbf4360759"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12"/>
 				</textElement>
@@ -429,135 +416,31 @@ WHERE
 	</title>
 	<detail>
 		<band height="441" splitType="Stretch">
-			<componentElement>
-				<reportElement uuid="168d5ac1-438c-40e2-a3d0-8b4a32ac78fa" positionType="Float" x="0" y="74" width="572" height="54"/>
-				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Product Samples" uuid="ee783c36-e4f9-4bf1-8f7e-96b2f93727e3">
-						<datasetParameter name="productSample_formId">
-							<datasetParameterExpression><![CDATA[$P{formId}]]></datasetParameterExpression>
-						</datasetParameter>
-						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					</datasetRun>
-					<jr:column width="351" uuid="8c9c7765-a5d5-4b45-aab7-2211edda27fe">
-						<jr:columnHeader height="30" rowSpan="1">
-							<staticText>
-								<reportElement uuid="baf09a94-4eb7-4c37-a946-81ddadbbcd83" x="0" y="0" width="351" height="30"/>
-								<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textElement>
-									<font size="10" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Product name]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="e212f7a6-f836-4649-aa5c-84b943c027dd" x="0" y="0" width="351" height="30"/>
-								<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textElement/>
-								<textFieldExpression><![CDATA[$F{productinspection_NAME}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="109" uuid="41653e58-527f-4a13-83ef-785995373f7c">
-						<jr:columnHeader height="30" rowSpan="1">
-							<staticText>
-								<reportElement uuid="baf09a94-4eb7-4c37-a946-81ddadbbcd83" x="0" y="0" width="102" height="30"/>
-								<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textElement>
-									<font size="10" isBold="true"/>
-								</textElement>
-								<text><![CDATA[Quantity]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement uuid="e212f7a6-f836-4649-aa5c-84b943c027dd" x="0" y="0" width="102" height="30"/>
-								<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
-									<pen lineWidth="0.5"/>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textElement/>
-								<textFieldExpression><![CDATA[$F{productinspection_NUMPRODUCTSSAMPLED}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-				</jr:table>
-			</componentElement>
 			<staticText>
-				<reportElement uuid="e4b86477-db45-4a3b-89d1-66807008d7de" positionType="Float" x="364" y="-41" width="192" height="15"/>
+				<reportElement positionType="Float" x="364" y="-41" width="192" height="15" uuid="e4b86477-db45-4a3b-89d1-66807008d7de"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12"/>
 				</textElement>
 				<text><![CDATA[Date]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="dad13083-716f-4e9f-9842-1d60a05e2175" positionType="Float" x="363" y="-40" width="200" height="1"/>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</line>
-			<line>
-				<reportElement uuid="c0f6bded-71c4-4099-ad1a-928a2e02e72a" positionType="Float" x="2" y="196" width="570" height="1"/>
+				<reportElement positionType="Float" x="363" y="-40" width="200" height="1" uuid="dad13083-716f-4e9f-9842-1d60a05e2175"/>
 				<graphicElement>
 					<pen lineStyle="Solid"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="955dcfca-b617-400a-978b-371951a3ad81" x="0" y="17" width="537" height="45"/>
+				<reportElement x="0" y="17" width="537" height="45" uuid="955dcfca-b617-400a-978b-371951a3ad81"/>
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>
-				<text><![CDATA[We hereby apply for authorization to bring the merchandise listed below into compliance with the provisions of The Standards Act and its attendant Regulations and any other related act(s) (as specified).]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="3c42c432-7df1-42d2-9f7b-64b954364ad5" positionType="Float" x="3" y="139" width="537" height="36"/>
-				<textElement>
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[The merchandise will be kept apart from all other merchandise and will be available for inspection at all reasonable times. The operations, if authorised, will be carried out at]]></text>
+				<text><![CDATA[I have examined the goods that were detained under]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="12bc409d-097d-40fa-9f9e-46b77781ec5c" positionType="Float" x="9" y="180" width="554" height="15"/>
-				<textElement/>
+				<reportElement positionType="Float" x="9" y="180" width="554" height="15" uuid="12bc409d-097d-40fa-9f9e-46b77781ec5c"/>
 			</textField>
 			<staticText>
-				<reportElement uuid="16d1fc1a-95ad-41b0-89ff-2ff8319ceeb2" positionType="Float" x="3" y="214" width="537" height="121"/>
-				<textElement>
-					<font fontName="Arial" size="12"/>
-				</textElement>
-				<text><![CDATA[and will require  about _______days to be completed. A detailed description of the method by which the merchandise will be brought into compliance is given in the space below. ____________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-We will pay all costs associated with this process.
-]]></text>
-			</staticText>
-			<line>
-				<reportElement uuid="4ef5529c-e94c-4d93-969f-5f2c7120818b" positionType="Float" x="-5" y="335" width="570" height="1"/>
-				<graphicElement>
-					<pen lineStyle="Solid"/>
-				</graphicElement>
-			</line>
-			<staticText>
-				<reportElement uuid="32d6a0f5-b94c-471e-a0ae-97579832f035" positionType="Float" x="0" y="341" width="537" height="100"/>
+				<reportElement positionType="Float" x="0" y="341" width="537" height="100" uuid="32d6a0f5-b94c-471e-a0ae-97579832f035"/>
 				<textElement>
 					<font fontName="Arial" size="12"/>
 				</textElement>
@@ -574,11 +457,11 @@ Applicant’s Name_________________________  Applicant’s Signature____________
 	<pageFooter>
 		<band height="28">
 			<staticText>
-				<reportElement uuid="e462a42b-a4e1-4c66-8274-ab392f01dc53" x="0" y="8" width="572" height="20"/>
+				<reportElement x="0" y="8" width="572" height="20" uuid="e462a42b-a4e1-4c66-8274-ab392f01dc53"/>
 				<textElement verticalAlignment="Bottom">
 					<font size="8"/>
 				</textElement>
-				<text><![CDATA[Form No: REG42_F_03/00                                                                                                                                                                           Page 1 of 1]]></text>
+				<text><![CDATA[Form No: REG42_F_16/00                                                                                                                                                                           Page 1 of 1]]></text>
 			</staticText>
 		</band>
 	</pageFooter>
