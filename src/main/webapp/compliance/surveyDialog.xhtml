@@ -118,6 +118,15 @@ Email: info@dpbennett.com.jm
                             <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
 
                         </p:menuitem>
+                        
+                        <p:menuitem value="Verification Report"
+                                    ajax="false"
+                                    disabled="#{complianceManager.currentComplianceSurvey.disableVerificationReport}"
+                                    onclick="PrimeFaces.monitorDownload(showLongProcessDialog, hideLongProcessDialog)" >
+
+                            <p:fileDownload value="#{complianceManager.verificationReportFile}" />
+
+                        </p:menuitem>
                     </p:menuButton>                           
                 </p:toolbarGroup>
             </p:toolbar>
