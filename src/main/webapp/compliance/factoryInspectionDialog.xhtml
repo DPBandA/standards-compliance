@@ -44,12 +44,12 @@ Email: info@dpbennett.com.jm
 
             <p:growl id="factory_inspection_survey_growl" life="5000" showDetail="true"/>
 
-            <p:toolbar style="margin-bottom: 1px;">
+            <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveFactoryInspection}"     
-                                     update="factory_inspection_survey_growl"
+                                     update=":factoryInspectionDialogForm,factory_inspection_survey_growl"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-disk"
                                      process="@form"/>
@@ -60,6 +60,10 @@ Email: info@dpbennett.com.jm
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
+
+                    <p:spacer width="10" />
+
+                    <h:outputText value="#{complianceManager.currentFactoryInspection.editStatus}" />
                 </p:toolbarGroup>
             </p:toolbar>
             <p:tabView id="factoryInspectionTabView" 
@@ -90,7 +94,7 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="address,representative,actionsMenuButton"
+                                        update=":factoryInspectionDialogForm:topToolbar,address,representative,actionsMenuButton"
                                         listener="#{complianceManager.updateManufacturer}"
                                         process="@this"/>
 
@@ -153,6 +157,7 @@ Email: info@dpbennett.com.jm
 
                             <p:ajax event="itemSelect"
                                     listener="#{complianceManager.updateFactoryInspection}" 
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     process="@this" />   
 
                         </p:autoComplete>
@@ -173,7 +178,8 @@ Email: info@dpbennett.com.jm
                             <f:attribute name="currentManufacturer" value="#{complianceManager.currentFactoryInspection.manufacturer}" />
 
                             <p:ajax event="itemSelect"
-                                    listener="#{complianceManager.updateFactoryInspection}"  
+                                    listener="#{complianceManager.updateFactoryInspection}" 
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     process="@this" />   
 
                         </p:autoComplete>   
@@ -195,6 +201,7 @@ Email: info@dpbennett.com.jm
 
                             <p:ajax event="itemSelect"
                                     listener="#{complianceManager.updateFactoryInspection}"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     process="@this"/>
                         </p:autoComplete>  
 
@@ -205,8 +212,10 @@ Email: info@dpbennett.com.jm
                                     pattern="MMM dd, yyyy" 
                                     value="#{complianceManager.currentFactoryInspection.inspectionDate}" >
                             <p:ajax event="dateSelect"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                             <p:ajax event="keyup"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
 
@@ -216,8 +225,10 @@ Email: info@dpbennett.com.jm
                                     timeOnly="true"
                                     value="#{complianceManager.currentFactoryInspection.inspectionStartTime}" >
                             <p:ajax event="dateSelect"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                             <p:ajax event="keyup"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
 
@@ -227,8 +238,10 @@ Email: info@dpbennett.com.jm
                                     timeOnly="true"
                                     value="#{complianceManager.currentFactoryInspection.inspectionEndTime}" >
                             <p:ajax event="dateSelect"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                             <p:ajax event="keyup"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}" />
                         </p:calendar>
 
@@ -245,6 +258,7 @@ Email: info@dpbennett.com.jm
                             style="width: 500px;">
 
                             <p:ajax event="change"
+                                    update=":factoryInspectionDialogForm:topToolbar"
                                     listener="#{complianceManager.updateFactoryInspection}"
                                     process="@this"/>
 
@@ -271,7 +285,7 @@ Email: info@dpbennett.com.jm
                                                     completeMethod="#{complianceManager.completeFactoryInspectionName}">
 
                                         <p:ajax event="itemSelect"                                    
-                                                update=":factoryInspectionDialogForm:factoryInspectionTabView:inspectionComponentsPanel"
+                                                update=":factoryInspectionDialogForm:topToolbar,:factoryInspectionDialogForm:factoryInspectionTabView:inspectionComponentsPanel"
                                                 listener="#{complianceManager.updateInspectionComponents}"
                                                 process="@this"/>      
 
@@ -289,6 +303,7 @@ Email: info@dpbennett.com.jm
 
                                         <p:ajax event="change"
                                                 global="false"
+                                                update=":factoryInspectionDialogForm:topToolbar"
                                                 listener="#{complianceManager.updateFactoryInspection}"
                                                 process="@this"/>
 
