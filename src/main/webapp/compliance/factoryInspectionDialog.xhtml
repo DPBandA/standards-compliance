@@ -336,7 +336,8 @@ Email: info@dpbennett.com.jm
                                       rowStyleClass="#{factoryInspectionComponent.isHeading ? 'header' : null}"
                                       value="#{complianceManager.currentFactoryInspection.allSortedFactoryInspectionComponents}">
 
-                            <p:ajax event="cellEdit" listener="#{complianceManager.onFactoryInspectionComponentCellEdit}" />
+                            <p:ajax event="cellEdit"                                     
+                                    listener="#{complianceManager.onFactoryInspectionComponentCellEdit}" />
 
                             <p:column headerText="Item" rendered="#{!factoryInspectionComponent.isHeading}">
                                 <p:cellEditor>
@@ -421,6 +422,10 @@ Email: info@dpbennett.com.jm
 
                                         <f:setPropertyActionListener value="#{factoryInspectionComponent}"
                                                                      target="#{complianceManager.currentFactoryInspectionComponent}" />
+                                        
+                                        <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.factoryInspectionComponentDialogReturn}"
+                                            update=":factoryInspectionComponentDialogForm" />
 
                                     </p:menuitem>
 
