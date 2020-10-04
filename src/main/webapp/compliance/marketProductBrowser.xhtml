@@ -137,6 +137,28 @@ Email: info@dpbennett.com.jm
             </p:commandButton>
         </p:column>
     </p:dataTable>
+    
+    <p:toolbar>
+        <p:toolbarGroup align="left" >  
+
+            <p:commandButton 
+                value="New"
+                icon="ui-icon-plus" 
+                onstart="PF('longProcessDialogVar').show();"
+                oncomplete="PF('longProcessDialogVar').hide();"
+                actionListener="#{complianceManager.createNewMarketProduct}"                                            
+                process="@this"
+                title="Add a new product" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{complianceManager.doMarketProductSearch}"
+                        update=":mainTabViewForm:mainTabView:marketProductsTable"/>
+
+            </p:commandButton>
+            
+        </p:toolbarGroup>
+      
+    </p:toolbar>
 
 </html>
 
