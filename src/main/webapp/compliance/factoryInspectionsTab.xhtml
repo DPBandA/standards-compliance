@@ -116,6 +116,7 @@ Email: info@dpbennett.com.jm
                                              target="#{complianceManager.currentFactoryInspection}" />
 
                 <p:ajax event="dialogReturn" 
+                        listener="#{complianceManager.factoryInspectionDialogReturn}"
                         update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>

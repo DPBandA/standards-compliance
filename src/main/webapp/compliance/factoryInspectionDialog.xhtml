@@ -459,7 +459,7 @@ Email: info@dpbennett.com.jm
                     </p:panel>
                 </p:tab>
 
-                <p:tab title="Product Sampling">
+                <p:tab title="Products">
                     <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewFactoryProductInspection}"
@@ -469,7 +469,8 @@ Email: info@dpbennett.com.jm
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
-                                update="factoryProductsTable" />
+                                listener="#{complianceManager.factoryProductInspectionDialogReturn}"
+                                update=":factoryInspectionDialogForm:topToolbar,factoryProductsTable" />
 
                     </p:commandButton>
 
@@ -506,7 +507,8 @@ Email: info@dpbennett.com.jm
                                             process="@this">    
 
                                     <p:ajax event="dialogReturn" 
-                                            update="factoryProductsTable" />                                
+                                            listener="#{complianceManager.factoryProductInspectionDialogReturn}"
+                                            update=":factoryInspectionDialogForm:topToolbar,factoryProductsTable" />                                
 
                                     <f:setPropertyActionListener value="#{product}"
                                                                  target="#{complianceManager.currentProductInspection}" />
@@ -535,7 +537,8 @@ Email: info@dpbennett.com.jm
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
-                                update="factoryProductsTable" />
+                                listener="#{complianceManager.factoryProductInspectionDialogReturn}"
+                                update=":factoryInspectionDialogForm:topToolbar,factoryProductsTable" />
 
                     </p:commandButton>
                 </p:tab>
@@ -566,7 +569,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveFactoryInspection}"     
-                                     update="factory_inspection_survey_growl"
+                                     update=":factoryInspectionDialogForm,factory_inspection_survey_growl"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-disk"
                                      process="@form"/>
