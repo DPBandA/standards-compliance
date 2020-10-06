@@ -118,7 +118,7 @@ Email: info@dpbennett.com.jm
                             <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
 
                         </p:menuitem>
-                        
+
                         <p:menuitem value="Verification Report"
                                     ajax="false"
                                     disabled="#{complianceManager.currentComplianceSurvey.disableVerificationReport}"
@@ -1308,23 +1308,25 @@ Email: info@dpbennett.com.jm
                                 process="@this" />
                         </p:inputText>    
 
-                        <h:outputText value="Country of origin:" />
-                        <p:autoComplete value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.countryOfConsignment}" 
-                                        forceSelection="true"  
-                                        maxlength="40"
-                                        dropdown="true"
-                                        scrollHeight="200"
-                                        completeMethod="#{systemManager.completeCountry}" >
+                        <ui:remove>
+                            <h:outputText value="Country of origin:" />
+                            <p:autoComplete value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.countryOfConsignment}" 
+                                            forceSelection="true"  
+                                            maxlength="40"
+                                            dropdown="true"
+                                            scrollHeight="200"
+                                            completeMethod="#{systemManager.completeCountry}" >
 
-                            <p:ajax event="itemSelect"                              
-                                    listener="#{complianceManager.updateEntryDocumentInspection}"
-                                    process="@this" />      
+                                <p:ajax event="itemSelect"                              
+                                        listener="#{complianceManager.updateEntryDocumentInspection}"
+                                        process="@this" />      
 
-                            <p:ajax event="change"                              
-                                    listener="#{complianceManager.updateEntryDocumentInspection}"
-                                    process="@this" />   
+                                <p:ajax event="change"                              
+                                        listener="#{complianceManager.updateEntryDocumentInspection}"
+                                        process="@this" />   
 
-                        </p:autoComplete>
+                            </p:autoComplete>
+                        </ui:remove>
                     </h:panelGrid>
                     <hr/>
                     <h:panelGrid columns="2" cellpadding="3">
