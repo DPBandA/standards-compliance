@@ -497,6 +497,16 @@ Email: info@dpbennett.com.jm
                             <p:ajax event="keyup"
                                     listener="#{complianceManager.updateSurvey}" />
                         </p:calendar>
+                        
+                        <p:outputLabel value="Compliant?:" for="compliant" style="font-weight: bold" />
+                        <p:selectBooleanCheckbox 
+                            id="compliant"
+                            value="#{complianceManager.currentComplianceSurvey.compliant}">
+
+                            <p:ajax listener="#{complianceManager.updateSurvey}" 
+                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+
+                        </p:selectBooleanCheckbox>
 
                         <h:outputText value="Comments:" />                        
                         <p:inputTextarea
