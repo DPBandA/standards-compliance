@@ -695,25 +695,25 @@ Email: info@dpbennett.com.jm
                     </p:commandButton>
 
                     <p:dataTable id="marketProductsTable"
-                                 var="product"
+                                 var="productInspection"
                                  value="#{complianceManager.currentComplianceSurvey.productInspections}">                   
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Name"/>
                             </f:facet>
-                            <h:outputText value="#{product.name}"/>
+                            <h:outputText value="#{productInspection.marketProduct.name}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Brand"/>
                             </f:facet>
-                            <h:outputText value="#{product.brand}"/>
+                            <h:outputText value="#{productInspection.brand}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Inspector"/>
                             </f:facet>
-                            <h:outputText value="#{product.inspector.name}" />
+                            <h:outputText value="#{productInspection.inspector.name}" />
                         </p:column>
                         <p:column style="width:32px">
                             <p:menuButton icon="ui-icon-pencil" 
@@ -729,7 +729,7 @@ Email: info@dpbennett.com.jm
                                     <p:ajax event="dialogReturn" 
                                             update="marketProductsTable" />                                
 
-                                    <f:setPropertyActionListener value="#{product}"
+                                    <f:setPropertyActionListener value="#{productInspection}"
                                                                  target="#{complianceManager.currentProductInspection}" />
 
                                 </p:menuitem>
@@ -740,7 +740,7 @@ Email: info@dpbennett.com.jm
                                     icon="ui-icon-trash"
                                     process="@this">
 
-                                    <f:setPropertyActionListener value="#{product}"
+                                    <f:setPropertyActionListener value="#{productInspection}"
                                                                  target="#{complianceManager.currentProductInspection}" />
 
                                 </p:menuitem>

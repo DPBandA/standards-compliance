@@ -52,30 +52,27 @@
                     <p:tab title="Product detail">
                         <h:panelGrid columns="2" cellpadding="3" >
 
-                            <h:outputText value="Name:" 
+                            <h:outputText value="Product:" 
                                           style="font-weight: bold;" /> 
                             <h:panelGroup>
-                                <p:autoComplete value="#{complianceManager.currentProductInspection.name}"     
-                                                id="marketproduct"
-                                                forceSelection="false"  
-                                                maxlength="40"
-                                                placeholder="-- select of enter name --"
+                                <p:autoComplete id="marketProduct"
+                                                var="marketProduct"   
+                                                value="#{complianceManager.currentProductInspection.marketProduct}"
+                                                itemLabel="#{marketProduct.name}"
+                                                itemValue="#{marketProduct}"
+                                                converter="activeMarketProductConverter"                                            
+                                                validator="businessEntityValidator"
+                                                forceSelection="true"
                                                 dropdown="true"
-                                                scrollHeight="200" 
-                                                validator="requiredFieldValidator"
-                                                completeMethod="#{complianceManager.completeMarketProduct}" >
+                                                scrollHeight="200"     
+                                                completeMethod="#{humanResourceManager.completeActiveMarketProduct}" >
 
                                     <p:ajax event="itemSelect"    
                                             update=":productDialogForm"
                                             listener="#{complianceManager.updateProductInspection}"
-                                            process="@this" />      
+                                            process="@this" />
 
-                                    <p:ajax event="change"   
-                                            update=":productDialogForm"
-                                            listener="#{complianceManager.updateProductInspection}"
-                                            process="@this" />    
-
-                                </p:autoComplete>
+                                </p:autoComplete>                                
                                 <p:spacer height="0" width="4"/>
                                 <p:commandButton 
                                     icon="ui-icon-plus" 
@@ -86,7 +83,7 @@
                                     title="Add a new product" >
 
                                     <p:ajax event="dialogReturn" 
-                                            update="marketproduct" />
+                                            update="marketProduct" />
 
                                 </p:commandButton>
                             </h:panelGroup>
