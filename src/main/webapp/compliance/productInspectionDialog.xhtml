@@ -69,12 +69,13 @@
 
                                     <p:ajax event="itemSelect"    
                                             update=":productDialogForm"
-                                            listener="#{complianceManager.updateProductInspection}"
+                                            listener="#{complianceManager.updateMarketProductForProductInspection}"
                                             process="@this" />
 
                                 </p:autoComplete>                                
                                 <p:spacer height="0" width="4"/>
                                 <p:menuButton icon="ui-icon-pencil" 
+                                              id="surveyMarketProductMenuButton"
                                               title="Add or edit product">
 
                                     <p:menuitem value="Edit product"
@@ -83,11 +84,11 @@
                                                 onstart="PF('longProcessDialogVar').show();"   
                                                 oncomplete="PF('longProcessDialogVar').hide();"                                  
                                                 actionListener="#{complianceManager.editSurveyMarketProduct}"  
-                                                process="@this,client"                             
+                                                process="@this"                             
                                                 title="View or edit this product's detail">  
 
                                         <p:ajax event="dialogReturn" 
-                                                update="marketProduct" />
+                                                update="marketProduct,surveyMarketProductMenuButton" />
                                         
                                     </p:menuitem>
 
@@ -101,7 +102,7 @@
                                         title="Add a new product to the market products database" >
 
                                         <p:ajax event="dialogReturn" 
-                                                update="marketProduct" />
+                                                update="marketProduct,surveyMarketProductMenuButton" />
 
                                     </p:menuitem>
 
