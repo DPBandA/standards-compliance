@@ -74,18 +74,38 @@
 
                                 </p:autoComplete>                                
                                 <p:spacer height="0" width="4"/>
-                                <p:commandButton 
-                                    icon="ui-icon-plus" 
-                                    onstart="PF('longProcessDialogVar').show();"
-                                    oncomplete="PF('longProcessDialogVar').hide();"
-                                    actionListener="#{complianceManager.createNewMarketProductInDialog}"                                            
-                                    process="@this"
-                                    title="Add a new product" >
+                                <p:menuButton icon="ui-icon-pencil" 
+                                              title="Add or edit product">
 
-                                    <p:ajax event="dialogReturn" 
-                                            update="marketProduct" />
+                                    <p:menuitem value="Edit product"
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isSurveyMarketProductNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editSurveyMarketProduct}"  
+                                                process="@this,client"                             
+                                                title="View or edit this product's detail">  
 
-                                </p:commandButton>
+                                        <p:ajax event="dialogReturn" 
+                                                update="marketProduct" />
+                                        
+                                    </p:menuitem>
+
+                                    <p:menuitem 
+                                        icon="ui-icon-plus" 
+                                        onstart="PF('longProcessDialogVar').show();"
+                                        oncomplete="PF('longProcessDialogVar').hide();"
+                                        actionListener="#{complianceManager.createNewMarketProductInDialog}"                                            
+                                        process="@this"
+                                        value="Add a new product"
+                                        title="Add a new product to the market products database" >
+
+                                        <p:ajax event="dialogReturn" 
+                                                update="marketProduct" />
+
+                                    </p:menuitem>
+
+                                </p:menuButton>
                             </h:panelGroup>
 
                             <h:outputText value="Product Category:" 
@@ -211,20 +231,6 @@
                                          listener="#{complianceManager.updateProductInspection}"
                                          process="@this"/>
                             </p:inputText>  
-
-                            <ui:remove>
-                                <p:selectCheckboxMenu id="productShippingContainers" 
-                                                      value="#{complianceManager.selectedContainerNumbers}" 
-                                                      label="Select shipping container(s)"                                              
-                                                      filter="true" 
-                                                      style="vertical-align: bottom;"
-                                                      filterMatchMode="startsWith" 
-                                                      onHide="updateSelectedShippingContainers();"
-                                                      panelStyle="width:250px">
-
-                                    <f:selectItems value="#{complianceManager.allShippingContainers}" />
-                                </p:selectCheckboxMenu>
-                            </ui:remove>
 
                             <h:outputText value="Shipping Container #(s):" />
                             <p:inputText value="#{complianceManager.currentProductInspection.containerNumber}"     
