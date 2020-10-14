@@ -80,7 +80,7 @@
 
                                     <p:menuitem value="Edit product"
                                                 icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isComplaintMarketProductNameValid}"
+                                                disabled="${!complianceManager.isMarketProductNameValid}"
                                                 onstart="PF('longProcessDialogVar').show();"   
                                                 oncomplete="PF('longProcessDialogVar').hide();"                                  
                                                 actionListener="#{complianceManager.editMarketProduct}"  
@@ -126,37 +126,23 @@
 
                                     <p:ajax event="itemSelect"
                                             listener="#{complianceManager.updateProductInspection}"  
+                                            update="complaintProductCategoryMenuButton"
                                             process="@this"/>
 
-                                </p:autoComplete>
-                                <ui:remove>
-                                    <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
-                                                     editable="true"
-                                                     id="productCategory"
-                                                     validator="requiredFieldValidator" >
-
-                                        <p:ajax
-                                            global="false"                            
-                                            listener="#{complianceManager.updateProductInspection}"  
-                                            process="@this" />
-
-                                        <f:selectItems value="#{complianceManager.productCategories}" />
-
-                                    </p:selectOneMenu>
-                                </ui:remove>
+                                </p:autoComplete>                                
                                 <p:spacer height="0" width="4"/>
                                 <p:menuButton icon="ui-icon-pencil" 
                                               id="complaintProductCategoryMenuButton"
                                               title="Add or edit product category">
 
-                                    <p:menuitem value="Edit product category"
+                                    <p:menuitem value="Edit category"
                                                 icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isComplaintMarketProductNameValid}"
+                                                disabled="${!complianceManager.isMarketProductCategoryNameValid}"
                                                 onstart="PF('longProcessDialogVar').show();"   
                                                 oncomplete="PF('longProcessDialogVar').hide();"                                  
-                                                actionListener="#{complianceManager.editMarketProduct}"  
+                                                actionListener="#{complianceManager.editMarketProductCategory}"  
                                                 process="@this"                             
-                                                title="View or edit this product's detail">  
+                                                title="View or edit this product's category">  
 
                                         <p:ajax event="dialogReturn" 
                                                 update="productCategory,complaintProductCategoryMenuButton" />
@@ -167,12 +153,13 @@
                                         icon="ui-icon-plus" 
                                         onstart="PF('longProcessDialogVar').show();"
                                         oncomplete="PF('longProcessDialogVar').hide();"
-                                        actionListener="#{complianceManager.createNewMarketProductInDialog}"                                            
+                                        actionListener="#{complianceManager.createNewMarketProductCategory}"                                            
                                         process="@this"
-                                        value="Add a new product"
+                                        value="Add new category"
                                         title="Add a new product to the market products database" >
 
                                         <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.createNewMarketProductCategoryDialogReturn}"
                                                 update="productCategory,complaintProductCategoryMenuButton" />
 
                                     </p:menuitem>
