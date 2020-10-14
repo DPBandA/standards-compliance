@@ -108,44 +108,42 @@
 
                                 </p:menuButton>
                             </h:panelGroup>
-                            <ui:remove>
-                                <p:autoComplete value="#{complianceManager.currentProductInspection.name}"     
-                                                id="marketproduct"
-                                                forceSelection="false"  
-                                                maxlength="40"
-                                                placeholder="-- select of enter name --"
-                                                dropdown="true"
-                                                scrollHeight="200" 
-                                                validator="requiredFieldValidator"
-                                                completeMethod="#{complianceManager.completeMarketProduct}" >
-
-                                    <p:ajax event="itemSelect"                              
-                                            listener="#{complianceManager.updateProductInspection}"
-                                            process="@this" />      
-
-                                    <p:ajax event="change"                              
-                                            listener="#{complianceManager.updateProductInspection}"
-                                            process="@this" />    
-
-                                </p:autoComplete>
-                            </ui:remove>
-
+                            
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
                             <h:panelGroup>
-                                <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
-                                                 editable="true"
-                                                 id="productCategory"
-                                                 validator="requiredFieldValidator" >
+                                <p:autoComplete id="productCategory"
+                                                var="category"   
+                                                value="#{complianceManager.currentProductInspection.productCategory}"
+                                                itemLabel="#{category.name}"
+                                                itemValue="#{category}"
+                                                converter="activeCategoryConverter"
+                                                validator="businessEntityValidator"
+                                                forceSelection="true"
+                                                dropdown="true"
+                                                scrollHeight="200"   
+                                                completeMethod="#{complianceManager.completeActiveCategory}" >
 
-                                    <p:ajax
-                                        global="false"                            
-                                        listener="#{complianceManager.updateProductInspection}"  
-                                        process="@this" />
+                                    <p:ajax event="itemSelect"
+                                            listener="#{complianceManager.updateProductInspection}"  
+                                            process="@this"/>
 
-                                    <f:selectItems value="#{complianceManager.productCategories}" />
+                                </p:autoComplete>
+                                <ui:remove>
+                                    <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
+                                                     editable="true"
+                                                     id="productCategory"
+                                                     validator="requiredFieldValidator" >
 
-                                </p:selectOneMenu>    
+                                        <p:ajax
+                                            global="false"                            
+                                            listener="#{complianceManager.updateProductInspection}"  
+                                            process="@this" />
+
+                                        <f:selectItems value="#{complianceManager.productCategories}" />
+
+                                    </p:selectOneMenu>
+                                </ui:remove>
                                 <p:spacer height="0" width="4"/>
                                 <p:menuButton icon="ui-icon-pencil" 
                                               id="complaintProductCategoryMenuButton"
