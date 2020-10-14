@@ -89,7 +89,7 @@
 
                                         <p:ajax event="dialogReturn" 
                                                 update="marketProduct,surveyMarketProductMenuButton" />
-                                        
+
                                     </p:menuitem>
 
                                     <p:menuitem 
@@ -111,19 +111,75 @@
 
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
+                            <h:panelGroup>
+                                <p:autoComplete id="productCategory"
+                                                var="category"   
+                                                value="#{complianceManager.currentProductInspection.productCategory}"
+                                                itemLabel="#{category.name}"
+                                                itemValue="#{category}"
+                                                converter="activeCategoryConverter"
+                                                validator="businessEntityValidator"
+                                                forceSelection="true"
+                                                dropdown="true"
+                                                scrollHeight="200"   
+                                                completeMethod="#{complianceManager.completeActiveCategory}" >
 
-                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
-                                             editable="true"
-                                             validator="requiredFieldValidator" >
+                                    <p:ajax event="itemSelect"
+                                            listener="#{complianceManager.updateProductInspection}"  
+                                            update="surveyProductCategoryMenuButton"
+                                            process="@this"/>
 
-                                <p:ajax
-                                    global="false"                            
-                                    listener="#{complianceManager.updateProductInspection}"  
-                                    process="@this" />
+                                </p:autoComplete>                                
+                                <p:spacer height="0" width="4"/>
+                                <p:menuButton icon="ui-icon-pencil" 
+                                              id="surveyProductCategoryMenuButton"
+                                              title="Add or edit product category">
 
-                                <f:selectItems value="#{complianceManager.productCategories}" />
+                                    <p:menuitem value="Edit category"
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isMarketProductCategoryNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editMarketProductCategory}"  
+                                                process="@this"                             
+                                                title="View or edit this product's category">  
 
-                            </p:selectOneMenu>     
+                                        <p:ajax event="dialogReturn" 
+                                                update="productCategory,surveyProductCategoryMenuButton" />
+
+                                    </p:menuitem>
+
+                                    <p:menuitem 
+                                        icon="ui-icon-plus" 
+                                        onstart="PF('longProcessDialogVar').show();"
+                                        oncomplete="PF('longProcessDialogVar').hide();"
+                                        actionListener="#{complianceManager.createNewMarketProductCategory}"                                            
+                                        process="@this"
+                                        value="Add new category"
+                                        title="Add a new product to the market products database" >
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.createNewMarketProductCategoryDialogReturn}"
+                                                update="productCategory,surveyProductCategoryMenuButton" />
+
+                                    </p:menuitem>
+
+                                </p:menuButton>
+                            </h:panelGroup>
+                            <ui:remove>
+                                <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
+                                                 editable="true"
+                                                 validator="requiredFieldValidator" >
+
+                                    <p:ajax
+                                        global="false"                            
+                                        listener="#{complianceManager.updateProductInspection}"  
+                                        process="@this" />
+
+                                    <f:selectItems value="#{complianceManager.productCategories}" />
+
+                                </p:selectOneMenu>
+                            </ui:remove>
 
                             <h:outputText value="Manufacturer:" />
                             <h:panelGroup>
