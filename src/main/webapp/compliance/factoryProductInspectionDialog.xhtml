@@ -54,41 +54,118 @@
 
                             <h:outputText style="vertical-align: top;font-weight: bold;"
                                           value="Product:" />
-                            <p:autoComplete id="marketProduct"
-                                            var="marketProduct"   
-                                            value="#{complianceManager.currentProductInspection.marketProduct}"
-                                            itemLabel="#{marketProduct.name}"
-                                            itemValue="#{marketProduct}"
-                                            converter="activeMarketProductConverter"                                            
-                                            validator="businessEntityValidator"
-                                            forceSelection="true"
-                                            dropdown="true"
-                                            scrollHeight="200"     
-                                            completeMethod="#{humanResourceManager.completeActiveMarketProduct}" >
+                            <h:panelGroup>
+                                <p:autoComplete id="marketProduct"
+                                                var="marketProduct"   
+                                                value="#{complianceManager.currentProductInspection.marketProduct}"
+                                                itemLabel="#{marketProduct.name}"
+                                                itemValue="#{marketProduct}"
+                                                converter="activeMarketProductConverter"                                            
+                                                validator="businessEntityValidator"
+                                                forceSelection="true"
+                                                dropdown="true"
+                                                scrollHeight="200"     
+                                                completeMethod="#{humanResourceManager.completeActiveMarketProduct}" >
 
-                                <p:ajax event="itemSelect"
-                                        listener="#{complianceManager.updateProductInspection}"  
-                                        update="productCategory,brand,model"                                        
-                                        process="@this"/>
+                                    <p:ajax event="itemSelect"    
+                                            update=":productDialogForm"
+                                            listener="#{complianceManager.updateMarketProductForProductInspection}"
+                                            process="@this" />
 
-                            </p:autoComplete>
+                                </p:autoComplete>                                
+                                <p:spacer height="0" width="4"/>
+                                <p:menuButton icon="ui-icon-pencil" 
+                                              id="factoryInspectionMarketProductMenuButton"
+                                              title="Add or edit product">
 
+                                    <p:menuitem value="Edit product"
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isMarketProductNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editMarketProduct}"  
+                                                process="@this"                             
+                                                title="View or edit this product's detail">  
+
+                                        <p:ajax event="dialogReturn" 
+                                                update="marketProduct,factoryInspectionMarketProductMenuButton" />
+
+                                    </p:menuitem>
+
+                                    <p:menuitem 
+                                        icon="ui-icon-plus" 
+                                        onstart="PF('longProcessDialogVar').show();"
+                                        oncomplete="PF('longProcessDialogVar').hide();"
+                                        actionListener="#{complianceManager.createNewMarketProductInDialog}"                                            
+                                        process="@this"
+                                        value="Add a new product"
+                                        title="Add a new product to the market products database" >
+
+                                        <p:ajax event="dialogReturn" 
+                                                update="marketProduct,factoryInspectionMarketProductMenuButton" />
+
+                                    </p:menuitem>
+
+                                </p:menuButton>
+                            </h:panelGroup>
+                            
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
+                            <h:panelGroup>
+                                <p:autoComplete id="productCategory"
+                                                var="category"   
+                                                value="#{complianceManager.currentProductInspection.productCategory}"
+                                                itemLabel="#{category.name}"
+                                                itemValue="#{category}"
+                                                converter="activeCategoryConverter"
+                                                validator="businessEntityValidator"
+                                                forceSelection="true"
+                                                dropdown="true"
+                                                scrollHeight="200"   
+                                                completeMethod="#{complianceManager.completeActiveCategory}" >
 
-                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
-                                             id="productCategory"
-                                             editable="true"
-                                             validator="requiredFieldValidator" >
+                                    <p:ajax event="itemSelect"
+                                            listener="#{complianceManager.updateProductInspection}"  
+                                            update="factoryInspectionProductCategoryMenuButton"
+                                            process="@this"/>
 
-                                <p:ajax
-                                    global="false"                            
-                                    listener="#{complianceManager.updateProductInspection}"  
-                                    process="@this" />
+                                </p:autoComplete>                                
+                                <p:spacer height="0" width="4"/>
+                                <p:menuButton icon="ui-icon-pencil" 
+                                              id="factoryInspectionProductCategoryMenuButton"
+                                              title="Add or edit product category">
 
-                                <f:selectItems value="#{complianceManager.productCategories}" />
+                                    <p:menuitem value="Edit category"
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isMarketProductCategoryNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editMarketProductCategory}"  
+                                                process="@this"                             
+                                                title="View or edit this product's category">  
 
-                            </p:selectOneMenu>   
+                                        <p:ajax event="dialogReturn" 
+                                                update="productCategory,factoryInspectionProductCategoryMenuButton" />
+
+                                    </p:menuitem>
+
+                                    <p:menuitem 
+                                        icon="ui-icon-plus" 
+                                        onstart="PF('longProcessDialogVar').show();"
+                                        oncomplete="PF('longProcessDialogVar').hide();"
+                                        actionListener="#{complianceManager.createNewMarketProductCategory}"                                            
+                                        process="@this"
+                                        value="Add new category"
+                                        title="Add a new product to the market products database" >
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.createNewMarketProductCategoryDialogReturn}"
+                                                update="productCategory,factoryInspectionProductCategoryMenuButton" />
+
+                                    </p:menuitem>
+
+                                </p:menuButton>
+                            </h:panelGroup>   
 
                             <h:outputText value="Brand:" />
                             <p:inputText value="#{complianceManager.currentProductInspection.brand}" 
@@ -164,41 +241,41 @@
                             <h:outputText value=" Product Package Type:" />
                             <p:inputText value="#{complianceManager.currentProductInspection.productPackageType}"
                                          placeholder="bottle, box, etc." >
-                                
+
                                 <p:ajax global="false"
                                         listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
-                                
+
                             </p:inputText>
 
                             <h:outputText value="No. of Products per Group Package:" />                       
                             <p:spinner  value="#{complianceManager.currentProductInspection.numProductsPerGroupPackage}" 
                                         stepFactor="1"
                                         min="0">
-                                
+
                                 <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
-                                
+
                             </p:spinner>  
 
                             <h:outputText value="Product Quantity:" /> 
                             <p:spinner  value="#{complianceManager.currentProductInspection.quantity}" 
                                         stepFactor="1"
                                         min="0">
-                                
+
                                 <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/> 
-                                
+
                             </p:spinner>  
 
                             <h:outputText value="Sample Quantity:" />                       
                             <p:spinner  value="#{complianceManager.currentProductInspection.numProductsSampled}" 
                                         stepFactor="1"
                                         min="0">
-                                
+
                                 <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
-                                
+
                             </p:spinner>  
 
                             <h:outputText value="Sampled for:" />

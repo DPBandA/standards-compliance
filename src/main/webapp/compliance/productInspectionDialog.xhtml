@@ -80,7 +80,7 @@
 
                                     <p:menuitem value="Edit product"
                                                 icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isSurveyMarketProductNameValid}"
+                                                disabled="${!complianceManager.isMarketProductNameValid}"
                                                 onstart="PF('longProcessDialogVar').show();"   
                                                 oncomplete="PF('longProcessDialogVar').hide();"                                  
                                                 actionListener="#{complianceManager.editMarketProduct}"  
@@ -166,21 +166,7 @@
 
                                 </p:menuButton>
                             </h:panelGroup>
-                            <ui:remove>
-                                <p:selectOneMenu value="#{complianceManager.currentProductInspection.productCategory}" 
-                                                 editable="true"
-                                                 validator="requiredFieldValidator" >
-
-                                    <p:ajax
-                                        global="false"                            
-                                        listener="#{complianceManager.updateProductInspection}"  
-                                        process="@this" />
-
-                                    <f:selectItems value="#{complianceManager.productCategories}" />
-
-                                </p:selectOneMenu>
-                            </ui:remove>
-
+                            
                             <h:outputText value="Manufacturer:" />
                             <h:panelGroup>
                                 <p:autoComplete id="manufacturer"      
