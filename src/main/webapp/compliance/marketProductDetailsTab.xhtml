@@ -102,27 +102,44 @@ Email: info@dpbennett.com.jm
 
         <h:outputText style="vertical-align: top;"
                       value="Categories:" />
-        <p:autoComplete id="categories"
-                        var="category"   
-                        value="#{complianceManager.currentMarketProduct.categories}"
-                        itemLabel="#{category.name}"
-                        itemValue="#{category}"
-                        converter="activeCategoryConverter"
-                        forceSelection="true"
-                        dropdown="true"
-                        scrollHeight="200"                         
-                        multiple="true"
-                        completeMethod="#{complianceManager.completeActiveCategory}" >
+        <h:panelGroup>
+            <h:panelGrid columns="2">
+                <p:autoComplete id="categories"
+                                var="category"   
+                                value="#{complianceManager.currentMarketProduct.categories}"
+                                itemLabel="#{category.name}"
+                                itemValue="#{category}"
+                                converter="activeCategoryConverter"
+                                forceSelection="true"
+                                dropdown="true"
+                                scrollHeight="200"                         
+                                multiple="true"
+                                completeMethod="#{complianceManager.completeActiveCategory}" >
 
-            <p:ajax event="itemSelect"
-                    listener="#{complianceManager.updateMarketProduct}"
-                    process="@this"/>
+                    <p:ajax event="itemSelect"
+                            listener="#{complianceManager.updateMarketProduct}"
+                            process="@this"/>
 
-            <p:ajax event="itemUnselect"
-                    listener="#{complianceManager.updateMarketProduct}"
-                    process="@this"/>
+                    <p:ajax event="itemUnselect"
+                            listener="#{complianceManager.updateMarketProduct}"
+                            process="@this"/>
 
-        </p:autoComplete>
+                </p:autoComplete>
+
+                <p:commandButton 
+                    icon="ui-icon-plus" 
+                    onstart="PF('longProcessDialogVar').show();"
+                    oncomplete="PF('longProcessDialogVar').hide();"
+                    actionListener="#{complianceManager.createNewMarketProductCategory}"                                            
+                    process="@this"
+                    title="Add a new category" >
+
+                    <p:ajax event="dialogReturn" 
+                            update="categories" />
+
+                </p:commandButton>
+            </h:panelGrid>
+        </h:panelGroup>
         <h:outputText value="" />
 
         <h:outputText value="Description:" />                        

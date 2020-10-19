@@ -23,7 +23,7 @@
 
             <p:growl id="complaint_growl" life="5000" showDetail="true"/>
 
-            <p:toolbar style="margin-bottom: 1px;">
+            <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
@@ -36,10 +36,14 @@
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.closeDialog}"
-                                     update="complaint_growl"                         
+                                     update="complaint_growl,complaintDialogForm"                         
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
+
+                    <p:spacer width="10" />
+
+                    <h:outputText value="#{complianceManager.currentComplaint.editStatus}" />
                 </p:toolbarGroup>                
             </p:toolbar>
             <p:tabView id="complaintTabView" 
@@ -57,7 +61,12 @@
                                        style="font-weight: bold;" />               
                         <p:selectBooleanCheckbox id="internal"
                                                  style="vertical-align: middle"
-                                                 value="#{complianceManager.currentComplaint.internal}" />                       
+                                                 value="#{complianceManager.currentComplaint.internal}" >
+
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar" />
+
+                        </p:selectBooleanCheckbox>                       
 
 
                         <h:outputText value="Complainant:"
@@ -78,7 +87,7 @@
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="actionsMenuButton"
+                                        update="actionsMenuButton,:complaintDialogForm:topToolbar"
                                         listener="#{complianceManager.updateComplainant}"
                                         process="@this"/>
 
@@ -139,6 +148,7 @@
 
                             <p:ajax event="itemSelect"
                                     listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:autoComplete>  
@@ -161,7 +171,7 @@
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="receivedViaActionsMenu"
+                                        update="receivedViaActionsMenu,:complaintDialogForm:topToolbar"
                                         listener="#{complianceManager.updateComplaint}"
                                         process="@this"/>
 
@@ -212,8 +222,10 @@
                                     pattern="MMM dd, yyyy" 
                                     value="#{complianceManager.currentComplaint.dateReceived}" >
                             <p:ajax event="dateSelect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                             <p:ajax event="keyup"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
 
@@ -224,12 +236,14 @@
                                     pattern="MMM dd, yyyy" 
                                     value="#{complianceManager.currentComplaint.dateOfCorrespondence}" >
                             <p:ajax event="dateSelect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                             <p:ajax event="keyup"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
 
-                        <h:outputText value="Job number(s):" />                   
+                        <h:outputText value="Job number:" />                   
                         <p:autoComplete id="jobNumber"                                           
                                         maxResults="12"                                           
                                         value="#{complianceManager.currentComplaint.jobNumber}"                                           
@@ -238,10 +252,12 @@
 
                             <p:ajax event="itemSelect"
                                     listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                             <p:ajax event="keyup"
                                     listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:autoComplete>
@@ -250,8 +266,8 @@
                         <p:inputText maxlength="250"
                                      value="#{complianceManager.currentComplaint.complaintOfficer}" >
 
-                            <p:ajax event="change"
-                                    listener="#{complianceManager.updateComplaint}"
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:inputText>
@@ -268,8 +284,8 @@
                             styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
                             style="width: 500px;">
 
-                            <p:ajax event="change"
-                                    listener="#{complianceManager.updateComplaint}"
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:inputTextarea> 
@@ -288,8 +304,8 @@
                             styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
                             style="width: 500px;">
 
-                            <p:ajax event="change"
-                                    listener="#{complianceManager.updateComplaint}"
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:inputTextarea> 
@@ -309,7 +325,8 @@
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
-                                update="marketProductsTable" />
+                                listener="#{complianceManager.complaintProductInspectionDialogReturn}"
+                                update="marketProductsTable,:complaintDialogForm:topToolbar" />
 
                     </p:commandButton>
                     <p:dataTable id="marketProductsTable"
@@ -339,7 +356,8 @@
                                             process="@this">  
 
                                     <p:ajax event="dialogReturn" 
-                                            update="marketProductsTable" />
+                                            listener="#{complianceManager.complaintProductInspectionDialogReturn}"
+                                            update="marketProductsTable,:complaintDialogForm:topToolbar" />
 
                                     <f:setPropertyActionListener value="#{productInspection}"
                                                                  target="#{complianceManager.currentProductInspection}" />
@@ -369,7 +387,8 @@
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
-                                update="marketProductsTable" />
+                                listener="#{complianceManager.complaintProductInspectionDialogReturn}"
+                                update="marketProductsTable,:complaintDialogForm:topToolbar" />
 
                     </p:commandButton>
 
@@ -518,7 +537,7 @@
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.closeDialog}"
-                                     update="complaint_growl"                         
+                                     update="complaint_growl,complaintDialogForm"                         
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
