@@ -417,6 +417,7 @@
                                             itemLabel="#{progress}"/>
 
                             <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     global="false"
                                     process="@this"/>
 
@@ -429,8 +430,10 @@
                                     pattern="MMM dd, yyyy" 
                                     value="#{complianceManager.currentComplaint.dateResolved}" >
                             <p:ajax event="dateSelect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                             <p:ajax event="keyup"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
 
@@ -446,8 +449,8 @@
                             styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
                             style="width: 500px;">
 
-                            <p:ajax event="change"
-                                    listener="#{complianceManager.updateComplaint}"
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:inputTextarea> 
@@ -466,8 +469,8 @@
                             styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
                             style="width: 500px;">
 
-                            <p:ajax event="change"
-                                    listener="#{complianceManager.updateComplaint}"
+                            <p:ajax listener="#{complianceManager.updateComplaint}"
+                                    update=":complaintDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:inputTextarea> 
@@ -488,10 +491,12 @@
                                         completeMethod="#{humanResourceManager.completeActiveDepartment}" >
 
                             <p:ajax event="itemSelect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}"
                                     process="@this"/>
 
                             <p:ajax event="itemUnselect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}"
                                     process="@this"/>
 
@@ -511,10 +516,12 @@
                                         completeMethod="#{humanResourceManager.completeActiveEmployee}" >
 
                             <p:ajax event="itemSelect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}"
                                     process="@this"/>
 
                             <p:ajax event="itemUnselect"
+                                    update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}"
                                     process="@this"/>
 
