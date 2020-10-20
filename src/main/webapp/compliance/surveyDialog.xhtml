@@ -773,12 +773,12 @@ Email: info@dpbennett.com.jm
                         <p:selectBooleanCheckbox value="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                                                  id="detentionRequestIssued" >
 
-                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
-                                    update="dateOfDetention,:ComplianceSurveyDialogForm:formsMenu"/>
+                            <p:ajax listener="#{complianceManager.updatePOEDetention}" 
+                                    update="portOfEntryDetentionNumber,dateOfDetention,:ComplianceSurveyDialogForm:formsMenu"/>
 
                         </p:selectBooleanCheckbox>
-                        
-                        <h:outputText value="Detention no.:" />
+
+                        <h:outputText value="Detention number:" />
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.portOfEntryDetentionNumber}" 
                                      id="portOfEntryDetentionNumber"
                                      readonly="true"
@@ -787,9 +787,9 @@ Email: info@dpbennett.com.jm
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
-                            
+
                         </p:inputText>
-                        
+
                         <h:outputText value="Broker: " />
                         <h:panelGroup>
                             <p:autoComplete id="broker"      
@@ -1128,8 +1128,8 @@ Email: info@dpbennett.com.jm
                             id="noticeOfDetentionIssued"
                             value="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}">
 
-                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
-                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+                            <p:ajax listener="#{complianceManager.updateSurvey}" 
+                                    update="domesticMarketDetentionNumber,:ComplianceSurveyDialogForm:formsMenu" />
 
                         </p:selectBooleanCheckbox>                        
 
@@ -1138,7 +1138,7 @@ Email: info@dpbennett.com.jm
                             id="releaseFromDetentionIssued"
                             value="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}">
 
-                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
+                            <p:ajax listener="#{complianceManager.updateSurvey}" 
                                     update=":ComplianceSurveyDialogForm:formsMenu" />
 
                         </p:selectBooleanCheckbox>
@@ -1148,17 +1148,22 @@ Email: info@dpbennett.com.jm
                             id="applicationForRehabilitation"
                             value="#{complianceManager.currentComplianceSurvey.applicationForRehabilitation}">
 
-                            <p:ajax listener="#{complianceManager.updateDateOfDetention}" 
+                            <p:ajax listener="#{complianceManager.updateSurvey}" 
                                     update=":ComplianceSurveyDialogForm:formsMenu" />
 
                         </p:selectBooleanCheckbox>
 
-                        <h:outputText value="Detention number #:"  />
-                        <p:inputText value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" > 
+                        <h:outputText value="Detention number:"  />
+                        <p:inputText id="domesticMarketDetentionNumber"
+                                     readonly="true"
+                                     style="width: 150px;background-color: lightyellow;"
+                                     value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" > 
+
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
-                                process="@this" />                            
+                                process="@this" />  
+
                         </p:inputText>
 
                         <h:outputText value="Release date:"  />
