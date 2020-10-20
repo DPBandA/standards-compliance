@@ -777,7 +777,19 @@ Email: info@dpbennett.com.jm
                                     update="dateOfDetention,:ComplianceSurveyDialogForm:formsMenu"/>
 
                         </p:selectBooleanCheckbox>
-
+                        
+                        <h:outputText value="Detention no.:" />
+                        <p:inputText value="#{complianceManager.currentComplianceSurvey.portOfEntryDetentionNumber}" 
+                                     id="portOfEntryDetentionNumber"
+                                     readonly="true"
+                                     style="width: 150px;background-color: lightyellow;">
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                process="@this" />
+                            
+                        </p:inputText>
+                        
                         <h:outputText value="Broker: " />
                         <h:panelGroup>
                             <p:autoComplete id="broker"      
@@ -1141,7 +1153,7 @@ Email: info@dpbennett.com.jm
 
                         </p:selectBooleanCheckbox>
 
-                        <h:outputText value="Reference #:"  />
+                        <h:outputText value="Detention number #:"  />
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.domesticMarketDetentionNumber}" > 
                             <p:ajax
                                 global="true"
