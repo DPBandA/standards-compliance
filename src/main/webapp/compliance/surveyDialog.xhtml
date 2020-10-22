@@ -1129,7 +1129,7 @@ Email: info@dpbennett.com.jm
                             value="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}">
 
                             <p:ajax listener="#{complianceManager.updateDMDetention}" 
-                                    update="domesticMarketDetentionNumber,:ComplianceSurveyDialogForm:formsMenu" />
+                                    update="dateOfNoticeOfDetention,domesticMarketDetentionNumber,:ComplianceSurveyDialogForm:formsMenu" />
 
                         </p:selectBooleanCheckbox>                        
 
@@ -1165,6 +1165,18 @@ Email: info@dpbennett.com.jm
                                 process="@this" />  
 
                         </p:inputText>
+                        
+                        <h:outputText value="Notice of detention issue date:"  />
+                        <p:calendar  readonlyInput="true"
+                                     id="dateOfNoticeOfDetention"
+                                     navigator="true" 
+                                     pattern="MMM dd, yyyy"                                     
+                                     value="#{complianceManager.currentComplianceSurvey.dateOfNoticeOfDetention}" >
+                            <p:ajax event="dateSelect"
+                                    listener="#{complianceManager.updateSurvey}" />
+                            <p:ajax event="keyup"
+                                    listener="#{complianceManager.updateSurvey}" />
+                        </p:calendar>
 
                         <h:outputText value="Release date:"  />
                         <p:calendar  readonlyInput="true"
