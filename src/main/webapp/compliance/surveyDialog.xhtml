@@ -48,7 +48,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveComplianceSurvey}"     
-                                     update="#{complianceManager.componentsToUpdate}"
+                                     update="ComplianceSurveyDialogForm"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-disk"
                                      process="@form"/>
@@ -56,10 +56,14 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.closeComplianceSurvey}"
-                                     update="#{complianceManager.componentsToUpdate}"                         
+                                     update="ComplianceSurveyDialogForm"                         
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
+                    
+                    <p:spacer width="10" />
+
+                    <h:outputText value="#{complianceManager.currentComplianceSurvey.editStatus}" />
                 </p:toolbarGroup>
 
                 <p:toolbarGroup align="right">
@@ -1417,7 +1421,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Save"
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveComplianceSurvey}"     
-                                     update="#{complianceManager.componentsToUpdate}"
+                                     update="ComplianceSurveyDialogForm"
                                      oncomplete="longProcessDialogVar.hide();"
                                      onerror="connectionErrorDialog.show();"
                                      icon="ui-icon-disk"
@@ -1426,7 +1430,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.closeComplianceSurvey}"
-                                     update="#{complianceManager.componentsToUpdate}"                         
+                                     update="ComplianceSurveyDialogForm"                         
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
