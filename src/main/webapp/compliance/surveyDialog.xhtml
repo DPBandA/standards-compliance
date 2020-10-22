@@ -60,7 +60,7 @@ Email: info@dpbennett.com.jm
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
-                    
+
                     <p:spacer width="10" />
 
                     <h:outputText value="#{complianceManager.currentComplianceSurvey.editStatus}" />
@@ -151,10 +151,12 @@ Email: info@dpbennett.com.jm
                                         completeMethod="#{complianceManager.completeJobNumber}">
 
                             <p:ajax event="itemSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
 
                             <p:ajax event="keyup"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}"
                                     process="@this"/>
 
@@ -167,7 +169,7 @@ Email: info@dpbennett.com.jm
                                 global="true"
                                 onstart="longProcessDialogVar.show();"
                                 oncomplete="longProcessDialogVar.hide();"
-                                update="generalPanelGrid,complianceSurveyTabView"
+                                update=":ComplianceSurveyDialogForm:topToolbar,generalPanelGrid,complianceSurveyTabView"
                                 listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
 
@@ -182,7 +184,7 @@ Email: info@dpbennett.com.jm
                                 global="true"
                                 onstart="longProcessDialogVar.show();"
                                 oncomplete="longProcessDialogVar.hide();"
-                                update="generalPanelGrid,complianceSurveyTabView"
+                                update=":ComplianceSurveyDialogForm:topToolbar,generalPanelGrid,complianceSurveyTabView"
                                 listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
 
@@ -193,6 +195,7 @@ Email: info@dpbennett.com.jm
                         <h:outputText value="Type of Establishment:" 
                                       style="font-weight: bold"
                                       rendered="#{!complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
+                        
                         <p:selectOneMenu id="typeOfEstablishment"
                                          editable="true"
                                          value="#{complianceManager.currentComplianceSurvey.typeOfEstablishment}" 
@@ -202,7 +205,7 @@ Email: info@dpbennett.com.jm
 
                             <p:ajax
                                 global="true"
-                                update="generalPanelGrid"
+                                update=":ComplianceSurveyDialogForm:topToolbar,generalPanelGrid"
                                 listener="#{complianceManager.updateSurvey}"  
                                 process="@this" />
 
@@ -217,30 +220,36 @@ Email: info@dpbennett.com.jm
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                             <p:ajax
                                 global="true"
-                                update="generalPanelGrid"
+                                update=":ComplianceSurveyDialogForm:topToolbar,generalPanelGrid"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
+                                                       
                             <f:selectItems value="#{complianceManager.typesOfPortOfEntry}" />
+                            
                         </p:selectOneMenu>      
 
                         <h:outputText value="Port of Entry:"
                                       style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
+                        
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.portOfEntry}" 
                                          editable="false"
                                          rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
 
                             <p:ajax
                                 global="true"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 listener="#{complianceManager.updateSurvey}"
                                 process="@this" />
 
                             <f:selectItems value="#{complianceManager.portsOfEntry}" />
+                            
                         </p:selectOneMenu>                      
 
                         <h:outputText value="Inspection Location/Point:"  
                                       style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"/>
+                        
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.inspectionPoint}" 
                                          editable="true"
                                          validator="requiredFieldValidator"
@@ -248,12 +257,14 @@ Email: info@dpbennett.com.jm
                             <p:ajax 
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                             <f:selectItems value="#{complianceManager.inspectionPoints}" />
+                            
                         </p:selectOneMenu>                     
 
                         <h:outputText value="Air waybill:" 
-                                      style="font-weight: bold"
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyTypeOfPortOfEntryIsAirport}" />
                         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyTypeOfPortOfEntryIsAirport}">
                             <p:inputText   id="waybill"  
@@ -261,9 +272,11 @@ Email: info@dpbennett.com.jm
                                            rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyTypeOfPortOfEntryIsAirport}"
                                            style="width: 300px"                                        
                                            maxlength="254">
-                                <p:ajax event="keyup"
-                                        listener="#{complianceManager.updateSurvey}"
+                                
+                                <p:ajax listener="#{complianceManager.updateSurvey}"
+                                        update=":ComplianceSurveyDialogForm:topToolbar"
                                         process="@this"/>
+                                
                             </p:inputText>                           
                         </h:panelGroup>                    
 
@@ -286,7 +299,7 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="actionsMenuButton,consigneeRepresentative"
+                                        update=":ComplianceSurveyDialogForm:topToolbar,actionsMenuButton,consigneeRepresentative"
                                         listener="#{complianceManager.updateConsignee}"
                                         process="@this"/>
 
@@ -348,6 +361,7 @@ Email: info@dpbennett.com.jm
                             <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.consignee}" />
 
                             <p:ajax event="itemSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}"  
                                     process="@this" />   
 
@@ -372,10 +386,9 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
                                 <p:ajax event="itemSelect"
-                                        update="retailOutletActionsMenu,retailRepresentative"
+                                        update=":ComplianceSurveyDialogForm:topToolbar,retailOutletActionsMenu,retailRepresentative"
                                         listener="#{complianceManager.updateRetailOutlet}"
                                         process="@this"/>
-
 
                             </p:autoComplete>  
                             <p:menuButton id="retailOutletActionsMenu" 
@@ -395,7 +408,6 @@ Email: info@dpbennett.com.jm
                                     <p:ajax event="dialogReturn" 
                                             listener="#{complianceManager.retailOutletDialogReturn}"
                                             update="retailOutlet,retailRepresentative" />
-
 
                                 </p:menuitem>
 
@@ -437,6 +449,7 @@ Email: info@dpbennett.com.jm
                             <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.retailOutlet}" />
 
                             <p:ajax event="itemSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}"  
                                     process="@this" />   
 
@@ -474,10 +487,15 @@ Email: info@dpbennett.com.jm
                                     navigator="true" 
                                     pattern="MMM dd, yyyy" 
                                     value="#{complianceManager.currentComplianceSurvey.dateOfSurvey}" >
+                            
                             <p:ajax event="dateSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
+                            
                             <p:ajax event="keyup"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
+                            
                         </p:calendar>
 
                         <h:outputText value="Time in:" />
@@ -485,10 +503,15 @@ Email: info@dpbennett.com.jm
                                     pattern="hh:mm a" 
                                     timeOnly="true"
                                     value="#{complianceManager.currentComplianceSurvey.surveyStartTime}" >
+                            
                             <p:ajax event="dateSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
+                            
                             <p:ajax event="keyup"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
+                            
                         </p:calendar>
 
                         <h:outputText value="Time out:" />
@@ -496,10 +519,15 @@ Email: info@dpbennett.com.jm
                                     pattern="hh:mm a" 
                                     timeOnly="true"
                                     value="#{complianceManager.currentComplianceSurvey.surveyEndTime}" >
+                            
                             <p:ajax event="dateSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
+                            
                             <p:ajax event="keyup"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
+                            
                         </p:calendar>
 
                         <p:outputLabel value="Compliant?:" for="compliant" style="font-weight: bold" />
@@ -508,7 +536,7 @@ Email: info@dpbennett.com.jm
                             value="#{complianceManager.currentComplianceSurvey.compliant}">
 
                             <p:ajax listener="#{complianceManager.updateSurvey}" 
-                                    update=":ComplianceSurveyDialogForm:formsMenu" />
+                                    update=":ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
 
                         </p:selectBooleanCheckbox>
 
@@ -524,8 +552,8 @@ Email: info@dpbennett.com.jm
                             styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
                             style="width: 500px;">
 
-                            <p:ajax event="change"
-                                    listener="#{complianceManager.updateSurvey}"
+                            <p:ajax listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     process="@this"/>
 
                         </p:inputTextarea> 
@@ -544,10 +572,13 @@ Email: info@dpbennett.com.jm
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentNumber}" 
                                      id="entryDocumentNumber" 
                                      style="width: 150px">
+                            
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                         </p:inputText>
 
                         <ui:remove>
@@ -558,7 +589,9 @@ Email: info@dpbennett.com.jm
                                 <p:ajax
                                     global="true"
                                     listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     process="@this" />
+                                
                             </p:inputText>
                         </ui:remove>
 
@@ -569,9 +602,11 @@ Email: info@dpbennett.com.jm
                                     value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.entryDocumentReportDate}" >
 
                             <p:ajax event="dateSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
 
                             <p:ajax event="keyup"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
 
                         </p:calendar>   
@@ -581,10 +616,13 @@ Email: info@dpbennett.com.jm
                             <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.invoiceNumber}" 
                                          id="invoiceNumber" 
                                          style="width: 150px">
+                                
                                 <p:ajax
                                     global="true"
                                     listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     process="@this" />
+                                
                             </p:inputText>
                             <p:watermark value="" for="invoiceNumber"/>
                         </h:panelGroup>
@@ -596,9 +634,11 @@ Email: info@dpbennett.com.jm
                                     value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.invoiceDate}" >
 
                             <p:ajax event="dateSelect"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
 
                             <p:ajax event="keyup"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     listener="#{complianceManager.updateSurvey}" />
 
                         </p:calendar>     
@@ -607,9 +647,11 @@ Email: info@dpbennett.com.jm
                         <p:inputText id="containerNumbers"
                                      style="width: 300px"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.containerNumbers}" >
+                            
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
 
                         </p:inputText>    
@@ -624,10 +666,12 @@ Email: info@dpbennett.com.jm
 
                             <p:ajax event="itemSelect"                              
                                     listener="#{complianceManager.updateEntryDocumentInspection}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     process="@this" />      
 
                             <p:ajax event="change"                              
                                     listener="#{complianceManager.updateEntryDocumentInspection}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
                                     process="@this" />                               
                         </p:autoComplete>   
 
@@ -635,52 +679,71 @@ Email: info@dpbennett.com.jm
                         <p:inputText id="cif"
                                      style="width: 100px"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.CIF}" >
+                            
                             <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateSurvey}"                               
+                                listener="#{complianceManager.updateSurvey}"  
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                         </p:inputText>        
 
                         <h:outputText value="SCF payable:" />
                         <p:inputText id="scf"
                                      style="width: 100px"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCF}" >
+                            
                             <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateSurvey}"                               
+                                listener="#{complianceManager.updateSurvey}" 
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                         </p:inputText>     
 
                         <h:outputText value="SCF amount calculated:" />
                         <p:inputText id="SCFAmountCalculated"
                                      style="width: 100px"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFAmountCalculated}" >
+                            
                             <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            
                             <p:ajax
                                 global="true"
-                                listener="#{complianceManager.updateSurvey}"                               
+                                listener="#{complianceManager.updateSurvey}" 
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                         </p:inputText>      
 
                         <h:outputText value="SCF free code:" />
                         <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFFreeCode}" 
                                      id="SCFFreeCode" 
                                      style="width: 150px">
+                            
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                         </p:inputText>    
 
                         <h:outputText value="Document stamped:"/>
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.documentStamped}">
+                            
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
+                            
                             <f:selectItems value="#{complianceManager.documentStamps}" />
+                            
                         </p:selectOneMenu>   
 
                     </h:panelGrid>
@@ -696,7 +759,7 @@ Email: info@dpbennett.com.jm
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
-                                update="marketProductsTable" />
+                                update=":ComplianceSurveyDialogForm:topToolbar,marketProductsTable" />
 
                     </p:commandButton>
 
@@ -1169,7 +1232,7 @@ Email: info@dpbennett.com.jm
                                 process="@this" />  
 
                         </p:inputText>
-                        
+
                         <h:outputText value="Notice of detention issue date:"  />
                         <p:calendar  readonlyInput="true"
                                      id="dateOfNoticeOfDetention"
