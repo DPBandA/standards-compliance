@@ -14,7 +14,7 @@
                          width="400">
             <p:commandButton value="Yes"
                              actionListener="#{complianceManager.removeComplaintProductInspection}"
-                             update=":complaintDialogForm:complaintTabView:marketProductsTable"
+                             update=":complaintDialogForm:topToolbar,:complaintDialogForm:complaintTabView:marketProductsTable"
                              oncomplete="deleteProductDialog.hide();"
                              icon="ui-icon-check"/>
             <p:commandButton value="No"

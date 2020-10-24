@@ -14,7 +14,7 @@
                          width="400">
             <p:commandButton value="Yes"
                              actionListener="#{complianceManager.removeFactoryProductInspection}"
-                             update=":factoryInspectionDialogForm:factoryInspectionTabView:factoryProductsTable"
+                             update=":factoryInspectionDialogForm:topToolbar,:factoryInspectionDialogForm:factoryInspectionTabView:factoryProductsTable"
                              oncomplete="deleteProductDialog.hide();"
                              icon="ui-icon-check"/>
             <p:commandButton value="No"
