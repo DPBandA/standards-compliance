@@ -759,6 +759,7 @@ Email: info@dpbennett.com.jm
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
+                                listener="#{complianceManager.surveyProductInspectionDialogReturn}"
                                 update=":ComplianceSurveyDialogForm:topToolbar,marketProductsTable" />
 
                     </p:commandButton>
@@ -796,6 +797,7 @@ Email: info@dpbennett.com.jm
                                             process="@this">    
 
                                     <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.surveyProductInspectionDialogReturn}"
                                             update=":ComplianceSurveyDialogForm:topToolbar,marketProductsTable" />                                
 
                                     <f:setPropertyActionListener value="#{productInspection}"
@@ -825,6 +827,7 @@ Email: info@dpbennett.com.jm
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
+                                listener="#{complianceManager.surveyProductInspectionDialogReturn}"
                                 update=":ComplianceSurveyDialogForm:topToolbar,marketProductsTable" />
 
                     </p:commandButton>
