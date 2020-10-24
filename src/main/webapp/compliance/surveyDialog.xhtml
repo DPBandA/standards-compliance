@@ -144,10 +144,11 @@ Email: info@dpbennett.com.jm
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
-                        <h:outputText value="Job number: " />                   
-                        <p:autoComplete maxResults="12"                                           
-                                        value="#{complianceManager.currentComplianceSurvey.jobNumber}"                                           
+                        <h:outputText value="Job number: " style="font-weight: bold" />                   
+                        <p:autoComplete value="#{complianceManager.currentComplianceSurvey.jobNumber}" 
+                                        maxResults="12"
                                         forceSelection="false"
+                                        validator="requiredFieldValidator"
                                         completeMethod="#{complianceManager.completeJobNumber}">
 
                             <p:ajax event="itemSelect"

@@ -66,8 +66,26 @@
                             <p:ajax listener="#{complianceManager.updateComplaint}"
                                     update=":complaintDialogForm:topToolbar" />
 
-                        </p:selectBooleanCheckbox>                       
+                        </p:selectBooleanCheckbox>
+                        
+                        <h:outputText value="Job number:" style="font-weight: bold" />                   
+                        <p:autoComplete value="#{complianceManager.currentComplaint.jobNumber}" 
+                                        maxResults="12"
+                                        forceSelection="false"
+                                        validator="requiredFieldValidator"
+                                        completeMethod="#{complianceManager.completeJobNumber}">
 
+                            <p:ajax event="itemSelect"
+                                    update=":complaintDialogForm:topToolbar"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                            <p:ajax event="keyup"
+                                    update=":complaintDialogForm:topToolbar"
+                                    listener="#{complianceManager.updateComplaint}"
+                                    process="@this"/>
+
+                        </p:autoComplete>
 
                         <h:outputText value="Complainant:"
                                       style="font-weight: bold" />
@@ -242,25 +260,6 @@
                                     update=":complaintDialogForm:topToolbar"
                                     listener="#{complianceManager.updateComplaint}" />
                         </p:calendar>
-
-                        <h:outputText value="Job number:" />                   
-                        <p:autoComplete id="jobNumber"                                           
-                                        maxResults="12"                                           
-                                        value="#{complianceManager.currentComplaint.jobNumber}"                                           
-                                        forceSelection="false"
-                                        completeMethod="#{complianceManager.completeJobNumber}">
-
-                            <p:ajax event="itemSelect"
-                                    listener="#{complianceManager.updateComplaint}"
-                                    update=":complaintDialogForm:topToolbar"
-                                    process="@this"/>
-
-                            <p:ajax event="keyup"
-                                    listener="#{complianceManager.updateComplaint}"
-                                    update=":complaintDialogForm:topToolbar"
-                                    process="@this"/>
-
-                        </p:autoComplete>
 
                         <h:outputText value="Complaint officer:"/>
                         <p:inputText maxlength="250"

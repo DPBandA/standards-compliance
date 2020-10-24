@@ -77,6 +77,25 @@ Email: info@dpbennett.com.jm
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
 
+                        <h:outputText value="Job number:" style="font-weight: bold" />                   
+                        <p:autoComplete value="#{complianceManager.currentFactoryInspection.jobNumber}" 
+                                        maxResults="12"
+                                        forceSelection="false"
+                                        validator="requiredFieldValidator"
+                                        completeMethod="#{complianceManager.completeJobNumber}">
+
+                            <p:ajax event="itemSelect"
+                                    update=":factoryInspectionDialogForm:topToolbar"
+                                    listener="#{complianceManager.updateFactoryInspection}"
+                                    process="@this"/>
+
+                            <p:ajax event="keyup"
+                                    update=":factoryInspectionDialogForm:topToolbar"
+                                    listener="#{complianceManager.updateFactoryInspection}"
+                                    process="@this"/>
+
+                        </p:autoComplete>
+
                         <h:outputText value="Manufacturer:"  style="font-weight: bold" />
                         <h:panelGroup>
                             <p:autoComplete id="manufacturer"      
