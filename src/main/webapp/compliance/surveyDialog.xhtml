@@ -750,11 +750,11 @@ Email: info@dpbennett.com.jm
                     </h:panelGrid>
                 </p:tab>
 
-                <p:tab title="Products">
+                <p:tab title="Product Inspections">
                     <p:commandButton value="Add"
-                                     title="Add new product"
+                                     title="Add new product inspection"
                                      actionListener="#{complianceManager.createNewProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
+                                      onstart="longProcessDialogVar.show();"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-plus"
                                      process="@this" >
@@ -820,7 +820,7 @@ Email: info@dpbennett.com.jm
                         </p:column>
                     </p:dataTable>
                     <p:commandButton value="Add"
-                                     title="Add new product"
+                                     title="Add new product inspection"
                                      actionListener="#{complianceManager.createNewProductInspection}"
                                      onstart="longProcessDialogVar.show();"
                                      oncomplete="longProcessDialogVar.hide();"

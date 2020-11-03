@@ -51,6 +51,16 @@
 
                     <p:tab title="Product detail">
                         <h:panelGrid columns="2" cellpadding="3" >
+                            
+                            <h:outputText value="Entry Document Number:" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.entryDocumentNumber}"     
+                                         id="entryDocumentNumber"                                            
+                                         size="20" >
+                                
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+                                
+                            </p:inputText>
 
                             <h:outputText value="Product:" 
                                           style="font-weight: bold;" /> 
