@@ -97,6 +97,13 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{marketProduct.name}" />
         </p:column>
+        
+        <p:column sortBy="#{marketProduct.brand}">
+            <f:facet name="header">
+                <h:outputText value="Brand"/>
+            </f:facet>
+            <h:outputText value="#{marketProduct.brand}" />
+        </p:column>
 
         <p:column sortBy="#{marketProduct.description}">
             <f:facet name="header">

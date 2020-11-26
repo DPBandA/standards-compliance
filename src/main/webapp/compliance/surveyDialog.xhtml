@@ -677,16 +677,19 @@ Email: info@dpbennett.com.jm
                         </p:autoComplete>   
 
                         <h:outputText value="Cost, Insurance &amp; Freight (CIF):" />
-                        <p:inputText id="cif"
+                        <p:inputText id="cif"                                     
+                                     converterMessage="Please enter a valid CIF"
                                      style="width: 100px"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.CIF}" >
 
-                            <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
+                            <f:convertNumber                                 
+                                minFractionDigits="2" 
+                                maxFractionDigits="2"/>
 
                             <p:ajax
                                 global="true"
                                 listener="#{complianceManager.updateSurvey}"  
-                                update=":ComplianceSurveyDialogForm:topToolbar"
+                                update="SCFAmountCalculated,:ComplianceSurveyDialogForm:topToolbar"
                                 process="@this" />
 
                         </p:inputText>        
@@ -694,6 +697,7 @@ Email: info@dpbennett.com.jm
                         <h:outputText value="SCF payable:" />
                         <p:inputText id="scf"
                                      style="width: 100px"
+                                     converterMessage="Please enter a valid SCF"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCF}" >
 
                             <f:convertNumber minFractionDigits="2" maxFractionDigits="2"/>
@@ -708,6 +712,7 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="SCF amount calculated:" />
                         <p:inputText id="SCFAmountCalculated"
+                                     converterMessage="Please enter a valid SCF"
                                      style="width: 100px"
                                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFAmountCalculated}" >
 
