@@ -38,7 +38,7 @@ Email: info@dpbennett.com.jm
         <ui:insert >   
             <ui:include src="../common/longProcessDialog.xhtml"/>
             <ui:include src="deleteProductInspectionDialog.xhtml"/>   
-            <ui:include src="saveAndCloseSurveyConfirmationDialog.xhtml"/> 
+            <ui:include src="saveSurveyConfirmationDialog.xhtml"/> 
         </ui:insert>
         <h:form id="ComplianceSurveyDialogForm">   
 
@@ -56,8 +56,7 @@ Email: info@dpbennett.com.jm
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
-                                     actionListener="#{complianceManager.closeComplianceSurvey}"
-                                     update="ComplianceSurveyDialogForm"                         
+                                     actionListener="#{complianceManager.closeComplianceSurvey}" 
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
@@ -1564,8 +1563,7 @@ Email: info@dpbennett.com.jm
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
-                                     actionListener="#{complianceManager.closeComplianceSurvey}"
-                                     update="ComplianceSurveyDialogForm"                         
+                                     actionListener="#{complianceManager.closeComplianceSurvey}" 
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>

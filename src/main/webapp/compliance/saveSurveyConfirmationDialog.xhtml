@@ -5,20 +5,20 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <h:form id="saveAndCloseSurveyConfirmationDialogForm"> 
+    <h:form id="saveSurveyConfirmationDialogForm"> 
         <p:confirmDialog severity="alert"
                          closable="false"
-                         message="Are you sure you wish to delete this product?"
+                         message="The current survey was edited. Do you wish to save it?"
                          header="Save Survey?"
-                         widgetVar="deleteProductDialog"
+                         widgetVar="saveSurveyConfirmationDialog"
                          width="400">
             <p:commandButton value="Yes"
-                             actionListener="#{complianceManager.saveComplianceSurvey}"
-                             update=":ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:complianceSurveyTabView:marketProductsTable"
-                             oncomplete="deleteProductDialog.hide();"
+                             actionListener="#{complianceManager.saveAndCloseComplianceSurvey}"
+                             update=":ComplianceSurveyDialogForm:topToolbar"
+                             oncomplete="saveSurveyConfirmationDialog.hide();"
                              icon="ui-icon-check"/>
             <p:commandButton value="No"
-                             oncomplete="deleteProductDialog.hide();"
+                             oncomplete="saveSurveyConfirmationDialog.hide();"
                              icon="ui-icon-cancel"/>
         </p:confirmDialog>
     </h:form>
