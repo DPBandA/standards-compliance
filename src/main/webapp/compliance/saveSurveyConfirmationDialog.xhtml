@@ -18,6 +18,7 @@
                              oncomplete="saveSurveyConfirmationDialog.hide();"
                              icon="ui-icon-check"/>
             <p:commandButton value="No"
+                             actionListener="#{complianceManager.closeDialog}"
                              oncomplete="saveSurveyConfirmationDialog.hide();"
                              icon="ui-icon-cancel"/>
         </p:confirmDialog>

@@ -414,6 +414,15 @@
                                     process="@this" />
                                 <f:selectItems value="#{complianceManager.productStatus}" />
                             </p:selectOneMenu>
+                            
+                            <h:outputText value="Enforcement action:" />
+                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.enforcementAction}" >
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateProductInspection}"
+                                    process="@this" />
+                                <f:selectItems value="#{complianceManager.enforcementActions}" />
+                            </p:selectOneMenu>
 
                             <h:outputText value="Comment:" />   
                             <p:inputTextarea
