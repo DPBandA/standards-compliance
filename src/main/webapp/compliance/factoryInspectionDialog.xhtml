@@ -38,6 +38,7 @@ Email: info@dpbennett.com.jm
             <ui:include src="factoryInspectionComponentDialog.xhtml"/>       
             <ui:include src="factoryInspectionComponentDeleteConfirmDialog.xhtml"/>   
             <ui:include src="deleteFactoryProductInspectionDialog.xhtml"/>  
+            <ui:include src="saveFactoryInspectionConfirmationDialog.xhtml"/>  
             <ui:include src="../common/longProcessDialog.xhtml"/>
         </ui:insert>
         <h:form id="factoryInspectionDialogForm">   
@@ -56,7 +57,7 @@ Email: info@dpbennett.com.jm
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
-                                     actionListener="#{complianceManager.closeDialog}"
+                                     actionListener="#{complianceManager.closeFactoryInspectionDialog}"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>
@@ -595,7 +596,7 @@ Email: info@dpbennett.com.jm
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
-                                     actionListener="#{complianceManager.closeDialog}"
+                                     actionListener="#{complianceManager.closeFactoryInspectionDialog}"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
                                      process="@this"/>

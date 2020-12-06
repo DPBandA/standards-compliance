@@ -18,6 +18,7 @@
         <ui:insert >   
             <ui:include src="../common/longProcessDialog.xhtml"/>
             <ui:include src="deleteComplaintProductInspectionDialog.xhtml"/>   
+            <ui:include src="saveComplaintConfirmationDialog.xhtml"/> 
         </ui:insert>
         <h:form id="complaintDialogForm">   
 
@@ -35,7 +36,7 @@
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
-                                     actionListener="#{complianceManager.closeDialog}"
+                                     actionListener="#{complianceManager.closeComplaintDialog}"
                                      update="complaint_growl,complaintDialogForm"                         
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
@@ -542,7 +543,7 @@
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Close"      
                                      onstart="longProcessDialogVar.show();"
-                                     actionListener="#{complianceManager.closeDialog}"
+                                     actionListener="#{complianceManager.closeComplaintDialog}"
                                      update="complaint_growl,complaintDialogForm"                         
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-close"
