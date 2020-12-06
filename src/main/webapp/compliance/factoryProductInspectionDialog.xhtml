@@ -108,7 +108,7 @@
 
                                 </p:menuButton>
                             </h:panelGroup>
-                            
+
                             <h:outputText value="Product Category:" 
                                           style="font-weight: bold;" />
                             <h:panelGroup>
@@ -311,6 +311,248 @@
                                 </p:selectBooleanCheckbox>
                             </h:panelGrid>
                         </h:panelGrid>
+                    </p:tab>
+
+                    <p:tab title="Checklist">
+                        <h:panelGrid columns="3" cellpadding="5">
+                            <h:outputText value="Country of Origin:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasCountryOfOrigin}">
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
+                            </p:selectBooleanCheckbox>
+
+                            <p:autoComplete value="#{complianceManager.currentProductInspection.countryOfOrigin}" 
+                                            forceSelection="true"  
+                                            maxlength="40"
+                                            dropdown="true"
+                                            scrollHeight="200" 
+                                            completeMethod="#{systemManager.completeCountry}" >       
+
+                                <p:ajax                               
+                                    listener="#{complianceManager.updateProductInspection}"
+                                    process="@this" />
+
+                            </p:autoComplete>
+
+                            <h:outputText value="Distributor:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasBusinessSource}">
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
+                            </p:selectBooleanCheckbox>   
+                            <h:panelGroup>
+                                <p:autoComplete id="distributor"      
+                                                var="distributor"
+                                                itemLabel="#{distributor.truncatedName}"
+                                                itemValue="#{distributor}"
+                                                size="35" 
+                                                maxlength="40"                             
+                                                dropdown="false"
+                                                scrollHeight="200" 
+                                                value="#{complianceManager.currentProductInspection.distributor}"    
+                                                converter="activeClientConverter"
+                                                forceSelection="true"
+                                                completeMethod="#{clientManager.completeActiveClient}" >
+
+                                    <p:ajax event="itemSelect"
+                                            update="distributorActionsMenu"
+                                            listener="#{complianceManager.updateProductInspection}"
+                                            process="@this"/>
+
+                                </p:autoComplete>  
+                                <p:menuButton id="distributorActionsMenu" 
+                                              icon="ui-icon-pencil" 
+                                              title="Add or edit distributor">
+                                    <p:menuitem value="Edit distributor"
+                                                id="editDistributor"
+                                                icon="ui-icon-pencil" 
+                                                disabled="${!complianceManager.isDistributorNameValid}"
+                                                onstart="PF('longProcessDialogVar').show();"   
+                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                actionListener="#{complianceManager.editDistributor}"  
+                                                process="@this,distributor"                             
+                                                title="View or edit this distributor's detail">  
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.distributorDialogReturn}"
+                                                update="distributor" />
+
+                                    </p:menuitem>
+
+                                    <p:menuitem
+                                        value="Add distributor"
+                                        icon="ui-icon-plus" 
+                                        onstart="PF('longProcessDialogVar').show();"    
+                                        oncomplete="PF('longProcessDialogVar').hide();"  
+                                        actionListener="#{complianceManager.createNewDistributor}"                                            
+                                        process="@this"
+                                        title="Add a new distributor">
+
+                                        <p:ajax event="dialogReturn" 
+                                                listener="#{complianceManager.distributorDialogReturn}"
+                                                update="distributor" />
+
+                                    </p:menuitem>
+                                </p:menuButton>                                
+                            </h:panelGroup> 
+
+                            <h:outputText value="Net Quantity Declaration in Metric:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasQuantityDescription}">
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
+                            </p:selectBooleanCheckbox>
+                            <p:inputText value="#{complianceManager.currentProductInspection.quantityDescription}"
+                                         style="font-weight: bold;width: 300px" >
+                                <p:ajax global="false"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+                            </p:inputText>
+
+                            <h:outputText value="Ingredient Listing:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasIngredients}">
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
+                            </p:selectBooleanCheckbox>
+                            <p:inputText value="#{complianceManager.currentProductInspection.ingredients}"
+                                         style="width: 300px"                                        
+                                         maxlength="1000">
+
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+
+                            </p:inputText>
+
+                            <h:outputText value="Instructions:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasInstructions}">
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
+                            </p:selectBooleanCheckbox>
+                            <p:inputText value="#{complianceManager.currentProductInspection.instructions}"
+                                         style="width: 300px"
+                                         maxlength="1000">
+
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+
+                            </p:inputText>
+
+                            <h:outputText value="Pictorial Representation:" />
+                            <p:selectBooleanCheckbox value="#{complianceManager.currentProductInspection.hasPictorialRepresentation}">
+                                <p:ajax listener="#{complianceManager.updateProductInspection}"/>
+                            </p:selectBooleanCheckbox>                            
+
+                        </h:panelGrid>
+
+                        <h:panelGrid columns="2" cellspacing="5">
+                            <h:outputText value="Batch code:" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.batchCode}"
+                                         style="font-weight: bold;" >
+
+                                <p:ajax  global="false"
+                                         listener="#{complianceManager.updateProductInspection}"
+                                         process="@this"/>
+
+                            </p:inputText>
+
+                            <h:outputText value="Date mark:" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.dateMark}"
+                                         style="font-weight: bold;" >
+
+                                <p:ajax global="false"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+
+                            </p:inputText>
+
+                            <h:outputText value="Precaution statement:"  />
+                            <p:inputTextarea
+                                id="precautionStatement"
+                                value="#{complianceManager.currentProductInspection.precautionStatement}"
+                                rows="2"
+                                counter="precautionStatementCharsRemaining"
+                                counterTemplate="{0} characters remaining."
+                                autoResize="false"
+                                maxlength="1000" 
+                                styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                                style="width: 500px;">
+
+                                <p:ajax event="change"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+
+                            </p:inputTextarea> 
+                            <h:outputText value="&nbsp;&nbsp;" />
+                            <h:outputText id="precautionStatementCharsRemaining" /> 
+
+                            <h:outputText value="Status:" />
+                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.status}" >
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateProductInspection}"
+                                    process="@this" />
+                                <f:selectItems value="#{complianceManager.productStatus}" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Enforcement action:" />
+                            <p:selectOneMenu value="#{complianceManager.currentProductInspection.enforcementAction}" >
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateProductInspection}"
+                                    process="@this" />
+                                <f:selectItems value="#{complianceManager.enforcementActions}" />
+                            </p:selectOneMenu>
+
+                            <h:outputText value="Comment:" />   
+                            <p:inputTextarea
+                                id="comments"
+                                value="#{complianceManager.currentProductInspection.comments}"
+                                rows="2"
+                                counter="commentsCharsRemaining"
+                                counterTemplate="{0} characters remaining."
+                                autoResize="false"
+                                maxlength="1000" 
+                                styleClass="#{not component.valid ? 'invalid-inputtextarea-field' : ''}" 
+                                style="width: 500px;">
+
+                                <p:ajax event="change"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+
+                            </p:inputTextarea> 
+                            <h:outputText value="&nbsp;&nbsp;" />
+                            <h:outputText id="commentsCharsRemaining" />
+
+                        </h:panelGrid>
+
+                        <ui:remove>
+                            <hr/>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Product image:" />
+                                <h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:inputText value="#{complianceManager.currentProductInspection.imageURL}"
+                                                     id="imageURL"
+                                                     readonly="true"
+                                                     style="font-weight: bold;width: 300px" >
+
+                                            <p:ajax global="false"
+                                                    listener="#{complianceManager.updateProductInspection}"
+                                                    process="@this"/>     
+
+                                        </p:inputText>
+
+                                        <p:commandButton id="downloadImageButton" value="Download" ajax="false" 
+                                                         onclick="longProcessDialogVar2.show();"   
+                                                         disabled="#{!complianceManager.marketProductImageIsValid}"
+                                                         icon="ui-icon-arrowthichk-s">  
+                                            <p:fileDownload value="#{complianceManager.getCurrentProductInspectionImageDownload}" />
+                                        </p:commandButton> 
+                                    </h:panelGrid>
+
+                                    <p:fileUpload listener="#{complianceManager.handleProductPhotoFileUpload}"                                                   
+                                                  onstart="longProcessDialogVar.show();"
+                                                  oncomplete="longProcessDialogVar.hide();"
+                                                  multiple="false"
+                                                  update="imageURL,downloadImageButton"
+                                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </ui:remove>
                     </p:tab>
                 </p:tabView>    
             </p:scrollPanel>
