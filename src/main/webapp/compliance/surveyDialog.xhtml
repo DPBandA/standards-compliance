@@ -864,6 +864,19 @@ Email: info@dpbennett.com.jm
                             <f:selectItems value="#{complianceManager.documentStamps}" />
 
                         </p:selectOneMenu>   
+                        
+                        <h:outputText value="Profile flag:"/>
+                        <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.profileFlagged}">
+
+                            <p:ajax
+                                global="true"
+                                listener="#{complianceManager.updateSurvey}"
+                                update=":ComplianceSurveyDialogForm:topToolbar"
+                                process="@this" />
+
+                            <f:selectItems value="#{complianceManager.profileFlags}" />
+
+                        </p:selectOneMenu>
 
                     </h:panelGrid>
                 </p:tab>
