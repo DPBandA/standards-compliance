@@ -367,7 +367,7 @@ Email: info@dpbennett.com.jm
                                     process="@this" />   
 
                         </p:autoComplete>   
-                        
+
                         <h:outputText value="Broker: " 
                                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                                       style="font-weight: bold" />
@@ -837,18 +837,20 @@ Email: info@dpbennett.com.jm
 
                         </p:inputText>      
 
-                        <h:outputText value="SCF free code:" />
-                        <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFFreeCode}" 
-                                     id="SCFFreeCode" 
-                                     style="width: 150px">
+                        <ui:remove>
+                            <h:outputText value="SCF free code:" />
+                            <p:inputText value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.SCFFreeCode}" 
+                                         id="SCFFreeCode" 
+                                         style="width: 150px">
 
-                            <p:ajax
-                                global="true"
-                                listener="#{complianceManager.updateSurvey}"
-                                update=":ComplianceSurveyDialogForm:topToolbar"
-                                process="@this" />
+                                <p:ajax
+                                    global="true"
+                                    listener="#{complianceManager.updateSurvey}"
+                                    update=":ComplianceSurveyDialogForm:topToolbar"
+                                    process="@this" />
 
-                        </p:inputText>    
+                            </p:inputText>    
+                        </ui:remove>
 
                         <h:outputText value="Document stamped:"/>
                         <p:selectOneMenu value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.documentStamped}">
@@ -870,7 +872,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Add"
                                      title="Add new product inspection"
                                      actionListener="#{complianceManager.createNewProductInspection}"
-                                      onstart="longProcessDialogVar.show();"
+                                     onstart="longProcessDialogVar.show();"
                                      oncomplete="longProcessDialogVar.hide();"
                                      icon="ui-icon-plus"
                                      process="@this" >

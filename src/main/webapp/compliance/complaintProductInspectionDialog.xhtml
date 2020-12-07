@@ -246,6 +246,26 @@
                                         listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
                             </p:inputText>   
+                            
+                            <h:outputText value="Coil No.:" 
+                                          rendered="#{complianceManager.renderCoilNumber}" /> 
+                            <p:inputText value="#{complianceManager.currentProductInspection.coilNumber}" 
+                                         rendered="#{complianceManager.renderCoilNumber}"
+                                         id="coilNumber" >
+                                <p:ajax global="false"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+                            </p:inputText>
+
+                            <h:outputText value="Heat No.:" 
+                                          rendered="#{complianceManager.renderHeatNumber}" />
+                            <p:inputText value="#{complianceManager.currentProductInspection.heatNumber}" 
+                                         rendered="#{complianceManager.renderHeatNumber}"
+                                         id="heatNumber" >
+                                <p:ajax global="false"
+                                        listener="#{complianceManager.updateProductInspection}"
+                                        process="@this"/>
+                            </p:inputText>
 
                         </h:panelGrid>
                     </p:tab>

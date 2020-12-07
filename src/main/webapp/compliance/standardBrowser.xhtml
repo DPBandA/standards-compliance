@@ -74,7 +74,6 @@ Email: info@dpbennett.com.jm
             </h:panelGroup>
         </p:toolbarGroup>
     </p:toolbar>
-
     <p:dataTable id="standardsTable"
                  var="standard"
                  style="margin-bottom: 1px;margin-top: 1px;"
@@ -137,6 +136,25 @@ Email: info@dpbennett.com.jm
             </p:commandButton>
         </p:column>
     </p:dataTable>
+    <p:toolbar>
+        <p:toolbarGroup align="left" >  
+           
+            <p:commandButton 
+                value="New"
+                icon="ui-icon-plus" 
+                onstart="PF('longProcessDialogVar').show();"
+                oncomplete="PF('longProcessDialogVar').hide();"
+                actionListener="#{complianceManager.createNewDocumentStandard}"                                            
+                process="@this"
+                title="Add a new standard to the standard database" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{complianceManager.doDocumentStandardSearch}"
+                        update=":mainTabViewForm:mainTabView:standardsTable"/>
+
+            </p:commandButton>            
+        </p:toolbarGroup>
+    </p:toolbar>
 
 </html>
 
