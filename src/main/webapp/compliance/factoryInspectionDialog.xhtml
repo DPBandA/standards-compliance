@@ -96,6 +96,28 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
 
                         </p:autoComplete>
+                        
+                        <h:outputText value="Business office: " style="font-weight: bold"/>       
+                        <p:autoComplete id="businessOffice"
+                                        size="35"
+                                        maxlength="40"
+                                        dropdown="true" 
+                                        readonly="false"
+                                        var="businessOffice"
+                                        value="#{complianceManager.currentFactoryInspection.businessOffice}"
+                                        itemLabel="#{businessOffice.name}"
+                                        itemValue="#{businessOffice}"
+                                        converter="businessOfficeConverter"
+                                        validator="businessEntityValidator"
+                                        forceSelection="true"
+                                        completeMethod="#{humanResourceManager.completeActiveBusinessOffice}" >
+
+                            <p:ajax event="itemSelect"
+                                    listener="#{complianceManager.updateFactoryInspection}" 
+                                    update=":factoryInspectionDialogForm:topToolbar"
+                                    process="@this" />   
+
+                        </p:autoComplete>
 
                         <h:outputText value="Manufacturer:"  style="font-weight: bold" />
                         <h:panelGroup>
