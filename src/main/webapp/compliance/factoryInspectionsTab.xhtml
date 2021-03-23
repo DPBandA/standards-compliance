@@ -73,6 +73,13 @@ Email: info@dpbennett.com.jm
         <f:facet name="header">
             <h:outputText value="Search Results (found: #{complianceManager.numFactoryInspectionsFound})" />
         </f:facet>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Business office"/>
+            </f:facet>
+            <h:outputText value="#{factoryInspection.businessOffice}" />
+        </p:column>
 
         <p:column sortBy="#{factoryInspection.manufacturer.name}">
             <f:facet name="header">

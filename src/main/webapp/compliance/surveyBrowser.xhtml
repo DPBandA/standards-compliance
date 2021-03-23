@@ -34,8 +34,9 @@ Email: info@dpbennett.com.jm
                  rows="15"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  value="#{complianceManager.complianceSurveys}">
+        
         <f:facet name="header">
-            <h:outputText value="Surveys" />
+            <h:outputText value="Search Results (found: #{complianceManager.numSurveysFound})" />
         </f:facet>
         
         <p:column>

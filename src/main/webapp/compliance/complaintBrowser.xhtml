@@ -34,9 +34,17 @@ Email: info@dpbennett.com.jm
                  rows="15"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  value="#{complianceManager.complaints}">
+        
         <f:facet name="header">
-            <h:outputText value="Complaints" />
+            <h:outputText value="Search Results (found: #{complianceManager.numComplaintsFound})" />
         </f:facet>
+        
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Business office"/>
+            </f:facet>
+            <h:outputText value="#{complaint.businessOffice}" />
+        </p:column>
 
         <p:column>
             <f:facet name="header">
