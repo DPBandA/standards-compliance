@@ -144,24 +144,62 @@ Email: info@dpbennett.com.jm
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
-                        <h:outputText value="Job number: " style="font-weight: bold" />                   
-                        <p:autoComplete value="#{complianceManager.currentComplianceSurvey.jobNumber}" 
-                                        maxResults="12"
-                                        forceSelection="false"
-                                        validator="requiredFieldValidator"
-                                        completeMethod="#{complianceManager.completeJobNumber}">
+                        <h:outputText value="Job number: " style="font-weight: bold" />   
+                        <h:panelGroup>
+                            <p:autoComplete value="#{complianceManager.currentComplianceSurvey.jobNumber}" 
+                                            id="jobNumber"
+                                            maxResults="12"
+                                            forceSelection="false"
+                                            validator="requiredFieldValidator"
+                                            completeMethod="#{complianceManager.completeJobNumber}">
 
-                            <p:ajax event="itemSelect"
-                                    update=":ComplianceSurveyDialogForm:topToolbar"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this"/>
+                                <p:ajax event="itemSelect"
+                                        update=":ComplianceSurveyDialogForm:topToolbar"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this"/>
 
-                            <p:ajax event="keyup"
-                                    update=":ComplianceSurveyDialogForm:topToolbar"
-                                    listener="#{complianceManager.updateSurvey}"
-                                    process="@this"/>
+                                <p:ajax event="keyup"
+                                        update=":ComplianceSurveyDialogForm:topToolbar"
+                                        listener="#{complianceManager.updateSurvey}"
+                                        process="@this"/>
 
-                        </p:autoComplete>
+                            </p:autoComplete>
+                            <p:menuButton id="jobActionsMenu" 
+                                          icon="ui-icon-pencil" 
+                                          title="Add or edit job">
+                                <p:menuitem value="Edit job"
+                                            id="editJob"
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.IsSavedJob}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editJob}"  
+                                            process="@this,jobNumber"                             
+                                            title="View or edit this job's detail">  
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.surveyJobDialogReturn}"
+                                            update="jobNumber" />
+
+                                </p:menuitem>
+
+                                <p:menuitem 
+                                    value="Add new client"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"                    
+                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    actionListener="#{complianceManager.createNewJobClient}"                                            
+                                    process="@this"
+                                    title="Add a new client to the client database">
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.clientDialogReturn}"
+                                            update="client,billingAddress,clientContact,clientActionsMenu,:jobDialogForm:jobDetailToolbar1" />
+
+                                </p:menuitem>
+                            </p:menuButton>
+                        </h:panelGroup>
 
                         <h:outputText value="Business office: " style="font-weight: bold"/>       
                         <p:autoComplete id="businessOffice"
