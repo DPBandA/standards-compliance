@@ -154,7 +154,7 @@ Email: info@dpbennett.com.jm
                                             completeMethod="#{complianceManager.completeJobNumber}">
 
                                 <p:ajax event="itemSelect"
-                                        update=":ComplianceSurveyDialogForm:topToolbar"
+                                        update="jobActionsMenu,:ComplianceSurveyDialogForm:topToolbar"
                                         listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
 
@@ -168,9 +168,9 @@ Email: info@dpbennett.com.jm
                                           icon="ui-icon-pencil" 
                                           title="Add or edit job">
                                 <p:menuitem value="Edit job"
-                                            id="editJob"
+                                            id="editSurveyJob"
                                             icon="ui-icon-pencil" 
-                                            disabled="${!complianceManager.isSavedJob}"
+                                            disabled="${!complianceManager.currentComplianceSurvey.isJobNumberValid}"
                                             onstart="PF('longProcessDialogVar').show();"   
                                             oncomplete="PF('longProcessDialogVar').hide();"                                  
                                             actionListener="#{complianceManager.editJob}"  
@@ -185,6 +185,7 @@ Email: info@dpbennett.com.jm
 
                                 <p:menuitem 
                                     value="Add new job"
+                                    id="createNewSurveyJob"
                                     icon="ui-icon-plus" 
                                     onstart="PF('longProcessDialogVar').show();"    
                                     oncomplete="PF('longProcessDialogVar').hide();"  

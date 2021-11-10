@@ -236,6 +236,7 @@ Email: info@dpbennett.com.jm
 
         <h:outputText value="Department: " style="font-weight: bold" />
         <p:autoComplete id="department" 
+                        disabled="#{complianceManager.disableJobDialogField('department')}"
                         var="department"
                         forceSelection="true"      
                         dropdown="true"
