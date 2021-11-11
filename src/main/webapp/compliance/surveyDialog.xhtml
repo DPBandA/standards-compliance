@@ -178,8 +178,8 @@ Email: info@dpbennett.com.jm
                                             title="View or edit this job's detail">  
 
                                     <p:ajax event="dialogReturn" 
-                                            listener="#{complianceManager.surveyJobDialogReturn}"
-                                            update="jobNumber" />
+                                            listener="#{complianceManager.jobDialogReturn}"
+                                            update="jobNumber,:ComplianceSurveyDialogForm:topToolbar" />
 
                                 </p:menuitem>
 
@@ -195,7 +195,7 @@ Email: info@dpbennett.com.jm
 
                                     <p:ajax event="dialogReturn" 
                                             listener="#{complianceManager.surveyJobDialogReturn}"
-                                            update="jobNumber" />
+                                            update="jobNumber,:ComplianceSurveyDialogForm:topToolbar" />
 
                                 </p:menuitem>
                             </p:menuButton>
