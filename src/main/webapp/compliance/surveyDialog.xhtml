@@ -159,7 +159,7 @@ Email: info@dpbennett.com.jm
                                         process="@this"/>
 
                                 <p:ajax event="keyup"
-                                        update=":ComplianceSurveyDialogForm:topToolbar"
+                                        update="jobActionsMenu,:ComplianceSurveyDialogForm:topToolbar"
                                         listener="#{complianceManager.updateSurvey}"
                                         process="@this"/>
 
@@ -194,7 +194,7 @@ Email: info@dpbennett.com.jm
                                     title="Add a new job">
 
                                     <p:ajax event="dialogReturn" 
-                                            listener="#{complianceManager.surveyJobDialogReturn}"
+                                            listener="#{complianceManager.jobDialogReturn}"
                                             update="jobNumber,:ComplianceSurveyDialogForm:topToolbar" />
 
                                 </p:menuitem>

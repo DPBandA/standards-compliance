@@ -25,7 +25,7 @@ Email: info@dpbennett.com.jm
       xmlns:f="http://java.sun.com/jsf/core"> 
 
     <ui:include src="complaintToolbar.xhtml"/>
-    
+
     <p:dataTable id="complaintsTable"
                  var="complaint"
                  paginator="true"
@@ -34,11 +34,18 @@ Email: info@dpbennett.com.jm
                  rows="15"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  value="#{complianceManager.complaints}">
-        
+
         <f:facet name="header">
             <h:outputText value="Search Results (found: #{complianceManager.numComplaintsFound})" />
         </f:facet>
-        
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Job number"/>
+            </f:facet>
+            <h:outputText value="#{complaint.jobNumber}" />
+        </p:column>
+
         <p:column>
             <f:facet name="header">
                 <h:outputText value="Business office"/>
@@ -52,7 +59,7 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{complaint.complaint}" />
         </p:column>
-        
+
         <p:column>
             <f:facet name="header">
                 <h:outputText value="Date of received"/>
@@ -83,18 +90,18 @@ Email: info@dpbennett.com.jm
                              actionListener="#{complianceManager.editComplaint}"                             
                              global="true"
                              icon="ui-icon-pencil">
-                
+
                 <f:setPropertyActionListener value="#{complaint}"
                                              target="#{complianceManager.currentComplaint}" />
-                
+
                 <p:ajax event="dialogReturn" 
                         update=":mainTabViewForm:mainTabView"
                         listener="#{complianceManager.complaintDialogReturn}" />
-                
+
             </p:commandButton>
         </p:column>
     </p:dataTable>
-   
+
 
 </html>
 

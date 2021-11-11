@@ -76,6 +76,13 @@ Email: info@dpbennett.com.jm
         
         <p:column>
             <f:facet name="header">
+                <h:outputText value="Job number"/>
+            </f:facet>
+            <h:outputText value="#{factoryInspection.jobNumber}" />
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
                 <h:outputText value="Business office"/>
             </f:facet>
             <h:outputText value="#{factoryInspection.businessOffice}" />

@@ -78,25 +78,63 @@ Email: info@dpbennett.com.jm
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
 
-                        <h:outputText value="Job number:" style="font-weight: bold" />                   
-                        <p:autoComplete value="#{complianceManager.currentFactoryInspection.jobNumber}" 
-                                        maxResults="12"
-                                        forceSelection="false"
-                                        validator="requiredFieldValidator"
-                                        completeMethod="#{complianceManager.completeJobNumber}">
+                        <h:outputText value="Job number:" style="font-weight: bold" />     
+                        <h:panelGroup>
+                            <p:autoComplete value="#{complianceManager.currentFactoryInspection.jobNumber}" 
+                                            id="jobNumber"
+                                            maxResults="12"
+                                            forceSelection="false"
+                                            validator="requiredFieldValidator"
+                                            completeMethod="#{complianceManager.completeJobNumber}">
 
-                            <p:ajax event="itemSelect"
-                                    update=":factoryInspectionDialogForm:topToolbar"
-                                    listener="#{complianceManager.updateFactoryInspection}"
-                                    process="@this"/>
+                                <p:ajax event="itemSelect"
+                                        update=":factoryInspectionDialogForm:topToolbar"
+                                        listener="#{complianceManager.updateFactoryInspection}"
+                                        process="@this"/>
 
-                            <p:ajax event="keyup"
-                                    update=":factoryInspectionDialogForm:topToolbar"
-                                    listener="#{complianceManager.updateFactoryInspection}"
-                                    process="@this"/>
+                                <p:ajax event="keyup"
+                                        update=":factoryInspectionDialogForm:topToolbar"
+                                        listener="#{complianceManager.updateFactoryInspection}"
+                                        process="@this"/>
 
-                        </p:autoComplete>
-                        
+                            </p:autoComplete>
+                            <p:menuButton id="jobActionsMenu" 
+                                          icon="ui-icon-pencil" 
+                                          title="Add or edit job">
+                                <p:menuitem value="Edit job"
+                                            id="editFactoryInspectionJob"
+                                            icon="ui-icon-pencil" 
+                                            disabled="${!complianceManager.currentFactoryInspection.isJobNumberValid}"
+                                            onstart="PF('longProcessDialogVar').show();"   
+                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            actionListener="#{complianceManager.editJob}"  
+                                            process="@this,jobNumber"                             
+                                            title="View or edit this job's detail">  
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.jobDialogReturn}"
+                                            update="jobNumber,:factoryInspectionDialogForm:topToolbar" />
+
+                                </p:menuitem>
+
+                                <p:menuitem 
+                                    value="Add new job"
+                                    id="createNewFactoryInspectionJob"
+                                    icon="ui-icon-plus" 
+                                    onstart="PF('longProcessDialogVar').show();"    
+                                    oncomplete="PF('longProcessDialogVar').hide();"  
+                                    actionListener="#{complianceManager.createNewJob}"                                            
+                                    process="@this"
+                                    title="Add a new job">
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.jobDialogReturn}"
+                                            update="jobNumber,:factoryInspectionDialogForm:topToolbar" />
+
+                                </p:menuitem>
+                            </p:menuButton>
+                        </h:panelGroup>
+
                         <h:outputText value="Business office: " style="font-weight: bold"/>       
                         <p:autoComplete id="businessOffice"
                                         size="35"
