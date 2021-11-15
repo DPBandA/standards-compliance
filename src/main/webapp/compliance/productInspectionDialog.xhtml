@@ -316,28 +316,42 @@
                             </p:inputText>
 
                             <h:outputText value="No. of Products per Group Package:" />                       
-                            <p:spinner  value="#{complianceManager.currentProductInspection.numProductsPerGroupPackage}" 
-                                        stepFactor="1"
-                                        min="0">
+                            <p:inputText  value="#{complianceManager.currentProductInspection.numProductsPerGroupPackage}"
+                                          converterMessage="Please enter a valid quantity"
+                                          styleClass="number-field" >
+                               
                                 <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
-                            </p:spinner>  
+                                
+                                <f:convertNumber integerOnly="true"/>
+                                
+                            </p:inputText>  
 
-                            <h:outputText value="Product Quantity:" /> 
-                            <p:spinner  value="#{complianceManager.currentProductInspection.quantity}" 
-                                        stepFactor="1"
-                                        min="0">
+                            <h:outputText value="Product Quantity:"  style="font-weight: bold;" /> 
+                            <p:inputText  value="#{complianceManager.currentProductInspection.quantity}" 
+                                          converterMessage="Please enter a valid product quantity"
+                                          styleClass="number-field"
+                                          validator="requiredFieldValidator">
+                                
                                 <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/> 
-                            </p:spinner>  
+                                
+                                <f:convertNumber integerOnly="true"/>
+                                
+                            </p:inputText>  
 
-                            <h:outputText value="Sample Quantity:" />                       
-                            <p:spinner  value="#{complianceManager.currentProductInspection.numProductsSampled}" 
-                                        stepFactor="1"
-                                        min="0">
+                            <h:outputText value="Sample Quantity:"  style="font-weight: bold;" />                       
+                            <p:inputText  value="#{complianceManager.currentProductInspection.numProductsSampled}"
+                                          converterMessage="Please enter a valid sample quantity"
+                                          styleClass="number-field"
+                                          validator="requiredFieldValidator" >
+                                
                                 <p:ajax listener="#{complianceManager.updateProductInspection}"
                                         process="@this"/>
-                            </p:spinner>  
+                                
+                                <f:convertNumber integerOnly="true"/>
+                                
+                            </p:inputText>  
 
                             <h:outputText value="Sampled for:" />
                             <h:panelGrid columns="2">
