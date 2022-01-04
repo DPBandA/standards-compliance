@@ -1,2 +1,7 @@
-# Standards Compliance
-An enterprise web application for standards compliance.
+# Standards Compliance (Compliance Connect)
+
+[![Current Release](https://img.shields.io/badge/release-latest-green.svg)](https://github.com/DPBandA/standards-compliance/releases/latest)
+[![GitHub Issues](https://img.shields.io/github/issues/dpbanda/standards-compliance.svg)](https://github.com/dpbanda/standards-compliance/issues)
+[![Wiki](https://img.shields.io/badge/documentation-wiki-green.svg)](https://github.com/DPBandA/standards-compliance/wiki)
+
+Standards Compliance (Compliance Connect) is an enterprise software that faciliates the regulatory activites related to standards.
