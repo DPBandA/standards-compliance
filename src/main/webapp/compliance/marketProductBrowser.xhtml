@@ -30,16 +30,14 @@ Email: info@dpbennett.com.jm
 
             <p:commandButton 
                 value="New"
-                icon="ui-icon-plus" 
-                onstart="PF('longProcessDialogVar').show();"
-                oncomplete="PF('longProcessDialogVar').hide();"
+                icon="pi pi-plus" 
                 actionListener="#{complianceManager.createNewMarketProduct}"                                            
                 process="@this"
                 title="Add a new product" >
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doMarketProductSearch}"
-                        update=":mainTabViewForm:mainTabView:marketProductsTable"/>
+                        update=":appForm:mainTabView:marketProductsTable"/>
 
             </p:commandButton>
             <p:spacer width="20" />
@@ -50,7 +48,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="keyup"                            
                         global="false"
-                        update=":mainTabViewForm:mainTabView:marketProductsTable"
+                        update=":appForm:mainTabView:marketProductsTable"
                         listener="#{complianceManager.doMarketProductSearch}"
                         process="@this"/>
 
@@ -63,7 +61,7 @@ Email: info@dpbennett.com.jm
                 <p:selectBooleanCheckbox style="vertical-align: middle"
                                          id="isActiveMarketProductsOnly"
                                          value="#{complianceManager.isActiveMarketProductsOnly}" >
-                    <p:ajax  update=":mainTabViewForm:mainTabView:marketProductsTable"
+                    <p:ajax  update=":appForm:mainTabView:marketProductsTable"
                              listener="#{complianceManager.doMarketProductSearch}"
                              event="change"                                      
                              process="@this"/>
@@ -127,9 +125,7 @@ Email: info@dpbennett.com.jm
         </p:column>
 
         <p:column style="width:32px">
-            <p:commandButton icon="ui-icon-pencil"
-                             onstart="PF('longProcessDialogVar').show();"                               
-                             oncomplete="PF('longProcessDialogVar').hide();"
+            <p:commandButton icon="pi pi-pencil"
                              actionListener="#{complianceManager.editCurrentMarketProduct}"
                              process="@this"
                              title="View or edit this market product's detail">
@@ -139,7 +135,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doMarketProductSearch}"
-                        update=":mainTabViewForm:mainTabView:marketProductsTable"/>
+                        update=":appForm:mainTabView:marketProductsTable"/>
 
             </p:commandButton>
         </p:column>
@@ -150,16 +146,14 @@ Email: info@dpbennett.com.jm
 
             <p:commandButton 
                 value="New"
-                icon="ui-icon-plus" 
-                onstart="PF('longProcessDialogVar').show();"
-                oncomplete="PF('longProcessDialogVar').hide();"
+                icon="pi pi-plus" 
                 actionListener="#{complianceManager.createNewMarketProduct}"                                            
                 process="@this"
                 title="Add a new product" >
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doMarketProductSearch}"
-                        update=":mainTabViewForm:mainTabView:marketProductsTable"/>
+                        update=":appForm:mainTabView:marketProductsTable"/>
 
             </p:commandButton>
             

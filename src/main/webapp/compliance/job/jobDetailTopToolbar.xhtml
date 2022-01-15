@@ -26,13 +26,10 @@ Email: info@dpbennett.com.jm
     <p:toolbar id="jobDetailToolbar1">
         <p:toolbarGroup align="left" >  
             <p:commandButton actionListener="#{complianceManager.saveCurrentJob}"                            
-                             onstart="PF('longProcessDialogVar').show();"
-                             oncomplete="PF('longProcessDialogVar').hide();"
-                             onerror="PF('connectionErrorDialog').show();"
                              value="Save"
                              update=":jobDialogForm"
                              title="Save current job"
-                             icon="ui-icon-disk"
+                             icon="pi pi-save"
                              process="@form" >
 
                 <p:ajax update=":jobDialogForm" resetValues="true" />
@@ -43,11 +40,9 @@ Email: info@dpbennett.com.jm
 
             <p:commandButton value="Close"     
                              actionListener="#{complianceManager.prepareToCloseJobDetail}"
-                             onstart="PF('longProcessDialogVar').show();"
-                             oncomplete="PF('longProcessDialogVar').hide();" 
                              immediate="true"                             
                              process="@this"
-                             icon="ui-icon ui-icon-close" />            
+                             icon="pi pi-times" />            
 
             <p:spacer width="10" />
 

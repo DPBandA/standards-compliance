@@ -31,34 +31,31 @@ Email: info@dpbennett.com.jm
         <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
         <meta http-equiv="pragma" content="no-cache" />
         <title>Market Product</title>
-        <link rel="stylesheet" href="../css/main.css" /> 
+        <link rel="stylesheet" href="../css/main.css" />         
+        <script type="text/javascript" src="../../js/javascripts.js"/>
     </h:head>
     <h:body>  
-        <ui:include src="../common/longProcessDialog.xhtml"/>  
+                
         <ui:include src="../common/commonDialogs.xhtml"/>  
+        
         <h:form id="marketProductForm" >
             <p:growl id="market_product_growl" life="5000" showDetail="true"/>
 
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Ok"
-                                     onstart="PF('longProcessDialogVar').show();"
                                      actionListener="#{complianceManager.okMarketProduct}"
-                                     oncomplete="PF('longProcessDialogVar').hide();"
                                      update="market_product_growl"                             
-                                     icon="ui-icon-check"/>
+                                     icon="pi pi-check"/>
                     <p:spacer width="10"/>
                     <p:commandButton value="Cancel"
                                      immediate="true" 
-                                     onstart="PF('longProcessDialogVar').show();"
                                      actionListener="#{complianceManager.cancelMarketProductEdit}"
-                                     oncomplete="PF('longProcessDialogVar').hide();"
-                                     icon="ui-icon ui-icon-close" />
+                                     icon="pi pi-times" />
                 </p:toolbarGroup>
             </p:toolbar>
             
             <p:tabView id="marketProductFormTabView"
-                       onTabShow="PF('longProcessDialogVar').hide();"
                        dynamic="true"
                        style="margin-top: 1px;margin-bottom: 1px;"
                        widgetVar="marketProductFormTabVar" >
@@ -70,18 +67,14 @@ Email: info@dpbennett.com.jm
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:commandButton value="Ok"
-                                     onstart="PF('longProcessDialogVar').show();"
                                      actionListener="#{complianceManager.okMarketProduct}"
-                                     oncomplete="PF('longProcessDialogVar').hide();"
                                      update="market_product_growl"                             
-                                     icon="ui-icon-check"/>
+                                     icon="pi pi-check"/>
                     <p:spacer width="10"/>
                     <p:commandButton value="Cancel"
                                      immediate="true" 
-                                     onstart="PF('longProcessDialogVar').show();"
                                      actionListener="#{complianceManager.cancelMarketProductEdit}"
-                                     oncomplete="PF('longProcessDialogVar').hide();"
-                                     icon="ui-icon ui-icon-close" />
+                                     icon="pi pi-times" />
                 </p:toolbarGroup>
             </p:toolbar>
         </h:form>     

@@ -27,91 +27,79 @@ Email: info@dpbennett.com.jm
             <p:menuButton value="New">   
                 <p:menuitem
                     actionListener="#{complianceManager.createNewComplianceSurvey}"
-                    onstart="PF('longProcessDialogVar').show();"                 
-                    oncomplete="PF('longProcessDialogVar').hide();"
                     value="Survey"       
-                    update="headerForm:growl3"
+                    update=":appForm:growl3"
                     title="Add a new survey"
-                    icon="ui-icon-plus"
+                    icon="pi pi-plus"
                     process="@this" >
 
                     <p:ajax event="dialogReturn" 
-                            update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+                            update=":appForm:mainTabView,:appForm:growl3" />
 
                 </p:menuitem>
                 <p:separator />
                 <p:menuitem
                     actionListener="#{complianceManager.createNewDocumentStandard}"
-                    onstart="PF('longProcessDialogVar').show();"                 
-                    oncomplete="PF('longProcessDialogVar').hide();"
                     value="Standard"       
-                    update="headerForm:growl3"
+                    update="appForm:growl3"
                     title="Add a new standard"
-                    icon="ui-icon-plus"
+                    icon="pi pi-plus"
                     process="@this" >
 
                     <p:ajax event="dialogReturn" 
-                            update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+                            update=":appForm:mainTabView,:appForm:growl3" />
 
                 </p:menuitem>
                 <p:separator />
                 <p:menuitem
                     actionListener="#{complianceManager.createNewComplaint}"
-                    onstart="PF('longProcessDialogVar').show();"                 
-                    oncomplete="PF('longProcessDialogVar').hide();"
                     value="Complaint"       
-                    update="headerForm:growl3"
+                    update="appForm:growl3"
                     title="Add a new complaint"
-                    icon="ui-icon-plus"
+                    icon="pi pi-plus"
                     process="@this" >
 
                     <p:ajax event="dialogReturn" 
-                            update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+                            update=":appForm:mainTabView,:appForm:growl3" />
 
                 </p:menuitem>
                 <p:separator />
                 <p:menuitem
                     actionListener="#{complianceManager.createNewMarketProduct}"
-                    onstart="PF('longProcessDialogVar').show();"                 
-                    oncomplete="PF('longProcessDialogVar').hide();"
                     value="Market Product"       
-                    update="headerForm:growl3"
+                    update="appForm:growl3"
                     title="Add a new market product"
-                    icon="ui-icon-plus"
+                    icon="pi pi-plus"
                     process="@this" >
 
                     <p:ajax event="dialogReturn" 
-                            update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+                            update=":appForm:mainTabView,:appForm:growl3" />
 
                 </p:menuitem>
                 <p:separator />
                 <p:menuitem
                     actionListener="#{humanResourceManager.createNewManufacturer}"
-                    onstart="PF('longProcessDialogVar').show();"                 
-                    oncomplete="PF('longProcessDialogVar').hide();"
                     value="Manufacturer"       
-                    update="headerForm:growl3"
+                    update="appForm:growl3"
                     title="Add a new manufacturer"
-                    icon="ui-icon-plus"
+                    icon="pi pi-plus"
                     process="@this" >
 
                     <p:ajax event="dialogReturn" 
-                            update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+                            update=":appForm:mainTabView,:appForm:growl3" />
 
                 </p:menuitem>
                 <p:separator />
                 <p:menuitem
                     actionListener="#{complianceManager.createNewFactoryInspection}"
-                    onstart="PF('longProcessDialogVar').show();"                 
-                    oncomplete="PF('longProcessDialogVar').hide();"
                     value="Factory Inspection"       
-                    update="headerForm:growl3"
+                    update="appForm:growl3"
                     title="Add a new factory inspection"
-                    icon="ui-icon-plus"
+                    icon="pi pi-plus"
                     process="@this" >
 
                     <p:ajax event="dialogReturn" 
-                            update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
+                            update=":appForm:mainTabView,:appForm:growl3" />
 
                 </p:menuitem>
 
@@ -121,39 +109,27 @@ Email: info@dpbennett.com.jm
         <p:toolbarGroup align="right">
             <p:menuButton value="Tools" >  
                 <p:menuitem value="Surveys"
-                            onstart="PF('longProcessDialogVar').show();" 
-                            oncomplete="PF('longProcessDialogVar').hide();"
                             actionListener="#{complianceManager.openSurveysBrowser}"   
                             process="@this"/>                   
                 <p:separator />
-                <p:menuitem value="Standards"
-                            onstart="PF('longProcessDialogVar').show();"  
+                <p:menuitem value="Standards" 
                             actionListener="#{complianceManager.openStandardsBrowser}"
-                            oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
                 <p:separator />
-                <p:menuitem value="Complaints"
-                            onstart="PF('longProcessDialogVar').show();"  
+                <p:menuitem value="Complaints"  
                             actionListener="#{complianceManager.openComplaintsBrowser}"
-                            oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
                 <p:separator />
-                <p:menuitem value="Market Products"
-                            onstart="PF('longProcessDialogVar').show();"  
+                <p:menuitem value="Market Products"  
                             actionListener="#{complianceManager.openMarketProductBrowser}"
-                            oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
                 <p:separator />
-                <p:menuitem value="Manufacturers"
-                            onstart="PF('longProcessDialogVar').show();"  
+                <p:menuitem value="Manufacturers"  
                             actionListener="#{complianceManager.openManufacturerBrowser}"
-                            oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
                 <p:separator />
-                <p:menuitem value="Factory Inspections"
-                            onstart="PF('longProcessDialogVar').show();"  
+                <p:menuitem value="Factory Inspections"  
                             actionListener="#{complianceManager.openFactoryInspectionBrowser}"
-                            oncomplete="PF('longProcessDialogVar').hide();"
                             process="@this"/>
 
             </p:menuButton>         

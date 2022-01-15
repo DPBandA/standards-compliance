@@ -1,5 +1,5 @@
 <!--
-Job Management & Tracking System (JMTS) 
+Standards Compliance (SC) 
 Copyright (C) 2020  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
@@ -29,16 +29,14 @@ Email: info@dpbennett.com.jm
         <p:toolbarGroup align="left" >               
             <p:commandButton 
                 value="New"
-                icon="ui-icon-plus" 
-                onstart="PF('longProcessDialogVar').show();"
-                oncomplete="PF('longProcessDialogVar').hide();"
+                icon="pi pi-plus" 
                 actionListener="#{humanResourceManager.createNewManufacturer}"                                            
                 process="@this"
                 title="Add a new manufacturer to the manufacturer database" >
 
                 <p:ajax event="dialogReturn" 
                         listener="#{humanResourceManager.doManufacturerSearch}"
-                        update=":mainTabViewForm:mainTabView:manufacturersTable2"/>
+                        update=":appForm:mainTabView:manufacturersTable2"/>
 
             </p:commandButton>
             <p:spacer width="20" />
@@ -49,7 +47,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="keyup"                            
                         global="false"
-                        update=":mainTabViewForm:mainTabView:manufacturersTable2"
+                        update=":appForm:mainTabView:manufacturersTable2"
                         listener="#{humanResourceManager.doManufacturerSearch}"
                         process="@this"/>
 
@@ -62,7 +60,7 @@ Email: info@dpbennett.com.jm
                 <p:selectBooleanCheckbox style="vertical-align: middle"
                                          id="activeManufacturersOnly"
                                          value="#{humanResourceManager.isActiveManufacturersOnly}" >
-                    <p:ajax  update=":mainTabViewForm:mainTabView:manufacturersTable2"
+                    <p:ajax  update=":appForm:mainTabView:manufacturersTable2"
                              listener="#{humanResourceManager.doManufacturerSearch}"
                              event="change"                                      
                              process="@this"/>
@@ -135,9 +133,7 @@ Email: info@dpbennett.com.jm
         </p:column>
 
         <p:column style="width:32px">
-            <p:commandButton icon="ui-icon-pencil"
-                             onstart="PF('longProcessDialogVar').show();"                               
-                             oncomplete="PF('longProcessDialogVar').hide();"
+            <p:commandButton icon="pi pi-pencil"
                              actionListener="#{humanResourceManager.editSelectedManufacturer}"
                              process="@this"
                              title="View or edit this manufacturer's detail">
@@ -146,7 +142,7 @@ Email: info@dpbennett.com.jm
                                              target="#{humanResourceManager.selectedManufacturer}" />
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView:manufacturersTable2"/>
+                        update=":appForm:mainTabView:manufacturersTable2"/>
 
             </p:commandButton>
         </p:column>
@@ -156,15 +152,13 @@ Email: info@dpbennett.com.jm
         <p:toolbarGroup align="left" >             
             <p:commandButton 
                 value="New"
-                icon="ui-icon-plus" 
-                onstart="PF('longProcessDialogVar').show();"
-                oncomplete="PF('longProcessDialogVar').hide();"
+                icon="pi pi-plus" 
                 actionListener="#{humanResourceManager.createNewManufacturer}"                                            
                 process="@this"
                 title="Add a new manufacturer to the manufacturer database" >
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView:manufacturersTable2"/>
+                        update=":appForm:mainTabView:manufacturersTable2"/>
 
             </p:commandButton>
 

@@ -29,16 +29,14 @@ Email: info@dpbennett.com.jm
         <p:toolbarGroup align="left" >               
             <p:commandButton 
                 value="New"
-                icon="ui-icon-plus" 
-                onstart="PF('longProcessDialogVar').show();"
-                oncomplete="PF('longProcessDialogVar').hide();"
+                icon="pi pi-plus" 
                 actionListener="#{complianceManager.createNewFactoryInspection}"                                            
                 process="@this"
                 title="Add a new factory inspection" >
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doFactoryInspectionSearch}"
-                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
+                        update=":appForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
             <p:spacer width="20" />
@@ -49,7 +47,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="keyup"                            
                         global="false"
-                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"
+                        update=":appForm:mainTabView:factoryInspectionsTable"
                         listener="#{complianceManager.doFactoryInspectionSearch}"
                         process="@this"/>
 
@@ -119,9 +117,7 @@ Email: info@dpbennett.com.jm
         </p:column>
 
         <p:column style="width:32px">
-            <p:commandButton icon="ui-icon-pencil"
-                             onstart="PF('longProcessDialogVar').show();"                               
-                             oncomplete="PF('longProcessDialogVar').hide();"
+            <p:commandButton icon="pi pi-pencil"
                              actionListener="#{complianceManager.editCurrentFactoryInspection}"
                              process="@this"
                              title="View or edit this factory inspection's detail">
@@ -131,7 +127,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.factoryInspectionDialogReturn}"
-                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
+                        update=":appForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
         </p:column>
@@ -141,16 +137,14 @@ Email: info@dpbennett.com.jm
         <p:toolbarGroup align="left" >             
             <p:commandButton 
                 value="New"
-                icon="ui-icon-plus" 
-                onstart="PF('longProcessDialogVar').show();"
-                oncomplete="PF('longProcessDialogVar').hide();"
+                icon="pi pi-plus" 
                 actionListener="#{complianceManager.createNewFactoryInspection}"                                            
                 process="@this"
                 title="Add a new factory inspection" >
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doFactoryInspectionSearch}"
-                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
+                        update=":appForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
 

@@ -1,3 +1,22 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2020  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -14,10 +33,11 @@
         <meta http-equiv="pragma" content="no-cache" />
         <title>Product Inspection</title>
         <link rel="stylesheet" href="../css/main.css" /> 
+        <script type="text/javascript" src="../../js/javascripts.js"/>
     </h:head>
     <h:body >  
         <ui:insert >   
-            <ui:include src="../common/longProcessDialog.xhtml"/>           
+            <ui:include src="../common/commonDialogs.xhtml"/>           
         </ui:insert>
         <h:form id="productDialogForm">   
             <p:growl id="product_inspection_growl" life="5000" showDetail="true"/>
@@ -27,17 +47,13 @@
                     <p:commandButton value="Ok"
                                      actionListener="#{complianceManager.okComplaintProductInspection}"
                                      update=":productDialogForm"
-                                     onstart="longProcessDialogVar.show();"                                     
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon ui-icon-check"
+                                     icon="pi pi-check"
                                      process="@form" />
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Cancel"
-                                     actionListener="#{complianceManager.cancelProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"      
+                                     actionListener="#{complianceManager.cancelProductInspection}"     
                                      process="@this"
-                                     icon="ui-icon ui-icon-close"/>
+                                     icon="pi pi-times"/>
                 </p:toolbarGroup>
             </p:toolbar>    
             <p:scrollPanel style="height: 625px;">
@@ -45,9 +61,7 @@
                            dynamic="false"
                            widgetVar="productDialogTabViewVar">
 
-                    <p:ajax event="tabChange"    
-                            onstart="longProcessDialogVar.show();"
-                            oncomplete="longProcessDialogVar.hide();"/>
+                    <p:ajax event="tabChange" />
 
                     <p:tab title="Product detail">
                         <h:panelGrid columns="2" cellpadding="3" >
@@ -75,15 +89,13 @@
 
                                 </p:autoComplete>                                
                                 <p:spacer height="0" width="4"/>
-                                <p:menuButton icon="ui-icon-pencil" 
+                                <p:menuButton icon="pi pi-pencil" 
                                               id="complaintMarketProductMenuButton"
                                               title="Add or edit product">
 
                                     <p:menuitem value="Edit product"
-                                                icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isMarketProductNameValid}"
-                                                onstart="PF('longProcessDialogVar').show();"   
-                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                icon="pi pi-pencil" 
+                                                disabled="${!complianceManager.isMarketProductNameValid}"                                 
                                                 actionListener="#{complianceManager.editMarketProduct}"  
                                                 process="@this"                             
                                                 title="View or edit this product's detail">  
@@ -94,9 +106,7 @@
                                     </p:menuitem>
 
                                     <p:menuitem 
-                                        icon="ui-icon-plus" 
-                                        onstart="PF('longProcessDialogVar').show();"
-                                        oncomplete="PF('longProcessDialogVar').hide();"
+                                        icon="pi pi-plus" 
                                         actionListener="#{complianceManager.createNewMarketProductInDialog}"                                            
                                         process="@this"
                                         value="Add a new product"
@@ -132,15 +142,13 @@
 
                                 </p:autoComplete>                                
                                 <p:spacer height="0" width="4"/>
-                                <p:menuButton icon="ui-icon-pencil" 
+                                <p:menuButton icon="pi pi-pencil" 
                                               id="complaintProductCategoryMenuButton"
                                               title="Add or edit product category">
 
                                     <p:menuitem value="Edit category"
-                                                icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isMarketProductCategoryNameValid}"
-                                                onstart="PF('longProcessDialogVar').show();"   
-                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                icon="pi pi-pencil" 
+                                                disabled="${!complianceManager.isMarketProductCategoryNameValid}"                      
                                                 actionListener="#{complianceManager.editMarketProductCategory}"  
                                                 process="@this"                             
                                                 title="View or edit this product's category">  
@@ -151,9 +159,7 @@
                                     </p:menuitem>
 
                                     <p:menuitem 
-                                        icon="ui-icon-plus" 
-                                        onstart="PF('longProcessDialogVar').show();"
-                                        oncomplete="PF('longProcessDialogVar').hide();"
+                                        icon="pi pi-plus" 
                                         actionListener="#{complianceManager.createNewMarketProductCategory}"                                            
                                         process="@this"
                                         value="Add new category"
@@ -191,14 +197,12 @@
                                 </p:autoComplete>  
 
                                 <p:menuButton id="actionsMenuButton"
-                                              icon="ui-icon-pencil" 
+                                              icon="pi pi-pencil" 
                                               title="Add or edit manufacturer" >  
 
                                     <p:menuitem value="Edit manufacturer"
-                                                icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isManufacturerNameValid}"
-                                                onstart="PF('longProcessDialogVar').show();"   
-                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                icon="pi pi-pencil" 
+                                                disabled="${!complianceManager.isManufacturerNameValid}"                              
                                                 actionListener="#{complianceManager.editManufacturer}"
                                                 process="@this,manufacturer"                             
                                                 title="View or edit manufacturer">  
@@ -211,9 +215,7 @@
 
                                     <p:menuitem 
                                         value="Add manufacturer"
-                                        icon="ui-icon-plus" 
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"  
+                                        icon="pi pi-plus"  
                                         actionListener="#{complianceManager.createNewManufacturer}"                                            
                                         process="@this"
                                         title="Add a new manufacturer">
@@ -316,14 +318,12 @@
 
                                 </p:autoComplete>  
                                 <p:menuButton id="distributorActionsMenu" 
-                                              icon="ui-icon-pencil" 
+                                              icon="pi pi-pencil" 
                                               title="Add or edit distributor">
                                     <p:menuitem value="Edit distributor"
                                                 id="editDistributor"
-                                                icon="ui-icon-pencil" 
-                                                disabled="${!complianceManager.isDistributorNameValid}"
-                                                onstart="PF('longProcessDialogVar').show();"   
-                                                oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                                icon="pi pi-pencil" 
+                                                disabled="${!complianceManager.isDistributorNameValid}"                             
                                                 actionListener="#{complianceManager.editDistributor}"  
                                                 process="@this,distributor"                             
                                                 title="View or edit this distributor's detail">  
@@ -336,9 +336,7 @@
 
                                     <p:menuitem 
                                         value="Add distributor"
-                                        icon="ui-icon-plus" 
-                                        onstart="PF('longProcessDialogVar').show();"    
-                                        oncomplete="PF('longProcessDialogVar').hide();"  
+                                        icon="pi pi-plus"   
                                         actionListener="#{complianceManager.createNewDistributor}"                                            
                                         process="@this"
                                         title="Add a new distributor">
@@ -472,18 +470,14 @@
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Ok"
                                      actionListener="#{complianceManager.okComplaintProductInspection}"
-                                     update=":productDialogForm"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();" 
-                                     icon="ui-icon ui-icon-check"
+                                     update=":productDialogForm" 
+                                     icon="pi pi-check"
                                      process="@form"/>
                     <p:spacer height="0" width="4"/>
                     <p:commandButton value="Cancel"
-                                     actionListener="#{complianceManager.cancelProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"    
+                                     actionListener="#{complianceManager.cancelProductInspection}"  
                                      process="@this"
-                                     icon="ui-icon ui-icon-close"/>
+                                     icon="pi pi-times"/>
                 </p:toolbarGroup>
             </p:toolbar>
         </h:form>

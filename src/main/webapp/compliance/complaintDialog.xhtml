@@ -1,3 +1,22 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2020  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -13,10 +32,11 @@
         <meta http-equiv="pragma" content="no-cache" />
         <title>Complaint</title>
         <link rel="stylesheet" href="../css/main.css" /> 
+        <script type="text/javascript" src="../../js/javascripts.js"/>
     </h:head>
     <h:body >  
         <ui:insert >   
-            <ui:include src="../common/longProcessDialog.xhtml"/>
+            <ui:include src="../common/commonDialogs.xhtml"/>
             <ui:include src="deleteComplaintProductInspectionDialog.xhtml"/>   
             <ui:include src="saveComplaintConfirmationDialog.xhtml"/> 
         </ui:insert>
@@ -27,19 +47,15 @@
             <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
-                                     onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveComplaint}"     
                                      update="complaint_growl,complaintDialogForm"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-disk"
+                                     icon="pi pi-save"
                                      process="@form"/>
                     <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Close"      
-                                     onstart="longProcessDialogVar.show();"
+                    <p:commandButton value="Close" 
                                      actionListener="#{complianceManager.closeComplaintDialog}"
-                                     update="complaint_growl,complaintDialogForm"                         
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-close"
+                                     update="complaint_growl,complaintDialogForm" 
+                                     icon="pi pi-times"
                                      process="@this"/>
 
                     <p:spacer width="10" />
@@ -51,9 +67,7 @@
                        widgetVar="complaintTabViewVar"                        
                        dynamic="false">
 
-                <p:ajax event="tabChange"     
-                        onstart="longProcessDialogVar.show();"
-                        oncomplete="longProcessDialogVar.hide();"/>               
+                <p:ajax event="tabChange" />               
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
@@ -90,14 +104,12 @@
 
                             </p:autoComplete>
                             <p:menuButton id="jobActionsMenu" 
-                                          icon="ui-icon-pencil" 
+                                          icon="pi pi-pencil" 
                                           title="Add or edit job">
                                 <p:menuitem value="Edit job"
                                             id="editComplaintJob"
-                                            icon="ui-icon-pencil" 
+                                            icon="pi pi-pencil" 
                                             disabled="${!complianceManager.currentComplaint.isJobNumberValid}"
-                                            onstart="PF('longProcessDialogVar').show();"   
-                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
                                             actionListener="#{complianceManager.editJob}"  
                                             process="@this,jobNumber"                             
                                             title="View or edit this job's detail">  
@@ -111,9 +123,7 @@
                                 <p:menuitem 
                                     value="Add new job"
                                     id="createNewComplaintJob"
-                                    icon="ui-icon-plus" 
-                                    onstart="PF('longProcessDialogVar').show();"    
-                                    oncomplete="PF('longProcessDialogVar').hide();"  
+                                    icon="pi pi-plus" 
                                     actionListener="#{complianceManager.createNewJob}"                                            
                                     process="@this"
                                     title="Add a new job">
@@ -173,14 +183,12 @@
                             </p:autoComplete>  
 
                             <p:menuButton id="actionsMenuButton"
-                                          icon="ui-icon-pencil" 
+                                          icon="pi pi-pencil" 
                                           title="Add or edit complainant" >  
 
                                 <p:menuitem value="Edit complainant"
-                                            icon="ui-icon-pencil" 
-                                            disabled="${!complianceManager.isComplainantNameValid}"
-                                            onstart="PF('longProcessDialogVar').show();"   
-                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            icon="pi pi-pencil" 
+                                            disabled="${!complianceManager.isComplainantNameValid}"                        
                                             actionListener="#{complianceManager.editComplainant}"
                                             process="@this,complainant"                             
                                             title="View or edit complainant">  
@@ -193,9 +201,7 @@
 
                                 <p:menuitem 
                                     value="Add complainant"
-                                    icon="ui-icon-plus" 
-                                    onstart="PF('longProcessDialogVar').show();"    
-                                    oncomplete="PF('longProcessDialogVar').hide();"  
+                                    icon="pi pi-plus"  
                                     disabled="#{!complianceManager.user.privilege.canAddClient}"
                                     actionListener="#{complianceManager.createNewComplainant}"                                            
                                     process="@this"
@@ -257,15 +263,13 @@
                             </p:autoComplete>  
 
                             <p:menuButton id="receivedViaActionsMenu" 
-                                          icon="ui-icon-pencil" 
+                                          icon="pi pi-pencil" 
                                           title="Add or edit">
 
                                 <p:menuitem value="Edit client"
                                             id="editReceivedVia"
-                                            icon="ui-icon-pencil" 
-                                            disabled="${!complianceManager.isReceivedViaNameValid}"
-                                            onstart="PF('longProcessDialogVar').show();"   
-                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            icon="pi pi-pencil" 
+                                            disabled="${!complianceManager.isReceivedViaNameValid}"                              
                                             actionListener="#{complianceManager.editReceivedVia}"  
                                             process="@this,receivedVia"                             
                                             title="View or edit this client's detail">  
@@ -278,9 +282,7 @@
 
                                 <p:menuitem 
                                     value="Add client"
-                                    icon="ui-icon-plus" 
-                                    onstart="PF('longProcessDialogVar').show();"    
-                                    oncomplete="PF('longProcessDialogVar').hide();"                    
+                                    icon="pi pi-plus"                    
                                     disabled="#{!complianceManager.user.privilege.canAddClient}"
                                     actionListener="#{complianceManager.createNewReceivedVia}"                                            
                                     process="@this"
@@ -379,9 +381,7 @@
                     <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewComplaintProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-plus"
+                                     icon="pi pi-plus"
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
@@ -405,14 +405,12 @@
                             <h:outputText value="#{productInspection.brand}"/>
                         </p:column>  
                         <p:column style="width:32px">
-                            <p:menuButton icon="ui-icon-pencil" 
+                            <p:menuButton icon="pi pi-pencil" 
                                           title="Edit or delete product" >  
 
                                 <p:menuitem value="Edit product details"
                                             actionListener="#{complianceManager.editCurrentComplaintProductInspection}" 
-                                            onstart="longProcessDialogVar.show();"
-                                            icon="ui-icon-pencil"
-                                            oncomplete="longProcessDialogVar.hide();"
+                                            icon="pi pi-pencil"
                                             process="@this">  
 
                                     <p:ajax event="dialogReturn" 
@@ -427,7 +425,7 @@
                                 <p:menuitem 
                                     value="Delete this product"
                                     onclick="deleteProductDialog.show();"
-                                    icon="ui-icon-trash"
+                                    icon="pi pi-trash"
                                     process="@this">
 
                                     <f:setPropertyActionListener value="#{productInspection}"
@@ -441,9 +439,7 @@
                     <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewComplaintProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-plus"
+                                     icon="pi pi-plus"
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
@@ -594,19 +590,15 @@
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
-                                     onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveComplaint}"     
                                      update="complaint_growl,complaintDialogForm"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-disk"
+                                     icon="pi pi-save"
                                      process="@form"/>
                     <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Close"      
-                                     onstart="longProcessDialogVar.show();"
+                    <p:commandButton value="Close" 
                                      actionListener="#{complianceManager.closeComplaintDialog}"
-                                     update="complaint_growl,complaintDialogForm"                         
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-close"
+                                     update="complaint_growl,complaintDialogForm" 
+                                     icon="pi pi-times"
                                      process="@this"/>
                 </p:toolbarGroup>
             </p:toolbar>

@@ -92,17 +92,15 @@ Email: info@dpbennett.com.jm
 
         <p:column style="width:32px">
             <p:commandButton title="View or edit survey"
-                             onstart="longProcessDialogVar.show();"
-                             oncomplete="longProcessDialogVar.hide();"
                              actionListener="#{complianceManager.editComplianceSurvey}"                             
                              global="true"
-                             icon="ui-icon-pencil">
+                             icon="pi pi-pencil">
 
                 <f:setPropertyActionListener value="#{complianceSurvey}"
                                              target="#{complianceManager.currentComplianceSurvey}" />
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView"
+                        update=":appForm:mainTabView"
                         listener="#{complianceManager.surveyDialogReturn}" />
                 
 
