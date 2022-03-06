@@ -372,7 +372,7 @@ Email: info@dpbennett.com.jm
                                 <p:menuitem
                                     value="Add consignee"
                                     icon="pi pi-plus"                    
-                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    disabled="#{!complianceManager.user.can('AddClient')}"
                                     actionListener="#{complianceManager.createNewConsignee}"                                            
                                     process="@this"
                                     title="Add a new consignee">
@@ -562,7 +562,7 @@ Email: info@dpbennett.com.jm
                                 <p:menuitem 
                                     value="Add retail outlet"
                                     icon="pi pi-plus"                     
-                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    disabled="#{!complianceManager.user.can('AddClient')}"
                                     actionListener="#{complianceManager.createNewRetailOutlet}"                                            
                                     process="@this"
                                     title="Add a new retail outlet">

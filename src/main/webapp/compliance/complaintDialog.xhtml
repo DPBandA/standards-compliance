@@ -202,7 +202,7 @@ Email: info@dpbennett.com.jm
                                 <p:menuitem 
                                     value="Add complainant"
                                     icon="pi pi-plus"  
-                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    disabled="#{!complianceManager.user.can('AddClient')}"
                                     actionListener="#{complianceManager.createNewComplainant}"                                            
                                     process="@this"
                                     title="Add a new complainant">
@@ -283,7 +283,7 @@ Email: info@dpbennett.com.jm
                                 <p:menuitem 
                                     value="Add client"
                                     icon="pi pi-plus"                    
-                                    disabled="#{!complianceManager.user.privilege.canAddClient}"
+                                    disabled="#{!complianceManager.user.can('AddClient')}"
                                     actionListener="#{complianceManager.createNewReceivedVia}"                                            
                                     process="@this"
                                     title="Add a new client">
