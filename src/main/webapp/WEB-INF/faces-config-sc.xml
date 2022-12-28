@@ -3,22 +3,7 @@
               xmlns="http://java.sun.com/xml/ns/javaee" 
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
-    
-    <converter>
-        <converter-id>activeDocumentStandardConverter</converter-id>
-        <converter-class>jm.com.dpbennett.sc.converter.ActiveDocumentStandardConverter</converter-class>
-    </converter>   
-    
-    <validator>
-        <validator-id>documentStandardValidator</validator-id>
-        <validator-class>jm.com.dpbennett.sc.validator.DocumentStandardValidator</validator-class>
-    </validator>
-    
-    <validator>
-        <validator-id>marketProductValidator</validator-id>
-        <validator-class>jm.com.dpbennett.sc.validator.MarketProductValidator</validator-class>
-    </validator>
-    
+       
     <managed-bean>
         <managed-bean-name>complianceManager</managed-bean-name>
         <managed-bean-class>jm.com.dpbennett.sc.manager.ComplianceManager</managed-bean-class>

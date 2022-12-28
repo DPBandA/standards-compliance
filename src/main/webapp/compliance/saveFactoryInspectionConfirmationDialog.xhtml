@@ -16,11 +16,11 @@
                              actionListener="#{complianceManager.saveAndCloseFactoryInspection}"
                              update=":factoryInspectionDialogForm:topToolbar"
                              oncomplete="saveFactoryInspectionConfirmationDialog.hide();"
-                             icon="ui-icon-check"/>
+                             icon="pi pi-check"/>
             <p:commandButton value="No"
                              actionListener="#{complianceManager.closeDialog}"
                              oncomplete="saveFactoryInspectionConfirmationDialog.hide();"
-                             icon="ui-icon-cancel"/>
+                             icon="pi pi-times"/>
         </p:confirmDialog>
     </h:form>
 </html>

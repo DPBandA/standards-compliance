@@ -85,17 +85,15 @@ Email: info@dpbennett.com.jm
 
         <p:column style="width:32px">
             <p:commandButton title="View or edit complaint"
-                             onstart="longProcessDialogVar.show();"
-                             oncomplete="longProcessDialogVar.hide();"
                              actionListener="#{complianceManager.editComplaint}"                             
                              global="true"
-                             icon="ui-icon-pencil">
+                             icon="pi pi-pencil">
 
                 <f:setPropertyActionListener value="#{complaint}"
                                              target="#{complianceManager.currentComplaint}" />
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView"
+                        update=":appForm:mainTabView"
                         listener="#{complianceManager.complaintDialogReturn}" />
 
             </p:commandButton>

@@ -29,16 +29,14 @@ Email: info@dpbennett.com.jm
 
             <p:commandButton
                 actionListener="#{complianceManager.createNewComplaint}"
-                global="true"                
-                onstart="PF('longProcessDialogVar').show();"   
-                oncomplete="PF('longProcessDialogVar').hide();"  
+                global="true"  
                 value="New"                                       
                 title="Create new complaint"
-                icon="ui-icon-plus"
+                icon="pi pi-plus"
                 process="@this">  
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView"
+                        update=":appForm:mainTabView"
                         listener="#{complianceManager.complaintDialogReturn}" />
 
             </p:commandButton>   
@@ -50,7 +48,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax global="true"
                         event="keyup"
-                        update=":mainTabViewForm:mainTabView:complaintsTable"
+                        update=":appForm:mainTabView:complaintsTable"
                         listener="#{complianceManager.doComplaintSearch}"
                         process="@this"/>
 

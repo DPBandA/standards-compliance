@@ -28,17 +28,14 @@ Email: info@dpbennett.com.jm
 
             <p:commandButton
                 actionListener="#{complianceManager.createNewComplianceSurvey}"
-                global="true"                
-                onstart="PF('longProcessDialogVar').show();"   
-                oncomplete="PF('longProcessDialogVar').hide();"              
-                onerror="PF('connectionErrorDialog').show();"
+                global="true"  
                 value="New"                                       
                 title="Create new survey"
-                icon="ui-icon-plus"
+                icon="pi pi-plus"
                 process="@this">  
 
                 <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView"
+                        update=":appForm:mainTabView"
                         listener="#{complianceManager.surveyDialogReturn}" />
 
             </p:commandButton>   
@@ -49,9 +46,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="keyup"                            
                         global="false"
-                        onstart="PF('longProcessDialogVar').show();"
-                        oncomplete="PF('longProcessDialogVar').hide();"
-                        update=":mainTabViewForm:mainTabView:complianceSurveysTable"
+                        update=":appForm:mainTabView:complianceSurveysTable"
                         listener="#{complianceManager.doDefaultSurveySearch}"
                         process="@this"/>
 

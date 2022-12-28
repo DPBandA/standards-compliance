@@ -32,6 +32,7 @@ Email: info@dpbennett.com.jm
         <meta http-equiv="pragma" content="no-cache" />
         <title>Factory Inspection</title>
         <link rel="stylesheet" href="../css/main.css" /> 
+        <script type="text/javascript" src="../../js/javascripts.js"/>
     </h:head>
     <h:body >  
         <ui:insert >   
@@ -39,7 +40,7 @@ Email: info@dpbennett.com.jm
             <ui:include src="factoryInspectionComponentDeleteConfirmDialog.xhtml"/>   
             <ui:include src="deleteFactoryProductInspectionDialog.xhtml"/>  
             <ui:include src="saveFactoryInspectionConfirmationDialog.xhtml"/>  
-            <ui:include src="../common/longProcessDialog.xhtml"/>
+            <ui:include src="../common/commonDialogs.xhtml"/>
         </ui:insert>
         <h:form id="factoryInspectionDialogForm">   
 
@@ -48,18 +49,14 @@ Email: info@dpbennett.com.jm
             <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
-                                     onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveFactoryInspection}"     
                                      update=":factoryInspectionDialogForm,factory_inspection_survey_growl"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-disk"
+                                     icon="pi pi-save"
                                      process="@form"/>
                     <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Close"      
-                                     onstart="longProcessDialogVar.show();"
+                    <p:commandButton value="Close"  
                                      actionListener="#{complianceManager.closeFactoryInspectionDialog}"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-close"
+                                     icon="pi pi-times"
                                      process="@this"/>
 
                     <p:spacer width="10" />
@@ -71,9 +68,7 @@ Email: info@dpbennett.com.jm
                        widgetVar="factoryInspectionTabVar"                        
                        dynamic="false">
 
-                <p:ajax event="tabChange"     
-                        onstart="longProcessDialogVar.show();"
-                        oncomplete="longProcessDialogVar.hide();"/>               
+                <p:ajax event="tabChange" />               
 
                 <p:tab title="General" >
                     <h:panelGrid id="generalPanelGrid" columns="2" cellspacing="3">
@@ -99,14 +94,12 @@ Email: info@dpbennett.com.jm
 
                             </p:autoComplete>
                             <p:menuButton id="jobActionsMenu" 
-                                          icon="ui-icon-pencil" 
+                                          icon="pi pi-pencil" 
                                           title="Add or edit job">
                                 <p:menuitem value="Edit job"
                                             id="editFactoryInspectionJob"
-                                            icon="ui-icon-pencil" 
-                                            disabled="${!complianceManager.currentFactoryInspection.isJobNumberValid}"
-                                            onstart="PF('longProcessDialogVar').show();"   
-                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            icon="pi pi-pencil" 
+                                            disabled="${!complianceManager.currentFactoryInspection.isJobNumberValid}"                                  
                                             actionListener="#{complianceManager.editJob}"  
                                             process="@this,jobNumber"                             
                                             title="View or edit this job's detail">  
@@ -120,9 +113,7 @@ Email: info@dpbennett.com.jm
                                 <p:menuitem 
                                     value="Add new job"
                                     id="createNewFactoryInspectionJob"
-                                    icon="ui-icon-plus" 
-                                    onstart="PF('longProcessDialogVar').show();"    
-                                    oncomplete="PF('longProcessDialogVar').hide();"  
+                                    icon="pi pi-plus"  
                                     actionListener="#{complianceManager.createNewJob}"                                            
                                     process="@this"
                                     title="Add a new job">
@@ -181,14 +172,12 @@ Email: info@dpbennett.com.jm
                             </p:autoComplete>  
 
                             <p:menuButton id="actionsMenuButton"
-                                          icon="ui-icon-pencil" 
+                                          icon="pi pi-pencil" 
                                           title="Add, view or edit a manufacturer">                            
 
                                 <p:menuitem value="Edit manufacturer"
-                                            icon="ui-icon-pencil" 
-                                            disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"
-                                            onstart="PF('longProcessDialogVar').show();"   
-                                            oncomplete="PF('longProcessDialogVar').hide();"                                  
+                                            icon="pi pi-pencil" 
+                                            disabled="${!complianceManager.isFactoryInspectionManufacturerNameValid}"                                
                                             actionListener="#{complianceManager.editFactoryInspectionManufacturer}"  
                                             process="@this,manufacturer"                             
                                             title="View or edit manufacturer">  
@@ -202,9 +191,7 @@ Email: info@dpbennett.com.jm
 
                                 <p:menuitem 
                                     value="Add manufacturer"
-                                    icon="ui-icon-plus" 
-                                    onstart="PF('longProcessDialogVar').show();"    
-                                    oncomplete="PF('longProcessDialogVar').hide();"    
+                                    icon="pi pi-plus"   
                                     actionListener="#{complianceManager.createNewManufacturer}"                                            
                                     process="@this"
                                     title="Add a new manufacturer">
@@ -401,9 +388,8 @@ Email: info@dpbennett.com.jm
                                                  value="New"
                                                  actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
                                                  update=":factoryInspectionComponentDialogForm"
-                                                 onstart="PF('longProcessDialogVar').show();"
-                                                 oncomplete="PF('factoryInspectionComponentDialog').show();PF('longProcessDialogVar').hide();"
-                                                 icon="ui-icon-plus"
+                                                 oncomplete="PF('factoryInspectionComponentDialog').show();"
+                                                 icon="pi pi-plus"
                                                  process="@this">
                                 </p:commandButton>
 
@@ -492,13 +478,13 @@ Email: info@dpbennett.com.jm
                             <p:column style="width:32px" >
                                 <p:menuButton id="toolsButton" 
                                               title="Edit or delete inspection component"
-                                              icon="ui-icon-pencil" >
+                                              icon="pi pi-pencil" >
                                     <p:menuitem 
                                         value="Edit"
                                         actionListener="#{complianceManager.editFactoryInspectionComponent}"
                                         update=":factoryInspectionComponentDialogForm"
                                         oncomplete="PF('factoryInspectionComponentDialog').show();"
-                                        icon="ui-icon ui-icon-pencil"
+                                        icon="pi pi-pencil"
                                         process="@this" >
 
                                         <f:setPropertyActionListener value="#{factoryInspectionComponent}"
@@ -509,7 +495,7 @@ Email: info@dpbennett.com.jm
                                     <p:menuitem  
                                         value="Delete"
                                         onclick="factoryInspectionComponentDeleteConfirm.show();"
-                                        icon="ui-icon-trash"
+                                        icon="pi pi-trash"
                                         process="@this">
 
                                         <f:setPropertyActionListener value="#{factoryInspectionComponent}"
@@ -528,9 +514,8 @@ Email: info@dpbennett.com.jm
                                                  value="New"
                                                  actionListener="#{complianceManager.createNewFactoryInspectionComponent}"
                                                  update=":factoryInspectionComponentDialogForm"
-                                                 onstart="PF('longProcessDialogVar').show();"
-                                                 oncomplete="PF('factoryInspectionComponentDialog').show();PF('longProcessDialogVar').hide();"
-                                                 icon="ui-icon-plus"
+                                                 oncomplete="PF('factoryInspectionComponentDialog').show();"
+                                                 icon="pi pi-plus"
                                                  process="@this">
                                 </p:commandButton>
 
@@ -543,9 +528,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewFactoryProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-plus"
+                                     icon="pi pi-plus"
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
@@ -576,14 +559,12 @@ Email: info@dpbennett.com.jm
                             <h:outputText value="#{product.model}" />
                         </p:column>                        
                         <p:column style="width:32px">
-                            <p:menuButton icon="ui-icon-pencil" 
+                            <p:menuButton icon="pi pi-pencil" 
                                           title="Edit or delete product">
 
                                 <p:menuitem value="Edit product details"
                                             actionListener="#{complianceManager.editFactoryProductInspection}" 
-                                            onstart="longProcessDialogVar.show();"
-                                            icon="ui-icon-pencil"
-                                            oncomplete="longProcessDialogVar.hide();"
+                                            icon="pi pi-pencil"
                                             process="@this">    
 
                                     <p:ajax event="dialogReturn" 
@@ -598,7 +579,7 @@ Email: info@dpbennett.com.jm
                                 <p:menuitem
                                     value="Delete this product"
                                     onclick="deleteProductDialog.show();"
-                                    icon="ui-icon-trash"
+                                    icon="pi pi-trash"
                                     process="@this">
 
                                     <f:setPropertyActionListener value="#{product}"
@@ -611,9 +592,7 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Add"
                                      title="Add new product"
                                      actionListener="#{complianceManager.createNewFactoryProductInspection}"
-                                     onstart="longProcessDialogVar.show();"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-plus"
+                                     icon="pi pi-plus"
                                      process="@this" >
 
                         <p:ajax event="dialogReturn" 
@@ -647,18 +626,14 @@ Email: info@dpbennett.com.jm
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="Save"
-                                     onstart="longProcessDialogVar.show();"
                                      actionListener="#{complianceManager.saveFactoryInspection}"     
                                      update=":factoryInspectionDialogForm,factory_inspection_survey_growl"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-disk"
+                                     icon="pi pi-save"
                                      process="@form"/>
                     <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Close"      
-                                     onstart="longProcessDialogVar.show();"
+                    <p:commandButton value="Close" 
                                      actionListener="#{complianceManager.closeFactoryInspectionDialog}"
-                                     oncomplete="longProcessDialogVar.hide();"
-                                     icon="ui-icon-close"
+                                     icon="pi pi-times"
                                      process="@this"/>
                 </p:toolbarGroup>
             </p:toolbar>

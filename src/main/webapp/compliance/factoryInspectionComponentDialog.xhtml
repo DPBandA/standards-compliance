@@ -35,17 +35,15 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Ok"
                                      actionListener="#{complianceManager.okFactoryInspectionComponent}"
                                      update=":factoryInspectionDialogForm:topToolbar,:factoryInspectionDialogForm:factory_inspection_survey_growl,:factoryInspectionDialogForm:factoryInspectionTabView:inspectionComponentsPanel"
-                                     onstart="PF('longProcessDialogVar').show();" 
-                                     oncomplete="PF('factoryInspectionComponentDialog').hide();PF('longProcessDialogVar').hide();"
-                                     icon="ui-icon ui-icon-check"
+                                     oncomplete="PF('factoryInspectionComponentDialog').hide();"
+                                     icon="pi pi-check"
                                      process="@form"/>
                     <p:spacer width="5" />
                     <p:commandButton value="Cancel" 
                                      immediate="true"
                                      actionListener="#{complianceManager.cancelFactoryInspectionComponentEdit}"
-                                     onstart="PF('longProcessDialogVar').show();"                              
-                                     oncomplete="PF('factoryInspectionComponentDialog').hide();PF('longProcessDialogVar').hide();"
-                                     icon="ui-icon-close"/>
+                                     oncomplete="PF('factoryInspectionComponentDialog').hide();"
+                                     icon="pi pi-times"/>
                 </p:toolbarGroup>
             </p:toolbar>            
             <p:panel>
@@ -120,17 +118,15 @@ Email: info@dpbennett.com.jm
                     <p:commandButton value="Ok"
                                      actionListener="#{complianceManager.okFactoryInspectionComponent}"
                                      update=":factoryInspectionDialogForm:topToolbar,:factoryInspectionDialogForm:factory_inspection_survey_growl,:factoryInspectionDialogForm:factoryInspectionTabView:inspectionComponentsPanel"
-                                     onstart="PF('longProcessDialogVar').show();" 
-                                     oncomplete="PF('factoryInspectionComponentDialog').hide();PF('longProcessDialogVar').hide();"
-                                     icon="ui-icon ui-icon-check"
+                                     oncomplete="PF('factoryInspectionComponentDialog').hide();"
+                                     icon="pi pi-check"
                                      process="@form"/>
                     <p:spacer width="5" />
                     <p:commandButton value="Cancel" 
                                      immediate="true"
                                      actionListener="#{complianceManager.cancelFactoryInspectionComponentEdit}"
-                                     onstart="PF('longProcessDialogVar').show();"                              
-                                     oncomplete="PF('factoryInspectionComponentDialog').hide();PF('longProcessDialogVar').hide();"
-                                     icon="ui-icon-close"/>
+                                     oncomplete="PF('factoryInspectionComponentDialog').hide();"
+                                     icon="pi pi-times"/>
                 </p:toolbarGroup>
             </p:toolbar> 
             <p/>
