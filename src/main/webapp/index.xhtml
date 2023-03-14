@@ -29,53 +29,19 @@ Email: info@dpbennett.com.jm
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>#{jobManager.applicationHeader}</title>     
-        <link rel="shortcut icon" type="image/x-icon" href="#{jobManager.appShortcutIconURL}" />
+        <title>#{complianceManager.applicationHeader}</title>     
+        <link rel="shortcut icon" type="image/x-icon" href="#{complianceManager.appShortcutIconURL}" />
         <script type="text/javascript" src="js/javascripts.js" /> 
         <h:outputStylesheet library="webjars" name="primeflex/3.2.1/primeflex.min.css" />       
         <link rel="stylesheet" type="text/css" href="css/main.css" />   
-        <style type="text/css">
-
-            .lightgreybg {
-                background-color:lightgrey !important;
-                background-image: none !important;
-                color: #000000 !important;
-            }
-            .lightgreenbg {
-                background-color:lightgreen !important;
-                background-image: none !important;
-                color: #000000 !important;
-            }
-            .orangeredbg {
-                background-color:orangered !important;
-                background-image: none !important;
-                color: #000000 !important;
-            }
-            .yellowbg {
-                background-color:yellow !important;
-                background-image: none !important;
-                color: #000000 !important;
-            }
-
-            .ui-sticky {
-                top: 0px !important;
-            }
-
-            @media (max-width: 960px) {
-                .ui-sticky {
-                    top: 0px !important;
-                }
-            }
-
-        </style>
     </h:head>
     <h:body>
 
         <ui:include src="common/commonDialogs.xhtml" />          
-        <ui:include src="job/loginDialog.xhtml"/>         
+        <ui:include src="compliance/loginDialog.xhtml"/>         
         <ui:include src="common/userProfileDialog.xhtml"/> 
 
-        <h:form id="appForm" rendered="#{jobManager.userLoggedIn}">   
+        <h:form id="appForm" rendered="#{complianceManager.userLoggedIn}">   
 
             <p:growl id="growl3" life="5000" showDetail="true" />
             <p:panel>
@@ -87,17 +53,17 @@ Email: info@dpbennett.com.jm
                                 <div class="grid">
                                     <div class="col-12 md:col-3">
                                         <h:panelGroup style="float: left;margin-right: 10px;" >
-                                            <p:graphicImage value="#{jobManager.logoURL}"
+                                            <p:graphicImage value="#{complianceManager.logoURL}"
                                                             class="logo"
-                                                            height="#{jobManager.logoURLImageHeight}" 
-                                                            width="#{jobManager.logoURLImageWidth}"/>
+                                                            height="#{complianceManager.logoURLImageHeight}" 
+                                                            width="#{complianceManager.logoURLImageWidth}"/>
                                         </h:panelGroup>
                                         <h:panelGrid columns="1" cellspacing="0" >   
 
-                                            <p:outputLabel value="#{jobManager.applicationHeader}"
+                                            <p:outputLabel value="#{complianceManager.applicationHeader}"
                                                            class="header-text" />
 
-                                            <p:outputLabel value="Job Administration &amp; Management"
+                                            <p:outputLabel value="Compliance &amp; Regulation..."
                                                            class="subheader-text" />  
 
                                         </h:panelGrid>
@@ -128,7 +94,7 @@ Email: info@dpbennett.com.jm
                                                         <p:ajax event="select" 
                                                                 update=":appForm:notificationBadge"
                                                                 oncomplete="PF('NotificationPanelVar').hide()"
-                                                                listener="#{jobManager.onNotificationSelect}" />
+                                                                listener="#{complianceManager.onNotificationSelect}" />
 
                                                         <p:column>
                                                             <p:outputLabel value="#{notification.name}" 
@@ -142,7 +108,7 @@ Email: info@dpbennett.com.jm
                                             <p:spacer width="30"/>
                                             <p:menuButton iconPos="left"
                                                           icon="pi pi-user"
-                                                          title="#{jobManager.user.employee.firstName} #{jobManager.user.employee.lastName} (#{jobManager.user.username})"
+                                                          title="#{complianceManager.user.employee.firstName} #{complianceManager.user.employee.lastName} (#{complianceManager.user.username})"
                                                           id="userMenu"
                                                           class="usermenu-button" >
 
@@ -152,7 +118,7 @@ Email: info@dpbennett.com.jm
                                                             icon="pi pi-cog"
                                                             value="Profile"
                                                             process="@this"/>  
-                                                <p:menuitem actionListener="#{jobManager.logout}"                                             
+                                                <p:menuitem actionListener="#{complianceManager.logout}"                                             
                                                             icon="pi pi-sign-out"
                                                             value="Logout"
                                                             oncomplete="location.reload();"
@@ -169,13 +135,13 @@ Email: info@dpbennett.com.jm
 
                                         <p:defaultCommand target="defaultCommand" />
 
-                                        <ui:include src="dashboard/job/adminTab.xhtml" />
+                                        <ui:include src="dashboard/compliance/adminTab.xhtml" />
 
                                     </div>    
                                     <div class="col-12 md:col-8">
                                         <p:tabView id="mainTabView"  
-                                                   rendered="#{jobManager.mainTabView.render}"
-                                                   value="#{jobManager.mainTabView.tabs}" 
+                                                   rendered="#{complianceManager.mainTabView.render}"
+                                                   value="#{complianceManager.mainTabView.tabs}" 
                                                    var="t" 
                                                    widgetVar="mainTabViewVar">
 
@@ -183,22 +149,38 @@ Email: info@dpbennett.com.jm
                                                     immediate="true"
                                                     process="@this"
                                                     update=""
-                                                    listener="#{jobManager.onMainViewTabClose}" />  
+                                                    listener="#{complianceManager.onMainViewTabClose}" />  
 
                                             <p:ajax event="tabChange" 
                                                     immediate="true"
                                                     process="@this"                                
-                                                    listener="#{jobManager.onMainViewTabChange}" />  
+                                                    listener="#{complianceManager.onMainViewTabChange}" />  
 
 
                                             <p:tab title="#{t.name}" closable="true"  >
 
-                                                <h:panelGroup rendered="#{t.id == 'Job Browser'}">                                
-                                                    <ui:include src="job/jobBrowser.xhtml" /> 
+                                                <h:panelGroup  rendered="#{t.id == 'Survey Browser'}">
+                                                    <ui:include src="compliance/surveyBrowser.xhtml" /> 
+                                                </h:panelGroup> 
+
+                                                <h:panelGroup  rendered="#{t.id == 'Complaint Browser'}">
+                                                    <ui:include src="compliance/complaintBrowser.xhtml" /> 
                                                 </h:panelGroup>
 
-                                                <h:panelGroup rendered="#{t.id == 'Document Browser'}">                                
-                                                    <ui:include src="legal/documentBrowser.xhtml" />   
+                                                <h:panelGroup rendered="#{t.id == 'Standard Browser'}" >
+                                                    <ui:include src="compliance/standardBrowser.xhtml" />                                                                
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{t.id == 'Manufacturers'}" >
+                                                    <ui:include src="compliance/manufacturersTab.xhtml"/>  
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{t.id == 'Factory Inspections'}" >
+                                                    <ui:include src="compliance/factoryInspectionsTab.xhtml" />                                                                
+                                                </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{t.id == 'Job Browser'}">                                
+                                                    <ui:include src="job/jobBrowser.xhtml" /> 
                                                 </h:panelGroup>
 
                                                 <h:panelGroup rendered="#{t.id == 'System Administration'}" >
@@ -223,15 +205,7 @@ Email: info@dpbennett.com.jm
 
                                                 <h:panelGroup rendered="#{t.id == 'Report Templates'}" >
                                                     <ui:include src="report/reportTemplatesTab.xhtml" />                                                               
-                                                </h:panelGroup>                                            
-
-                                                <h:panelGroup rendered="#{t.id == 'Purchase Requisitions'}" >
-                                                    <ui:include src="finance/purch/purchreqsTab.xhtml" />                                                                
-                                                </h:panelGroup>
-
-                                                <h:panelGroup rendered="#{t.id == 'Suppliers'}" >
-                                                    <ui:include src="finance/purch/suppliersTab.xhtml" />                                                                
-                                                </h:panelGroup>
+                                                </h:panelGroup>  
 
                                             </p:tab>
 
@@ -254,7 +228,7 @@ Email: info@dpbennett.com.jm
             </p:panel>
             <p:poll interval="60" 
                     global="false"
-                    listener="#{jobManager.handleKeepAlive}" />
+                    listener="#{complianceManager.handleKeepAlive}" />
 
         </h:form>
 
