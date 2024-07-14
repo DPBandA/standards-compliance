@@ -87,35 +87,31 @@ Email: info@dpbennett.com.jm
         </h:panelGroup>
 
         <p:outputLabel value="Business office *" style="font-weight: bold"/>   
-        <p:selectOneMenu id="businessOffice" 
-                         value="#{complianceManager.currentComplianceSurvey.businessOffice}"
-                         panelStyle="width:180px"
-                         required="true"
-                         requiredMessage="Business office required"
-                         filter="true" 
-                         filterMatchMode="contains" 
-                         filterNormalize="true">
+        <p:autoComplete id="businessOffice"
+                        dropdown="true" 
+                        readonly="false"
+                        var="businessOffice"
+                        value="#{complianceManager.currentComplianceSurvey.businessOffice}"
+                        itemLabel="#{businessOffice.name}"
+                        itemValue="#{businessOffice}"
+                        required="true"
+                        requiredMessage="Business Office Required"
+                        validator="businessEntityValidator"
+                        forceSelection="true"
+                        cache="true"
+                        completeMethod="#{humanResourceManager.completeActiveBusinessOffice}" >
 
             <f:converter converterId="businessOfficeConverter"/>
 
             <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
-
-            <f:selectItems value="#{humanResourceManager.allActiveBusinessOffices}" 
-                           var="office"
-                           itemLabel="#{office.name}" 
-                           itemValue="#{office}"/>
 
             <p:ajax event="itemSelect"                       
                     update=":ComplianceSurveyDialogForm:topToolbar,generalPanelGrid,complianceSurveyTabView"
                     listener="#{complianceManager.updateSurvey}"
                     process="@this"/>
 
-            <p:column>               
-                <h:outputText value="#{businessOffice.name}"/>
-            </p:column>
-
-        </p:selectOneMenu>
-
+        </p:autoComplete>    
+        
         <p:outputLabel value="Survey type *" style="font-weight: bold"/>
         <p:selectOneMenu id="surveyType"
                          value="#{complianceManager.currentComplianceSurvey.surveyType}" >
