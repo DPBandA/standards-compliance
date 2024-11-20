@@ -251,19 +251,20 @@ Email: info@dpbennett.com.jm
 
         </p:autoComplete>
 
-        <h:outputText value="Broker: " 
-                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
-                      style="font-weight: bold" />
+        <p:outputLabel value="Broker *" 
+                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
+                       style="font-weight: bold" />                   
         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
             <p:autoComplete id="broker"      
                             var="broker"
                             itemLabel="#{broker.truncatedName}"
-                            itemValue="#{broker}"               
+                            itemValue="#{broker}"                     
                             dropdown="false"
-                            scrollHeight="200" 
                             value="#{complianceManager.currentComplianceSurvey.broker}"    
                             validator="jobClientValidator"
                             forceSelection="true"
+                            cache="true"
+                            maxResults="3"
                             minQueryLength="2"
                             completeMethod="#{clientManager.completeActiveClient}" >
 
@@ -272,97 +273,23 @@ Email: info@dpbennett.com.jm
                 <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
                 <p:ajax event="itemSelect"
-                        update=":ComplianceSurveyDialogForm:topToolbar,brokerActionsMenu,brokerRepresentative,brokerAddress"
+                        update=":ComplianceSurveyDialogForm:topToolbar"
                         listener="#{complianceManager.updateBroker}"
                         process="@this"/>
 
             </p:autoComplete>  
-            <p:menuButton id="brokerActionsMenu" 
-                          icon="pi pi-pencil" 
-                          title="Add or edit broker">
-                <p:menuitem value="Edit broker"
-                            id="editBroker"
-                            icon="pi pi-pencil" 
-                            disabled="${!complianceManager.isBrokerNameValid}"                               
-                            actionListener="#{complianceManager.editBroker}"  
-                            process="@this,broker"                             
-                            title="View or edit this broker's detail">  
+            <p:commandButton icon="pi pi-pencil"
+                             process="@this"
+                             rendered="true"
+                             actionListener="#{complianceManager.openSurveyBrokerDialog}"
+                             title="Edit/view broker">
 
-                    <p:ajax event="dialogReturn" 
-                            listener="#{complianceManager.brokerDialogReturn}"
-                            update="broker,brokerRepresentative,brokerAddress" />
+                <p:ajax event="dialogReturn" 
+                        listener="#{complianceManager.surveyEstablishmentsDialogReturn}"
+                        update="broker,:ComplianceSurveyDialogForm:topToolbar" />
 
-                </p:menuitem>
-
-                <p:menuitem  
-                    value="Add broker"
-                    icon="pi pi-plus"  
-                    actionListener="#{complianceManager.createNewBroker}"                                            
-                    process="@this"
-                    title="Add a new broker">
-
-                    <p:ajax event="dialogReturn" 
-                            listener="#{complianceManager.brokerDialogReturn}"
-                            update="broker,brokerRepresentative,brokerAddress" />
-
-                </p:menuitem>
-            </p:menuButton>                                
+            </p:commandButton>
         </h:panelGroup>
-
-        <h:outputText value="Broker representative:" 
-                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
-                      style="font-weight: bold" />  
-        <p:autoComplete id="brokerRepresentative"
-                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
-                        value="#{complianceManager.currentComplianceSurvey.brokerRepresentative}"
-                        dropdown="true"
-                        forceSelection="true"
-                        scrollHeight="200"
-                        converter="clientContactConverter" 
-                        validator="contactValidator"
-                        var="representative"                        
-                        itemValue="#{representative}"
-                        itemLabel="#{representative.name}" 
-                        completeMethod="#{complianceManager.completeBrokerRepresentative}">
-
-            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.broker}" />
-
-            <p:ajax event="itemSelect"
-                    listener="#{complianceManager.updateSurvey}"  
-                    update=":ComplianceSurveyDialogForm:topToolbar"
-                    process="@this" />   
-
-        </p:autoComplete> 
-
-        <h:outputText value="Broker address:" 
-                      rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
-                      style="font-weight: bold" /> 
-        <p:autoComplete id="brokerAddress"
-                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
-                        value="#{complianceManager.currentComplianceSurvey.brokerAddress}"
-                        dropdown="true"
-                        forceSelection="true"
-                        size="35"
-                        converter="clientAddressConverter" 
-                        validator="addressValidator"
-                        var="address"  
-                        scrollHeight="200"
-                        itemValue="#{address}"
-                        itemLabel="#{address.name}" 
-                        completeMethod="#{complianceManager.completeBrokerAddress}">
-
-            <f:converter converterId="clientAddressConverter"/>
-
-            <f:attribute name="em" value="#{clientManager.entityManager1}"/>
-
-            <f:attribute name="currentClient" value="#{complianceManager.currentComplianceSurvey.broker}" />
-
-            <p:ajax event="itemSelect"
-                    listener="#{complianceManager.updateSurvey}" 
-                    update=":ComplianceSurveyDialogForm:topToolbar"
-                    process="@this" />   
-
-        </p:autoComplete>
 
         <h:outputText value="Retail Outlet *" 
                       style="font-weight: bold"
