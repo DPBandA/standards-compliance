@@ -36,7 +36,7 @@ Email: info@dpbennett.com.jm
                 process="@this">  
 
                 <p:ajax event="dialogReturn" 
-                        update=":appForm:growl3"
+                        update=":headerForm:growl3"
                         listener="#{complianceManager.complaintDialogReturn}" />
 
             </p:commandButton>   
@@ -48,7 +48,7 @@ Email: info@dpbennett.com.jm
                 <p:commandButton id="complaintSearchButton"
                                  class="search-button"   
                                  actionListener="#{complianceManager.doComplaintSearch}"
-                                 update=":appForm:mainTabView:complaintsTable"
+                                 update=":mainTabViewForm:mainTabView:complaintsTable"
                                  icon="pi pi-search"
                                  process="@form" />
             </h:panelGroup>

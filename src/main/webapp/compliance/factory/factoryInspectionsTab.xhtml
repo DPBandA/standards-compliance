@@ -36,7 +36,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.factoryInspectionDialogReturn}"
-                        update=":appForm:mainTabView:factoryInspectionsTable,:appForm:growl3"/>
+                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable,:headerForm:growl3"/>
 
             </p:commandButton>
             <p:spacer width="20" />
@@ -47,7 +47,7 @@ Email: info@dpbennett.com.jm
                 <p:commandButton id="factoryInspectionSearchButton"
                                  class="search-button"   
                                  actionListener="#{complianceManager.doFactoryInspectionSearch}"
-                                 update=":appForm:mainTabView:factoryInspectionsTable"
+                                 update=":mainTabViewForm:mainTabView:factoryInspectionsTable"
                                  icon="pi pi-search"
                                  process="@form" />
             </h:panelGroup>
@@ -127,7 +127,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.factoryInspectionDialogReturn}"
-                        update=":appForm:mainTabView:factoryInspectionsTable,:appForm:growl3"/>
+                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable,:headerForm:growl3"/>
 
             </p:commandButton>
         </p:column>
@@ -144,7 +144,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doFactoryInspectionSearch}"
-                        update=":appForm:mainTabView:factoryInspectionsTable"/>
+                        update=":mainTabViewForm:mainTabView:factoryInspectionsTable"/>
 
             </p:commandButton>
 

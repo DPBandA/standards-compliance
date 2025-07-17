@@ -37,7 +37,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doDocumentStandardSearch}"
-                        update=":appForm:mainTabView:standardsTable,:appForm:growl3"/>
+                        update=":mainTabViewForm:mainTabView:standardsTable,:headerForm:growl3"/>
 
             </p:commandButton>
             <p:spacer width="20" />
@@ -48,7 +48,7 @@ Email: info@dpbennett.com.jm
                 <p:commandButton id="standardSearchButton"
                                  class="search-button"   
                                  actionListener="#{complianceManager.doDocumentStandardSearch}"
-                                 update=":appForm:mainTabView:standardsTable"
+                                 update=":mainTabViewForm:mainTabView:standardsTable"
                                  icon="pi pi-search"
                                  process="@form" />
             </h:panelGroup>
@@ -61,7 +61,7 @@ Email: info@dpbennett.com.jm
                 <p:selectBooleanCheckbox style="vertical-align: middle"
                                          id="isActiveDocumentStandardsOnly"
                                          value="#{complianceManager.isActiveDocumentStandardsOnly}" >
-                    <p:ajax  update=":appForm:mainTabView:standardsTable"
+                    <p:ajax  update=":mainTabViewForm:mainTabView:standardsTable"
                              listener="#{complianceManager.doDocumentStandardSearch}"
                              event="change"                                      
                              process="@this"/>
@@ -128,7 +128,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doDocumentStandardSearch}"
-                        update=":appForm:mainTabView:standardsTable"/>
+                        update=":mainTabViewForm:mainTabView:standardsTable"/>
 
             </p:commandButton>
         </p:column>
@@ -145,7 +145,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{complianceManager.doDocumentStandardSearch}"
-                        update=":appForm:mainTabView:standardsTable"/>
+                        update=":mainTabViewForm:mainTabView:standardsTable"/>
 
             </p:commandButton>            
         </p:toolbarGroup>

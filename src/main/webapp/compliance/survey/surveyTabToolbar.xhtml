@@ -36,7 +36,7 @@ Email: info@dpbennett.com.jm
                 process="@this">  
 
                 <p:ajax event="dialogReturn" 
-                        update=":appForm:growl3"
+                        update=":headerForm:growl3"
                         listener="#{complianceManager.surveyDialogReturn}" />
 
             </p:commandButton>   
@@ -47,7 +47,7 @@ Email: info@dpbennett.com.jm
                 <p:commandButton id="surveySearchButton"
                                  class="search-button"   
                                  actionListener="#{complianceManager.doDefaultSurveySearch}"
-                                 update=":appForm:mainTabView:complianceSurveysTable"
+                                 update=":mainTabViewForm:mainTabView:complianceSurveysTable"
                                  icon="pi pi-search"
                                  process="@form" />
             </h:panelGroup>
