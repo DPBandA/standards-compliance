@@ -1,6 +1,6 @@
 <!--
 Standards Compliance (SC) 
-Copyright (C) 2024  D P Bennett & Associates Limited
+Copyright (C) 2025  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -25,33 +25,6 @@ Email: info@dpbennett.com.jm
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <p:menubar id="main_menubar" style="width: 100%;" autoDisplay="false">
-
-        <p:submenu label="Clients" 
-                   icon="pi pi-users" >
-
-            <p:menuitem
-                actionListener="#{clientManager.createNewClient}"                
-                rendered="#{clientManager.user.can('AddClient')}"
-                global="true" 
-                value="Client"
-                title="Create new client"
-                icon="pi pi-plus"
-                process="@this" >
-
-                <p:ajax event="dialogReturn" 
-                        update=":mainTabViewForm:mainTabView:clientsTable" />
-
-            </p:menuitem>
-
-            <p:divider />
-
-            <p:menuitem value="Client Management"
-                        title="Open the Clients tab"
-                        icon="pi pi-users"
-                        actionListener="#{complianceManager.openClientsTab}" 
-                        process="@this" />
-         
-        </p:submenu>
 
         <p:submenu label="Compliance"                            
                    rendered="#{complianceManager.user.hasModule('complianceManager')}"

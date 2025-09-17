@@ -11,6 +11,18 @@
     </managed-bean>
     
     <managed-bean>
+        <managed-bean-name>foodSafetyManager</managed-bean-name>
+        <managed-bean-class>jm.com.dpbennett.sc.manager.FoodSafetyManager</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-name>legalMetrologyManager</managed-bean-name>
+        <managed-bean-class>jm.com.dpbennett.sc.manager.LegalMetrologyManager</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
         <managed-bean-name>jobManager</managed-bean-name>
         <managed-bean-class>jm.com.dpbennett.jmts.manager.JobManager</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>

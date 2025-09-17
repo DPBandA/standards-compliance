@@ -1,5 +1,5 @@
 <!--
-Standards Compliance (SC)  
+Standards Compliance (SC)   
 Copyright (C) 2025  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
@@ -28,10 +28,11 @@ Email: info@dpbennett.com.jm
     <h:head>
         <ui:include src="head.xhtml" />
         <title>#{complianceManager.applicationHeader}</title>         
-        <script type="text/javascript" src="js/javascripts.js" /> 
+        <script type="text/javascript" src="js/javascripts.js" />
+        <script type="text/javascript" src="js/app.js" />
         <h:outputStylesheet library="webjars" name="primeflex/3.2.1/primeflex.min.css" />       
         <link rel="stylesheet" type="text/css" href="css/main.css" /> 
-        <link rel="stylesheet" type="text/css" href="css/rm.css" /> 
+        <link rel="stylesheet" type="text/css" href="css/sc.css" />   
     </h:head>
 
     <h:body id="appBody" style="margin: 0;" class="flex flex-column min-h-screen">
@@ -46,6 +47,45 @@ Email: info@dpbennett.com.jm
 
             <h:form id="headerForm" rendered="#{complianceManager.userLoggedIn}">
 
+                <p:sidebar widgetVar="sidebar1" style="z-index: 1000">
+
+                    <p:panel >
+
+                        <f:facet name="header">
+                            <h:panelGroup layout="block" style="display: flex; align-items: center;">
+
+                                <p:graphicImage value="#{complianceManager.logoURL}"
+                                                width="30" height="30" 
+                                                style="margin-right: 0.5em;"/>
+
+                            </h:panelGroup>
+                        </f:facet>
+
+                        <p:menu style="border: 0;">
+
+                            <p:menuitem value="Website"
+                                        url="https://dpbennett.com.jm/jmts/"
+                                        icon="pi pi-globe"/>
+                            <p:menuitem value="User Guide" 
+                                        url="https://dpbennett.com.jm/jmts-doc"
+                                        icon="pi pi-file"/>
+                            <p:menuitem value="Ticket" 
+                                        disabled="true"
+                                        icon="pi pi-ticket"/>
+
+                            <p:divider />
+
+                            <p:menuitem value="Logout" 
+                                        actionListener="#{complianceManager.logout}"
+                                        oncomplete="location.reload();"
+                                        icon="pi pi-sign-out"/>
+
+                        </p:menu>
+
+                    </p:panel>
+
+                </p:sidebar>
+
                 <p:growl id="growl3" life="5000" showDetail="true" />
 
                 <!-- Header -->
@@ -53,7 +93,13 @@ Email: info@dpbennett.com.jm
 
                     <div class="col-12 col-nogutter">
                         <div class="grid">
-                            <div class="col-12 md:col-3">
+                            <div class="col-12 md:col-4">
+                                <h:panelGroup style="float: left;margin-right: 10px;" >
+                                    <p:commandButton styleClass="ui-button-flat hamburger hamburger-icon"
+                                                     rendered="true"
+                                                     onclick="PF('sidebar1').show()"
+                                                     icon="pi pi-bars" />
+                                </h:panelGroup>
                                 <h:panelGroup style="float: left;margin-right: 10px;" >
                                     <p:graphicImage value="#{complianceManager.logoURL}"
                                                     class="logo"
@@ -70,14 +116,14 @@ Email: info@dpbennett.com.jm
 
                                 </h:panelGrid>
                             </div>    
-                            <div class="col-12 md:col-6">
+                            <div class="col-12 md:col-4">
                                 <p:outputPanel style="text-align: center;">
                                     <h:outputText value="#{complianceManager.lastSystemNotificationContent}"                                                   
                                                   style="font-size: 1em;"
                                                   escape="false" />
                                 </p:outputPanel>                          
                             </div>  
-                            <div class="col-12 md:col-3">
+                            <div class="col-12 md:col-4">
                                 <h:panelGroup style="float: right;" >
 
                                     <p:badge value="#{complianceManager.sizeOfActiveNotifications}" 
@@ -115,7 +161,7 @@ Email: info@dpbennett.com.jm
                                     <p:spacer width="30"/>                                   
 
 
-                                    <p:commandButton actionListener="#{complianceManager.viewUserProfile}"                                            
+                                    <p:commandButton actionListener="#{systemManager.viewUserProfile}"                                            
                                                      update=":userProfileDialogForm"
                                                      oncomplete="PF('userProfileDialog').show();"
                                                      icon="pi pi-user"
@@ -135,7 +181,12 @@ Email: info@dpbennett.com.jm
                             </div>
                         </div>
                     </div>     
+                    <div class="col-12 col-nogutter">
+                        <ui:include src="menubar.xhtml" />
+                    </div>
                 </p:panel>
+
+                <p:sticky target=""/>
 
             </h:form>     
 
@@ -171,8 +222,8 @@ Email: info@dpbennett.com.jm
 
                                         <p:defaultCommand target="#{complianceManager.defaultCommandTarget}" />
 
-                                        <h:panelGroup rendered="#{t.id == 'Standards Compliance'}" >
-                                            <ui:include src="dashboard/sc/scTab.xhtml" />                                                                
+                                        <h:panelGroup rendered="#{t.id == 'Standards Compliance'}">
+                                            <ui:include src="dashboard/sc/scTab.xhtml" />
                                         </h:panelGroup>
 
                                         <h:panelGroup rendered="#{t.id == 'System Administration'}" >
@@ -199,7 +250,9 @@ Email: info@dpbennett.com.jm
                                 <div class="grid">
                                     <div class="col-12">
 
-                                        <ui:include src="menubar.xhtml" /> 
+                                        <ui:remove>
+                                            <ui:include src="menubar.xhtml" />
+                                        </ui:remove>
 
                                         <p:tabView id="mainTabView"  
                                                    rendered="#{complianceManager.mainTabView.render}"
@@ -223,24 +276,16 @@ Email: info@dpbennett.com.jm
 
                                                 <p:defaultCommand target="#{complianceManager.defaultCommandTarget}" />
 
-                                                <h:panelGroup rendered="#{t.id == 'System Administration'}" >
-                                                    <ui:include src="admin/generalAdminTab.xhtml" /> 
-                                                </h:panelGroup>  
-
-                                                <h:panelGroup  rendered="#{t.id == 'Financial Administration'}">
-                                                    <ui:include src="finance/financialAdminTab.xhtml" /> 
-                                                </h:panelGroup> 
-
-                                                <h:panelGroup rendered="#{t.id == 'Market Products'}" >
-                                                    <ui:include src="finance/marketProductBrowser.xhtml" />                                                                
-                                                </h:panelGroup>
-
                                                 <h:panelGroup rendered="#{t.id == 'Human Resource'}" >
                                                     <ui:include src="hr/hrmTab.xhtml" /> 
                                                 </h:panelGroup>
 
-                                                <h:panelGroup rendered="#{t.id == 'Clients'}" >
-                                                    <ui:include src="client/clientsTab.xhtml" />                                                                
+                                                <h:panelGroup rendered="#{t.id == 'System Administration'}" >
+                                                    <ui:include src="admin/generalAdminTab.xhtml" /> 
+                                                </h:panelGroup>                                               
+
+                                                <h:panelGroup rendered="#{t.id == 'Market Products'}" >
+                                                    <ui:include src="finance/marketProductBrowser.xhtml" />                                                                
                                                 </h:panelGroup>
 
                                                 <h:panelGroup rendered="#{t.id == 'Report Templates'}" >
@@ -261,7 +306,11 @@ Email: info@dpbennett.com.jm
 
                                                 <h:panelGroup rendered="#{t.id == 'Factory Inspections'}" >
                                                     <ui:include src="compliance/factory/factoryInspectionsTab.xhtml" />                                                                
-                                                </h:panelGroup>                                              
+                                                </h:panelGroup>
+                                                
+                                                <h:panelGroup  rendered="#{t.id == 'Factory Browser'}">
+                                                    <ui:include src="compliance/foodsafety/factoryBrowser.xhtml" /> 
+                                                </h:panelGroup>
 
                                             </p:tab>
 
