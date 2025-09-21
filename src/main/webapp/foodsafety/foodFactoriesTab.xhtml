@@ -1,0 +1,182 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2025  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+    <p:toolbar>
+        <p:toolbarGroup align="left" >               
+            <p:commandButton 
+                value="New"
+                icon="pi pi-plus" 
+                actionListener="#{foodFactoryManager.createNewFoodFactory}"                                            
+                process="@this"
+                title="Add a new food factory" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{foodFactoryManager.doFoodFactorySearch}"
+                        update="foodFactoriesTable"/>
+
+            </p:commandButton>
+            <p:spacer width="20" />
+            <h:panelGroup>
+                <p:inputText id="foodFactorySearchText" 
+                             placeholder="Enter search text"
+                             value="#{foodFactoryManager.foodFactorySearchText}" />
+                <p:commandButton id="foodFactorySearchButton"
+                                 class="search-button"   
+                                 actionListener="#{foodFactoryManager.doFoodFactorySearch}"
+                                 update=":mainTabViewForm:mainTabView:foodFactoriesTable"
+                                 icon="pi pi-search"
+                                 process="@form" />
+            </h:panelGroup>
+        </p:toolbarGroup>
+        
+        <p:toolbarGroup align="right" >
+            <p:outputLabel value="Active factories only" 
+                           for="activeFactoriesOnly" />  
+            <p:spacer height="0px" width="5px"/>
+            <h:panelGroup>
+                <p:selectBooleanCheckbox style="vertical-align: middle"
+                                         id="activeFactoriesOnly"
+                                         value="#{foodFactoryManager.isActiveFactoriesOnly}" >
+                  
+                    <p:ajax  update="foodFactoriesTable"
+                             listener="#{foodFactoryManager.doFoodFactorySearch}"
+                             event="change"                                      
+                             process="@this"/>
+                    
+                </p:selectBooleanCheckbox>            
+                <p:tooltip for="activeFactoriesOnly" 
+                           value="Check to search for active factories only" 
+                           showEffect="fade" hideEffect="fade" />
+                <p:spacer width="15" />                
+            </h:panelGroup>
+        </p:toolbarGroup>
+    </p:toolbar>
+
+    <p:dataTable id="foodFactoriesTable"
+                 var="factory"
+                 paginator="true"
+                 rendered="true"                 
+                 rows="15"
+                 reflow="true"
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 value="#{foodFactoryManager.factories}">
+
+        <f:facet name="header">
+            <h:outputText value="Search Results (found: #{foodFactoryManager.numFactoriesFound})" />
+        </f:facet>
+
+        <p:column style="width: 30px;">
+            <f:facet name="header">
+                <p:outputLabel value="Active"/>
+            </f:facet>           
+            <p:selectBooleanCheckbox 
+                style="display: block;text-align: center;"
+                disabled="true"
+                value="#{factory.active}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Name"/>
+            </f:facet>
+            <h:outputText value="#{factory.name}" />
+        </p:column>
+
+        <p:column sortBy="#{factory.registrationStatus}">
+            <f:facet name="header">
+                <h:outputText value="Registration status"/>
+            </f:facet>
+            <h:outputText value="#{factory.registrationStatus}" />
+        </p:column>
+
+        <p:column sortBy="#{factory.dateRegistrationDue}">
+            <f:facet name="header">
+                <h:outputText value="Registration due"/>
+            </f:facet>
+            <h:outputText value="#{factory.dateRegistrationDue}">
+                <f:convertDateTime pattern="MMM dd, yyyy"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column sortBy="#{factory.status}">
+            <f:facet name="header">
+                <h:outputText value="Status"/>
+            </f:facet>
+            <h:outputText value="#{factory.status}" />
+        </p:column>
+
+        <p:column headerText="Active?" >                                                                         
+            <p:cellEditor>                
+                <f:facet name="output">
+                    <h:outputText value="#{factory.isActive}" />
+                </f:facet>
+                <f:facet name="input">
+                    <p:selectOneMenu value="#{factory.isActive}">
+                        <f:selectItem itemLabel="Yes" itemValue="Yes"/>
+                        <f:selectItem itemLabel="No" itemValue="No"/>
+                    </p:selectOneMenu>
+                </f:facet>
+            </p:cellEditor>         
+        </p:column>
+
+        <p:column>
+            <p:commandButton icon="pi pi-pencil"
+                             actionListener="#{foodFactoryManager.editSelectedFactory}"
+                             process="@this"
+                             title="View or edit this factory's detail">
+
+                <f:setPropertyActionListener value="#{factory}" 
+                                             target="#{foodFactoryManager.selectedFactory}" />
+
+                <p:ajax event="dialogReturn" 
+                        update="foodFactoriesTable"/>
+
+            </p:commandButton>
+        </p:column>
+
+    </p:dataTable>
+    
+    <p:toolbar>
+        <p:toolbarGroup align="left" >               
+            <p:commandButton 
+                value="New"
+                icon="pi pi-plus" 
+                actionListener="#{foodFactoryManager.createNewFoodFactory}"                                            
+                process="@this"
+                title="Add a new food factory to the database" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{foodFactoryManager.doFoodFactorySearch}"
+                        update="foodFactoriesTable"/>
+
+            </p:commandButton>
+            
+        </p:toolbarGroup>
+    </p:toolbar>
+
+</html>
+
+

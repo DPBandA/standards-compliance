@@ -113,29 +113,79 @@ Email: info@dpbennett.com.jm
                             update=":mainTabViewForm:mainTabView,:headerForm:growl3" />
 
                 </p:menuitem>
+
             </p:submenu>
 
             <p:divider />
 
-            <p:menuitem value="Surveys"
-                        actionListener="#{complianceManager.openSurveysBrowser}"   
-                        icon="pi pi-copy"
-                        process="@this"/>                   
+            <p:submenu label="Tools"  
+                       icon="pi pi-wrench">
 
-            <p:menuitem value="Standards" 
-                        actionListener="#{complianceManager.openStandardsBrowser}"
-                        icon="pi pi-copy"
-                        process="@this"/>
+                <p:menuitem value="Surveys"
+                            actionListener="#{complianceManager.openSurveysBrowser}"   
+                            icon="pi pi-copy"
+                            process="@this"/>                   
 
-            <p:menuitem value="Complaints"  
-                        actionListener="#{complianceManager.openComplaintsBrowser}"
-                        icon="pi pi-copy"
-                        process="@this"/>
+                <p:menuitem value="Standards" 
+                            actionListener="#{complianceManager.openStandardsBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
 
-            <p:menuitem value="Factory Inspections"  
-                        actionListener="#{complianceManager.openFactoryInspectionBrowser}"
-                        icon="pi pi-copy"
-                        process="@this"/>
+                <p:menuitem value="Complaints"  
+                            actionListener="#{complianceManager.openComplaintsBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+
+                <p:menuitem value="Market Products"  
+                            actionListener="#{complianceManager.openMarketProductBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+
+                <p:menuitem value="Manufacturers"  
+                            actionListener="#{complianceManager.openManufacturerBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+
+                <p:menuitem value="Factory Inspections"  
+                            actionListener="#{complianceManager.openFactoryInspectionBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+
+            </p:submenu>
+
+        </p:submenu>
+
+        <p:submenu label="Food Safety"                            
+                   rendered="#{foodSafetyManager.user.hasModule('foodSafetyManager')}"
+                   icon="pi pi-shield" >
+
+            <p:submenu label="New"  
+                       icon="pi pi-plus" >
+
+                <p:menuitem
+                    value="Factory"
+                    icon="pi pi-plus" 
+                    actionListener="#{foodFactoryManager.createNewFoodFactory}"                                            
+                    process="@this"
+                    title="Add a new food factory" >
+
+                    <p:ajax event="dialogReturn" 
+                            listener="#{foodFactoryManager.doFoodFactorySearch}"
+                            update=":mainTabViewForm:mainTabView:foodFactoriesTable,:headerForm:growl3"/>
+
+                </p:menuitem>
+
+            </p:submenu>
+
+            <p:submenu label="Tools"  
+                       icon="pi pi-wrench">
+
+                <p:menuitem value="Factories"  
+                            actionListener="#{foodFactoryManager.openFactoryBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+
+            </p:submenu>
 
         </p:submenu>
 
@@ -166,46 +216,6 @@ Email: info@dpbennett.com.jm
         <p:submenu rendered="#{systemManager.user.hasModule('systemManager')}"
                    label="System Administration" 
                    icon="pi pi-server" >
-            
-            <p:submenu label="Entity Managers" 
-                       icon="pi pi-database" >
-
-                <p:menuitem value="System Management (SM)"
-                            title="Edit SM entity manager"
-                            icon="pi pi-cog"
-                            actionListener="#{systemManager.editSMEM}" 
-                            process="@this" >
-
-                    <p:ajax event="dialogReturn" 
-                            update=""/>
-
-                </p:menuitem>
-                
-                <p:menuitem value="Financial Management (FM)"
-                            title="Edit FM entity manager"
-                            icon="pi pi-cog"
-                            actionListener="#{systemManager.editFMEM}" 
-                            process="@this" >
-
-                    <p:ajax event="dialogReturn" 
-                            update=""/>
-
-                </p:menuitem>
-                
-                <p:menuitem value="Job Management &amp; Tracking System (JMTS)"
-                            title="Edit JMTS entity manager"
-                            icon="pi pi-cog"
-                            actionListener="#{systemManager.editJMTSEM}" 
-                            process="@this" >
-
-                    <p:ajax event="dialogReturn" 
-                            update=""/>
-
-                </p:menuitem>               
-                              
-            </p:submenu>
-            
-            <p:divider />
 
             <p:menuitem 
                 actionListener="#{systemManager.mainTabView.openTab('System Administration')}" 

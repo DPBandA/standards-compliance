@@ -17,6 +17,12 @@
     </managed-bean>
     
     <managed-bean>
+        <managed-bean-name>foodFactoryManager</managed-bean-name>
+        <managed-bean-class>jm.com.dpbennett.sc.manager.FoodFactoryManager</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
         <managed-bean-name>legalMetrologyManager</managed-bean-name>
         <managed-bean-class>jm.com.dpbennett.sc.manager.LegalMetrologyManager</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>

@@ -225,6 +225,10 @@ Email: info@dpbennett.com.jm
                                         <h:panelGroup rendered="#{t.id == 'Standards Compliance'}">
                                             <ui:include src="dashboard/sc/scTab.xhtml" />
                                         </h:panelGroup>
+                                        
+                                        <h:panelGroup rendered="#{t.id == 'Food Safety'}">
+                                            <ui:include src="dashboard/fs/fsTab.xhtml" />
+                                        </h:panelGroup>
 
                                         <h:panelGroup rendered="#{t.id == 'System Administration'}" >
                                             <ui:include src="dashboard/admin/generalAdminTab.xhtml" /> 
@@ -292,24 +296,28 @@ Email: info@dpbennett.com.jm
                                                     <ui:include src="report/reportTemplatesTab.xhtml" />                                                               
                                                 </h:panelGroup>   
 
-                                                <h:panelGroup  rendered="#{t.id == 'Survey Browser'}">
-                                                    <ui:include src="compliance/survey/surveyBrowser.xhtml" /> 
+                                                <h:panelGroup  rendered="#{t.id == 'Surveys'}">
+                                                    <ui:include src="compliance/survey/surveysTab.xhtml" /> 
                                                 </h:panelGroup> 
 
-                                                <h:panelGroup  rendered="#{t.id == 'Complaint Browser'}">
-                                                    <ui:include src="compliance/complaint/complaintBrowser.xhtml" /> 
+                                                <h:panelGroup  rendered="#{t.id == 'Complaints'}">
+                                                    <ui:include src="compliance/complaint/complaintsTab.xhtml" /> 
                                                 </h:panelGroup>
 
-                                                <h:panelGroup rendered="#{t.id == 'Standard Browser'}" >
-                                                    <ui:include src="compliance/standard/standardBrowser.xhtml" />                                                                
+                                                <h:panelGroup rendered="#{t.id == 'Standards'}" >
+                                                    <ui:include src="compliance/standard/standardsTab.xhtml" />                                                                
                                                 </h:panelGroup>
 
                                                 <h:panelGroup rendered="#{t.id == 'Factory Inspections'}" >
                                                     <ui:include src="compliance/factory/factoryInspectionsTab.xhtml" />                                                                
                                                 </h:panelGroup>
+
+                                                <h:panelGroup rendered="#{t.id == 'Manufacturers'}" >
+                                                    <ui:include src="compliance/factory/manufacturersTab.xhtml"/>  
+                                                </h:panelGroup>
                                                 
-                                                <h:panelGroup  rendered="#{t.id == 'Factory Browser'}">
-                                                    <ui:include src="compliance/foodsafety/factoryBrowser.xhtml" /> 
+                                                <h:panelGroup rendered="#{t.id == 'Factories'}" >
+                                                    <ui:include src="foodsafety/foodFactoriesTab.xhtml"/>  
                                                 </h:panelGroup>
 
                                             </p:tab>
