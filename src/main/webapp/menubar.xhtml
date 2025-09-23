@@ -188,6 +188,40 @@ Email: info@dpbennett.com.jm
             </p:submenu>
 
         </p:submenu>
+        
+        <p:submenu label="Legal Metrology"                            
+                   rendered="#{legalMetrologyManager.user.hasModule('legalMetrologyManager')}"
+                   icon="pi pi-gauge" >
+
+            <p:submenu label="New"  
+                       icon="pi pi-plus" >
+
+                <p:menuitem
+                    value="Petrol Station"
+                    icon="pi pi-plus" 
+                    actionListener="#{legalMetrologyManager.createNewPetrolStation}"                                            
+                    process="@this"
+                    title="Add a new petrol station" >
+
+                    <p:ajax event="dialogReturn" 
+                            listener="#{legalMetrologyManager.doPetrolStationSearch}"
+                            update=":mainTabViewForm:mainTabView:petrolStationsTable,:headerForm:growl3"/>
+
+                </p:menuitem>
+
+            </p:submenu>
+
+            <p:submenu label="Tools"  
+                       icon="pi pi-wrench">
+
+                <p:menuitem value="Petrol Stations"  
+                            actionListener="#{legalMetrologyManager.openPetrolStationBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+
+            </p:submenu>
+
+        </p:submenu>
 
         <p:menuitem value="Human Resource"
                     title="Human resource management"
