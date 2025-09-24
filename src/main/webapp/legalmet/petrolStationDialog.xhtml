@@ -73,15 +73,15 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Parent company/client *" style="font-weight: bold" />
                         <h:panelGroup>
-                            <p:autoComplete id="petrolStationClient"
+                            <p:autoComplete id="petrolStationClient"      
                                             var="client"
-                                            value="#{legalMetrologyManager.currentPetrolStation.client}"
                                             itemLabel="#{client.truncatedName}"
-                                            itemValue="#{client}"
+                                            itemValue="#{client}"              
                                             dropdown="false"
-                                            scrollHeight="200"
-                                            forceSelection="true"
+                                            scrollHeight="200" 
+                                            value="#{legalMetrologyManager.currentPetrolStation.client}"
                                             validator="jobClientValidator"
+                                            forceSelection="true"
                                             minQueryLength="2"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
@@ -89,20 +89,79 @@ Email: info@dpbennett.com.jm
 
                                 <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
-                                <p:ajax event="itemSelect"                                        
+                                <p:ajax event="itemSelect"
+                                        update="actionsMenuButton"
                                         listener="#{legalMetrologyManager.updatePetrolStationClient}"
-                                        process="@this" />
+                                        process="@this"/>
 
-                            </p:autoComplete>
+                            </p:autoComplete>  
+                            <p:menuButton id="actionsMenuButton" 
+                                          icon="pi pi-pencil" 
+                                          title="Add or edit company">
 
-                            <p:spacer height="0" width="4"/>
+                                <p:menuitem value="Edit company"
+                                            id="editClient"
+                                            icon="pi pi-pencil" 
+                                            disabled="${!legalMetrologyManager.isPetrolStationClientNameValid}"                            
+                                            actionListener="#{legalMetrologyManager.editPetrolCompany}"  
+                                            process="@this,petrolStationClient"                             
+                                            title="View or edit this company's detail">    
 
-                            <p:commandButton icon="ui-icon-pencil"
-                                             actionListener="#{legalMetrologyManager.editPetrolStationClient}"
-                                             process="@this"
-                                             title="View or edit this client's detail"/>                    
-                            <p:spacer height="0" width="4"/>
-                        </h:panelGroup>   
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{legalMetrologyManager.petrolCompanyDialogReturn}"
+                                            update="petrolStationClient" />
+
+                                </p:menuitem>
+
+                                <p:menuitem
+                                    value="Add company"
+                                    icon="pi pi-plus"                    
+                                    disabled="#{!legalMetrologyManager.user.can('AddClient')}"
+                                    actionListener="#{legalMetrologyManager.createNewPetrolCompany}"                                            
+                                    process="@this"
+                                    title="Add a new company">
+
+                                    <p:ajax event="dialogReturn" 
+                                            listener="#{legalMetrologyManager.petrolCompanyDialogReturn}"
+                                            update="petrolStationClient" />
+
+                                </p:menuitem>
+                            </p:menuButton>     
+
+                        </h:panelGroup>
+                        <ui:remove>
+                            <h:panelGroup>
+                                <p:autoComplete id="petrolStationClient"
+                                                var="client"
+                                                value="#{legalMetrologyManager.currentPetrolStation.client}"
+                                                itemLabel="#{client.truncatedName}"
+                                                itemValue="#{client}"
+                                                dropdown="false"
+                                                scrollHeight="200"
+                                                forceSelection="true"
+                                                validator="jobClientValidator"
+                                                minQueryLength="2"
+                                                completeMethod="#{clientManager.completeActiveClient}" >
+
+                                    <f:converter converterId="activeClientConverter"/>
+
+                                    <f:attribute name="em" value="#{clientManager.entityManager1}"/>
+
+                                    <p:ajax event="itemSelect"                                        
+                                            listener="#{legalMetrologyManager.updatePetrolStationClient}"
+                                            process="@this" />
+
+                                </p:autoComplete>
+
+                                <p:spacer height="0" width="4"/>
+
+                                <p:commandButton icon="ui-icon-pencil"
+                                                 actionListener="#{legalMetrologyManager.editPetrolStationClient}"
+                                                 process="@this"
+                                                 title="View or edit this client's detail"/>                    
+                                <p:spacer height="0" width="4"/>
+                            </h:panelGroup>  
+                        </ui:remove>
 
                         <h:outputText value="Name *" style="font-weight: bold" />
                         <p:inputText value="#{legalMetrologyManager.currentPetrolStation.name}"
