@@ -41,6 +41,19 @@ Email: info@dpbennett.com.jm
 
                 </p:menuitem>
 
+                <p:menuitem
+                    value="Scale"
+                    icon="pi pi-plus" 
+                    actionListener="#{legalMetrologyManager.createNewScale}"                                            
+                    process="@this"
+                    title="Add a new scale" >
+
+                    <p:ajax event="dialogReturn" 
+                            listener="#{legalMetrologyManager.doScaleSearch}"
+                            update=":mainTabViewForm:mainTabView:scalesTable,:headerForm:growl3"/>
+
+                </p:menuitem>
+
 
             </p:menuButton>
 
@@ -52,6 +65,11 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Petrol Stations"  
                             actionListener="#{legalMetrologyManager.openPetrolStationBrowser}"
+                            icon="pi pi-copy"
+                            process="@this"/>
+                
+                <p:menuitem value="Scales"  
+                            actionListener="#{legalMetrologyManager.openScaleBrowser}"
                             icon="pi pi-copy"
                             process="@this"/>
 

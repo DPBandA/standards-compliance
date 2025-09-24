@@ -1,0 +1,143 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2025  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+    
+    <p:toolbar>
+        <p:toolbarGroup align="left" >               
+            <p:commandButton 
+                value="New"
+                icon="pi pi-plus" 
+                actionListener="#{legalMetrologyManager.createNewScale}"                                            
+                process="@this"
+                title="Add a scale" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doScaleSearch}"
+                        update="scalesTable"/>
+
+            </p:commandButton>
+            <p:spacer width="20" />
+            <h:panelGroup>
+                <p:inputText id="scaleSearchText" 
+                             placeholder="Enter search text"
+                             value="#{legalMetrologyManager.scaleSearchText}" />
+                <p:commandButton id="scaleSearchButton"
+                                 class="search-button"   
+                                 actionListener="#{legalMetrologyManager.doScaleSearch}"
+                                 update=":mainTabViewForm:mainTabView:scalesTable"
+                                 icon="pi pi-search"
+                                 process="@form" />
+            </h:panelGroup>
+        </p:toolbarGroup>
+
+        <p:toolbarGroup align="right" >
+            <p:outputLabel value="Active scales only" 
+                           for="activeScalesOnly" />  
+            <p:spacer height="0px" width="5px"/>
+            <h:panelGroup>
+                <p:selectBooleanCheckbox style="vertical-align: middle"
+                                         id="activeScalesOnly"
+                                         value="#{legalMetrologyManager.isActiveScalesOnly}" >
+
+                    <p:ajax  update="scalesTable"
+                             listener="#{legalMetrologyManager.doScaleSearch}"
+                             event="change"                                      
+                             process="@this"/>
+
+                </p:selectBooleanCheckbox>            
+                <p:tooltip for="activeScalesOnly" 
+                           value="Check to search for active scales only" 
+                           showEffect="fade" hideEffect="fade" />
+                <p:spacer width="15" />                
+            </h:panelGroup>
+        </p:toolbarGroup>
+    </p:toolbar>
+
+    <p:dataTable id="scalesTable"
+                 var="scale"
+                 paginator="true"
+                 rows="15"      
+                 rowStyleClass="#{scale.certification.expiryDate le legalMetrologyManager.currentDate ? 'due' : null}" 
+                 resizableColumns="false"
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 value="#{legalMetrologyManager.scaleSearchResultsList}">
+        <p:ajax event="page"  onstart="longProcessDialogVar.show();" oncomplete="longProcessDialogVar.hide();" />
+
+        <f:facet name="header">
+            <h:outputText value="Search Results (found: #{legalMetrologyManager.numScalesFound})" />
+        </f:facet>
+
+        <p:column sortBy="#{scale.name}">
+            <f:facet name="header">
+                <h:outputText value="Name"/>
+            </f:facet>
+            <h:outputText value="#{scale.name}" />
+        </p:column>
+
+        <p:column sortBy="#{scale.client.name}">
+            <f:facet name="header">
+                <h:outputText value="Client"/>
+            </f:facet>
+            <h:outputText value="#{scale.client.name}" />
+        </p:column>
+
+        <p:column sortBy="#{scale.certification.dateIssued}">
+            <f:facet name="header">
+                <h:outputText value="Cert. Issue Date"/>
+            </f:facet>
+            <h:outputText value="#{scale.certification.dateIssued}">
+                <f:convertDateTime pattern="MMM dd, yyyy"/>
+            </h:outputText>                
+        </p:column>  
+
+        <p:column sortBy="#{scale.certification.expiryDate}">
+            <f:facet name="header">
+                <h:outputText value="Expiry Date"/>
+            </f:facet>
+            <h:outputText value="#{scale.certification.expiryDate}">
+                <f:convertDateTime pattern="MMM dd, yyyy"/>
+            </h:outputText>                
+        </p:column>    
+
+        <p:column style="width:32px">
+            <p:commandButton title="View/Edit scale"                             
+                             actionListener="#{legalMetrologyManager.editScale}"
+                             update=":unitDialogForms:scaleDetailDialog"
+                             onstart="longProcessDialogVar.show();"
+                             oncomplete="scaleDialog.show();longProcessDialogVar.hide();"
+                             onerror="connectionErrorDialog.show();"
+                             global="true"
+                             process="@this"
+                             icon="ui-icon ui-icon-pencil">
+                <f:setPropertyActionListener value="#{scale}"
+                                             target="#{legalMetrologyManager.currentScale}" />
+            </p:commandButton>           
+        </p:column>    
+
+
+    </p:dataTable>
+
+
+</html>

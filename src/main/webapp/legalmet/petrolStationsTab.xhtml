@@ -53,12 +53,12 @@ Email: info@dpbennett.com.jm
         </p:toolbarGroup>
 
         <p:toolbarGroup align="right" >
-            <p:outputLabel value="Active factories only" 
-                           for="activeFactoriesOnly" />  
+            <p:outputLabel value="Active petrol stations only" 
+                           for="activePetrolStationsOnly" />  
             <p:spacer height="0px" width="5px"/>
             <h:panelGroup>
                 <p:selectBooleanCheckbox style="vertical-align: middle"
-                                         id="isActivePetrolStationsOnly"
+                                         id="activePetrolStationsOnly"
                                          value="#{legalMetrologyManager.isActivePetrolStationsOnly}" >
 
                     <p:ajax  update="petrolStationsTable"
@@ -67,7 +67,7 @@ Email: info@dpbennett.com.jm
                              process="@this"/>
 
                 </p:selectBooleanCheckbox>            
-                <p:tooltip for="isActivePetrolStationsOnly" 
+                <p:tooltip for="activePetrolStationsOnly" 
                            value="Check to search for active petrol stations only" 
                            showEffect="fade" hideEffect="fade" />
                 <p:spacer width="15" />                
@@ -85,7 +85,7 @@ Email: info@dpbennett.com.jm
                  value="#{legalMetrologyManager.petrolStationSearchResultsList}">
 
         <f:facet name="header">
-            <h:outputText value="#{legalMetrologyManager.petrolStationSearchResultsTableHeader}" />
+            <h:outputText value="Search Results (found: #{legalMetrologyManager.numPetrolStationsFound})" />
         </f:facet>
 
         <p:column sortBy="#{petrolStation.name}">

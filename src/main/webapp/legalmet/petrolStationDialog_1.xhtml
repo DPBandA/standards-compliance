@@ -1,0 +1,334 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2025  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <ui:include src="/head.xhtml" />     
+        <title>Petrol Station</title>
+        <ui:include src="header.xhtml" /> 
+    </h:head>
+
+    <h:body >  
+        <ui:insert >   
+            <ui:include src="../common/commonDialogs.xhtml"/>
+        </ui:insert>
+
+        <h:form id="petrolStationDialogForm">   
+
+            <p:growl id="petrolStationGrowl" life="5000" showDetail="true"/>
+
+            <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     actionListener="#{legalMetrologyManager.savePetrolStation}"     
+                                     update="petrolStationGrowl,petrolStationDialogForm"
+                                     icon="pi pi-save"
+                                     process="@form"/>
+                    <p:spacer height="0" width="4"/>
+                    <p:commandButton value="Close" 
+                                     actionListener="#{legalMetrologyManager.closeDialog}"
+                                     update="petrolStationGrowl,petrolStationDialogForm"
+                                     icon="pi pi-times"
+                                     process="@this"/>
+
+                    <p:spacer width="10" />
+
+                    <h:outputText value="#{legalMetrologyManager.currentPetrolStation.editStatus}" />
+                </p:toolbarGroup>   
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <h:panelGrid id="petrolStationDialogContent" columns="2">            
+
+                <h:outputText value="Parent company/client *" style="font-weight: bold" />
+                <h:panelGroup>
+                    <p:autoComplete id="petrolStationClient"
+                                    var="client"
+                                    value="#{legalMetrologyManager.currentPetrolStation.client}"
+                                    itemLabel="#{client.truncatedName}"
+                                    itemValue="#{client}"
+                                    dropdown="false"
+                                    scrollHeight="200"
+                                    forceSelection="true"
+                                    validator="jobClientValidator"
+                                    minQueryLength="2"
+                                    completeMethod="#{clientManager.completeActiveClient}" >
+
+                        <f:converter converterId="activeClientConverter"/>
+
+                        <f:attribute name="em" value="#{clientManager.entityManager1}"/>
+
+                        <p:ajax event="itemSelect"                                        
+                                listener="#{legalMetrologyManager.updatePetrolStationClient}"
+                                process="@this" />
+
+                    </p:autoComplete>
+
+                    <p:spacer height="0" width="4"/>
+
+                    <p:commandButton icon="ui-icon-pencil"
+                                     actionListener="#{legalMetrologyManager.editPetrolStationClient}"
+                                     process="@this"
+                                     title="View or edit this client's detail"/>                    
+                    <p:spacer height="0" width="4"/>
+                </h:panelGroup>   
+
+                <h:outputText value="Name *" style="font-weight: bold" />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolStation.name}"
+                             id="petrolStationName"                             
+                             validatorMessage="Please enter a valid name" >
+
+                    <p:ajax event="keyup"
+                            global="false"                            
+                            listener="#{legalMetrologyManager.updatePetrolStation}"/>
+
+                </p:inputText>
+
+                <h:outputText value="Inspector responsible *" style="font-weight: bold" />                       
+                <p:autoComplete id="inspector"
+                                var="assignedTo"
+                                value="#{legalMetrologyManager.currentPetrolStation.lastAssignee}"
+                                itemLabel="#{assignedTo.name}"
+                                itemValue="#{assignedTo}"
+                                validator="businessEntityListValidator"
+                                forceSelection="true"
+                                dropdown="true"
+                                scrollHeight="200" 
+                                completeMethod="#{humanResourceManager.completeActiveEmployee}" >
+
+                    <f:converter converterId="activeEmployeeConverter"/>
+
+                    <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
+
+                    <p:ajax event="itemSelect"
+                            listener="#{legalMetrologyManager.updatePetrolStationLastAssignee}"
+                            process="@this" />
+
+                </p:autoComplete>   
+
+                <h:outputText value="Certication" style="font-style: italic"/>
+                <h:outputText value="" />
+
+                <h:outputText value="Last certified:" style="font-weight: bold" />     
+                <h:panelGroup>
+                    <p:calendar id="datePetrolStationLastCertified"
+                                value="#{legalMetrologyManager.currentPetrolStation.certification.dateIssued}"
+                                navigator="true"
+                                pattern="MMM dd, yyyy" >
+
+                        <p:ajax event="dateSelect"
+                                update="datePetrolStationCertificationDue,petrolPumpTable"
+                                listener="#{legalMetrologyManager.updatePetrolStationDateCertified}" />       
+
+                        <p:ajax event="keyup"
+                                update="datePetrolStationCertificationDue,petrolPumpTable"
+                                listener="#{legalMetrologyManager.updatePetrolStationDateCertified}" />   
+                    </p:calendar>
+                    <p:spacer height="0" width="5"/>
+                    <h:outputText value="Due:" style="font-weight: bold" />     
+                    <p:spacer height="0" width="5"/>
+                    <p:calendar id="datePetrolStationCertificationDue"
+                                value="#{legalMetrologyManager.currentPetrolStation.certification.expiryDate}"
+                                navigator="true"
+                                pattern="MMM dd, yyyy" >
+                        <p:ajax event="dateSelect"
+                                update="petrolPumpTable"
+                                listener="#{legalMetrologyManager.updatePetrolStationDateCertificationDue}" />      
+                        <p:ajax event="keyup"
+                                update="petrolPumpTable"
+                                listener="#{legalMetrologyManager.updatePetrolStationDateCertificationDue}" /> 
+                    </p:calendar>
+                </h:panelGroup>
+
+                <h:outputText value="Address" style="font-style: italic"/>
+                <h:outputText value="" />
+
+                <h:outputText value="Address (line 1):" />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolStation.billingAddress.addressLine1}"
+                             id="petrolStationAddressLine1" >
+
+                    <p:ajax event="keyup"
+                            global="false"                            
+                            listener="#{legalMetrologyManager.updatePetrolStation()}"
+                            process="@this"/>
+
+                </p:inputText>
+
+                <h:outputText value="Address (line 2):" />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolStation.billingAddress.addressLine2}"
+                             id="petrolStationAddressLine2" >
+
+                    <p:ajax event="keyup"
+                            global="false"                            
+                            listener="#{legalMetrologyManager.updatePetrolStation}"
+                            process="@this"/>
+
+                </p:inputText>
+
+                <h:outputText value="Parish:"/>
+                <h:selectOneMenu value="#{legalMetrologyManager.currentPetrolStation.billingAddress.stateOrProvince}"                             
+                                 id="petrolStationStateOrProvince" >
+
+                    <p:ajax
+                        global="true"
+                        listener="#{legalMetrologyManager.updatePetrolStation}"
+                        process="@this" />
+
+                    <f:selectItems value="#{systemManager.jamaicaParishes}" />
+
+                </h:selectOneMenu>
+
+                <h:outputText value="City:" />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolStation.billingAddress.city}"
+                             id="petrolStationCity" >
+
+                    <p:ajax event="keyup"
+                            global="false"                            
+                            listener="#{legalMetrologyManager.updatePetrolStation}"
+                            process="@this"/>
+
+                </p:inputText>
+
+            </h:panelGrid>
+            <hr/>
+            <p:commandButton
+                actionListener="#{legalMetrologyManager.createNewPump}"
+                value="Add pump"
+                title="Add a petrol pump"
+                icon="ui-icon ui-icon-plus"
+                process="@this" />  
+
+            <p:dataTable id="petrolPumpTable"
+                         var="pump"                     
+                         paginator="true"
+                         rows="15"                     
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         value="#{legalMetrologyManager.currentPetrolStation.petrolPumps}">
+
+                <f:facet name="header">
+                    <h:outputText value="Petrol Pumps for #{legalMetrologyManager.currentPetrolStation.name}"/>
+                </f:facet>
+
+                <p:column style="width:100px" >
+                    <f:facet name="header">
+                        <h:outputText value="Pump #/ID"/>
+                    </f:facet>
+                    <h:outputText value="#{pump.number}" />
+                </p:column>
+
+                <p:column style="width:100px" >
+                    <f:facet name="header">
+                        <h:outputText value="Nozzles"/>
+                    </f:facet>
+                    <h:outputText value="#{pump.numberOfNozzles}" />
+                </p:column>
+
+                <p:column style="width:100px">
+                    <f:facet name="header">
+                        <h:outputText value="Last Certified"/>
+                    </f:facet>
+                    <h:outputText value="#{pump.certification.dateIssued}">
+                        <f:convertDateTime pattern="MMM dd, yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column style="width:100px">
+                    <f:facet name="header">
+                        <h:outputText value="Certification Due"/>
+                    </f:facet>
+                    <h:outputText value="#{pump.certification.expiryDate}">
+                        <f:convertDateTime pattern="MMM dd, yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Comment"/>
+                    </f:facet>
+                    <h:outputText value="#{pump.status}"/>
+                </p:column>
+
+                <p:column style="width:32px">
+                    <p:commandButton update=""                                    
+                                     title="View/Edit"
+                                     process="@this"
+                                     icon="ui-icon ui-icon-pencil">
+                        
+                        <f:setPropertyActionListener value="#{pump}"
+                                                     target="#{legalMetrologyManager.currentPetrolPump}" />
+                        
+                    </p:commandButton>
+                </p:column>
+
+                <p:column style="width:32px" 
+                          rendered="#{legalMetrologyManager.canDeletePetrolPump}">
+                    <p:commandButton title="Delete"
+                                     onclick="petrolPumpDeleteConfirm.show();"
+                                     process="@this"
+                                     icon="ui-icon ui-icon-trash">
+                        
+                        <f:setPropertyActionListener value="#{pump}"
+                                                     target="#{legalMetrologyManager.currentPetrolPump}" />
+                        
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+            <p:commandButton
+                actionListener="#{legalMetrologyManager.createNewPump}"
+                value="Add pump"
+                title="Add a petrol pump"
+                icon="ui-icon ui-icon-plus"
+                process="@this" />  
+
+            <p:toolbar id="bottomToolbar" style="margin-bottom: 1px;">
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     actionListener="#{legalMetrologyManager.savePetrolStation}"     
+                                     update="petrolStationGrowl,petrolStationDialogForm"
+                                     icon="pi pi-save"
+                                     process="@form"/>
+                    <p:spacer height="0" width="4"/>
+                    <p:commandButton value="Close" 
+                                     actionListener="#{legalMetrologyManager.closeDialog}"
+                                     update="petrolStationGrowl,petrolStationDialogForm"
+                                     icon="pi pi-times"
+                                     process="@this"/>
+
+                    <p:spacer width="10" />
+
+                    <h:outputText value="#{legalMetrologyManager.currentPetrolStation.editStatus}" />
+                </p:toolbarGroup>   
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
+                </p:toolbarGroup>
+            </p:toolbar>
+
+        </h:form>   
+    </h:body>
+</html>
