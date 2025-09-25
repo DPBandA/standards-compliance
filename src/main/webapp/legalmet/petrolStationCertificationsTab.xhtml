@@ -1,0 +1,131 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2025  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+    <p:toolbar style="margin-bottom: 1px;">
+
+        <p:toolbarGroup align="left">
+
+            <p:commandButton
+                actionListener="#{legalMetrologyManager.createNewCertification}"
+                value="New"
+                title="Add a certification"
+                icon="pi pi-plus"
+                process="@this" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doCertificationSearch}"
+                        update="certificationsTable"/>
+
+            </p:commandButton> 
+
+        </p:toolbarGroup>
+
+    </p:toolbar>
+
+    <p:dataTable id="certificationsTable"
+                 var="certificate"                     
+                 paginator="true"
+                 rows="15"                     
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                 value="#{legalMetrologyManager.certifications}">
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Certificate #"/>
+            </f:facet>
+            <h:outputText value="#{certificate.number}" />
+        </p:column>
+
+        <p:column>
+            <f:facet name="header"> 
+                <h:outputText value="Date Issued"/>
+            </f:facet>
+            <h:outputText value="#{certificate.dateIssued}">
+                <f:convertDateTime pattern="MMM dd, yyyy"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputText value="Expiry Date"/>
+            </f:facet>
+            <h:outputText value="#{certificate.expiryDate}">
+                <f:convertDateTime pattern="MMM dd, yyyy"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column style="width:32px">
+            <p:commandButton update=""                                    
+                             title="View/Edit"
+                             process="@this"
+                             icon="pi pi-pencil">
+
+                <f:setPropertyActionListener value="#{certificate}"
+                                             target="#{legalMetrologyManager.currentCertification}" />
+
+            </p:commandButton>
+        </p:column>
+
+        <p:column style="width:32px">
+            
+            <p:commandButton title="Delete"
+                             onclick="certificationDeleteConfirm.show();"
+                             process="@this"
+                             icon="pi pi-trash">
+
+                <f:setPropertyActionListener value="#{certificate}"
+                                             target="#{legalMetrologyManager.currentCertification}" />
+
+            </p:commandButton>
+            
+        </p:column>
+
+    </p:dataTable>
+
+    <p:toolbar style="margin-top: 1px;">
+
+        <p:toolbarGroup align="left">
+
+            <p:commandButton
+                actionListener="#{legalMetrologyManager.createNewCertification}"
+                value="New"
+                title="Add a certification"
+                icon="pi pi-plus"
+                process="@this" >
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doCertificationSearch}"
+                        update="certificationsTable"/>
+
+            </p:commandButton> 
+
+        </p:toolbarGroup>
+
+    </p:toolbar>
+
+</html>
+
+
