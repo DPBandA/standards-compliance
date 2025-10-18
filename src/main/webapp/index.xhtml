@@ -206,10 +206,10 @@ Email: info@dpbennett.com.jm
                                 <p:divider style="margin-top: 0;"/>
 
                                 <p:accordionPanel id="dashboardAccordion" 
-                                                  value="#{complianceManager.dashboard.tabs}" 
+                                                  value="#{systemManager.dashboard.tabs}" 
+                                                  activeIndex="#{systemManager.dashboard.tabIndex}"
                                                   var="t"   
-                                                  widgetVar="dashboardAccordionVar"
-                                                  activeIndex="#{complianceManager.dashboard.tabIndex}"
+                                                  widgetVar="dashboardAccordionVar"                                                  
                                                   rendered="true"
                                                   multiple="false">
 
@@ -217,11 +217,11 @@ Email: info@dpbennett.com.jm
                                             immediate="true"
                                             process="@this"
                                             update=":mainTabViewForm"
-                                            listener="#{complianceManager.onDashboardTabChange}" />
+                                            listener="#{systemManager.onDashboardTabChange}" />
 
                                     <p:tab title="#{t.name}" >
 
-                                        <p:defaultCommand target="#{complianceManager.defaultCommandTarget}" />
+                                        <p:defaultCommand target="#{systemManager.defaultCommandTarget}" />
 
                                         <h:panelGroup rendered="#{t.id == 'Standards Compliance'}">
                                             <ui:include src="dashboard/sc/scTab.xhtml" />
@@ -264,27 +264,27 @@ Email: info@dpbennett.com.jm
                                         </ui:remove>
 
                                         <p:tabView id="mainTabView"  
-                                                   rendered="#{complianceManager.mainTabView.render}"
-                                                   value="#{complianceManager.mainTabView.tabs}" 
+                                                   rendered="#{systemManager.mainTabView.render}"
+                                                   value="#{systemManager.mainTabView.tabs}" 
+                                                   activeIndex="#{systemManager.mainTabView.tabIndex}"
                                                    var="t" 
-                                                   dynamic="false"
-                                                   activeIndex="#{complianceManager.mainTabView.tabIndex}"
+                                                   dynamic="false"                                                   
                                                    widgetVar="mainTabViewVar">
 
                                             <p:ajax event="tabClose" 
                                                     immediate="true"
                                                     process="@this"
-                                                    listener="#{complianceManager.onMainViewTabClose}" />  
+                                                    listener="#{systemManager.onMainViewTabClose}" />  
 
                                             <p:ajax event="tabChange" 
                                                     process="@form"      
                                                     update=":mainTabViewForm"
-                                                    listener="#{complianceManager.onMainViewTabChange}" />  
+                                                    listener="#{systemManager.onMainViewTabChange}" />  
 
 
                                             <p:tab title="#{t.name}" closable="true"  >
 
-                                                <p:defaultCommand target="#{complianceManager.defaultCommandTarget}" />
+                                                <p:defaultCommand target="#{systemManager.defaultCommandTarget}" />
 
                                                 <h:panelGroup rendered="#{t.id == 'Human Resource'}" >
                                                     <ui:include src="hr/hrmTab.xhtml" /> 
