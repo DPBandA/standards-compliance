@@ -227,7 +227,7 @@ Email: info@dpbennett.com.jm
                                             <ui:include src="dashboard/sc/scTab.xhtml" />
                                         </h:panelGroup>
 
-                                        <h:panelGroup rendered="#{t.id == 'Food Safety'}">
+                                        <h:panelGroup rendered="#{t.id == 'Food Factory'}">
                                             <ui:include src="dashboard/fs/fsTab.xhtml" />
                                         </h:panelGroup>
 
@@ -286,10 +286,6 @@ Email: info@dpbennett.com.jm
 
                                                 <p:defaultCommand target="#{systemManager.defaultCommandTarget}" />
 
-                                                <h:panelGroup rendered="#{t.id == 'Human Resource'}" >
-                                                    <ui:include src="hr/hrmTab.xhtml" /> 
-                                                </h:panelGroup>
-
                                                 <h:panelGroup rendered="#{t.id == 'System Administration'}" >
                                                     <ui:include src="admin/generalAdminTab.xhtml" /> 
                                                 </h:panelGroup>                                               
@@ -297,10 +293,6 @@ Email: info@dpbennett.com.jm
                                                 <h:panelGroup rendered="#{t.id == 'Market Products'}" >
                                                     <ui:include src="finance/marketProductBrowser.xhtml" />                                                                
                                                 </h:panelGroup>
-
-                                                <h:panelGroup rendered="#{t.id == 'Report Templates'}" >
-                                                    <ui:include src="report/reportTemplatesTab.xhtml" />                                                               
-                                                </h:panelGroup>   
 
                                                 <h:panelGroup  rendered="#{t.id == 'Surveys'}">
                                                     <ui:include src="compliance/survey/surveysTab.xhtml" /> 
