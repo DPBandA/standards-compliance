@@ -33,6 +33,7 @@ Email: info@dpbennett.com.jm
                 value="New"
                 title="Add a certification"
                 icon="pi pi-plus"
+                disabled="#{legalMetrologyManager.currentPetrolStation.id == null}"
                 process="@this" >
 
                 <p:ajax event="dialogReturn" 
@@ -90,7 +91,7 @@ Email: info@dpbennett.com.jm
         </p:column>
 
         <p:column style="width:32px">
-            
+
             <p:commandButton title="Delete"
                              onclick="certificationDeleteConfirm.show();"
                              process="@this"
@@ -100,7 +101,7 @@ Email: info@dpbennett.com.jm
                                              target="#{legalMetrologyManager.currentCertification}" />
 
             </p:commandButton>
-            
+
         </p:column>
 
     </p:dataTable>
@@ -114,6 +115,7 @@ Email: info@dpbennett.com.jm
                 value="New"
                 title="Add a certification"
                 icon="pi pi-plus"
+                disabled="#{legalMetrologyManager.currentPetrolStation.id == null}"
                 process="@this" >
 
                 <p:ajax event="dialogReturn" 

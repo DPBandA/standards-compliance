@@ -79,7 +79,6 @@ Email: info@dpbennett.com.jm
                  var="petrolStation"
                  paginator="true" 
                  rows="15"       
-                 rowStyleClass="#{petrolStation.certification.expiryDate le legalMetrologyManager.currentDate ? 'due' : null}"                 
                  resizableColumns="false"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  value="#{legalMetrologyManager.petrolStationSearchResultsList}">
@@ -101,6 +100,13 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{petrolStation.client.name}" />
         </p:column>
+              
+        <p:column sortBy="#{petrolStation.lastAssignee.name}">
+            <f:facet name="header">
+                <h:outputText value="Inspector responsible"/>
+            </f:facet>
+            <h:outputText value="#{petrolStation.lastAssignee.name}" />
+        </p:column>
 
         <ui:remove>
             <p:column>
@@ -118,34 +124,12 @@ Email: info@dpbennett.com.jm
             </p:column>
         </ui:remove>
 
-        <p:column sortBy="#{petrolStation.certification.dateIssued}" style="min-width: 100px">
-            <f:facet name="header">
-                <h:outputText value="Certified"/>
-            </f:facet>
-            <h:outputText value="#{petrolStation.certification.dateIssued}">
-                <f:convertDateTime pattern="MMM dd, yyyy"/>
-            </h:outputText>
-        </p:column>
-
-        <p:column sortBy="#{petrolStation.certification.expiryDate}" style="min-width: 100px">
-            <f:facet name="header">
-                <h:outputText value="Due"/>
-            </f:facet>
-            <h:outputText value="#{petrolStation.certification.expiryDate}">
-                <f:convertDateTime pattern="MMM dd, yyyy"/>
-            </h:outputText>
-        </p:column>
-
         <p:column style="width:32px">
             <p:commandButton title="View/Edit petrol station"                             
                              actionListener="#{legalMetrologyManager.editPetrolStation}"
-
-                             onstart="longProcessDialogVar.show();"
-                             oncomplete="petrolStationDialog.show();longProcessDialogVar.hide();"
-                             onerror="connectionErrorDialog.show();"
                              global="true"
                              process="@this"
-                             icon="ui-icon ui-icon-pencil">
+                             icon="pi pi-pencil">
                 <f:setPropertyActionListener value="#{petrolStation}"
                                              target="#{legalMetrologyManager.currentPetrolStation}" />
             </p:commandButton>           

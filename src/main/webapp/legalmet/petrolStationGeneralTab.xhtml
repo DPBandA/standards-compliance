@@ -26,7 +26,37 @@ Email: info@dpbennett.com.jm
 
     <h:panelGrid id="petrolStationDialogContent" 
                  cellspacing="5"
-                 columns="2">            
+                 columns="2">    
+
+        <p:outputLabel for="petrolStationActive" value="Active *" style="font-weight: bold;" />  
+        <h:panelGroup>
+            <p:selectBooleanCheckbox style="vertical-align: middle"
+                                     id="petrolStationActive"
+                                     value="#{legalMetrologyManager.currentPetrolStation.active}" >
+
+                <p:ajax listener="#{legalMetrologyManager.updatePetrolStation}"
+                        event="change"                                      
+                        process="@this"/>
+
+            </p:selectBooleanCheckbox>     
+
+            <p:tooltip for="petrolStationActive" 
+                       value="Check to activate this petrol station" 
+                       showEffect="fade" hideEffect="fade" />            
+        </h:panelGroup>     
+
+        <h:outputText value="Name *" style="font-weight: bold" />
+        <p:inputText value="#{legalMetrologyManager.currentPetrolStation.name}"
+                     id="petrolStationName"       
+                     required="true"
+                     requiredMessage="A valid name is required"
+                     validatorMessage="Please enter a valid name" >
+
+            <p:ajax event="keyup"
+                    global="false"                            
+                    listener="#{legalMetrologyManager.updatePetrolStation}"/>
+
+        </p:inputText>
 
         <h:outputText value="Parent company/client *" style="font-weight: bold" />
         <h:panelGroup>
@@ -42,6 +72,7 @@ Email: info@dpbennett.com.jm
                             requiredMessage="A valid parent company/client is required"
                             forceSelection="true"
                             minQueryLength="2"
+                            maxResults="3"
                             completeMethod="#{clientManager.completeActiveClient}" >
 
                 <f:converter converterId="activeClientConverter"/>
@@ -89,19 +120,6 @@ Email: info@dpbennett.com.jm
 
         </h:panelGroup>
 
-        <h:outputText value="Name *" style="font-weight: bold" />
-        <p:inputText value="#{legalMetrologyManager.currentPetrolStation.name}"
-                     id="petrolStationName"       
-                     required="true"
-                     requiredMessage="A valid name is required"
-                     validatorMessage="Please enter a valid name" >
-
-            <p:ajax event="keyup"
-                    global="false"                            
-                    listener="#{legalMetrologyManager.updatePetrolStation}"/>
-
-        </p:inputText>
-
         <h:outputText value="Inspector responsible *" style="font-weight: bold" />                       
         <p:autoComplete id="inspector"
                         var="assignedTo"
@@ -125,33 +143,35 @@ Email: info@dpbennett.com.jm
 
         </p:autoComplete>   
 
-        <h:outputText value="Last certified" style="font-weight: bold" />     
-        <p:calendar id="datePetrolStationLastCertified"
-                    value="#{legalMetrologyManager.currentPetrolStation.certification.dateIssued}"
-                    navigator="true"
-                    pattern="MMM dd, yyyy" >
+        <ui:remove>
+            <h:outputText value="Last certified" style="font-weight: bold" />     
+            <p:calendar id="datePetrolStationLastCertified"
+                        value="#{legalMetrologyManager.currentPetrolStation.certification.dateIssued}"
+                        navigator="true"
+                        pattern="MMM dd, yyyy" >
 
-            <p:ajax event="dateSelect"
-                    update="datePetrolStationCertificationDue,petrolPumpsTable"
-                    listener="#{legalMetrologyManager.updatePetrolStationDateCertified}" />       
+                <p:ajax event="dateSelect"
+                        update="datePetrolStationCertificationDue,petrolPumpsTable"
+                        listener="#{legalMetrologyManager.updatePetrolStationDateCertified}" />       
 
-            <p:ajax event="keyup"
-                    update="datePetrolStationCertificationDue,petrolPumpsTable"
-                    listener="#{legalMetrologyManager.updatePetrolStationDateCertified}" />   
-        </p:calendar>
+                <p:ajax event="keyup"
+                        update="datePetrolStationCertificationDue,petrolPumpsTable"
+                        listener="#{legalMetrologyManager.updatePetrolStationDateCertified}" />   
+            </p:calendar>
 
-        <h:outputText value="Certification due" style="font-weight: bold" /> 
-        <p:calendar id="datePetrolStationCertificationDue"
-                    value="#{legalMetrologyManager.currentPetrolStation.certification.expiryDate}"
-                    navigator="true"
-                    pattern="MMM dd, yyyy" >
-            <p:ajax event="dateSelect"
-                    update="petrolPumpsTable"
-                    listener="#{legalMetrologyManager.updatePetrolStationDateCertificationDue}" />      
-            <p:ajax event="keyup"
-                    update="petrolPumpsTable"
-                    listener="#{legalMetrologyManager.updatePetrolStationDateCertificationDue}" /> 
-        </p:calendar>
+            <h:outputText value="Certification due" style="font-weight: bold" /> 
+            <p:calendar id="datePetrolStationCertificationDue"
+                        value="#{legalMetrologyManager.currentPetrolStation.certification.expiryDate}"
+                        navigator="true"
+                        pattern="MMM dd, yyyy" >
+                <p:ajax event="dateSelect"
+                        update="petrolPumpsTable"
+                        listener="#{legalMetrologyManager.updatePetrolStationDateCertificationDue}" />      
+                <p:ajax event="keyup"
+                        update="petrolPumpsTable"
+                        listener="#{legalMetrologyManager.updatePetrolStationDateCertificationDue}" /> 
+            </p:calendar>
+        </ui:remove>
 
     </h:panelGrid>
 
