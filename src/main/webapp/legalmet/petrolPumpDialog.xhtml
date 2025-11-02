@@ -26,7 +26,7 @@ Email: info@dpbennett.com.jm
 
     <h:head>
         <ui:include src="/head.xhtml" />     
-        <title>Petrol Station</title>
+        <title>Petrol Pump</title>
         <ui:include src="header.xhtml" /> 
     </h:head>
 
@@ -35,75 +35,242 @@ Email: info@dpbennett.com.jm
             <ui:include src="../common/commonDialogs.xhtml"/>
         </ui:insert>
 
-        <h:form id="petrolStationDialogForm">   
+        <h:form id="petrolPumpDialogForm">   
 
-            <p:growl id="petrolStationGrowl" life="5000" showDetail="true"/>
+            <p:growl id="petrolPumpGrowl" life="5000" showDetail="true"/>
 
-            <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
-                <p:toolbarGroup align="left">
-                    <p:commandButton value="Save"
-                                     actionListener="#{legalMetrologyManager.savePetrolStation}"     
-                                     update="petrolStationGrowl,petrolStationDialogForm"
-                                     icon="pi pi-save"
-                                     process="@form"/>
-                    <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Close" 
-                                     actionListener="#{legalMetrologyManager.closeDialog}"
-                                     update="petrolStationGrowl,petrolStationDialogForm"
-                                     icon="pi pi-times"
-                                     process="@this"/>
+            <!-- to be duplicated at bottom -->
+            <p:commandButton value="Ok"
+                             actionListener="#{legalMetrologyManager.updatePetrolPumpsList}"                            
+                             update=""
+                             icon="pi pi-check"
+                             process="@this"/>
+            <p:spacer height="0" width="5"/>
+            <p:commandButton value="Cancel"
+                             actionListener="#{legalMetrologyManager.cancelPetrolPumpEdit}"
+                             update=""
+                             icon="pi pi-close"
+                             process="@this"/>
+            <hr/>
+            <h:panelGrid columns="2" id="petrolPumpDialogFormContent">
+                <h:outputText value="ID/Number" />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolPump.number}"
+                             id="petrolPumpNumber"
+                             readonly="false"
+                             validatorMessage="Please enter a valid ID/Number" >
+                    
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPump()}" />  
+                    
+                </p:inputText>
 
-                    <p:spacer width="10" />
+                <h:outputText value="Manufacturer" />                
+                <p:autoComplete id="petrolPumpManufacturer"      
+                                var="manufacturer"
+                                itemLabel="#{manufacturer.truncatedName}"
+                                itemValue="#{manufacturer}"           
+                                dropdown="false"
+                                scrollHeight="200" 
+                                value="#{legalMetrologyManager.currentPetrolPump.manufacturer}"                                
+                                validator="manufacturerValidator"
+                                forceSelection="true"
+                                completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
-                    <h:outputText value="#{legalMetrologyManager.currentPetrolStation.editStatus}" />
-                </p:toolbarGroup>   
+                    <f:converter converterId="activeManufacturerConverter"/>
 
-                <p:toolbarGroup align="right" >  
-                    <h:outputText value="* Field required." style="font-weight: bold;" />            
-                </p:toolbarGroup>
-            </p:toolbar>
+                    <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
-            <p:tabView id="petrolStationTabView" 
-                       widgetVar="petrolStationTabViewVar"                        
-                       dynamic="false">
+                    <p:ajax event="itemSelect"
+                            listener="#{legalMetrologyManager.updateCurrentPetrolPumpManufacturer}" />   
 
-                <p:tab title="General" >
-                  <ui:include src="petrolStationGeneralTab.xhtml"/>
-                </p:tab>
+                </p:autoComplete>
 
-                <p:tab title="Petrol Pumps" >
-                    <ui:include src="petrolStationPetrolPumpsTab.xhtml"/>
-                </p:tab>
+                <h:outputText value="Model" />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolPump.model}"
+                             id="petrolPumpModel" >
+                    
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPump}" />  
+                    
+                </p:inputText>
 
-                <p:tab title="Certifications" >
-                    <ui:include src="petrolStationCertificationsTab.xhtml"/>
-                </p:tab>
+                <h:outputText value="Serial No." />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolPump.serialNumber}"
+                             id="petrolPumpSerialNumber" >
+                    
+                    <p:ajax event="keyup"                        
+                            listener="#{legalMetrologyManager.updatePetrolPump}" />  
+                    
+                </p:inputText>
 
-            </p:tabView>
+                <h:outputText value="Last certified" style="font-weight: bold" />
+                <p:calendar id="datePumpLastCertified"                        
+                            value="#{legalMetrologyManager.currentPetrolPump.certification.dateIssued}"
+                            navigator="true"
+                            pattern="MMM dd, yyyy" >
+                    
+                    <p:ajax event="dateSelect"
+                            update="datePumpCertificatioDue,petrolPumpNozzleTable"
+                            listener="#{legalMetrologyManager.updatePetrolPumpDateCertified}" /> 
+                    
+                    <p:ajax event="keyup"
+                            update="datePumpCertificatioDue,petrolPumpNozzleTable"
+                            listener="#{legalMetrologyManager.updatePetrolPumpDateCertified}" /> 
+                    
+                </p:calendar>
 
-            <p:toolbar id="bottomToolbar" style="margin-bottom: 1px;">
-                <p:toolbarGroup align="left">
-                    <p:commandButton value="Save"
-                                     actionListener="#{legalMetrologyManager.savePetrolStation}"     
-                                     update="petrolStationGrowl,petrolStationDialogForm"
-                                     icon="pi pi-save"
-                                     process="@form"/>
-                    <p:spacer height="0" width="4"/>
-                    <p:commandButton value="Close" 
-                                     actionListener="#{legalMetrologyManager.closeDialog}"
-                                     update="petrolStationGrowl,petrolStationDialogForm"
-                                     icon="pi pi-times"
-                                     process="@this"/>
+                <h:outputText value="Certification due" style="font-weight: bold" />
+                <p:calendar id="datePumpCertificatioDue"
+                            value="#{legalMetrologyManager.currentPetrolPump.certification.expiryDate}"
+                            navigator="true"
+                            pattern="MMM dd, yyyy" >
+                    
+                    <p:ajax event="dateSelect"
+                            update="petrolPumpNozzleTable"
+                            listener="#{legalMetrologyManager.updatePetrolPumpDateCertificationDue}" />  
+                    
+                    <p:ajax event="keyup"
+                            update="petrolPumpNozzleTable"
+                            listener="#{legalMetrologyManager.updatePetrolPumpDateCertificationDue}" />  
+                    
+                </p:calendar>
 
-                    <p:spacer width="10" />
+                <h:outputText value="Comment" />
+                <p:inputTextarea id="petrolPumpComment"
+                                 value="#{legalMetrologyManager.currentPetrolPump.status}"
+                                 autoResize="false"
+                                 style="width: 250px" >
+                    
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPump}" />  
+                    
+                </p:inputTextarea>
+            </h:panelGrid>         
+            <hr/>        
+            <p:commandButton value="New"
+                             actionListener="#{legalMetrologyManager.createNewNozzle}"                            
+                             title="Add petrol pump nozzle"
+                             icon="ui-icon ui-icon-plus"
+                             process="@this"/>
 
-                    <h:outputText value="#{legalMetrologyManager.currentPetrolStation.editStatus}" />
-                </p:toolbarGroup>   
+            <p:dataTable id="petrolPumpNozzleTable"
+                         var="nozzle"
+                         paginator="true" 
+                         rows="6"
+                         reflow="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         value="#{legalMetrologyManager.currentPetrolPump.nozzles}">
+                
+                <f:facet name="header">
+                    <h:outputText value="Petrol Pump Nozzles"/>
+                </f:facet>
+                
+                <p:column headerText="Nozzle #/ID">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{nozzle.number}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{nozzle.number}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Model" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{nozzle.model}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{nozzle.model}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Serial No." >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{nozzle.serialNumber}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{nozzle.serialNumber}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Seal No." >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{nozzle.lastSealIssued.number}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{nozzle.lastSealIssued.number}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Sticker Log" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{nozzle.lastStickerIssued.number}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{nozzle.lastStickerIssued.number}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Measure(s)(L)" >
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{nozzle.testMeasures}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:selectOneMenu  value="#{nozzle.testMeasures}">
+                                <f:selectItems  value="#{App.testMeasures}" />
+                            </h:selectOneMenu>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column style="width:16px">
+                    <p:commandButton update=""
+                                     title="View/Edit"
+                                     process="@this"
+                                     icon="pi pi-pencil">
+                        
+                        <f:setPropertyActionListener value="#{nozzle}"
+                                                     target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+                        
+                    </p:commandButton>
+                </p:column>
+                <p:column rendered="#{legalMetrologyManager.canDeletePetrolPumpNozzle}">
+                    <p:commandButton 
+                        onstart="longProcessDialogVar.show();"                  
+                        oncomplete="longProcessDialogVar.hide();petrolPumpNozzleDeleteConfirm.show();"
+                        title="Delete"
+                        process="@this"
+                        icon="pi pi-trash">
+                        
+                        <f:setPropertyActionListener value="#{nozzle}"
+                                                     target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+                        
+                    </p:commandButton>
+                </p:column>
 
-                <p:toolbarGroup align="right" >  
-                    <h:outputText value="* Field required." style="font-weight: bold;" />            
-                </p:toolbarGroup>
-            </p:toolbar>
+            </p:dataTable>
+
+            <p:commandButton value="New"
+                             actionListener="#{legalMetrologyManager.createNewNozzle}"
+                             title="Add petrol pump nozzle"
+                             icon="pi pi-plus"
+                             process="@this"/>
+            <hr/>
+            <p:commandButton value="Ok"
+                             actionListener="#{legalMetrologyManager.updatePetrolPumpsList}"
+                             update="petrolPumpTable"
+                             icon="ui-icon ui-icon-check"
+                             process="@this"/>
+            <p:spacer height="0" width="5"/>
+            <p:commandButton value="Cancel"
+                             actionListener="#{legalMetrologyManager.cancelPetrolPumpEdit}"
+                             update="petrolPumpTable"
+                             icon="pi pi-close"
+                             process="@this"/>
 
         </h:form>   
     </h:body>
