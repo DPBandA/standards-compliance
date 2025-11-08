@@ -100,7 +100,7 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{petrolStation.client.name}" />
         </p:column>
-              
+
         <p:column sortBy="#{petrolStation.lastAssignee.name}">
             <f:facet name="header">
                 <h:outputText value="Inspector responsible"/>
@@ -130,8 +130,14 @@ Email: info@dpbennett.com.jm
                              global="true"
                              process="@this"
                              icon="pi pi-pencil">
+
                 <f:setPropertyActionListener value="#{petrolStation}"
                                              target="#{legalMetrologyManager.currentPetrolStation}" />
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doPetrolStationSearch}"
+                        update="petrolStationsTable"/>
+
             </p:commandButton>           
         </p:column> 
 
