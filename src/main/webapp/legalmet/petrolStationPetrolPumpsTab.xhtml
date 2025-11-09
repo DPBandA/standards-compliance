@@ -64,23 +64,25 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{pump.numberOfNozzles}" />
         </p:column>
-
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Last Certified"/>
-            </f:facet>
-            <h:outputText value="#{pump.certification.dateIssued}">
-                <f:convertDateTime pattern="MMM dd, yyyy"/>
-            </h:outputText>
-        </p:column>
-        <p:column>
-            <f:facet name="header">
-                <h:outputText value="Certification Due"/>
-            </f:facet>
-            <h:outputText value="#{pump.certification.expiryDate}">
-                <f:convertDateTime pattern="MMM dd, yyyy"/>
-            </h:outputText>
-        </p:column>
+        
+        <ui:remove>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Last Certified"/>
+                </f:facet>
+                <h:outputText value="#{pump.certification.dateIssued}">
+                    <f:convertDateTime pattern="MMM dd, yyyy"/>
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Certification Due"/>
+                </f:facet>
+                <h:outputText value="#{pump.certification.expiryDate}">
+                    <f:convertDateTime pattern="MMM dd, yyyy"/>
+                </h:outputText>
+            </p:column>
+        </ui:remove>
 
         <p:column style="width:32px">
             <p:commandButton update=""                                    
