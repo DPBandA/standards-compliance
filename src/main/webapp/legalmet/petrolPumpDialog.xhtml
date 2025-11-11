@@ -93,7 +93,7 @@ Email: info@dpbennett.com.jm
 
                         <p:ajax event="itemSelect"
                                 update="actionsMenuButton"
-                                listener="#{legalMetrologyManager.updateCurrentPetrolPumpManufacturer}" />   
+                                listener="#{legalMetrologyManager.updatePetrolPump}" />   
 
                     </p:autoComplete>
 
@@ -165,7 +165,7 @@ Email: info@dpbennett.com.jm
             <p:toolbar style="margin-bottom: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="New"
-                                     actionListener="#{legalMetrologyManager.createNewNozzle}"                            
+                                     actionListener="#{legalMetrologyManager.createNewPumpNozzle}"                            
                                      title="Add petrol pump nozzle"
                                      icon="pi pi-plus"
                                      process="@this"/>
@@ -274,7 +274,7 @@ Email: info@dpbennett.com.jm
             <p:toolbar style="margin-top: 1px;">
                 <p:toolbarGroup align="left">
                     <p:commandButton value="New"
-                                     actionListener="#{legalMetrologyManager.createNewNozzle}"                            
+                                     actionListener="#{legalMetrologyManager.createNewPumpNozzle}"                            
                                      title="Add petrol pump nozzle"
                                      icon="pi pi-plus"
                                      process="@this"/>
