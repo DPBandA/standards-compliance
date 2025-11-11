@@ -35,7 +35,8 @@ Email: info@dpbennett.com.jm
                                      value="#{legalMetrologyManager.currentPetrolStation.active}" >
 
                 <p:ajax listener="#{legalMetrologyManager.updatePetrolStation}"
-                        event="change"                                      
+                        update=":petrolStationDialogForm:topToolbar"
+                        event="change"
                         process="@this"/>
 
             </p:selectBooleanCheckbox>     
@@ -53,7 +54,7 @@ Email: info@dpbennett.com.jm
                      validatorMessage="Please enter a valid name" >
 
             <p:ajax event="keyup"
-                    global="false"                            
+                    update=":petrolStationDialogForm:topToolbar"
                     listener="#{legalMetrologyManager.updatePetrolStation}"/>
 
         </p:inputText>
@@ -80,7 +81,7 @@ Email: info@dpbennett.com.jm
                 <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
                 <p:ajax event="itemSelect"
-                        update="actionsMenuButton"
+                        update="actionsMenuButton,:petrolStationDialogForm:topToolbar"
                         listener="#{legalMetrologyManager.updatePetrolStationClient}"
                         process="@this"/>
 
@@ -139,6 +140,7 @@ Email: info@dpbennett.com.jm
 
             <p:ajax event="itemSelect"
                     listener="#{legalMetrologyManager.updatePetrolStationLastAssignee}"
+                    update=":petrolStationDialogForm:topToolbar"
                     process="@this" />
 
         </p:autoComplete>   

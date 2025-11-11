@@ -36,7 +36,7 @@ Email: info@dpbennett.com.jm
                 process="@this" >
 
                 <p:ajax event="dialogReturn" 
-                        update="petrolPumpsTable"/>
+                        update="petrolPumpsTable,:petrolStationDialogForm:topToolbar" />
 
             </p:commandButton> 
 
@@ -64,7 +64,7 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{pump.numberOfNozzles}" />
         </p:column>
-        
+
         <ui:remove>
             <p:column>
                 <f:facet name="header">
@@ -84,35 +84,40 @@ Email: info@dpbennett.com.jm
             </p:column>
         </ui:remove>
 
-        <p:column style="width:32px">
-            <p:commandButton update=""                                    
-                             title="View/Edit"
-                             process="@this"
-                             icon="pi pi-pencil">
+        <p:column>
 
-                <f:setPropertyActionListener value="#{pump}"
-                                             target="#{legalMetrologyManager.currentPetrolPump}" />
+            <p:menuButton id="toolsButton" 
+                          icon="pi pi-pencil" 
+                          title="Edit, view or delete petrol pump" >
 
-                <p:ajax event="dialogReturn" 
-                        update="petrolPumpsTable"/>
+                <p:menuitem  
+                    value="View/Edit"
+                    actionListener="#{legalMetrologyManager.editPetrolPump}"
+                    process="@this"
+                    icon="pi pi-pencil" >
 
-            </p:commandButton>
-        </p:column>
+                    <f:setPropertyActionListener value="#{pump}"
+                                                 target="#{legalMetrologyManager.currentPetrolPump}" />
 
-        <p:column style="width:32px" >
+                    <p:ajax event="dialogReturn" 
+                            listener="#{legalMetrologyManager.petrolPumpDialogReturn}"
+                            update="petrolPumpsTable,:petrolStationDialogForm:topToolbar" />
 
-            <p:commandButton title="Delete"
-                             onclick="petrolPumpDeleteConfirm.show();"
-                             process="@this"
-                             icon="pi pi-trash">
+                </p:menuitem>
 
-                <f:setPropertyActionListener value="#{pump}"
-                                             target="#{legalMetrologyManager.currentPetrolPump}" />
+                <p:menuitem 
+                    value="Delete"
+                    onclick="PF('petrolPumpDeleteConfirm').show();"
+                    process="@this"
+                    icon="pi pi-trash">
 
-                <p:ajax event="dialogReturn" 
-                        update="petrolPumpsTable"/>
+                    <f:setPropertyActionListener value="#{pump}"
+                                                 target="#{legalMetrologyManager.currentPetrolPump}" />
 
-            </p:commandButton>
+                </p:menuitem>                   
+
+            </p:menuButton>      
+
         </p:column>
 
     </p:dataTable>
@@ -128,7 +133,7 @@ Email: info@dpbennett.com.jm
                 process="@this" >
 
                 <p:ajax event="dialogReturn" 
-                        update="petrolPumpsTable"/>            
+                        update="petrolPumpsTable,:petrolStationDialogForm:topToolbar" />            
 
             </p:commandButton> 
 

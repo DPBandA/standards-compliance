@@ -37,7 +37,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{legalMetrologyManager.doCertificationSearch}"
-                        update="certificationsTable"/>
+                        update="certificationsTable,:petrolStationDialogForm:topToolbar"/>
 
             </p:commandButton> 
 
@@ -82,9 +82,13 @@ Email: info@dpbennett.com.jm
                              title="View/Edit"
                              process="@this"
                              icon="pi pi-pencil">
-
+                
                 <f:setPropertyActionListener value="#{certificate}"
                                              target="#{legalMetrologyManager.currentCertification}" />
+                
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doCertificationSearch}"
+                        update="certificationsTable,:petrolStationDialogForm:topToolbar"/>
 
             </p:commandButton>
         </p:column>
@@ -98,6 +102,10 @@ Email: info@dpbennett.com.jm
 
                 <f:setPropertyActionListener value="#{certificate}"
                                              target="#{legalMetrologyManager.currentCertification}" />
+                
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doCertificationSearch}"
+                        update="certificationsTable,:petrolStationDialogForm:topToolbar"/>
 
             </p:commandButton>
 
@@ -118,7 +126,7 @@ Email: info@dpbennett.com.jm
 
                 <p:ajax event="dialogReturn" 
                         listener="#{legalMetrologyManager.doCertificationSearch}"
-                        update="certificationsTable"/>
+                        update="certificationsTable,:petrolStationDialogForm:topToolbar"/>
 
             </p:commandButton> 
 
