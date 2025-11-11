@@ -34,7 +34,7 @@ Email: info@dpbennett.com.jm
                 title="Add a petrol station" >
 
                 <p:ajax event="dialogReturn" 
-                        listener="#{legalMetrologyManager.doPetrolStationSearch}"
+                        listener="#{legalMetrologyManager.petrolStationDialogReturn}"
                         update="petrolStationsTable"/>
 
             </p:commandButton>
@@ -135,7 +135,7 @@ Email: info@dpbennett.com.jm
                                              target="#{legalMetrologyManager.currentPetrolStation}" />
 
                 <p:ajax event="dialogReturn" 
-                        listener="#{legalMetrologyManager.doPetrolStationSearch}"
+                        listener="#{legalMetrologyManager.petrolStationDialogReturn}"
                         update="petrolStationsTable"/>
 
             </p:commandButton>           

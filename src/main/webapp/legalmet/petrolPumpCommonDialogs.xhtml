@@ -5,22 +5,6 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"> 
 
-     <p:confirmDialog severity="alert"
-                     message="Are you sure you wish to delete this petrol pump?"
-                     header="Delete Petrol Pump"
-                     widgetVar="petrolPumpDeleteConfirm">        
-        <p:commandButton value="Yes"                             
-                         action="#{legalMetrologyManager.deletePetrolPump}"
-                         oncomplete="PF('petrolPumpDeleteConfirm').hide();"
-                         update=":petrolStationDialogForm:petrolStationTabView:petrolPumpsTable,:petrolStationDialogForm:topToolbar"
-                         icon="pi pi-check"
-                         process="@this"/>
-        <p:commandButton value="No"
-                         onclick="PF('petrolPumpDeleteConfirm').hide();"
-                         process="@this"
-                         icon="pi pi-close"/>      
-    </p:confirmDialog>
-
     <p:confirmDialog severity="alert"
                      message="Are you sure you wish to delete this nozzle?"
                      header="Delete Pump Nozzle"
