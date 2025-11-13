@@ -168,7 +168,14 @@ Email: info@dpbennett.com.jm
                                      actionListener="#{legalMetrologyManager.createNewPumpNozzle}"                            
                                      title="Add petrol pump nozzle"
                                      icon="pi pi-plus"
-                                     process="@this"/>
+                                     process="@this">
+
+                        <p:ajax event="dialogReturn" 
+                                listener="#{legalMetrologyManager.petrolPumpNozzleDialogReturn}"
+                                update="petrolPumpNozzleTable" />
+
+
+                    </p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar>           
 
@@ -246,27 +253,66 @@ Email: info@dpbennett.com.jm
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column style="width:16px">
-                    <p:commandButton update=""
-                                     title="View/Edit"
-                                     process="@this"
-                                     icon="pi pi-pencil">
+                <ui:remove>
+                    <p:column>
+                        <p:commandButton actionListener="#{legalMetrologyManager.editPetrolPumpNozzle}"
+                                         title="View/Edit"
+                                         process="@this"
+                                         icon="pi pi-pencil">
 
-                        <f:setPropertyActionListener value="#{nozzle}"
-                                                     target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+                            <f:setPropertyActionListener value="#{nozzle}"
+                                                         target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
 
-                    </p:commandButton>
-                </p:column>
-                <p:column rendered="#{legalMetrologyManager.canDeletePetrolPumpNozzle}">
-                    <p:commandButton 
-                        title="Delete"
-                        process="@this"
-                        icon="pi pi-trash">
+                            <p:ajax event="dialogReturn" 
+                                    listener="#{legalMetrologyManager.petrolPumpNozzleDialogReturn}"
+                                    update="petrolPumpNozzleTable" />
 
-                        <f:setPropertyActionListener value="#{nozzle}"
-                                                     target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+                        </p:commandButton>
+                    </p:column>
+                    <p:column>
+                        <p:commandButton 
+                            title="Delete"
+                            process="@this"
+                            icon="pi pi-trash">
 
-                    </p:commandButton>
+                            <f:setPropertyActionListener value="#{nozzle}"
+                                                         target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+
+                        </p:commandButton>
+                    </p:column>
+                </ui:remove>
+                <p:column>
+                    <p:menuButton id="toolsButton" 
+                                  icon="pi pi-pencil" 
+                                  title="Edit, view or delete petrol pump nozzle" >
+
+                        <p:menuitem  
+                            value="View/Edit"
+                            actionListener="#{legalMetrologyManager.editPetrolPumpNozzle}"
+                            process="@this"
+                            icon="pi pi-pencil" >
+
+                            <f:setPropertyActionListener value="#{nozzle}"
+                                                         target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+
+                            <p:ajax event="dialogReturn" 
+                                    listener="#{legalMetrologyManager.petrolPumpNozzleDialogReturn}"
+                                    update="petrolPumpNozzleTable" />
+
+                        </p:menuitem>
+
+                        <p:menuitem 
+                            value="Delete"
+                            onclick="PF('petrolPumpDeleteConfirm').show();"
+                            process="@this"
+                            icon="pi pi-trash">
+
+                            <f:setPropertyActionListener value="#{nozzle}"
+                                                         target="#{legalMetrologyManager.currentPetrolPumpNozzle}" />
+
+                        </p:menuitem>                   
+
+                    </p:menuButton>   
                 </p:column>
 
             </p:dataTable>
@@ -277,7 +323,14 @@ Email: info@dpbennett.com.jm
                                      actionListener="#{legalMetrologyManager.createNewPumpNozzle}"                            
                                      title="Add petrol pump nozzle"
                                      icon="pi pi-plus"
-                                     process="@this"/>
+                                     process="@this">
+
+                        <p:ajax event="dialogReturn" 
+                                listener="#{legalMetrologyManager.petrolPumpNozzleDialogReturn}"
+                                update="petrolPumpNozzleTable" />
+
+
+                    </p:commandButton>
                 </p:toolbarGroup>
             </p:toolbar> 
 

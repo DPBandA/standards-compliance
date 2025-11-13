@@ -70,7 +70,9 @@ Email: info@dpbennett.com.jm
 
                 </p:inputText>
 
-                <h:outputText value="Manufacturer" />                
+                <p:outputLabel value="Manufacturer" 
+                               style="font-weight: bold;"
+                               for="manufacturer" />                
                 <h:panelGroup>
                     <p:autoComplete id="manufacturer"      
                                     var="manufacturer"
@@ -101,12 +103,12 @@ Email: info@dpbennett.com.jm
                         <p:menuitem value="Edit manufacturer"
                                     icon="pi pi-pencil" 
                                     disabled="${!legalMetrologyManager.isPetrolPumpNozzleManufacturerNameValid}"                              
-                                    actionListener="#{legalMetrologyManager.editPetrolPumpManufacturer}"
+                                    actionListener="#{legalMetrologyManager.editPetrolPumpNozzleManufacturer}"
                                     process="@this,manufacturer"                             
                                     title="View or edit manufacturer">  
 
                             <p:ajax event="dialogReturn" 
-                                    listener="#{legalMetrologyManager.petrolPumpManufacturerDialogReturn}"
+                                    listener="#{legalMetrologyManager.petrolPumpNozzleManufacturerDialogReturn}"
                                     update="manufacturer" />
 
                         </p:menuitem>
@@ -119,7 +121,7 @@ Email: info@dpbennett.com.jm
                             title="Add a new manufacturer">
 
                             <p:ajax event="dialogReturn" 
-                                    listener="#{legalMetrologyManager.petrolPumpManufacturerDialogReturn}"
+                                    listener="#{legalMetrologyManager.petrolPumpNozzleManufacturerDialogReturn}"
                                     update="manufacturer" />
 
                         </p:menuitem>
@@ -129,54 +131,85 @@ Email: info@dpbennett.com.jm
 
                 <h:outputText value="Model" />
                 <p:inputText value="#{legalMetrologyManager.currentPetrolPumpNozzle.model}">
+
                     <p:ajax event="keyup"
-                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle()}" />  
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" /> 
+
                 </p:inputText>
 
-                <h:outputText value="Serial No.:" />
+                <h:outputText value="Serial No." />
                 <p:inputText value="#{legalMetrologyManager.currentPetrolPumpNozzle.serialNumber}" >
+
                     <p:ajax event="keyup"
-                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle()}" />  
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />  
+
                 </p:inputText>
 
                 <h:outputText value="Test Measure(s)(L):" />
                 <h:selectOneMenu  value="#{legalMetrologyManager.currentPetrolPumpNozzle.testMeasures}">
-                    <f:selectItems  value="#{App.testMeasures}" />
-                    <p:ajax listener="#{legalMetrologyManager.updatePetrolPumpNozzle()}" 
+
+                    <f:selectItems  value="#{legalMetrologyManager.petrolTestMeasures}" />
+
+                    <p:ajax listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" 
                             process="@this"/>  
+
                 </h:selectOneMenu>
 
-                <h:outputText value="Last sticker No. *:" />
-                <p:inputText style="font-weight: bold; background-color: lightyellow;"
-                             readonly="true"
-                             value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastStickerIssued.number}"/>
+                <h:outputText value="Last sticker No." />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastStickerIssued.number}">
 
-                <h:outputText value="Last Sticker Issued:" />
-                <p:inputText id="stickerDateIssued"
-                             style="font-weight: bold; background-color: lightyellow;"
-                             readonly="true"
-                             value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastStickerIssued.dateIssued}" >
-                    <f:convertDateTime pattern="MMM dd, yyyy"/>
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />  
+
                 </p:inputText>
 
-                <h:outputText value="Last Seal No. *:" />
-                <p:inputText style="font-weight: bold; background-color: lightyellow;"
-                             readonly="true"
-                             value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastSealIssued.number}"/>
+                <h:outputText value="Last Sticker Issued" />
+                <p:calendar id="stickerDateIssued"
+                            navigator="true" 
+                            autocomplete="off"
+                            pattern="MMM dd, yyyy"
+                            value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastStickerIssued.dateIssued}" >
 
-                <h:outputText value="Last Seal Issued:" />
-                <p:inputText value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastSealIssued.dateIssued}" 
-                             style="font-weight: bold; background-color: lightyellow;"
-                             readonly="true">
-                    <f:convertDateTime pattern="MMM dd, yyyy"/>
-                </p:inputText>        
+                    <p:ajax event="dateSelect"                          
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />
 
-                <h:outputText value="Working status:" />
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />  
+
+                </p:calendar>
+
+                <h:outputText value="Last Seal No." />
+                <p:inputText value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastSealIssued.number}">
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />
+
+                </p:inputText>
+
+                <h:outputText value="Last Seal Issued" />
+                <p:calendar value="#{legalMetrologyManager.currentPetrolPumpNozzle.lastSealIssued.dateIssued}" 
+                            navigator="true" 
+                            autocomplete="off"
+                            pattern="MMM dd, yyyy" >
+
+                    <p:ajax event="dateSelect"                          
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" />  
+
+                </p:calendar>    
+
+                <h:outputText value="Working status" />
                 <h:selectOneMenu  value="#{legalMetrologyManager.currentPetrolPumpNozzle.status}">
-                    <f:selectItems  value="#{App.equipmentWorkingStatus}" />
-                    <p:ajax listener="#{legalMetrologyManager.updatePetrolPumpNozzle()}" 
+                    
+                    <f:selectItems  value="#{legalMetrologyManager.equipmentWorkingStatus}" />
+                    
+                    <p:ajax listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" 
                             process="@this"/>  
+                    
                 </h:selectOneMenu>
+
             </h:panelGrid>
 
             <p:toolbar style="margin-top: 1px;">
