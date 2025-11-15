@@ -13,6 +13,7 @@
                          action="#{legalMetrologyManager.deletePetrolPumpNozzle}"
                          oncomplete="PF('petrolPumpNozzleDeleteConfirm').hide();"                         
                          icon="pi pi-check"
+                         update=":petrolPumpDialogForm:petrolPumpNozzleTable"
                          process="@this"/>
         <p:commandButton value="No"
                          onclick="PF('petrolPumpNozzleDeleteConfirm').hide();"

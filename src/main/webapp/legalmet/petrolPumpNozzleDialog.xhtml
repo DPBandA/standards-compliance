@@ -53,6 +53,10 @@ Email: info@dpbennett.com.jm
                                      icon="pi pi-close"
                                      process="@this"/>
                 </p:toolbarGroup>
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
+                </p:toolbarGroup>
             </p:toolbar>
 
             <h:panelGrid columns="2" id="petrolPumpNozzleDialogFormContent">
@@ -202,12 +206,12 @@ Email: info@dpbennett.com.jm
 
                 <h:outputText value="Working status" />
                 <h:selectOneMenu  value="#{legalMetrologyManager.currentPetrolPumpNozzle.status}">
-                    
+
                     <f:selectItems  value="#{legalMetrologyManager.equipmentWorkingStatus}" />
-                    
+
                     <p:ajax listener="#{legalMetrologyManager.updatePetrolPumpNozzle}" 
                             process="@this"/>  
-                    
+
                 </h:selectOneMenu>
 
             </h:panelGrid>
@@ -225,6 +229,10 @@ Email: info@dpbennett.com.jm
                                      update=""
                                      icon="pi pi-close"
                                      process="@this"/>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
                 </p:toolbarGroup>
             </p:toolbar>
 

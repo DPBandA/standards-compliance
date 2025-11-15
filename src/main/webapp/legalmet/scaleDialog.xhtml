@@ -1,0 +1,359 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2025  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <ui:include src="/head.xhtml" />     
+        <title>Scale</title>
+        <ui:include src="header.xhtml" /> 
+    </h:head>
+
+    <h:body >  
+        <ui:insert >   
+            <ui:include src="../common/commonDialogs.xhtml"/>
+        </ui:insert>
+
+        <h:form id="scaleDialogForm">   
+
+            <p:growl id="scaleGrowl" life="5000" showDetail="true"/>
+
+            <p:toolbar style="margin-bottom: 1px;">
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Ok"
+                                     actionListener="#{legalMetrologyManager.okScale}"                            
+                                     update="scaleGrowl"
+                                     icon="pi pi-check"
+                                     process="@form"/>
+                    <p:spacer height="0" width="5"/>
+                    <p:commandButton value="Cancel"
+                                     actionListener="#{legalMetrologyManager.cancelScaleEdit}"
+                                     update=""
+                                     icon="pi pi-close"
+                                     process="@this"/>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
+                </p:toolbarGroup>
+
+            </p:toolbar>
+
+            <h:panelGrid columns="2" id="scaleDialogFormContent">
+
+                <p:outputLabel value="Name" 
+                               style="font-weight: bold;"
+                               for="scaleName" />
+                <p:inputText value="#{legalMetrologyManager.currentScale.name}"
+                             id="scaleName"
+                             required="true"
+                             maxlength="250"
+                             requiredMessage="Please enter a valid name" >
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}"/>
+
+                </p:inputText>
+
+                <p:outputLabel value="Client" 
+                               for="scaleClient"
+                               style="font-weight: bold" />
+                <ui:remove>
+                    <h:panelGroup>
+                        <p:autoComplete id="scaleClient"
+                                        size="35"
+                                        maxResults="12"
+                                        maxlength="250"
+                                        var="client"
+                                        value="#{legalMetrologyManager.currentScale.client}"
+                                        itemLabel="#{client.name}"
+                                        itemValue="#{client}"
+                                        converter="clientConverter"
+                                        forceSelection="false"
+                                        completeMethod="#{App.completeClient}" >
+                            <p:ajax event="itemSelect"                                        
+                                    listener="#{legalMetrologyManager.updateCurrentScaleClient}"/>
+                            <p:ajax event="keyup"                                        
+                                    listener="#{legalMetrologyManager.updateCurrentScaleClient}"/>
+                        </p:autoComplete>
+
+                        <p:spacer height="0" width="4"/>
+                        <p:commandButton icon="ui-icon-pencil"
+                                         onstart="longProcessDialogVar.show();"
+                                         actionListener="#{legalMetrologyManager.editScaleClient}"
+                                         update=":clientForm"
+                                         oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"
+                                         process="@this"
+                                         title="View or edit this client's detail"/>
+                        <p:spacer height="0" width="4"/>
+                    </h:panelGroup>
+                </ui:remove>
+                <h:panelGroup>
+                    <p:autoComplete id="scaleClient"      
+                                    var="client"
+                                    itemLabel="#{client.truncatedName}"
+                                    itemValue="#{client}"              
+                                    dropdown="false"
+                                    scrollHeight="200" 
+                                    value="#{legalMetrologyManager.currentScale.client}"
+                                    validator="jobClientValidator"
+                                    required="true"
+                                    requiredMessage="A valid client is required"
+                                    forceSelection="true"
+                                    minQueryLength="2"
+                                    maxResults="10"
+                                    completeMethod="#{clientManager.completeActiveClient}" >
+
+                        <f:converter converterId="activeClientConverter"/>
+
+                        <f:attribute name="em" value="#{clientManager.entityManager1}"/>
+
+                        <p:ajax event="itemSelect"
+                                update="actionsMenuButton"
+                                listener="#{legalMetrologyManager.updateScale}"
+                                process="@this"/>
+
+                    </p:autoComplete>  
+                    <p:menuButton id="actionsMenuButton" 
+                                  icon="pi pi-pencil" 
+                                  title="Add or edit client">
+
+                        <p:menuitem value="Edit client"
+                                    id="editClient"
+                                    icon="pi pi-pencil" 
+                                    disabled="${!legalMetrologyManager.isScaleClientNameValid}"                            
+                                    actionListener="#{legalMetrologyManager.editScaleClient}"  
+                                    process="@this,scaleClient"                             
+                                    title="View or edit this client's detail">    
+
+                            <p:ajax event="dialogReturn" 
+                                    listener="#{legalMetrologyManager.scaleDialogReturn}"
+                                    update="scaleClient" />
+
+                        </p:menuitem>
+
+                        <p:menuitem
+                            value="Add client"
+                            icon="pi pi-plus"                    
+                            disabled="#{!legalMetrologyManager.user.can('AddClient')}"
+                            actionListener="#{legalMetrologyManager.createNewScaleClient}"                                            
+                            process="@this"
+                            title="Add a new client">
+
+                            <p:ajax event="dialogReturn" 
+                                    listener="#{legalMetrologyManager.scaleDialogReturn}"
+                                    update="scaleClient" />
+
+                        </p:menuitem>
+                    </p:menuButton>     
+
+                </h:panelGroup>
+
+                <p:outputLabel value="ID/Number" 
+                               style="font-weight: bold" 
+                               for="scaleNumber" />
+                <p:inputText value="#{legalMetrologyManager.currentScale.number}"
+                             id="scaleNumber"
+                             maxlength="250"
+                             required="true"
+                             requiredMessage="Please enter a valid ID/Number" >
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}"/>
+
+                </p:inputText>
+
+                <p:outputLabel value="Manufacturer" 
+                               style="font-weight: bold;"
+                               for="manufacturer" />  
+                <ui:remove>
+                    <p:autoComplete value="#{legalMetrologyManager.currentScale.manufacturer}"
+                                    var="manufacturer"
+                                    maxResults="12"
+                                    size="35"
+                                    maxlength="250"
+                                    itemLabel="#{manufacturer.name}"
+                                    itemValue="#{manufacturer}"
+                                    title="#{manufacturer.name}"
+                                    converter="manufacturerConverter"
+                                    completeMethod="#{App.completeManufacturer}" >
+                        <p:ajax event="itemSelect"
+                                listener="#{legalMetrologyManager.updateCurrentScaleManufacturer}" />
+                        <p:ajax event="keyup"
+                                listener="#{legalMetrologyManager.updateCurrentScaleManufacturer}"/>
+                    </p:autoComplete>
+                </ui:remove>
+                <h:panelGroup>
+                    <p:autoComplete id="manufacturer"      
+                                    var="manufacturer"
+                                    itemLabel="#{manufacturer.truncatedName}"
+                                    itemValue="#{manufacturer}"           
+                                    dropdown="false"
+                                    scrollHeight="200" 
+                                    value="#{legalMetrologyManager.currentScale.manufacturer}"                                
+                                    forceSelection="true"
+                                    required="true"
+                                    requiredMessage="Please enter a valid manufacturer"
+                                    completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
+
+                        <f:converter converterId="activeManufacturerConverter"/>
+
+                        <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
+
+                        <p:ajax event="itemSelect"
+                                update="actionsMenuButton"
+                                listener="#{legalMetrologyManager.updateScale}" />   
+
+                    </p:autoComplete>
+
+                    <p:menuButton id="actionsMenuButton"
+                                  icon="pi pi-pencil" 
+                                  title="Add or edit manufacturer" >  
+
+                        <p:menuitem value="Edit manufacturer"
+                                    icon="pi pi-pencil" 
+                                    disabled="${!legalMetrologyManager.isScaleManufacturerNameValid}"                              
+                                    actionListener="#{legalMetrologyManager.editScaleManufacturer}"
+                                    process="@this,manufacturer"                             
+                                    title="View or edit manufacturer">  
+
+                            <p:ajax event="dialogReturn" 
+                                    listener="#{legalMetrologyManager.scaleManufacturerDialogReturn}"
+                                    update="manufacturer" />
+
+                        </p:menuitem>
+
+                        <p:menuitem 
+                            value="Add manufacturer"
+                            icon="pi pi-plus"  
+                            actionListener="#{legalMetrologyManager.createNewManufacturer}"                                            
+                            process="@this"
+                            title="Add a new manufacturer">
+
+                            <p:ajax event="dialogReturn" 
+                                    listener="#{legalMetrologyManager.scaleManufacturerDialogReturn}"
+                                    update="manufacturer" />
+
+                        </p:menuitem>
+
+                    </p:menuButton>
+                </h:panelGroup>
+
+                <h:outputText value="Model" />
+                <p:inputText value="#{legalMetrologyManager.currentScale.model}"  maxlength="250" >
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}" />
+
+                </p:inputText>
+
+                <h:outputText value="Serial No." />
+                <p:inputText value="#{legalMetrologyManager.currentScale.serialNumber}"  maxlength="250">
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}"/>
+
+                </p:inputText>
+
+                <h:outputText value="Capacity" />
+                <p:inputText value="#{legalMetrologyManager.currentScale.capacity}"  maxlength="250">
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}"/>
+
+                </p:inputText>
+
+                <h:outputText value="Capacity Unit" />
+                <p:inputText value="#{legalMetrologyManager.currentScale.capacityUnit}"  maxlength="250">
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}"/>
+
+                </p:inputText>
+
+                <ui:remove>
+                    <h:outputText value="Last certified" />
+                    <p:calendar value="#{legalMetrologyManager.currentScale.certification.dateIssued}"
+                                navigator="true"
+                                pattern="MMM dd, yyyy" >
+
+                        <p:ajax event="dateSelect"                        
+                                listener="#{legalMetrologyManager.updateScale}" />
+
+                        <p:ajax event="keyup"                        
+                                listener="#{legalMetrologyManager.updateScale}" />
+
+                    </p:calendar>
+
+                    <h:outputText value="Certification due" />
+                    <p:calendar value="#{legalMetrologyManager.currentScale.certification.expiryDate}"
+                                navigator="true"
+                                pattern="MMM dd, yyyy" >
+
+                        <p:ajax event="dateSelect"                        
+                                listener="#{legalMetrologyManager.updateScale}" />
+
+                        <p:ajax event="keyup"                        
+                                listener="#{legalMetrologyManager.updateScale}" />
+
+                    </p:calendar>
+                </ui:remove>
+
+                <h:outputText value="Status" />
+                <p:inputTextarea value="#{legalMetrologyManager.currentScale.status}"
+                                 maxlength="1000"
+                                 autoResize="false"
+                                 style="width: 250px" >
+                    
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale()}" />
+                    
+                </p:inputTextarea>
+
+            </h:panelGrid>
+
+            <p:toolbar style="margin-bottom: 1px;">
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Ok"
+                                     actionListener="#{legalMetrologyManager.okScale}"                            
+                                     update="scaleGrowl"
+                                     icon="pi pi-check"
+                                     process="@form"/>
+                    <p:spacer height="0" width="5"/>
+                    <p:commandButton value="Cancel"
+                                     actionListener="#{legalMetrologyManager.cancelScaleEdit}"
+                                     update=""
+                                     icon="pi pi-close"
+                                     process="@this"/>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
+                </p:toolbarGroup>
+
+            </p:toolbar>
+
+        </h:form>   
+    </h:body>
+</html>

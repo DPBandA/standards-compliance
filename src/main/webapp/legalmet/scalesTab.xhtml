@@ -79,12 +79,10 @@ Email: info@dpbennett.com.jm
                  var="scale"
                  paginator="true"
                  rows="15"      
-                 rowStyleClass="#{scale.certification.expiryDate le legalMetrologyManager.currentDate ? 'due' : null}" 
                  resizableColumns="false"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  value="#{legalMetrologyManager.scaleSearchResultsList}">
-        <p:ajax event="page"  onstart="longProcessDialogVar.show();" oncomplete="longProcessDialogVar.hide();" />
-
+        
         <f:facet name="header">
             <h:outputText value="Search Results (found: #{legalMetrologyManager.numScalesFound})" />
         </f:facet>

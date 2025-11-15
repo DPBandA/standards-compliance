@@ -69,16 +69,18 @@ Email: info@dpbennett.com.jm
                        dynamic="false">
 
                 <p:tab title="General" >
-                  <ui:include src="petrolStationGeneralTab.xhtml"/>
+                    <ui:include src="petrolStationGeneralTab.xhtml"/>
                 </p:tab>
 
                 <p:tab title="Petrol Pumps" >
                     <ui:include src="petrolStationPetrolPumpsTab.xhtml"/>
                 </p:tab>
 
-                <p:tab title="Certifications" >
-                    <ui:include src="petrolStationCertificationsTab.xhtml"/>
-                </p:tab>
+                <ui:remove>
+                    <p:tab title="Certifications" >
+                        <ui:include src="petrolStationCertificationsTab.xhtml"/>
+                    </p:tab>
+                </ui:remove>
 
             </p:tabView>
 

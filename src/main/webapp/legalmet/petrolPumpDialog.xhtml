@@ -54,6 +54,10 @@ Email: info@dpbennett.com.jm
                                      icon="pi pi-close"
                                      process="@this"/>
                 </p:toolbarGroup>
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
+                </p:toolbarGroup>
             </p:toolbar>
             <h:panelGrid columns="2" 
                          cellspacing="5"
@@ -177,6 +181,7 @@ Email: info@dpbennett.com.jm
 
                     </p:commandButton>
                 </p:toolbarGroup>
+
             </p:toolbar>           
 
             <p:dataTable id="petrolPumpNozzleTable"
@@ -303,7 +308,7 @@ Email: info@dpbennett.com.jm
 
                         <p:menuitem 
                             value="Delete"
-                            onclick="PF('petrolPumpDeleteConfirm').show();"
+                            onclick="PF('petrolPumpNozzleDeleteConfirm').show();"
                             process="@this"
                             icon="pi pi-trash">
 
@@ -349,6 +354,10 @@ Email: info@dpbennett.com.jm
                                      update=""
                                      icon="pi pi-close"
                                      process="@this"/>
+                </p:toolbarGroup>
+
+                <p:toolbarGroup align="right" >  
+                    <h:outputText value="* Field required." style="font-weight: bold;" />            
                 </p:toolbarGroup>
             </p:toolbar>
 
