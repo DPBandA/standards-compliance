@@ -23,7 +23,7 @@ Email: info@dpbennett.com.jm
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"> 
-    
+
     <p:toolbar>
         <p:toolbarGroup align="left" >               
             <p:commandButton 
@@ -82,7 +82,7 @@ Email: info@dpbennett.com.jm
                  resizableColumns="false"
                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                  value="#{legalMetrologyManager.scaleSearchResultsList}">
-        
+
         <f:facet name="header">
             <h:outputText value="Search Results (found: #{legalMetrologyManager.numScalesFound})" />
         </f:facet>
@@ -93,6 +93,13 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{scale.name}" />
         </p:column>
+        
+        <p:column sortBy="#{scale.number}">
+            <f:facet name="header">
+                <h:outputText value="ID/Number"/>
+            </f:facet>
+            <h:outputText value="#{scale.number}" />
+        </p:column>
 
         <p:column sortBy="#{scale.client.name}">
             <f:facet name="header">
@@ -100,37 +107,48 @@ Email: info@dpbennett.com.jm
             </f:facet>
             <h:outputText value="#{scale.client.name}" />
         </p:column>
-
-        <p:column sortBy="#{scale.certification.dateIssued}">
+        
+        <p:column sortBy="#{scale.manufacturer.name}">
             <f:facet name="header">
-                <h:outputText value="Cert. Issue Date"/>
+                <h:outputText value="Manufacturer"/>
             </f:facet>
-            <h:outputText value="#{scale.certification.dateIssued}">
-                <f:convertDateTime pattern="MMM dd, yyyy"/>
-            </h:outputText>                
-        </p:column>  
-
-        <p:column sortBy="#{scale.certification.expiryDate}">
+            <h:outputText value="#{scale.manufacturer.name}" />
+        </p:column>
+        
+        <p:column sortBy="#{scale.model}">
             <f:facet name="header">
-                <h:outputText value="Expiry Date"/>
+                <h:outputText value="Model"/>
             </f:facet>
-            <h:outputText value="#{scale.certification.expiryDate}">
-                <f:convertDateTime pattern="MMM dd, yyyy"/>
-            </h:outputText>                
-        </p:column>    
-
+            <h:outputText value="#{scale.model}" />
+        </p:column>
+        
+        <p:column sortBy="#{scale.serialNumber}">
+            <f:facet name="header">
+                <h:outputText value="Serial No."/>
+            </f:facet>
+            <h:outputText value="#{scale.serialNumber}" />
+        </p:column>
+        
+        <p:column sortBy="#{scale.capacity}">
+            <f:facet name="header">
+                <h:outputText value="Capacity"/>
+            </f:facet>
+            <h:outputText value="#{scale.capacity}" />
+        </p:column>
+       
         <p:column style="width:32px">
             <p:commandButton title="View/Edit scale"                             
-                             actionListener="#{legalMetrologyManager.editScale}"
-                             update=":unitDialogForms:scaleDetailDialog"
-                             onstart="longProcessDialogVar.show();"
-                             oncomplete="scaleDialog.show();longProcessDialogVar.hide();"
-                             onerror="connectionErrorDialog.show();"
-                             global="true"
+                             actionListener="#{legalMetrologyManager.editScale}"                             
                              process="@this"
-                             icon="ui-icon ui-icon-pencil">
+                             icon="pi pi-pencil">
+
                 <f:setPropertyActionListener value="#{scale}"
                                              target="#{legalMetrologyManager.currentScale}" />
+
+                <p:ajax event="dialogReturn" 
+                        listener="#{legalMetrologyManager.doScaleSearch}"
+                        update="scalesTable"/>
+
             </p:commandButton>           
         </p:column>    
 

@@ -62,6 +62,37 @@ Email: info@dpbennett.com.jm
 
             <h:panelGrid columns="2" id="scaleDialogFormContent">
 
+                <p:outputLabel for="scaleActive" value="Active *" style="font-weight: bold;" />  
+                <h:panelGroup>
+                    <p:selectBooleanCheckbox style="vertical-align: middle"
+                                             id="scaleActive"
+                                             value="#{legalMetrologyManager.currentScale.active}" >
+
+                        <p:ajax listener="#{legalMetrologyManager.updateScale}"
+                                event="change"
+                                process="@this"/>
+
+                    </p:selectBooleanCheckbox>     
+
+                    <p:tooltip for="scaleActive" 
+                               value="Check to activate this scale" 
+                               showEffect="fade" hideEffect="fade" />            
+                </h:panelGroup>   
+                
+                <p:outputLabel value="ID/Number" 
+                               style="font-weight: bold" 
+                               for="scaleNumber" />
+                <p:inputText value="#{legalMetrologyManager.currentScale.number}"
+                             id="scaleNumber"
+                             maxlength="250"
+                             required="true"
+                             requiredMessage="Please enter a valid ID/Number" >
+
+                    <p:ajax event="keyup"
+                            listener="#{legalMetrologyManager.updateScale}"/>
+
+                </p:inputText>
+
                 <p:outputLabel value="Name" 
                                style="font-weight: bold;"
                                for="scaleName" />
@@ -78,37 +109,7 @@ Email: info@dpbennett.com.jm
 
                 <p:outputLabel value="Client" 
                                for="scaleClient"
-                               style="font-weight: bold" />
-                <ui:remove>
-                    <h:panelGroup>
-                        <p:autoComplete id="scaleClient"
-                                        size="35"
-                                        maxResults="12"
-                                        maxlength="250"
-                                        var="client"
-                                        value="#{legalMetrologyManager.currentScale.client}"
-                                        itemLabel="#{client.name}"
-                                        itemValue="#{client}"
-                                        converter="clientConverter"
-                                        forceSelection="false"
-                                        completeMethod="#{App.completeClient}" >
-                            <p:ajax event="itemSelect"                                        
-                                    listener="#{legalMetrologyManager.updateCurrentScaleClient}"/>
-                            <p:ajax event="keyup"                                        
-                                    listener="#{legalMetrologyManager.updateCurrentScaleClient}"/>
-                        </p:autoComplete>
-
-                        <p:spacer height="0" width="4"/>
-                        <p:commandButton icon="ui-icon-pencil"
-                                         onstart="longProcessDialogVar.show();"
-                                         actionListener="#{legalMetrologyManager.editScaleClient}"
-                                         update=":clientForm"
-                                         oncomplete="clientFormDialog.show();longProcessDialogVar.hide();"
-                                         process="@this"
-                                         title="View or edit this client's detail"/>
-                        <p:spacer height="0" width="4"/>
-                    </h:panelGroup>
-                </ui:remove>
+                               style="font-weight: bold" />               
                 <h:panelGroup>
                     <p:autoComplete id="scaleClient"      
                                     var="client"
@@ -148,7 +149,7 @@ Email: info@dpbennett.com.jm
                                     title="View or edit this client's detail">    
 
                             <p:ajax event="dialogReturn" 
-                                    listener="#{legalMetrologyManager.scaleDialogReturn}"
+                                    listener="#{legalMetrologyManager.scaleClientDialogReturn}"
                                     update="scaleClient" />
 
                         </p:menuitem>
@@ -162,48 +163,17 @@ Email: info@dpbennett.com.jm
                             title="Add a new client">
 
                             <p:ajax event="dialogReturn" 
-                                    listener="#{legalMetrologyManager.scaleDialogReturn}"
+                                    listener="#{legalMetrologyManager.scaleClientDialogReturn}"
                                     update="scaleClient" />
 
                         </p:menuitem>
                     </p:menuButton>     
 
-                </h:panelGroup>
-
-                <p:outputLabel value="ID/Number" 
-                               style="font-weight: bold" 
-                               for="scaleNumber" />
-                <p:inputText value="#{legalMetrologyManager.currentScale.number}"
-                             id="scaleNumber"
-                             maxlength="250"
-                             required="true"
-                             requiredMessage="Please enter a valid ID/Number" >
-
-                    <p:ajax event="keyup"
-                            listener="#{legalMetrologyManager.updateScale}"/>
-
-                </p:inputText>
+                </h:panelGroup>                
 
                 <p:outputLabel value="Manufacturer" 
                                style="font-weight: bold;"
-                               for="manufacturer" />  
-                <ui:remove>
-                    <p:autoComplete value="#{legalMetrologyManager.currentScale.manufacturer}"
-                                    var="manufacturer"
-                                    maxResults="12"
-                                    size="35"
-                                    maxlength="250"
-                                    itemLabel="#{manufacturer.name}"
-                                    itemValue="#{manufacturer}"
-                                    title="#{manufacturer.name}"
-                                    converter="manufacturerConverter"
-                                    completeMethod="#{App.completeManufacturer}" >
-                        <p:ajax event="itemSelect"
-                                listener="#{legalMetrologyManager.updateCurrentScaleManufacturer}" />
-                        <p:ajax event="keyup"
-                                listener="#{legalMetrologyManager.updateCurrentScaleManufacturer}"/>
-                    </p:autoComplete>
-                </ui:remove>
+                               for="manufacturer" /> 
                 <h:panelGroup>
                     <p:autoComplete id="manufacturer"      
                                     var="manufacturer"
@@ -222,12 +192,12 @@ Email: info@dpbennett.com.jm
                         <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
                         <p:ajax event="itemSelect"
-                                update="actionsMenuButton"
+                                update="manuActionsMenuButton"
                                 listener="#{legalMetrologyManager.updateScale}" />   
 
                     </p:autoComplete>
 
-                    <p:menuButton id="actionsMenuButton"
+                    <p:menuButton id="manuActionsMenuButton"
                                   icon="pi pi-pencil" 
                                   title="Add or edit manufacturer" >  
 
@@ -325,10 +295,10 @@ Email: info@dpbennett.com.jm
                                  maxlength="1000"
                                  autoResize="false"
                                  style="width: 250px" >
-                    
+
                     <p:ajax event="keyup"
                             listener="#{legalMetrologyManager.updateScale()}" />
-                    
+
                 </p:inputTextarea>
 
             </h:panelGrid>

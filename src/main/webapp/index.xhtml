@@ -233,7 +233,7 @@ Email: info@dpbennett.com.jm
 
                                         <h:panelGroup rendered="#{t.id == 'Legal Metrology'}">
                                             <ui:include src="dashboard/lm/lmTab.xhtml" />
-                                        </h:panelGroup>
+                                        </h:panelGroup>                                     
 
                                         <h:panelGroup rendered="#{t.id == 'System Administration'}" >
                                             <ui:include src="dashboard/admin/generalAdminTab.xhtml" /> 
@@ -288,7 +288,11 @@ Email: info@dpbennett.com.jm
 
                                                 <h:panelGroup rendered="#{t.id == 'System Administration'}" >
                                                     <ui:include src="admin/generalAdminTab.xhtml" /> 
-                                                </h:panelGroup>                                               
+                                                </h:panelGroup>    
+
+                                                <h:panelGroup rendered="#{t.id == 'Human Resource'}">                                
+                                                    <ui:include src="hr/hrmTab.xhtml" /> 
+                                                </h:panelGroup>
 
                                                 <h:panelGroup rendered="#{t.id == 'Market Products'}" >
                                                     <ui:include src="finance/marketProductBrowser.xhtml" />                                                                
@@ -321,7 +325,7 @@ Email: info@dpbennett.com.jm
                                                 <h:panelGroup rendered="#{t.id == 'Petrol Stations'}" >
                                                     <ui:include src="legalmet/petrolStationsTab.xhtml"/>  
                                                 </h:panelGroup>
-                                                
+
                                                 <h:panelGroup rendered="#{t.id == 'Scales'}" >
                                                     <ui:include src="legalmet/scalesTab.xhtml"/>  
                                                 </h:panelGroup>
