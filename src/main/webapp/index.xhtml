@@ -233,7 +233,15 @@ Email: info@dpbennett.com.jm
 
                                         <h:panelGroup rendered="#{t.id == 'Legal Metrology'}">
                                             <ui:include src="dashboard/lm/lmTab.xhtml" />
-                                        </h:panelGroup>                                     
+                                        </h:panelGroup>   
+
+                                        <h:panelGroup  rendered="#{t.id == 'Financial Administration'}">
+                                            <ui:include src="dashboard/fm/fmTab.xhtml" /> 
+                                        </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{t.id == 'Human Resource'}">
+                                            <ui:include src="dashboard/hr/hrmTab.xhtml" />
+                                        </h:panelGroup>
 
                                         <h:panelGroup rendered="#{t.id == 'System Administration'}" >
                                             <ui:include src="dashboard/admin/generalAdminTab.xhtml" /> 
@@ -294,6 +302,10 @@ Email: info@dpbennett.com.jm
                                                     <ui:include src="hr/hrmTab.xhtml" /> 
                                                 </h:panelGroup>
 
+                                                <h:panelGroup  rendered="#{t.id == 'Financial Administration'}">
+                                                    <ui:include src="finance/financialAdminTab.xhtml" /> 
+                                                </h:panelGroup> 
+
                                                 <h:panelGroup rendered="#{t.id == 'Market Products'}" >
                                                     <ui:include src="finance/marketProductBrowser.xhtml" />                                                                
                                                 </h:panelGroup>
@@ -314,7 +326,7 @@ Email: info@dpbennett.com.jm
                                                     <ui:include src="compliance/factory/factoryInspectionsTab.xhtml" />                                                                
                                                 </h:panelGroup>
 
-                                                <h:panelGroup rendered="#{t.id == 'Manufacturers'}" >
+                                                <h:panelGroup rendered="#{t.id == 'Manufacturers/Factories'}" >
                                                     <ui:include src="compliance/factory/manufacturersTab.xhtml"/>  
                                                 </h:panelGroup>
 
