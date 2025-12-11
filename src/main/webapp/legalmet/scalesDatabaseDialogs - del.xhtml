@@ -45,6 +45,7 @@
             <h:outputText value="Client *: " style="font-weight: bold" />
             <h:panelGroup>
                 <p:autoComplete id="scaleClient"
+                                escape="false"
                                 size="35"
                                 maxResults="12"
                                  maxlength="250"
@@ -83,6 +84,7 @@
             <h:outputText value="Manufacturer:" />
             <p:autoComplete value="#{legalMetrologyManager.currentScale.manufacturer}"
                             var="manufacturer"
+                            escape="false"
                             maxResults="12"
                             size="35"
                              maxlength="250"

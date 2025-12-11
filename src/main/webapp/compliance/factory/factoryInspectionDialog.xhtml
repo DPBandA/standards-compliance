@@ -76,6 +76,7 @@ Email: info@dpbennett.com.jm
                         <h:panelGroup>
                             <p:autoComplete value="#{complianceManager.currentFactoryInspection.jobNumber}" 
                                             id="jobNumber"
+                                            escape="false"
                                             maxResults="20"
                                             scrollHeight="200"
                                             forceSelection="false"
@@ -163,6 +164,7 @@ Email: info@dpbennett.com.jm
                         <h:outputText value="Manufacturer *"  style="font-weight: bold" />
                         <h:panelGroup>
                             <p:autoComplete id="manufacturer"      
+                                            escape="false"
                                             var="manufacturer"
                                             itemLabel="#{manufacturer.truncatedName}"
                                             itemValue="#{manufacturer}"           
@@ -225,6 +227,7 @@ Email: info@dpbennett.com.jm
                         <p:autoComplete id="address"
                                         value="#{complianceManager.currentFactoryInspection.address}"
                                         dropdown="true"
+                                        escape="false"
                                         forceSelection="true"
                                         required="true"
                                         requiredMessage="Address Required"
@@ -252,6 +255,7 @@ Email: info@dpbennett.com.jm
                         <p:autoComplete id="representative"
                                         value="#{complianceManager.currentFactoryInspection.factoryRepresentative}"
                                         dropdown="true"
+                                        escape="false"
                                         forceSelection="true"
                                         scrollHeight="200"
                                         required="true"
@@ -277,6 +281,7 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Inspector *" style="font-weight: bold" />       
                         <p:autoComplete id="assignedInspector"
+                                        escape="false"
                                         var="assignedInspector"
                                         value="#{complianceManager.currentFactoryInspection.assignedInspector}"
                                         title="#{complianceManager.currentFactoryInspection.assignedInspector}"
@@ -378,6 +383,7 @@ Email: info@dpbennett.com.jm
                                                    title="Select an existing inspection template"/>      
                                     <p:spacer height="0px" width="5px"/>
                                     <p:autoComplete dropdown="true"
+                                                    escape="false"
                                                     value="#{complianceManager.selectedFactoryInspectionTemplate}"
                                                     placeholder="enter template name"
                                                     scrollHeight="200" 

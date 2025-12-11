@@ -67,6 +67,7 @@ Email: info@dpbennett.com.jm
                                       value="Product name *" />
                         <h:panelGroup>
                             <p:autoComplete id="marketProduct"
+                                            escape="false"
                                             var="marketProduct"   
                                             value="#{complianceManager.currentProductInspection.marketProduct}"
                                             title="#{complianceManager.currentProductInspection.marketProduct}"
@@ -126,6 +127,7 @@ Email: info@dpbennett.com.jm
                                       style="font-weight: bold;" />
                         <h:panelGroup>
                             <p:autoComplete id="productCategory"
+                                            escape="false"
                                             var="category"   
                                             value="#{complianceManager.currentProductInspection.productCategory}"
                                             itemLabel="#{category.name}"
@@ -368,6 +370,7 @@ Email: info@dpbennett.com.jm
 
                         <p:autoComplete value="#{complianceManager.currentProductInspection.countryOfOrigin}" 
                                         forceSelection="true" 
+                                        escape="false"
                                         dropdown="true"
                                         scrollHeight="200" 
                                         completeMethod="#{systemManager.completeCountry}" >       
@@ -383,7 +386,8 @@ Email: info@dpbennett.com.jm
                             <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                         </p:selectBooleanCheckbox>   
                         <h:panelGroup>
-                            <p:autoComplete id="distributor"      
+                            <p:autoComplete id="distributor"  
+                                            escape="false"
                                             var="distributor"
                                             itemLabel="#{distributor.truncatedName}"
                                             itemValue="#{distributor}"               

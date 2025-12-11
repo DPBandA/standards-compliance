@@ -70,6 +70,7 @@ and open the template in the editor.
 
                         <h:outputText value="Name *:" style="font-weight: bold;" />
                         <p:autoComplete size="35"
+                                        escape="false"
                                         id="factoryName"
                                         value="#{foodsManager.currentFoodFactory.name}"
                                         style="width: 100%"
@@ -82,6 +83,7 @@ and open the template in the editor.
 
                         <h:outputText value="Assigned inspector:" style="font-weight: bold" />
                         <p:autoComplete style="width: 75%"
+                                        escape="false"
                                         var="assignedInspector"
                                         value="#{foodsManager.currentFoodFactory.assignedInspector}"
                                         title="#{foodsManager.currentFoodFactory.assignedInspector}"

@@ -79,6 +79,7 @@ and open the template in the editor.
                 <h:outputText value="Signed by:" style="font-weight: bold" />
                 <p:autoComplete style="width: 75%"
                                 var="signedBy"
+                                escape="false"
                                 value="#{jobManager.currentCertification.certificateSignedBy}"
                                 title="#{jobManager.currentCertification.certificateSignedBy}"
                                 itemLabel="#{signedBy.name}"
