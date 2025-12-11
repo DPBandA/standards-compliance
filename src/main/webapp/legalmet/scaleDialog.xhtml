@@ -111,7 +111,8 @@ Email: info@dpbennett.com.jm
                                for="scaleClient"
                                style="font-weight: bold" />               
                 <h:panelGroup>
-                    <p:autoComplete id="scaleClient"      
+                    <p:autoComplete id="scaleClient"    
+                                    escape="false"
                                     var="client"
                                     itemLabel="#{client.truncatedName}"
                                     itemValue="#{client}"              
@@ -177,6 +178,7 @@ Email: info@dpbennett.com.jm
                 <h:panelGroup>
                     <p:autoComplete id="manufacturer"      
                                     var="manufacturer"
+                                    escape="false"
                                     itemLabel="#{manufacturer.truncatedName}"
                                     itemValue="#{manufacturer}"           
                                     dropdown="false"

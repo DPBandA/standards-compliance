@@ -30,7 +30,8 @@ Email: info@dpbennett.com.jm
                        style="font-weight: bold" />   
         <h:panelGroup>
             <p:autoComplete value="#{complianceManager.currentComplianceSurvey.jobNumber}" 
-                            id="jobNumber"                            
+                            id="jobNumber"    
+                            escape="false"
                             forceSelection="false"
                             cache="true"
                             maxResults="3"
@@ -88,6 +89,7 @@ Email: info@dpbennett.com.jm
 
         <p:outputLabel value="Business office *" style="font-weight: bold"/>   
         <p:autoComplete id="businessOffice"
+                        escape="false"
                         dropdown="true" 
                         readonly="false"
                         var="businessOffice"
@@ -143,6 +145,7 @@ Email: info@dpbennett.com.jm
                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}" />
         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
             <p:autoComplete id="consignee"      
+                            escape="false"
                             var="consignee"
                             itemLabel="#{consignee.truncatedName}"
                             itemValue="#{consignee}"              
@@ -202,6 +205,7 @@ Email: info@dpbennett.com.jm
         <h:outputText value="Consignee representative:" style="font-weight: bold" 
                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}" />  
         <p:autoComplete id="consigneeRepresentative"
+                        escape="false"
                         rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                         value="#{complianceManager.currentComplianceSurvey.consigneeRepresentative}"
                         dropdown="true"
@@ -226,6 +230,7 @@ Email: info@dpbennett.com.jm
         <p:outputLabel value="Consignee address *" 
                        style="font-weight: bold" /> 
         <p:autoComplete id="consigneeAddress"
+                        escape="false"
                         value="#{complianceManager.currentComplianceSurvey.consigneeAddress}"
                         dropdown="true"
                         forceSelection="true" 
@@ -255,7 +260,8 @@ Email: info@dpbennett.com.jm
                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                       style="font-weight: bold" />
         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-            <p:autoComplete id="broker"      
+            <p:autoComplete id="broker"     
+                            escape="false"
                             var="broker"
                             itemLabel="#{broker.truncatedName}"
                             itemValue="#{broker}"               
@@ -313,6 +319,7 @@ Email: info@dpbennett.com.jm
                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                       style="font-weight: bold" />  
         <p:autoComplete id="brokerRepresentative"
+                        escape="false"
                         rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                         value="#{complianceManager.currentComplianceSurvey.brokerRepresentative}"
                         dropdown="true"
@@ -338,6 +345,7 @@ Email: info@dpbennett.com.jm
                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                       style="font-weight: bold" /> 
         <p:autoComplete id="brokerAddress"
+                        escape="false"
                         rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}"
                         value="#{complianceManager.currentComplianceSurvey.brokerAddress}"
                         dropdown="true"
@@ -369,6 +377,7 @@ Email: info@dpbennett.com.jm
                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"/>
         <h:panelGroup rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}">
             <p:autoComplete id="retailOutlet"  
+                            escape="false"
                             var="retailOutlet"
                             itemLabel="#{retailOutlet.truncatedName}"
                             itemValue="#{retailOutlet}"                             
@@ -493,6 +502,7 @@ Email: info@dpbennett.com.jm
 
         <p:outputLabel value="Inspector(s) *" style="font-weight: bold" />       
         <p:autoComplete id="inspectors"
+                        escape="false"
                         var="inspector"   
                         value="#{complianceManager.currentComplianceSurvey.inspectors}"
                         itemLabel="#{inspector.name}"

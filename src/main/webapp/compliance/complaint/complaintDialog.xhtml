@@ -86,6 +86,7 @@ Email: info@dpbennett.com.jm
                                        style="font-weight: bold" />                   
                         <h:panelGroup>
                             <p:autoComplete value="#{complianceManager.currentComplaint.jobNumber}" 
+                                            escape="false"
                                             id="jobNumber"
                                             scrollHeight="200"
                                             forceSelection="false"
@@ -145,6 +146,7 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Business office *" style="font-weight: bold"/>       
                         <p:autoComplete id="businessOffice"
+                                        escape="false"
                                         dropdown="true" 
                                         readonly="false"
                                         var="businessOffice"
@@ -173,6 +175,7 @@ Email: info@dpbennett.com.jm
                                       style="font-weight: bold" />
                         <h:panelGroup>
                             <p:autoComplete id="complainant"      
+                                            escape="false"
                                             var="complainant"
                                             itemLabel="#{complainant.truncatedName}"
                                             itemValue="#{complainant}"               
@@ -235,6 +238,7 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Received by *" style="font-weight: bold" />       
                         <p:autoComplete id="receivedBy"
+                                        escape="false"
                                         var="receivedBy"  
                                         value="#{complianceManager.currentComplaint.receivedBy}"
                                         title="#{complianceManager.currentComplaint.receivedBy}"
@@ -263,6 +267,7 @@ Email: info@dpbennett.com.jm
                                       style="font-weight: bold" />
                         <h:panelGroup>
                             <p:autoComplete id="receivedVia"      
+                                            escape="false"
                                             var="receivedVia"
                                             itemLabel="#{receivedVia.truncatedName}"
                                             itemValue="#{receivedVia}"             
@@ -561,6 +566,7 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Referred to department(s)" />       
                         <p:autoComplete id="referredToDepartment"
+                                        escape="false"
                                         var="referredToDepartment"   
                                         value="#{complianceManager.currentComplaint.referredToDepartment}"
                                         itemLabel="#{referredToDepartment.name}"
@@ -571,7 +577,7 @@ Email: info@dpbennett.com.jm
                                         multiple="true"
                                         completeMethod="#{humanResourceManager.completeActiveDepartment}" >
 
-                            <f:converter converterId="activeDepartmentConverter"/>
+                            <f:converter converterId="departmentConverter"/>
 
                             <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
@@ -589,6 +595,7 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Referred to employee(s)" />       
                         <p:autoComplete id="referredTo"
+                                        escape="false"
                                         var="referredTo"   
                                         value="#{complianceManager.currentComplaint.referredTo}"
                                         itemLabel="#{referredTo.name}"

@@ -80,6 +80,7 @@ Email: info@dpbennett.com.jm
         
         <p:outputLabel value="Inspector" style="font-weight: bold" />       
         <p:autoComplete id="inspector"
+                        escape="false"
                         var="inspector"   
                         value="#{complianceManager.currentComplianceSurvey.inspector}"
                         itemLabel="#{inspector.name}"
@@ -110,6 +111,7 @@ Email: info@dpbennett.com.jm
                        value="Standards breached" />
         <h:panelGroup>
             <p:autoComplete id="standards"
+                            escape="false"
                             var="standard"   
                             value="#{complianceManager.currentComplianceSurvey.standardsBreached}"
                             itemLabel="#{standard.number} - #{standard.name}"

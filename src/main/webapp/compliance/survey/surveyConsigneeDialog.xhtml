@@ -47,6 +47,7 @@ Email: info@dpbennett.com.jm
                                style="font-weight: bold" />
                 <h:panelGroup>
                     <p:autoComplete id="consignee"      
+                                    escape="false"
                                     var="consignee"
                                     itemLabel="#{consignee.truncatedName}"
                                     itemValue="#{consignee}"                 
@@ -109,6 +110,7 @@ Email: info@dpbennett.com.jm
                 <h:outputText value="Consignee representative *" 
                               style="font-weight: bold" />  
                 <p:autoComplete id="consigneeRepresentative"
+                                escape="false"
                                 value="#{complianceManager.currentComplianceSurvey.consigneeRepresentative}"
                                 dropdown="true"
                                 forceSelection="true"
@@ -137,6 +139,7 @@ Email: info@dpbennett.com.jm
                 <p:outputLabel value="Consignee address *" 
                                style="font-weight: bold" /> 
                 <p:autoComplete id="consigneeAddress"
+                                escape="false"
                                 value="#{complianceManager.currentComplianceSurvey.consigneeAddress}"
                                 dropdown="true"
                                 forceSelection="true" 

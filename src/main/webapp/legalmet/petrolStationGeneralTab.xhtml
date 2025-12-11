@@ -61,7 +61,8 @@ Email: info@dpbennett.com.jm
 
         <h:outputText value="Parent company/client *" style="font-weight: bold" />
         <h:panelGroup>
-            <p:autoComplete id="petrolStationClient"      
+            <p:autoComplete id="petrolStationClient"     
+                            escape="false"
                             var="client"
                             itemLabel="#{client.truncatedName}"
                             itemValue="#{client}"              
@@ -124,6 +125,7 @@ Email: info@dpbennett.com.jm
         <h:outputText value="Inspector responsible *" style="font-weight: bold" />                       
         <p:autoComplete id="inspector"
                         var="assignedTo"
+                        escape="false"
                         value="#{legalMetrologyManager.currentPetrolStation.lastAssignee}"
                         itemLabel="#{assignedTo.name}"
                         itemValue="#{assignedTo}"

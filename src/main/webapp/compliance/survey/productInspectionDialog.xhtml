@@ -76,6 +76,7 @@ Email: info@dpbennett.com.jm
                                       style="font-weight: bold;" /> 
                         <h:panelGroup>
                             <p:autoComplete id="marketProduct"
+                                            escape="false"
                                             var="marketProduct"   
                                             value="#{complianceManager.currentProductInspection.marketProduct}"
                                             title="#{complianceManager.currentProductInspection.marketProduct}"
@@ -135,6 +136,7 @@ Email: info@dpbennett.com.jm
                                       style="font-weight: bold;" />
                         <h:panelGroup>
                             <p:autoComplete id="productCategory"
+                                            escape="false"
                                             var="category"   
                                             value="#{complianceManager.currentProductInspection.productCategory}"
                                             itemLabel="#{category.name}"
@@ -192,7 +194,8 @@ Email: info@dpbennett.com.jm
 
                         <h:outputText value="Manufacturer" />
                         <h:panelGroup>
-                            <p:autoComplete id="manufacturer"      
+                            <p:autoComplete id="manufacturer"  
+                                            escape="false"
                                             var="manufacturer"
                                             itemLabel="#{manufacturer.truncatedName}"
                                             itemValue="#{manufacturer}"                   
@@ -420,6 +423,7 @@ Email: info@dpbennett.com.jm
 
                         <p:autoComplete value="#{complianceManager.currentProductInspection.countryOfOrigin}" 
                                         forceSelection="true"  
+                                        escape="false"
                                         maxlength="40"
                                         dropdown="true"
                                         scrollHeight="200" 
@@ -436,7 +440,8 @@ Email: info@dpbennett.com.jm
                             <p:ajax listener="#{complianceManager.updateProductInspection}"/>
                         </p:selectBooleanCheckbox>   
                         <h:panelGroup>
-                            <p:autoComplete id="distributor"      
+                            <p:autoComplete id="distributor"   
+                                            escape="false"
                                             var="distributor"
                                             itemLabel="#{distributor.truncatedName}"
                                             itemValue="#{distributor}"                
@@ -573,6 +578,7 @@ Email: info@dpbennett.com.jm
                                        value="Standards breached" />
                         <h:panelGroup>
                             <p:autoComplete id="standards"
+                                            escape="false"
                                             var="standard"   
                                             value="#{complianceManager.currentProductInspection.documentStandards}"
                                             itemLabel="#{standard.number} - #{standard.name}"
