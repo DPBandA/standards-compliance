@@ -1,6 +1,6 @@
 <!--
 Standards Compliance (SC) 
-Copyright (C) 2025  D P Bennett & Associates Limited
+Copyright (C) 2026  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -97,14 +97,17 @@ Email: info@dpbennett.com.jm
                     <p:spacer width="30"/>                                   
 
 
-                    <p:commandButton actionListener="#{complianceManager.viewUserProfile}"                                            
-                                     update=":userProfileDialogForm"
-                                     oncomplete="PF('userProfileDialog').show();"
+                    <p:commandButton actionListener="#{systemManager.editUserProfile}"   
+                                     title="View or edit user profile" 
                                      icon="pi pi-user"
-                                     title="Profile"
                                      style="margin-right: 10px;"
                                      styleClass="rounded-button"
-                                     process="@this"/>  
+                                     process="@this">
+
+                        <p:ajax event="dialogReturn" 
+                                oncomplete="window.location.reload();"/>
+
+                    </p:commandButton>
                     <p:commandButton actionListener="#{complianceManager.logout}"                                             
                                      icon="pi pi-sign-out"
                                      styleClass="rounded-button"
