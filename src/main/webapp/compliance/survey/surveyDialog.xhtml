@@ -35,7 +35,7 @@ Email: info@dpbennett.com.jm
 
         <ui:include src="../../common/commonDialogs.xhtml"/>
         <ui:include src="deleteProductInspectionDialog.xhtml"/>   
-        <ui:include src="saveSurveyConfirmationDialog.xhtml"/>  
+        <ui:include src="saveSurveyConfirmationDialog.xhtml"/> 
 
         <h:form id="ComplianceSurveyDialogForm">   
 
@@ -49,12 +49,14 @@ Email: info@dpbennett.com.jm
 
                 <p:tab title="General" >
                     <ui:include src="surveyDialogGeneralTab.xhtml"/>
-                </p:tab>   
+                </p:tab>    
 
                 <p:tab id="entryDocumentInspectionTab"
                        title="Entry Document Inspection" 
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
+
                     <ui:include src="surveyDialogEntryDocumentInspectionTab.xhtml"/>
+
                 </p:tab>
 
                 <p:tab title="Product Inspections">
@@ -92,4 +94,5 @@ Email: info@dpbennett.com.jm
         </h:form>   
 
     </ui:define>
+
 </ui:composition>
