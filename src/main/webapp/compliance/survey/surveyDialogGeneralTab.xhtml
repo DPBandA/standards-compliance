@@ -45,6 +45,7 @@ Email: info@dpbennett.com.jm
                             completeMethod="#{complianceManager.completeJobNumber}">
 
                 <p:ajax event="itemSelect"
+                        global="false"
                         update="jobActionsMenu,:ComplianceSurveyDialogForm:topToolbar"
                         listener="#{complianceManager.updateSurvey}"
                         process="@this"/>
