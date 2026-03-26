@@ -581,6 +581,7 @@ Email: info@dpbennett.com.jm
                         <h:panelGroup>
                             <p:autoComplete id="standards"
                                             escape="false"
+                                            unique="true"
                                             var="standard"   
                                             value="#{complianceManager.currentProductInspection.documentStandards}"
                                             itemLabel="#{standard.number} - #{standard.name}"

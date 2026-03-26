@@ -52,6 +52,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Detention Request - Ports of Entry"
                             ajax="false"
+                            rendered="#{complianceManager.currentComplianceSurvey.canExportDetentionRequestPOEForm}"
                             disabled="#{!complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 

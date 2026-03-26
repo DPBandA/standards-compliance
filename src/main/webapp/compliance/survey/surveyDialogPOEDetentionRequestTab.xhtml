@@ -115,6 +115,7 @@ Email: info@dpbennett.com.jm
         <h:panelGroup>
             <p:autoComplete id="standards"
                             escape="false"
+                            unique="true"
                             var="standard"   
                             value="#{complianceManager.currentComplianceSurvey.standardsBreached}"
                             itemLabel="#{standard.number} - #{standard.name}"
