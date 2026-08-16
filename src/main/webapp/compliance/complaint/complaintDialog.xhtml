@@ -194,7 +194,7 @@ Email: info@dpbennett.com.jm
                                             minQueryLength="2"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
-                                <f:converter converterId="activeClientConverter"/>
+                                <f:converter converterId="clientConverter"/>
 
                                 <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
@@ -255,7 +255,7 @@ Email: info@dpbennett.com.jm
                                         scrollHeight="200" 
                                         completeMethod="#{humanResourceManager.completeActiveEmployee}" >
 
-                            <f:converter converterId="activeEmployeeConverter"/>
+                            <f:converter converterId="employeeConverter"/>
 
                             <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
@@ -286,7 +286,7 @@ Email: info@dpbennett.com.jm
                                             minQueryLength="2"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
-                                <f:converter converterId="activeClientConverter"/>
+                                <f:converter converterId="clientConverter"/>
 
                                 <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
@@ -609,7 +609,7 @@ Email: info@dpbennett.com.jm
                                         multiple="true"
                                         completeMethod="#{humanResourceManager.completeActiveEmployee}" >
 
-                            <f:converter converterId="activeEmployeeConverter"/>
+                            <f:converter converterId="employeeConverter"/>
 
                             <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 

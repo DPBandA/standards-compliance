@@ -94,7 +94,7 @@ Email: info@dpbennett.com.jm
                         scrollHeight="200"   
                         completeMethod="#{humanResourceManager.completeActiveEmployee}" >
 
-            <f:converter converterId="activeEmployeeConverter"/>
+            <f:converter converterId="employeeConverter"/>
 
             <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
@@ -126,7 +126,7 @@ Email: info@dpbennett.com.jm
                             multiple="true"
                             completeMethod="#{complianceManager.completeActiveDocumentStandard}" >
 
-                <f:converter converterId="activeDocumentStandardConverter"/>
+                <f:converter converterId="documentStandardConverter"/>
 
                 <f:attribute name="em" value="#{complianceManager.entityManager1}"/>
 

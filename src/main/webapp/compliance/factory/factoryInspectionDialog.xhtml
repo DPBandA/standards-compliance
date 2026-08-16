@@ -180,7 +180,7 @@ Email: info@dpbennett.com.jm
                                             forceSelection="true"
                                             completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
-                                <f:converter converterId="activeManufacturerConverter"/>
+                                <f:converter converterId="manufacturerConverter"/>
 
                                 <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
@@ -298,7 +298,7 @@ Email: info@dpbennett.com.jm
                                         scrollHeight="200" 
                                         completeMethod="#{humanResourceManager.completeActiveEmployee}" >
 
-                            <f:converter converterId="activeEmployeeConverter"/>
+                            <f:converter converterId="employeeConverter"/>
 
                             <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 

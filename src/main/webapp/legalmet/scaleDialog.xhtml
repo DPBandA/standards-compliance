@@ -129,7 +129,7 @@ Email: info@dpbennett.com.jm
                                     maxResults="10"
                                     completeMethod="#{clientManager.completeActiveClient}" >
 
-                        <f:converter converterId="activeClientConverter"/>
+                        <f:converter converterId="clientConverter"/>
 
                         <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
@@ -191,7 +191,7 @@ Email: info@dpbennett.com.jm
                                     requiredMessage="Please enter a valid manufacturer"
                                     completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
-                        <f:converter converterId="activeManufacturerConverter"/>
+                        <f:converter converterId="manufacturerConverter"/>
 
                         <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
