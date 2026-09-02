@@ -99,7 +99,7 @@ Email: info@dpbennett.com.jm
                  id="ReleaseRequestPOEPanelGrid"
                  cellpadding="5">
 
-        <p:commandButton value="Sign Prepared By"
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.preparedBySignForReleaseRequestPOEButtonLabel}"
                          disabled="#{!complianceManager.user.can('SignPreparedByReleaseRequest')}"
                          title="Sign form prepared by"
                          actionListener="#{complianceManager.updatePreparedBySigForReleaseRequestPOE}"
@@ -115,7 +115,7 @@ Email: info@dpbennett.com.jm
 
         </p:outputLabel>
 
-        <p:commandButton value="Sign Approved By"
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.approvedBySignForReleaseRequestPOEButtonLabel}"
                          disabled="#{!complianceManager.user.can('SignApprovedByReleaseRequest')}"
                          title="Sign form approved by"
                          actionListener="#{complianceManager.updateApprovedBySigForReleaseRequestPOE}"

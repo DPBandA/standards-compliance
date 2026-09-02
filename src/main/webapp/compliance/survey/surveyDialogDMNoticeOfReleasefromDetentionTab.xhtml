@@ -281,7 +281,7 @@ Email: info@dpbennett.com.jm
                  id="AuthForNoticeOfDentionDMPanelGrid"
                  cellpadding="5">
 
-        <p:commandButton value="Authorize Detention Notice"
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.authorizeNoticeOfDetentionDMButtonLabel}"
                          disabled="#{!complianceManager.user.can('AuthDetentionNotice')}"
                          title="Authorize notice of detention"
                          actionListener="#{complianceManager.updateAuthSigForNoticeOfDentionDM}"

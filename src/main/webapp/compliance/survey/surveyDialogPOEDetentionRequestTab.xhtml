@@ -179,7 +179,7 @@ Email: info@dpbennett.com.jm
                  id="AuthSigForDetentionRequestPOEPanelGrid"
                  cellpadding="5" >
 
-        <p:commandButton value="Authorize"
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.authDetentionRequestPOEButtonLabel}"
                          disabled="#{!complianceManager.user.can('AuthDetentionRequest')}"
                          title="Authorize form"
                          actionListener="#{complianceManager.updateAuthDetentionRequestPOE}"
@@ -187,13 +187,7 @@ Email: info@dpbennett.com.jm
                          icon="pi pi-key"
                          process="@this" />
 
-        <h:panelGroup id="AuthSigForDetentionRequestPOEPanelGroup">
-            <ui:remove>
-                <p:graphicImage id="AuthSigForDetentionRequestPOE" 
-                                height="24"
-                                width="192" cache="false"
-                                value="#{complianceManager.authSigForDetentionRequestPOE}" />  
-            </ui:remove>
+        <h:panelGroup id="AuthSigForDetentionRequestPOEPanelGroup">          
             <h:outputText  id="AuthEmployeeForDetentionRequestPOE"
                            value="#{complianceManager.currentComplianceSurvey.authEmployeeForDetentionRequestPOE.firstName} #{complianceManager.currentComplianceSurvey.authEmployeeForDetentionRequestPOE.lastName}" />
         </h:panelGroup>

@@ -94,7 +94,7 @@ Email: info@dpbennett.com.jm
                  id="SampleRequestPOEPanelGrid"
                  cellpadding="5">
 
-        <p:commandButton value="Sign"
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.signForSampleRequestPOEButtonLabel}"
                          disabled="#{!complianceManager.user.can('SignSampleRequest')}"
                          title="Sign form"
                          actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
