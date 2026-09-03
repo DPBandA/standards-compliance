@@ -73,6 +73,12 @@ Email: info@dpbennett.com.jm
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
                     <ui:include src="surveyDialogPOESampleRequestTab.xhtml"/>
                 </p:tab>
+                
+                <p:tab title="DM Sample Request" 
+                       id="DMSampleRequest"
+                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}">
+                    
+                </p:tab>
 
                 <p:tab title="POE Release Request"
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
