@@ -577,8 +577,9 @@ Email: info@dpbennett.com.jm
                         <h:outputText id="precautionStatementCharsRemaining" /> 
 
                         <p:outputLabel style="vertical-align: top;"
+                                       rendered="false"
                                        value="Standards breached" />
-                        <h:panelGroup>
+                        <h:panelGroup rendered="false">
                             <p:autoComplete id="standards"
                                             escape="false"
                                             unique="true"
@@ -619,10 +620,13 @@ Email: info@dpbennett.com.jm
 
                         </h:panelGroup>
 
-                        <p:outputLabel value="Reason for Detention" style="vertical-align: top" />
+                        <p:outputLabel value="Reason for Detention" 
+                                       rendered="false"
+                                       style="vertical-align: top" />
                         <p:inputTextarea
                             id="reasonForDetention"
                             value="#{complianceManager.currentProductInspection.reasonForDetention}"
+                            rendered="false"
                             rows="3"
                             counter="reasonForDetentionCharsRemaining"
                             counterTemplate="{0} characters remaining."
@@ -636,13 +640,14 @@ Email: info@dpbennett.com.jm
                                 process="@this" />
 
                         </p:inputTextarea> 
-                        <p:outputLabel value="" />
-                        <p:outputLabel id="reasonForDetentionCharsRemaining" />
+                        <p:outputLabel value="" rendered="false" />
+                        <p:outputLabel id="reasonForDetentionCharsRemaining" 
+                                       rendered="false" />
 
                         <h:outputText value="Standards breached" 
-                                      rendered="true" />
+                                      rendered="false" />
                         <p:inputTextarea
-                            rendered="true"
+                            rendered="false"
                             value="#{complianceManager.currentProductInspection.standardsBreached}"
                             rows="4"
                             autoResize="true"
