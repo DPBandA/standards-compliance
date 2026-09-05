@@ -112,7 +112,7 @@ Email: info@dpbennett.com.jm
                 process="@this" />
 
         </p:inputText>
-        
+
         <p:outputLabel value="Container size(s)" />
         <p:inputText id="containerSizes"
                      value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.containerSizes}" >
@@ -122,6 +122,24 @@ Email: info@dpbennett.com.jm
                 listener="#{complianceManager.updateSurvey}"
                 update=":ComplianceSurveyDialogForm:topToolbar"
                 process="@this" />
+
+        </p:inputText>
+
+        <p:outputLabel value="Number of consignments" />
+        <p:inputText title="Number of consignments"   
+                     id="consignments"
+                     converterMessage="Invalid number of consignments" 
+                     maxlength="4"
+                     value="#{complianceManager.currentComplianceSurvey.entryDocumentInspection.numberOfConsignments}">
+
+            <f:attribute name="tatRequired" value="#{jobManager.currentJob.estimatedTurnAroundTimeRequired}" />
+
+            <p:ajax
+                listener="#{complianceManager.updateSurvey}"
+                update=":ComplianceSurveyDialogForm:topToolbar"
+                process="@this" />
+
+            <f:convertNumber integerOnly="true"/>
 
         </p:inputText>
 
