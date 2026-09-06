@@ -1,0 +1,117 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2026  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"   
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <h:panelGrid columns="2" cellpadding="3">
+        <p:outputLabel value="Sample request issued" for="DMSampleRequestIssued"/>
+        <p:selectBooleanCheckbox 
+            id="DMSampleRequestIssued"
+            value="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForDomesticMarket}">
+
+            <p:ajax listener="#{complianceManager.updateSurvey}"
+                    process="@form"
+                    update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMSampleRequest,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+        </p:selectBooleanCheckbox>
+
+        <p:outputLabel value="Testing laboratory"
+                       rendered="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForDomesticMarket}"
+                       for="testingLaboratoryDM"
+                       style="font-weight: bold"/>       
+        <p:autoComplete id="testingLaboratoryDM"
+                        escape="false"
+                        dropdown="true" 
+                        var="testingLaboratoryDM"
+                        rendered="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForDomesticMarket}"
+                        value="#{complianceManager.currentComplianceSurvey.testingLaboratory}"
+                        itemLabel="#{testingLaboratoryDM.name}"
+                        itemValue="#{testingLaboratoryDM}"
+                        required="true"
+                        requiredMessage="Testing Laboratory Required"
+                        validator="businessEntityValidator"
+                        forceSelection="true"
+                        cache="true"
+                        completeMethod="#{complianceManager.completeActiveBusiness}" >
+
+            <f:converter converterId="businessConverter"/>
+
+            <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
+
+            <p:ajax event="itemSelect"                       
+                    listener="#{complianceManager.updateSurvey}"
+                    update=":ComplianceSurveyDialogForm:topToolbar" />
+
+        </p:autoComplete>
+
+        <p:outputLabel value="Samples to be collected within 30 days" for="collectedWithin30Days" />
+        <p:selectBooleanCheckbox 
+            id="collectedWithin30Days"
+            value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
+
+            <p:ajax listener="#{complianceManager.updateSurvey}"
+                    update=":ComplianceSurveyDialogForm:topToolbar" />
+
+        </p:selectBooleanCheckbox>
+
+        <p:outputLabel value="Disposed of by the NCRA" for="disposedOfByUs"/>
+        <p:selectBooleanCheckbox 
+            id="disposedOfByUs"
+            value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
+
+            <p:ajax listener="#{complianceManager.updateSurvey}"
+                    update=":ComplianceSurveyDialogForm:topToolbar" />
+
+        </p:selectBooleanCheckbox>
+
+    </h:panelGrid>
+    <hr/>
+    <h:panelGrid columns="3" 
+                 id="SampleRequestDMPanelGrid"
+                 cellpadding="5">
+
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.signForSampleRequestPOEButtonLabel}"
+                         disabled="#{!complianceManager.user.can('SignSampleRequest')}"
+                         title="Sign form"
+                         actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
+                         update=":ComplianceSurveyDialogForm:topToolbar,SampleRequestPOEPanelGrid"
+                         icon="pi pi-key"
+                         process="@this" />
+
+        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorForSampleRequestPOE.firstName} #{complianceManager.currentComplianceSurvey.inspectorForSampleRequestPOE.lastName}" />
+
+        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestPOE}" >
+
+            <f:convertDateTime pattern="MMM dd, yyyy" />
+
+        </h:outputText>
+
+    </h:panelGrid>
+
+</html>
+
+
