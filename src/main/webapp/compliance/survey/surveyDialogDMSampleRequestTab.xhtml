@@ -68,9 +68,9 @@ Email: info@dpbennett.com.jm
 
         </p:autoComplete>
 
-        <p:outputLabel value="Samples to be collected within 30 days" for="collectedWithin30Days" />
+        <p:outputLabel value="Samples to be collected within 30 days" for="collectedWithin30DaysDM" />
         <p:selectBooleanCheckbox 
-            id="collectedWithin30Days"
+            id="collectedWithin30DaysDM"
             value="#{complianceManager.currentComplianceSurvey.samplesToBeCollected}">
 
             <p:ajax listener="#{complianceManager.updateSurvey}"
@@ -78,9 +78,9 @@ Email: info@dpbennett.com.jm
 
         </p:selectBooleanCheckbox>
 
-        <p:outputLabel value="Disposed of by the NCRA" for="disposedOfByUs"/>
+        <p:outputLabel value="Disposed of by the NCRA" for="disposedOfByUsDM"/>
         <p:selectBooleanCheckbox 
-            id="disposedOfByUs"
+            id="disposedOfByUsDM"
             value="#{complianceManager.currentComplianceSurvey.samplesToBeDisposed}">
 
             <p:ajax listener="#{complianceManager.updateSurvey}"

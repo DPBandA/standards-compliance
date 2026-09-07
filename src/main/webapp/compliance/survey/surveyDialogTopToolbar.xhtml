@@ -52,8 +52,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Detention Request - Ports of Entry"
                             ajax="false"
-                            rendered="#{complianceManager.currentComplianceSurvey.canExportDetentionRequestPOEForm}"
-                            disabled="#{!complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
@@ -62,16 +61,25 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Release Request - Ports of Entry"                            
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
 
                 </p:menuitem>
 
+                <p:menuitem value="Sample Request - Domestic Market"
+                            ajax="false"
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForDomesticMarket}"                                    
+                            onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
+
+                    <p:fileDownload value="#{complianceManager.DMSampleRequestFile}" />
+
+                </p:menuitem>
+
                 <p:menuitem value="Sample Request - Ports of Entry"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
@@ -80,7 +88,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Notice of Detention - Domestic Market"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
+                            rendered="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
@@ -89,7 +97,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Notice of Release from Detention - Domestic Market"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}"
+                            rendered="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
@@ -98,7 +106,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Application for Rehabilitation"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.applicationForRehabilitation}"
+                            rendered="#{complianceManager.currentComplianceSurvey.applicationForRehabilitation}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
@@ -107,8 +115,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Verification Report"
                             ajax="false"
-                            rendered="false"
-                            disabled="#{complianceManager.currentComplianceSurvey.disableVerificationReport}"
+                            rendered="#{!complianceManager.currentComplianceSurvey.disableVerificationReport}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.verificationReportFile}" />
