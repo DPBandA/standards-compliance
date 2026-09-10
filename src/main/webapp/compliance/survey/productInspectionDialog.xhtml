@@ -32,8 +32,8 @@ Email: info@dpbennett.com.jm
     </ui:define>
 
     <ui:define name="content">
-        
-         <ui:include src="../../common/commonDialogs.xhtml"/>
+
+        <ui:include src="../../common/commonDialogs.xhtml"/>
 
         <h:form id="productDialogForm">   
             <p:growl id="product_inspection_growl" life="5000" showDetail="false"/>
@@ -115,6 +115,7 @@ Email: info@dpbennett.com.jm
                                             title="View or edit this product's detail">  
 
                                     <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.marketProductDialogReturn}"
                                             update="marketProduct,marketProductBrand,marketProductModel,surveyMarketProductMenuButton" />
 
                                 </p:menuitem>
@@ -127,6 +128,7 @@ Email: info@dpbennett.com.jm
                                     title="Add a new product to the market products database" >
 
                                     <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.marketProductDialogReturn}"
                                             update="marketProduct,marketProductBrand,marketProductModel,surveyMarketProductMenuButton" />
 
                                 </p:menuitem>
