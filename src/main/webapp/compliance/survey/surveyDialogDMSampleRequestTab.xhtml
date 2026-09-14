@@ -94,17 +94,17 @@ Email: info@dpbennett.com.jm
                  id="SampleRequestDMPanelGrid"
                  cellpadding="5">
 
-        <p:commandButton value="#{complianceManager.currentComplianceSurvey.signForSampleRequestPOEButtonLabel}"
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.signForSampleRequestDMButtonLabel}"
                          disabled="#{!complianceManager.user.can('SignSampleRequest')}"
                          title="Sign form"
-                         actionListener="#{complianceManager.updateInspectorSigForSampleRequestPOE}"
-                         update=":ComplianceSurveyDialogForm:topToolbar,SampleRequestPOEPanelGrid"
+                         actionListener="#{complianceManager.updateInspectorSigForSampleRequestDM}"
+                         update=":ComplianceSurveyDialogForm:topToolbar,SampleRequestDMPanelGrid"
                          icon="pi pi-key"
                          process="@this" />
 
-        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorForSampleRequestPOE.firstName} #{complianceManager.currentComplianceSurvey.inspectorForSampleRequestPOE.lastName}" />
+        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorForSampleRequestDM.firstName} #{complianceManager.currentComplianceSurvey.inspectorForSampleRequestDM.lastName}" />
 
-        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestPOE}" >
+        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorSigDateForSampleRequestDM}" >
 
             <f:convertDateTime pattern="MMM dd, yyyy" />
 
