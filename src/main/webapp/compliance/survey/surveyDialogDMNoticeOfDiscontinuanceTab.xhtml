@@ -41,8 +41,9 @@ Email: info@dpbennett.com.jm
 
         <p:outputLabel value="Duration of discontinuance"/>
         <h:panelGrid columns="2">
-            <p:outputLabel value="Temporarily"/>
+            <p:outputLabel value="Temporarily" for="temporarily"/>
             <p:selectBooleanCheckbox 
+                id="temporarily"
                 value="#{complianceManager.currentComplianceSurvey.temporarily}">
 
                 <p:ajax listener="#{complianceManager.updateTemporaryDiscontinuance}"
@@ -51,8 +52,9 @@ Email: info@dpbennett.com.jm
 
             </p:selectBooleanCheckbox>
 
-            <p:outputLabel value="Permanently"/>
+            <p:outputLabel value="Permanently" for="permanently"/>
             <p:selectBooleanCheckbox 
+                id="permanently"
                 value="#{complianceManager.currentComplianceSurvey.permanently}">
 
                 <p:ajax listener="#{complianceManager.updatePermanentDiscontinuance}"
@@ -64,8 +66,9 @@ Email: info@dpbennett.com.jm
 
         <p:outputLabel value="discontinued as a/an"/>
         <h:panelGrid columns="2">
-            <p:outputLabel value="Importer"/>
+            <p:outputLabel value="Importer" for="asimporter"/>
             <p:selectBooleanCheckbox 
+                id="asimporter"
                 value="#{complianceManager.currentComplianceSurvey.importer}">
 
                 <p:ajax listener="#{complianceManager.updateImporterDiscontinuance}"
@@ -74,8 +77,9 @@ Email: info@dpbennett.com.jm
 
             </p:selectBooleanCheckbox>
 
-            <p:outputLabel value="Manufacturer"/>
+            <p:outputLabel value="Manufacturer" for="asmanufacturer"/>
             <p:selectBooleanCheckbox 
+                id="asmanufacturer"
                 value="#{complianceManager.currentComplianceSurvey.manufacturer}">
 
                 <p:ajax listener="#{complianceManager.updateManufacturerDiscontinuance}"
@@ -84,8 +88,9 @@ Email: info@dpbennett.com.jm
 
             </p:selectBooleanCheckbox>
 
-            <p:outputLabel value="Processor"/>
+            <p:outputLabel value="Processor" for="asprocessor"/>
             <p:selectBooleanCheckbox 
+                id="asprocessor"
                 value="#{complianceManager.currentComplianceSurvey.processor}">
 
                 <p:ajax listener="#{complianceManager.updateProcessorDiscontinuance}"
@@ -110,6 +115,17 @@ Email: info@dpbennett.com.jm
                     listener="#{complianceManager.updateSurvey}" />
 
         </p:calendar>   
+
+        <p:outputLabel value="Administrative Closure" for="AdministrativeClosure"/>
+        <p:selectBooleanCheckbox
+            id="AdministrativeClosure"
+            value="#{complianceManager.currentComplianceSurvey.administrativeClosure}">
+
+            <p:ajax listener="#{complianceManager.updateSurvey}"
+                    process="@this"
+                    update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+        </p:selectBooleanCheckbox>
 
     </h:panelGrid>
     <hr/>

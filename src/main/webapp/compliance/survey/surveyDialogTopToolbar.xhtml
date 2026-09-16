@@ -76,6 +76,15 @@ Email: info@dpbennett.com.jm
                     <p:fileDownload value="#{complianceManager.DMSampleRequestFile}" />
 
                 </p:menuitem>
+                
+                <p:menuitem value="Notice of Discontinuance"
+                            ajax="false"
+                            rendered="#{complianceManager.currentComplianceSurvey.noticeOfDiscontinuanceIssuedForDomesticMarket}"                                    
+                            onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
+
+                    <p:fileDownload value="#{complianceManager.noticeOfDiscontinuanceFile}" />
+
+                </p:menuitem>
 
                 <p:menuitem value="Sample Request - Ports of Entry"
                             ajax="false"

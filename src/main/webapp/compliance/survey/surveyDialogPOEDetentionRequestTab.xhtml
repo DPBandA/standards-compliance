@@ -81,8 +81,11 @@ Email: info@dpbennett.com.jm
 
         </p:inputText>
         
-        <p:outputLabel value="Inspector" style="font-weight: bold" />       
+        <p:outputLabel value="Inspector" 
+                       rendered="false"
+                       style="font-weight: bold" />       
         <p:autoComplete id="inspector"
+                        rendered="false"
                         escape="false"
                         var="inspector"   
                         value="#{complianceManager.currentComplianceSurvey.inspector}"
