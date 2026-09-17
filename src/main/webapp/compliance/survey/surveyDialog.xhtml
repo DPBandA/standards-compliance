@@ -52,48 +52,47 @@ Email: info@dpbennett.com.jm
                 </p:tab>    
 
                 <p:tab id="entryDocumentInspectionTab"
-                       title="Entry Document Inspection" 
-                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
+                       title="Entry Document Inspection" >
 
                     <ui:include src="surveyDialogEntryDocumentInspectionTab.xhtml"/>
 
                 </p:tab>
 
                 <p:tab title="Product Inspections">
-                    
+
                     <ui:include src="surveyDialogProductInspectionsTab.xhtml"/>
-                    
+
                 </p:tab>
 
                 <p:tab title="POE Detention Request" 
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-                   
+
                     <ui:include src="surveyDialogPOEDetentionRequestTab.xhtml"/>
-                    
+
                 </p:tab>
 
                 <p:tab title="POE Sample Request" 
                        id="POESampleRequest"
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsPortOfEntryOrSite}">
-                    
+
                     <ui:include src="surveyDialogPOESampleRequestTab.xhtml"/>
-                    
+
                 </p:tab>
 
                 <p:tab title="DM Sample Request" 
                        id="DMSampleRequest"
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}">
-                    
+
                     <ui:include src="surveyDialogDMSampleRequestTab.xhtml"/>
-                    
+
                 </p:tab>
-                
+
                 <p:tab title="DM Notice of Discontinuance" 
                        id="DMNoticeOfDiscontinuance"
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}">
-                    
+
                     <ui:include src="surveyDialogDMNoticeOfDiscontinuanceTab.xhtml"/>
-                    
+
                 </p:tab>
 
                 <p:tab title="POE Release Request"
@@ -101,9 +100,14 @@ Email: info@dpbennett.com.jm
                     <ui:include src="surveyDialogPOEReleaseRequestTab.xhtml"/>
                 </p:tab>
 
+                <p:tab title="DM Notice of Detention"
+                       rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"> 
+
+                </p:tab>
+
                 <p:tab title="DM Notice of Release"
                        rendered="#{complianceManager.currentComplianceSurvey.complianceSurveyLocationTypeIsCommercialMarketplace}"> 
-                    <ui:include src="surveyDialogDMNoticeOfReleasefromDetentionTab.xhtml"/>
+                    <ui:include src="surveyDialogDMNoticeOfReleaseTab.xhtml"/>
                 </p:tab>
 
                 <p:tab title="Status &amp; Tracking" rendered="false" >
