@@ -28,15 +28,17 @@ Email: info@dpbennett.com.jm
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
 
     <h:panelGrid columns="2">
-        <p:outputLabel value="Notice of detention issued" for="noticeOfDetentionIssued" />
-        <p:selectBooleanCheckbox 
-            id="noticeOfDetentionIssued"
-            value="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}">
+        <ui:remove id="to_be_put_in_notice_of_detention_tab">
+            <p:outputLabel value="Notice of detention issued" for="noticeOfDetentionIssued" />
+            <p:selectBooleanCheckbox 
+                id="noticeOfDetentionIssued"
+                value="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}">
 
-            <p:ajax listener="#{complianceManager.updateDMDetention}" 
-                    update=":ComplianceSurveyDialogForm:topToolbar,dateOfNoticeOfDetention,domesticMarketDetentionNumber,:ComplianceSurveyDialogForm:formsMenu" />
+                <p:ajax listener="#{complianceManager.updateDMDetention}" 
+                        update=":ComplianceSurveyDialogForm:topToolbar,dateOfNoticeOfDetention,domesticMarketDetentionNumber,:ComplianceSurveyDialogForm:formsMenu" />
 
-        </p:selectBooleanCheckbox>                        
+            </p:selectBooleanCheckbox>    
+        </ui:remove>
 
         <p:outputLabel value="Notice of release from detention issued" for="releaseFromDetentionIssued" />
         <p:selectBooleanCheckbox 
