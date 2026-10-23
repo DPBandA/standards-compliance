@@ -18,6 +18,12 @@
         
         <dependency>
             <groupId>${project.groupId}</groupId>
+            <artifactId>system-management-lib</artifactId>
+            <version>6.0.0</version>
+        </dependency>  
+        
+        <dependency>
+            <groupId>${project.groupId}</groupId>
             <artifactId>system-management</artifactId>
             <version>6.0.0</version>
             <type>war</type>
