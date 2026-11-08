@@ -7,7 +7,7 @@
     <version>6.0.0</version>
     <packaging>war</packaging>
 
-    <name>j.SC</name>
+    <name>k.SC</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
