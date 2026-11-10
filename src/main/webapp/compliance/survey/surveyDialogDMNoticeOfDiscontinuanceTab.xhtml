@@ -1,0 +1,156 @@
+<!--
+Standards Compliance (SC) 
+Copyright (C) 2026  D P Bennett & Associates Limited
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Email: info@dpbennett.com.jm
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"   
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <h:panelGrid columns="2" cellpadding="3">
+        <p:outputLabel value="Notice of discontinuance issued" for="DMNoticeOfDiscontinuanceIssued"/>
+        <p:selectBooleanCheckbox 
+            id="DMNoticeOfDiscontinuanceIssued"
+            value="#{complianceManager.currentComplianceSurvey.noticeOfDiscontinuanceIssuedForDomesticMarket}">
+
+            <p:ajax listener="#{complianceManager.updateNoticeOfDiscontinuanceIssued}"
+                    process="@form"
+                    update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+        </p:selectBooleanCheckbox>
+
+        <p:outputLabel value="Duration of discontinuance"/>
+        <h:panelGrid columns="2">
+            <p:outputLabel value="Temporarily" for="temporarily"/>
+            <p:selectBooleanCheckbox 
+                id="temporarily"
+                value="#{complianceManager.currentComplianceSurvey.temporarily}">
+
+                <p:ajax listener="#{complianceManager.updateTemporaryDiscontinuance}"
+                        process="@this"
+                        update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+            </p:selectBooleanCheckbox>
+
+            <p:outputLabel value="Permanently" for="permanently"/>
+            <p:selectBooleanCheckbox 
+                id="permanently"
+                value="#{complianceManager.currentComplianceSurvey.permanently}">
+
+                <p:ajax listener="#{complianceManager.updatePermanentDiscontinuance}"
+                        process="@this"
+                        update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+            </p:selectBooleanCheckbox>
+        </h:panelGrid>
+
+        <p:outputLabel value="discontinued as a/an"/>
+        <h:panelGrid columns="2">
+            <p:outputLabel value="Importer" for="asimporter"/>
+            <p:selectBooleanCheckbox 
+                id="asimporter"
+                value="#{complianceManager.currentComplianceSurvey.importer}">
+
+                <p:ajax listener="#{complianceManager.updateImporterDiscontinuance}"
+                        process="@this"
+                        update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+            </p:selectBooleanCheckbox>
+
+            <p:outputLabel value="Manufacturer" for="asmanufacturer"/>
+            <p:selectBooleanCheckbox 
+                id="asmanufacturer"
+                value="#{complianceManager.currentComplianceSurvey.manufacturer}">
+
+                <p:ajax listener="#{complianceManager.updateManufacturerDiscontinuance}"
+                        process="@this"
+                        update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+            </p:selectBooleanCheckbox>
+
+            <p:outputLabel value="Processor" for="asprocessor"/>
+            <p:selectBooleanCheckbox 
+                id="asprocessor"
+                value="#{complianceManager.currentComplianceSurvey.processor}">
+
+                <p:ajax listener="#{complianceManager.updateProcessorDiscontinuance}"
+                        process="@this"
+                        update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+            </p:selectBooleanCheckbox>
+        </h:panelGrid>
+
+        <p:outputLabel value="Discontinuance date"  />
+        <p:calendar readonlyInput="true"
+                    navigator="true" 
+                    pattern="MMM dd, yyyy" 
+                    value="#{complianceManager.currentComplianceSurvey.dateOfDiscontinuance}" >
+
+            <p:ajax event="dateSelect"
+                    update=":ComplianceSurveyDialogForm:topToolbar"
+                    listener="#{complianceManager.updateSurvey}" />
+
+            <p:ajax event="keyup"
+                    update=":ComplianceSurveyDialogForm:topToolbar"
+                    listener="#{complianceManager.updateSurvey}" />
+
+        </p:calendar>   
+
+        <p:outputLabel value="Administrative Closure" for="AdministrativeClosure"/>
+        <p:selectBooleanCheckbox
+            id="AdministrativeClosure"
+            value="#{complianceManager.currentComplianceSurvey.administrativeClosure}">
+
+            <p:ajax listener="#{complianceManager.updateSurvey}"
+                    process="@this"
+                    update=":ComplianceSurveyDialogForm:complianceSurveyTabView:DMNoticeOfDiscontinuance,:ComplianceSurveyDialogForm:topToolbar,:ComplianceSurveyDialogForm:formsMenu" />
+
+        </p:selectBooleanCheckbox>
+
+    </h:panelGrid>
+    <hr/>
+    <h:panelGrid columns="3" 
+                 id="NoticeOfDiscontinuanceDMPanelGrid"
+                 cellpadding="5">
+
+        <p:commandButton value="#{complianceManager.currentComplianceSurvey.signForNoticeOfDiscontinuanceDMButtonLabel}"
+                         disabled="#{!complianceManager.user.can('SignNoticeOfDiscontinuance')}"
+                         title="Sign form"
+                         actionListener="#{complianceManager.updateInspectorSigForNoticeOfDiscontinuanceDM}"
+                         update=":ComplianceSurveyDialogForm:topToolbar,NoticeOfDiscontinuanceDMPanelGrid"
+                         icon="pi pi-key"
+                         process="@this" />
+
+        <h:outputText  value="#{complianceManager.currentComplianceSurvey.inspectorForNoticeOfDiscontinuanceDM.firstName} #{complianceManager.currentComplianceSurvey.inspectorForNoticeOfDiscontinuanceDM.lastName}" />
+
+        <h:outputText  value="#{complianceManager.currentComplianceSurvey.dateNoticeOfDiscontinuanceSigned}" >
+
+            <f:convertDateTime pattern="MMM dd, yyyy" />
+
+        </h:outputText>
+
+    </h:panelGrid>
+
+</html>
+
+

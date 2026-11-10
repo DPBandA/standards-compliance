@@ -1,6 +1,6 @@
 <!--
-Standards Compliance 
-Copyright (C) 2024  D P Bennett & Associates Limited
+Standards Compliance (SC) 
+Copyright (C) 2026  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -17,19 +17,21 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Email: info@dpbennett.com.jm
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+<ui:composition
+    template="/jmts-ui/templates/jmts-dialog.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"   
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
-    <h:head>
-        <ui:include src="/head.xhtml" />     
+    <ui:define name="head">
         <title>Product Inspection</title>
-        <ui:include src="header.xhtml" />  
-    </h:head>
-    <h:body >  
+    </ui:define>
+
+    <ui:define name="content">
 
         <ui:include src="../../common/commonDialogs.xhtml"/>
 
@@ -72,7 +74,7 @@ Email: info@dpbennett.com.jm
 
                         </p:inputText>
 
-                        <h:outputText value="Product name, brand, model *" 
+                        <h:outputText value="Product name *" 
                                       style="font-weight: bold;" /> 
                         <h:panelGroup>
                             <p:autoComplete id="marketProduct"
@@ -90,7 +92,7 @@ Email: info@dpbennett.com.jm
                                             scrollHeight="200"     
                                             completeMethod="#{financeManager.completeActiveMarketProduct}" >
 
-                                <f:converter converterId="activeMarketProductConverter"/>
+                                <f:converter converterId="marketProductConverter"/>
 
                                 <f:attribute name="em" value="#{financeManager.entityManager1}"/>
 
@@ -113,6 +115,7 @@ Email: info@dpbennett.com.jm
                                             title="View or edit this product's detail">  
 
                                     <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.marketProductDialogReturn}"
                                             update="marketProduct,marketProductBrand,marketProductModel,surveyMarketProductMenuButton" />
 
                                 </p:menuitem>
@@ -125,6 +128,7 @@ Email: info@dpbennett.com.jm
                                     title="Add a new product to the market products database" >
 
                                     <p:ajax event="dialogReturn" 
+                                            listener="#{complianceManager.marketProductDialogReturn}"
                                             update="marketProduct,marketProductBrand,marketProductModel,surveyMarketProductMenuButton" />
 
                                 </p:menuitem>
@@ -149,7 +153,7 @@ Email: info@dpbennett.com.jm
                                             scrollHeight="200"   
                                             completeMethod="#{systemManager.completeActiveCategory}" >
 
-                                <f:converter converterId="activeCategoryConverter"/>
+                                <f:converter converterId="categoryConverter"/>
 
                                 <f:attribute name="em" value="#{systemManager.entityManager1}"/>
 
@@ -205,7 +209,7 @@ Email: info@dpbennett.com.jm
                                             forceSelection="true"
                                             completeMethod="#{humanResourceManager.completeActiveManufacturer}" >
 
-                                <f:converter converterId="activeManufacturerConverter"/>
+                                <f:converter converterId="manufacturerConverter"/>
 
                                 <f:attribute name="em" value="#{humanResourceManager.entityManager1}"/>
 
@@ -338,15 +342,15 @@ Email: info@dpbennett.com.jm
                             <f:convertNumber integerOnly="true"/>
 
                         </p:inputText>  
-                        
+
                         <h:outputText value="Size" />
                         <p:inputText value="#{complianceManager.currentProductInspection.size}"
                                      placeholder="volume, weight, etc." >
-                            
+
                             <p:ajax global="false"
                                     listener="#{complianceManager.updateProductInspection}"
                                     process="@this"/>
-                            
+
                         </p:inputText>
 
                         <h:outputText value="Product Quantity *"  style="font-weight: bold;" /> 
@@ -451,7 +455,7 @@ Email: info@dpbennett.com.jm
                                             forceSelection="true"
                                             completeMethod="#{clientManager.completeActiveClient}" >
 
-                                <f:converter converterId="activeClientConverter"/>
+                                <f:converter converterId="clientConverter"/>
 
                                 <f:attribute name="em" value="#{clientManager.entityManager1}"/>
 
@@ -533,7 +537,7 @@ Email: info@dpbennett.com.jm
                         </p:selectBooleanCheckbox>                            
 
                     </h:panelGrid>
-                    
+
                     <hr/>
 
                     <h:panelGrid columns="2" cellspacing="5">
@@ -571,14 +575,16 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
 
                         </p:inputTextarea> 
-                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText value="  " />
                         <h:outputText id="precautionStatementCharsRemaining" /> 
 
                         <p:outputLabel style="vertical-align: top;"
+                                       rendered="false"
                                        value="Standards breached" />
-                        <h:panelGroup>
+                        <h:panelGroup rendered="false">
                             <p:autoComplete id="standards"
                                             escape="false"
+                                            unique="true"
                                             var="standard"   
                                             value="#{complianceManager.currentProductInspection.documentStandards}"
                                             itemLabel="#{standard.number} - #{standard.name}"
@@ -589,7 +595,7 @@ Email: info@dpbennett.com.jm
                                             multiple="true"
                                             completeMethod="#{complianceManager.completeActiveDocumentStandard}" >
 
-                                <f:converter converterId="activeDocumentStandardConverter"/>
+                                <f:converter converterId="documentStandardConverter"/>
 
                                 <f:attribute name="em" value="#{complianceManager.entityManager1}"/>
 
@@ -616,10 +622,13 @@ Email: info@dpbennett.com.jm
 
                         </h:panelGroup>
 
-                        <p:outputLabel value="Reason for Detention" style="vertical-align: top" />
+                        <p:outputLabel value="Reason for Detention" 
+                                       rendered="false"
+                                       style="vertical-align: top" />
                         <p:inputTextarea
                             id="reasonForDetention"
                             value="#{complianceManager.currentProductInspection.reasonForDetention}"
+                            rendered="false"
                             rows="3"
                             counter="reasonForDetentionCharsRemaining"
                             counterTemplate="{0} characters remaining."
@@ -633,13 +642,14 @@ Email: info@dpbennett.com.jm
                                 process="@this" />
 
                         </p:inputTextarea> 
-                        <p:outputLabel value="" />
-                        <p:outputLabel id="reasonForDetentionCharsRemaining" />
+                        <p:outputLabel value="" rendered="false" />
+                        <p:outputLabel id="reasonForDetentionCharsRemaining" 
+                                       rendered="false" />
 
                         <h:outputText value="Standards breached" 
-                                      rendered="true" />
+                                      rendered="false" />
                         <p:inputTextarea
-                            rendered="true"
+                            rendered="false"
                             value="#{complianceManager.currentProductInspection.standardsBreached}"
                             rows="4"
                             autoResize="true"
@@ -682,7 +692,7 @@ Email: info@dpbennett.com.jm
                                     process="@this"/>
 
                         </p:inputTextarea> 
-                        <h:outputText value="&nbsp;&nbsp;" />
+                        <h:outputText value="  " />
                         <h:outputText id="commentsCharsRemaining" />
 
                     </h:panelGrid>
@@ -742,6 +752,6 @@ Email: info@dpbennett.com.jm
                 </p:toolbarGroup>
             </p:toolbar>
         </h:form>
-    </h:body>
 
-</html>
+    </ui:define>
+</ui:composition>

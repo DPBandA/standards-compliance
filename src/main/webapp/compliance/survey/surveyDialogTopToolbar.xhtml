@@ -1,6 +1,6 @@
 <!--
 Standards Compliance (SC) 
-Copyright (C) 2024  D P Bennett & Associates Limited
+Copyright (C) 2026  D P Bennett & Associates Limited
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -18,11 +18,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 Email: info@dpbennett.com.jm
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"   
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
 
     <p:toolbar id="topToolbar" style="margin-bottom: 1px;">
         <p:toolbarGroup align="left">
@@ -49,7 +52,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Detention Request - Ports of Entry"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForDetentionIssuedForPortOfEntry}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.detentionRequestFile}" />
@@ -58,16 +61,34 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Release Request - Ports of Entry"                            
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForReleaseIssuedForPortOfEntry}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.releaseRequestForPortOfEntryFile}" />
 
                 </p:menuitem>
 
+                <p:menuitem value="Sample Request - Domestic Market"
+                            ajax="false"
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForDomesticMarket}"                                    
+                            onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
+
+                    <p:fileDownload value="#{complianceManager.DMSampleRequestFile}" />
+
+                </p:menuitem>
+                
+                <p:menuitem value="Notice of Discontinuance"
+                            ajax="false"
+                            rendered="#{complianceManager.currentComplianceSurvey.noticeOfDiscontinuanceIssuedForDomesticMarket}"                                    
+                            onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
+
+                    <p:fileDownload value="#{complianceManager.noticeOfDiscontinuanceFile}" />
+
+                </p:menuitem>
+
                 <p:menuitem value="Sample Request - Ports of Entry"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
+                            rendered="#{complianceManager.currentComplianceSurvey.requestForSampleIssuedForPortOfEntry}"                                    
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.sampleRequestFile}" />
@@ -76,16 +97,16 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Notice of Detention - Domestic Market"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
+                            rendered="#{complianceManager.currentComplianceSurvey.noticeOfDetentionIssuedForDomesticMarket}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.noticeOfDetentionFile}" />
 
                 </p:menuitem>
 
-                <p:menuitem value="Notice of Release from Detention - Domestic Market"
+                <p:menuitem value="Notice of Release - Domestic Market"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}"
+                            rendered="#{complianceManager.currentComplianceSurvey.noticeOfReleaseFromDetentionIssuedForDomesticMarket}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.noticeOfReleaseFromDetentionFile}" />
@@ -94,7 +115,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Application for Rehabilitation"
                             ajax="false"
-                            disabled="#{!complianceManager.currentComplianceSurvey.applicationForRehabilitation}"
+                            rendered="#{complianceManager.currentComplianceSurvey.applicationForRehabilitation}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.applicationForRehabilitationFile}" />
@@ -103,7 +124,7 @@ Email: info@dpbennett.com.jm
 
                 <p:menuitem value="Verification Report"
                             ajax="false"
-                            disabled="#{complianceManager.currentComplianceSurvey.disableVerificationReport}"
+                            rendered="#{!complianceManager.currentComplianceSurvey.disableVerificationReport}"
                             onclick="PrimeFaces.monitorDownload(showStatusDialog, hideStatusDialog)" >
 
                     <p:fileDownload value="#{complianceManager.verificationReportFile}" />
